@@ -1,5 +1,5 @@
 from backend.core.settings import BASE_DIR, STORAGE_DIR, UPLOAD_DIR, CONFIG_DIR, RESULTS_DIR, RUN_DIR #all the dir to be imported
-from backend.services.dataset_services import save_upload, latest_main_ds_upload
+from backend.services.dataset_services import save_upload
 from backend.services.utils.csv_tools import read_columns_from_file
 from fastapi import APIRouter, HTTPException, Query, Body, UploadFile, File, Form
 from pathlib import Path
@@ -8,12 +8,11 @@ import csv
 
 router = APIRouter(tags=["datasets"])
 
-#DS saved in UPLOADS
+#Save datasets in UPLOADS with following path: {dataset_type}__{dataset_id}__{safe_name}
 @router.post("/datasets")
 async def upload_dataset(
     file: UploadFile = File(...),
     dataset_type: str = Form(...),     
-    auto_simplify: str = Form("false") 
 ):
     dataset_id = str(uuid.uuid4())
     safe_name = file.filename.replace("/", "_").replace("\\", "_")
@@ -28,6 +27,16 @@ async def upload_dataset(
         "dataset_type": dataset_type,
         "path": str(path.resolve()),
     }
+
+
+
+
+
+
+
+
+
+
 
 #DS sensitive columns listing
 @router.get("/datasets/latest/columns")

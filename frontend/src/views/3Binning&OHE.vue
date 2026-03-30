@@ -1,5 +1,4 @@
 <script setup>
-
 //http://localhost:5173/bohe
 
 import { ref, onMounted, watch } from "vue";
@@ -15,26 +14,28 @@ const prefixes = ref([]);
 const selectedPrefixes = ref([]);        
 const error = ref(null);
 const normalBinning = ref({}); //binnings detected
-const notNormalBinning = ref({}); //binnings detected
 const normalBinningError = ref(null);
 const binLabelsText = ref("");
 
 const binsByFeature = ref({});  //bins to send to the backend
 
-// ✅ NEW: error message shown when user types edges out of range
+
 const binEdgesError = ref("");
 
-//selectable bins!
-//feature dropdown + editable bin edges
+//Binning Features for dropdown
 const binningFeatures = computed(() => Object.keys(normalBinning.value || {}));
-
-const selectedBinningFeature = ref(""); // chosen key from normalBinning
-const binEdgesText = ref("");           // editable text shown in the input
-
+const selectedBinningFeature = ref(""); 
+const binEdgesText = ref("");           
 let syncing = false;
 
-// ✅ NEW: compute allowed min/max for the selected feature
-// (we derive it from the suggested edges array: min = first edge, max = last edge)
+// Binning Features for the dropdown
+watch(binningFeatures, (list) => {
+  if (!selectedBinningFeature.value && list.length > 0) {
+    selectedBinningFeature.value = list[0];
+  }
+});
+
+// If not n-distributed -> min / max values of the bin
 const allowedMin = computed(() => {
   const feat = selectedBinningFeature.value;
   const arr = feat ? normalBinning.value?.[feat] : null;
@@ -47,17 +48,29 @@ const allowedMax = computed(() => {
   return Array.isArray(arr) && arr.length ? arr[arr.length - 1] : null;
 });
 
-// whenever normalBinning arrives, auto-select first feature (if none selected)
-watch(binningFeatures, (list) => {
-  if (!selectedBinningFeature.value && list.length > 0) {
-    selectedBinningFeature.value = list[0];
+//When feature selected -> edges shown
+watch(selectedBinningFeature, (feat) => {
+  syncing = true;                 
+  try {
+    binEdgesError.value = "";
+
+    const edges = (normalBinning.value && feat) ? normalBinning.value[feat] : null;
+    const arr = Array.isArray(edges) ? edges : [];
+
+    binEdgesText.value = arr.length ? arr.join(", ") : "";
+    binLabelsText.value = arr.length ? edgesToLabels(arr).map(l => `"${l}"`).join(", ") : "";
+
+    //if map has nothing leave it
+    if (feat && !binsByFeature.value[feat] && arr.length) {
+      binsByFeature.value[feat] = arr;
+    }
+  } finally {
+    syncing = false;
   }
 });
 
-//if not modified or deleted, add the n-binnings
-
+//determines the Binning on the N-distributed features -> used by selectedBinningFeature
 const touchedFeatures = ref(new Set());
-
 watch(
   normalBinning,
   (nb) => {
@@ -79,27 +92,8 @@ watch(
 );
 
 
-//Add then also the bins modified
-watch(selectedBinningFeature, (feat) => {
-  syncing = true;                 
-  try {
-    binEdgesError.value = "";
 
-    const edges = (normalBinning.value && feat) ? normalBinning.value[feat] : null;
-    const arr = Array.isArray(edges) ? edges : [];
-
-    binEdgesText.value = arr.length ? arr.join(", ") : "";
-    binLabelsText.value = arr.length ? edgesToLabels(arr).map(l => `"${l}"`).join(", ") : "";
-
-    //if map has nothing leave it
-    if (feat && !binsByFeature.value[feat] && arr.length) {
-      binsByFeature.value[feat] = arr;
-    }
-  } finally {
-    syncing = false;
-  }
-});
-
+//if not N-distributed, validats the values entered by user (val>min & val<max)
 // Validate edges are within [min,max]
 function validateEdgesWithinRange(edges) {
   binEdgesError.value = "";
@@ -121,7 +115,7 @@ function validateEdgesWithinRange(edges) {
   return true;
 }
 
-// If edges change -> update labels (only if valid)
+// Takes all bins modified or not -> pass them to BinsByFeature which will then go to payload
 watch(binEdgesText, (txt) => {
   if (syncing) return;
   syncing = true;
@@ -139,7 +133,6 @@ watch(binEdgesText, (txt) => {
         ? edgesToLabels(edges).map(l => `"${l}"`).join(", ")
         : "";
     
-        //user touched
     touchedFeatures.value.add(feat);
 
     const suggested = normalBinning.value?.[feat];
@@ -246,14 +239,10 @@ function labelsToEdges(labels) {
 }
 
 
-// optional: auto-enable toggleBinning if suggestions exist
-//watch(binningFeatures, (list) => {
-  //if (list.length > 0) toggleBinning.value = true;
-//});
-
-
-//catch the ds headers
+//////////////////////////////////////////////////////////////////////
+//FIRST: Get headers + get n-distributed numerical features to display
 onMounted(async () => {
+  //headers
   try {
     const res = await fetch("http://127.0.0.1:8000/inverse-encoding-prefixes");
     if (!res.ok) throw new Error(`HTTP ${res.status}`);
@@ -265,7 +254,7 @@ onMounted(async () => {
     console.error("fetch prefixes failed:", e);
   }
 
-  //detect binnings if N-distrib
+  //n-distributed
   try {
     const res2 = await fetch("http://127.0.0.1:8000/n-distrib");
     if (!res2.ok) throw new Error(`HTTP ${res2.status}`);
@@ -285,6 +274,9 @@ function goBack() {
   router.back();
 }
 
+
+
+//SECOND: Post the inverse encoding + binnings
 async function goNext() {
   try {
     await fetch("http://127.0.0.1:8000/config/inverse-encoding-prefixes", {

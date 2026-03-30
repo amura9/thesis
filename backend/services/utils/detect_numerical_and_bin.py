@@ -1,6 +1,19 @@
+import math 
 import numpy as np
 import pandas as pd
 from scipy.stats import shapiro
+
+#remove float for binning
+def safe_ceil_int(x):
+    if x is None:
+        return None
+    try:
+        x = float(x)
+        if math.isnan(x):
+            return None
+        return int(math.ceil(x))
+    except Exception:
+        return None
 
 
 #returns numerical features only if contain more than 3 different values

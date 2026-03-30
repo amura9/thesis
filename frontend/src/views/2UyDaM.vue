@@ -9,43 +9,45 @@ const router = useRouter();
 const role = ref("");
 const autoSimplify = ref(false);
 
-// Track picked files + upload results
+// Store files
 const files = ref({
   X_test: null,
   y_true: null,
   y_pred: null,
-  train: null,     // NEW
-  model: null,     // NEW
+  train: null,     
+  model: null,     
 });
 
 const uploaded = ref({
   X_test: { ok: false, filename: "", serverPath: "" },
   y_true: { ok: false, filename: "", serverPath: "" },
   y_pred: { ok: false, filename: "", serverPath: "" },
-  train: { ok: false, filename: "", serverPath: "" }, // NEW
-  model: { ok: false, filename: "", serverPath: "" }, // NEW
+  train: { ok: false, filename: "", serverPath: "" }, 
+  model: { ok: false, filename: "", serverPath: "" }, 
 });
 
 const uploading = ref({
   X_test: false,
   y_true: false,
   y_pred: false,
-  train: false, // NEW
-  model: false, // NEW
+  train: false, 
+  model: false, 
 });
 
 const errorMsg = ref("");
 
-// Allowed extensions (same as your original)
+// Valid extensions
 const acceptTypes =
   ".xlsx,.xls,.xlsm,.xlsb,.csv,application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,text/csv,";
 
   const acceptModelTypes =
   ".joblib,application/octet-stream";
 
+
+//minimum to move next
 const canGoNext = computed(() => {
-  // Require at least X_test, y_true &
-  return uploaded.value.X_test.ok && uploaded.value.y_true.ok && uploaded.value.y_pred.ok;
+  // Require at least X_test
+  return uploaded.value.X_test.ok;
 });
 
 async function uploadDataset(datasetType, file) {
@@ -71,8 +73,6 @@ async function uploadDataset(datasetType, file) {
       throw new Error(data?.detail || res.statusText);
     }
 
-    // Expect backend to return something like:
-    // { filename: "...", path: "backend/storage/uploads/....csv", dataset_type: "X_test" }
     uploaded.value[datasetType] = {
       ok: true,
       filename: data?.filename || file.name,
@@ -91,12 +91,33 @@ async function onPick(datasetType, e) {
   const file = input.files?.[0];
   if (!file) return;
 
+  //error message if extension not in list
+  errorMsg.value = "";
+
+  const ext = "." + file.name.split(".").pop().toLowerCase();
+
+  const allowedDatasetExt = [".xlsx", ".xls", ".xlsm", ".xlsb", ".csv"];
+  const allowedModelExt = [".joblib"];
+
+  const allowed =
+    datasetType === "model" ? allowedModelExt : allowedDatasetExt;
+
+  if (!allowed.includes(ext)) {
+    errorMsg.value =
+      datasetType === "model"
+        ? "Invalid file format. Allowed format: .joblib"
+        : "Invalid file format. Allowed formats: .xlsx, .xls, .xlsm, .xlsb, .csv";
+
+    input.value = "";
+    return;
+  }
+
   files.value[datasetType] = file;
 
   // upload immediately
   await uploadDataset(datasetType, file);
 
-  // allow picking same file again
+  // picking same file again if needed
   input.value = "";
 }
 
@@ -111,11 +132,11 @@ async function goNext() {
 
   try {
     if (!canGoNext.value) {
-      errorMsg.value = "Upload Main dataset, Ground truth, Model prediction before continuing.";
+      errorMsg.value = "Upload at least Main Dataset before continuing";
       return;
     }
 
-    // Create config only once
+    //If canGoNext -> create first config
     if (!configId.value) {
       const cfg = {};
 
@@ -252,16 +273,6 @@ async function goNext() {
 
             <input class="fileInput" type="file" :accept="acceptModelTypes" @change="(e) => onPick('model', e)" />
           </label>
-        </div>
-
-
-        <!-- Auto simplify toggle -->
-        <div class="simplifyRow">
-          <div class="simplifyText">
-            <div class="simplifyTitle">Automatically simplify my data to improve interpretability</div>
-            <div class="simplifySub">(eg. group numerical value like age, recombine split categories)</div>
-          </div>
-          <input class="checkbox" type="checkbox" v-model="autoSimplify" />
         </div>
 
         <!-- Error -->
@@ -454,10 +465,6 @@ async function goNext() {
 .simplifySub {
   font-size: 13px;
   color: #8a8d91;
-}
-.checkbox {
-  width: 22px;
-  height: 22px;
 }
 
 /* error */

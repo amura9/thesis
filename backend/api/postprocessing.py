@@ -1,10 +1,10 @@
 from backend.core.settings import BASE_DIR, STORAGE_DIR, UPLOAD_DIR, CONFIG_DIR, RESULTS_DIR, RUN_DIR #all the dir to be imported
 from backend.services.config_services import latest_config_path, read_config, write_config
-from backend.services.utils.prefixes_headers import find_x_test_prefixed_columns, find_x_test_headers
-from backend.services.utils.detect_numerical_and_bin import detect_numerical_and_bin
+from backend.services.utils.find_headers import detect_headers
+from backend.services.utils.detect_numerical_and_bin import detect_numerical_and_bin, safe_ceil_int
 from fastapi import APIRouter, HTTPException, Query, Body, UploadFile, File, Form
 from backend.services.utils.csv_tools import load_dataframe
-from backend.services.dataset_services import latest_main_ds_upload
+from backend.services.dataset_services import latest_upload_for_type
 from pydantic import BaseModel
 from typing import List, Dict
 import math
@@ -25,30 +25,70 @@ class BinningPayload(BaseModel):
     use_binning: bool = True
     bins: Dict[str, List[int]]  # feature -> edges
     
-#Get all headers for binning
+#GET headers of Main Dataset
 @router.get("/inverse-encoding-prefixes")
 def get_inverse_encoding_prefixes(recursive: bool = True):
     try:
-        headers_map = find_x_test_headers(UPLOAD_DIR, recursive=recursive)
-    except FileNotFoundError as e:
-        raise HTTPException(status_code=404, detail=str(e))
-    except ValueError as e:
-        raise HTTPException(status_code=400, detail=str(e))
+        headers_map = detect_headers(UPLOAD_DIR, recursive=recursive)
+
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Unexpected error: {e}")
 
-    #file
-    groups = {str(path): cols for path, cols in headers_map.items()}
-
     #headers
+    groups = {str(path): cols for path, cols in headers_map.items()}
     headers = sorted({c for cols in headers_map.values() for c in cols})
     
     return {"groups": groups, "prefixes": headers}
 
-#post the features to recombine in the .json
+#GET normally distributed numerical features
+@router.get("/n-distrib")
+def n_distrib():
+    try:
+        x_path = latest_upload_for_type(UPLOAD_DIR, "X_test") 
+        print("main Dataset used: ", x_path)
+
+        df = load_dataframe(x_path)
+        results = detect_numerical_and_bin(df=df)
+
+        extracted = {}
+        for col, info in results.items():
+            r = info.get("range")
+            min_v = r[0] if isinstance(r, (list, tuple)) and len(r) >= 2 else None
+            max_v = r[1] if isinstance(r, (list, tuple)) and len(r) >= 2 else None
+
+            if info.get("is_normal") and isinstance(info.get("binning"), dict):
+                edges = info["binning"].get("edges") or []
+                extracted[col] = [v for v in (safe_ceil_int(e) for e in edges) if v is not None]
+            else:
+                a = safe_ceil_int(min_v)
+                b = safe_ceil_int(max_v)
+                extracted[col] = [v for v in (a, b) if v is not None]
+
+        return extracted
+
+    except Exception as e:
+        traceback.print_exc()
+        raise HTTPException(status_code=500, detail=f"Unexpected error: {e}")
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+#POST: inverse encoding + binning
 @router.post("/config/inverse-encoding-prefixes")
 def save_inverse_encoding_prefixes(payload: SelectedPrefixesPayload):
-    path = latest_config_path(CONFIG_DIR)
+    path = latest_config_path()
     cfg = read_config(path)
 
     cfg.setdefault("postprocessing", {})
@@ -63,7 +103,7 @@ def save_inverse_encoding_prefixes(payload: SelectedPrefixesPayload):
 
     return {"ok": True, "config_id": path.stem, "path": str(path)}
 
-#get what is N distributed and based on this, propose equal width binning
+
 def safe_ceil_int(x):
     if x is None:
         return None
@@ -79,7 +119,7 @@ def safe_ceil_int(x):
 @router.get("/n-distrib")
 def n_distrib():
     try:
-        x_path = latest_main_ds_upload(UPLOAD_DIR)
+        x_path = latest_upload_for_type(UPLOAD_DIR, "X_test")
         print("X_test used:", x_path)
 
         df = load_dataframe(x_path)
@@ -101,10 +141,7 @@ def n_distrib():
 
         return extracted
 
-    except FileNotFoundError as e:
-        raise HTTPException(status_code=404, detail=str(e))
-    except HTTPException:
-        raise
+
     except Exception as e:
         traceback.print_exc()
         raise HTTPException(status_code=500, detail=f"Unexpected error: {e}")
@@ -124,7 +161,7 @@ def edges_to_labels(edges: List[int]) -> List[str]:
 
 @router.post("/config/binning")
 def save_binning(payload: BinningPayload):
-    path = latest_config_path(CONFIG_DIR)
+    path = latest_config_path()
     cfg = read_config(path)
 
     cfg.setdefault("postprocessing", {})

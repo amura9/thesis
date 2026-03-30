@@ -1,0 +1,94 @@
+{
+  "datasets": {
+    "train": null,
+    "X_test": "C:\\Users\\pc\\Desktop\\Alberto\\Alberto\\Tesi\\FRIA_evaluation\\FRIA_evaluation\\backend\\storage\\uploads\\X_test__01367e97-032f-442b-a70f-6c73f981d31b__X_test_MIN.csv",
+    "y_true": null,
+    "y_pred": null
+  },
+  "model": {
+    "path": null
+  },
+  "features": null,
+  "postprocessing": {
+    "use_inverse_encoding": true,
+    "inverse_encoding_prefixes": [
+      "age_min_job",
+      "age_max_job"
+    ],
+    "binning": {
+      "use_binning": true,
+      "features": {
+        "distrib_test": {
+          "bins": [
+            -39373,
+            -31683,
+            -23994,
+            -16304,
+            -8615,
+            -926,
+            6764,
+            14453,
+            22143,
+            29832,
+            37521
+          ],
+          "labels": [
+            "-39373--31683",
+            "-31682--23994",
+            "-23993--16304",
+            "-16303--8615",
+            "-8614--926",
+            "-925-6764",
+            "6765-14453",
+            "14454-22143",
+            "22144-29832",
+            "29833+"
+          ]
+        },
+        "people_of_world": {
+          "bins": [
+            -39373,
+            -31683,
+            -23994,
+            -16304,
+            -8615,
+            -926,
+            6764,
+            14453,
+            22143,
+            29832,
+            37521
+          ],
+          "labels": [
+            "-39373--31683",
+            "-31682--23994",
+            "-23993--16304",
+            "-16303--8615",
+            "-8614--926",
+            "-925-6764",
+            "6765-14453",
+            "14454-22143",
+            "22144-29832",
+            "29833+"
+          ]
+        },
+        "age_max_job": {
+          "bins": [
+            23,
+            32,
+            38
+          ],
+          "labels": [
+            "23-32",
+            "33+"
+          ]
+        }
+      }
+    }
+  },
+  "rights_to_evaluate": [],
+  "metrics": {
+    "metrics": {}
+  },
+  "plugins": []
+}

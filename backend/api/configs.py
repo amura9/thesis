@@ -27,12 +27,28 @@ logger = logging.getLogger(__name__)
 sys.modules.setdefault("core", importlib.import_module("evaluator.core"))
 sys.modules.setdefault("utilities", importlib.import_module("evaluator.utilities"))
 
-
 #routing
 configs_router = APIRouter(tags=["configs"])
 rights_router = APIRouter(tags=["rights"])
 
 ####################################
+
+#FIRST CONFIG & DS UPLOAD
+@configs_router.post("/config")
+def save_config(cfg: ConfigIn):
+    config_id = str(uuid.uuid4())
+    path = CONFIG_DIR / f"{config_id}.json"
+
+    payload = cfg.model_dump()
+    path.write_text(json.dumps(payload, indent=2), encoding="utf-8")
+
+    attach_uploads_to_config(path, UPLOAD_DIR) #save files from uploads to config.json
+
+    return {"config_id": config_id}
+
+
+
+
 
 #SAVE FIRST PLUGIN REGISTRY
 @configs_router.get("/plugin-registry")
@@ -52,19 +68,6 @@ def get_plugin_registry():
         logger.exception("Failed to save plugin registry to REGISTRY_DIR: %s", e)
 
     return reg
-
-#SAVE FIRST CONFIG FILE & UPLOADED DATASETS
-@configs_router.post("/config")
-def save_config(cfg: ConfigIn):
-    config_id = str(uuid.uuid4())
-    path = CONFIG_DIR / f"{config_id}.json"
-
-    payload = cfg.model_dump()
-    path.write_text(json.dumps(payload, indent=2), encoding="utf-8")
-
-    attach_uploads_to_config(path, UPLOAD_DIR)
-
-    return {"config_id": config_id}
 
 #GET MOST RECENT CONFIG FILE
 @configs_router.get("/configs/latest")
@@ -126,7 +129,6 @@ class Update(BaseModel):
     metrics: Dict[str, List[str]]
     plugins: List[str]
 
-
 #save metrics to be computed in .json
 @configs_router.put("/configs/metrics_to_compute")
 def update_latest_metrics(payload: Update):
@@ -155,12 +157,6 @@ def update_latest_metrics(payload: Update):
     return {"config_id": latest.stem, "config": cfg}
 
 #Save parameters for metrics to be computed in .json
-'''
-class metricABC(BaseModel):
-    enabled: bool = True
-    quasi_identifiers: List[str]
-    k_value: int
-'''
 
 class ParametersPayload(RootModel[Dict[str, Dict[str, Any]]]):
     pass

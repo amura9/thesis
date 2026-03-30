@@ -5,9 +5,10 @@ from pathlib import Path
 from fastapi import HTTPException
 import json
 
-#SAVES UPLOADED FILES IN CONFIG
+#SAVES UPLOADED FILES IN CONFIG WITH ABSOLUTE PATH
 def attach_uploads_to_config(cfg_path: Path, upload_dir: Path) -> None:
-    
+
+    #get latest uploaded files from UPLOADS
     x_test = latest_upload_for_type(upload_dir, "X_test")
     y_true = latest_upload_for_type(upload_dir, "y_true")
     y_pred = latest_upload_for_type(upload_dir, "y_pred")
@@ -15,34 +16,51 @@ def attach_uploads_to_config(cfg_path: Path, upload_dir: Path) -> None:
     model = latest_upload_for_type(upload_dir, "model")
 
     #minimum attachable files
-    if x_test is None or y_true is None or y_pred is None:
+    if x_test is None:
         raise HTTPException(
             status_code=400,
-            detail="Missing required uploads: X_test, y_true, y_pred (upload them before creating config).",
+            detail="Missing required upload: Main Dataset",
         )
 
     cfg = read_config(cfg_path)
     cfg.setdefault("datasets", {})
     cfg.setdefault("model", {})
 
+    #store absolute path (minimum dataset)
     cfg["datasets"]["X_test"] = str(x_test.resolve())
-    cfg["datasets"]["y_true"] = str(y_true.resolve())
-    cfg["datasets"]["y_pred"] = str(y_pred.resolve())
+
+
+    #save absolute paths -> OPTIONAL
+    if y_true is not None:
+        cfg["datasets"]["y_true"] = str(y_true.resolve())
+
+    if y_pred is not None:
+        cfg["datasets"]["y_pred"] = str(y_pred.resolve())
 
     if train is not None:
         cfg["datasets"]["train"] = str(train.resolve())
+
     if model is not None:
         cfg["model"]["path"] = str(model.resolve())
 
     write_config(cfg_path, cfg)
-    
-#READ LATEST CONFIGURATION
+
+#Load lastest config file
 def latest_config_path():
     CONFIG_DIR.mkdir(parents=True, exist_ok=True)
     config_files = list(CONFIG_DIR.glob("*.json"))
     if not config_files:
         raise HTTPException(status_code=404, detail="No configs found")
     return max(config_files, key=lambda p: p.stat().st_mtime)
+
+
+
+
+
+
+
+
+    
 
 
 def read_config(path: Path) -> dict:
