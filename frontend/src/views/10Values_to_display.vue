@@ -1,0 +1,162 @@
+<script setup>
+import { computed, onMounted, ref } from "vue";
+import { useRoute, useRouter } from "vue-router";
+
+import ScalarMapView from "../components/metrics/ScalarMapView.vue";
+import ConditionalNestedView from "../components/metrics/ConditionalNestedView.vue";
+import GroupMetricMapView from "../components/metrics/GroupMetricMapView.vue";
+import RecordWithTableView from "../components/metrics/RecordWithTableView.vue";
+import CardMap from "../components/metrics/CardMap.vue";
+
+const route = useRoute();
+const router = useRouter();
+
+const group = computed(() => String(route.params.group || ""));
+const metricKey = computed(() => String(route.params.metric || ""));
+
+const prettyMetric = computed(() =>
+  metricKey.value.replaceAll("_", " ").replace(/\b\w/g, (c) => c.toUpperCase())
+);
+
+const loading = ref(false);
+const error = ref("");
+
+const runId = ref("");   
+const allResults = ref({});
+const allSchemas = ref({});
+
+const metricObj = computed(() => allResults.value?.[metricKey.value] ?? null);
+const metricSchemaFromBackend = computed(
+  () => allSchemas.value?.[metricKey.value]?.schema ?? "unknown"
+);
+
+//get the schema value and apply the renderer
+const effectiveSchema = computed (() => metricSchemaFromBackend.value)
+
+const renderer = computed(() => {
+  switch (effectiveSchema.value) {
+    
+    case "card_map":
+      return CardMap;
+    case "scalar_map":
+      return ScalarMapView;
+    case "conditional_nested":
+      return ConditionalNestedView;
+    case "group_metric_map":
+      return GroupMetricMapView; 
+    case "record_with_table":
+      return RecordWithTableView;
+    default:
+      return null;
+  }
+});
+
+//initial weights as default
+const initialWeights = computed(() => ({}));
+
+onMounted(async () => {
+  try {
+    loading.value = true;
+    error.value = "";
+
+    // 1) Fetch all_results.json
+    const res = await fetch("http://127.0.0.1:8000/results/values_to_display");
+    if (!res.ok) throw new Error(await res.text());
+    const data = await res.json();
+
+    runId.value = String(data?.run_id || "");  //run id stored from results
+
+    allResults.value = data?.results?.results ?? data?.results ?? data ?? {};
+
+    // 2) Fetch schemas
+    if (data?.schemas) {
+      allSchemas.value = data.schemas;
+    } else {
+      const sres = await fetch("http://127.0.0.1:8000/results/result_schemas");
+      if (sres.ok) {
+        allSchemas.value = await sres.json();
+      } else {
+        console.warn("No schemas endpoint or failed fetch; using inferred schema.");
+        allSchemas.value = {};
+      }
+    }
+
+    console.log((!allResults.value?.[metricKey.value]))
+
+    if (!allResults.value?.[metricKey.value]) {
+      error.value = `Metric "${metricKey.value}" not found in results.`;
+    }
+  } catch (e) {
+    error.value = e?.message || String(e);
+  } finally {
+    loading.value = false;
+  }
+});
+</script>
+
+<template>
+  <div class="page">
+    <aside class="sidebar">
+      <div class="side-title">Metrics<br />Overview</div>
+      <button class="back" @click="$router.back()">‹ Back</button>
+    </aside>
+
+    <main class="content">
+      <h1 class="title">{{ prettyMetric }}</h1>
+      <p class="subtitle">Group: <strong>{{ group }}</strong></p>
+
+      <div v-if="loading" class="card">Loading results…</div>
+      <div v-else-if="error" class="card">{{ error }}</div>
+
+      <component
+        v-else-if="renderer && metricObj"
+        :is="renderer"
+        :metric-key="metricKey"
+        :metric-obj="metricObj"
+        :schema-type="effectiveSchema"
+        :run-id="runId"                 
+        :initial-weights="initialWeights"
+      />
+
+      <div v-else class="card">
+        <h3>Raw output</h3>
+        <p style="opacity:0.7; font-size: 13px">
+          (No renderer for schema: <strong>{{ effectiveSchema }}</strong>)
+        </p>
+        <pre class="pre">{{ JSON.stringify(metricObj, null, 2) }}</pre>
+      </div>
+    </main>
+  </div>
+</template>
+
+<style scoped>
+/* keep your layout styles */
+.page { min-height: 100vh; display: flex; font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; }
+.sidebar { width: 320px; background: #b8ff8f; padding: 28px 22px; box-sizing: border-box; }
+.side-title { font-size: 34px; font-weight: 900; text-align: center; margin-bottom: 30px; }
+.back { border: none; background: transparent; font-size: 18px; cursor: pointer; }
+.content { flex: 1; padding: 36px 56px; }
+.title { font-size: 44px; margin: 0 0 8px; }
+.subtitle { margin: 0 0 18px; font-size: 18px; }
+.card {
+  border: 1px solid #e6e6e6;
+  border-radius: 16px;
+  padding: 28px 34px;
+  max-width: 900px;
+  width: 100%;
+  background: #fafafa;
+  text-align: center;
+  margin-top: 14px;
+}
+.pre {
+  background: #fff;
+  border: 1px solid #eee;
+  border-radius: 12px;
+  padding: 16px;
+  overflow: auto;
+  max-height: 360px;
+  font-size: 12px;
+  text-align: left;
+  white-space: pre-wrap;
+}
+</style>

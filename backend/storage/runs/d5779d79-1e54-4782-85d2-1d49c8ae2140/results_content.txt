@@ -1,0 +1,98 @@
+Namespace(config='C:\\Users\\pc\\Desktop\\Alberto\\Alberto\\Tesi\\FRIA_evaluation\\FRIA_evaluation\\backend\\storage\\configs\\d5779d79-1e54-4782-85d2-1d49c8ae2140.json')
+C:\Users\pc\Desktop\Alberto\Alberto\Tesi\FRIA_evaluation\FRIA_evaluation\backend\storage\configs\d5779d79-1e54-4782-85d2-1d49c8ae2140.json
+[INFO] Using config: C:\Users\pc\Desktop\Alberto\Alberto\Tesi\FRIA_evaluation\FRIA_evaluation\backend\storage\configs\d5779d79-1e54-4782-85d2-1d49c8ae2140.json
+
+Selected sensitive features: ['age_cv', 'competences_coverage_required']
+
+Columns available after preprocessing: ['age_cv', 'competences_coverage_required', 'competences_coverage_optional', 'education_cv_encoded', 'education_job_req', 'education_job_encoded', 'gender_job_Any', 'gender_job_Female', 'gender_job_Male', 'gender_cv_Female', 'gender_cv_Male', 'gender_cv_Not binary', 'gender_cv_Not declared', 'disability_cv_No', 'disability_cv_Not declared', 'disability_cv_Yes', 'disability_job_Any', 'disability_job_No', 'PCA_1', 'PCA_2', 'nationality_job_Any', 'nationality_job_Catalan', 'nationality_job_English', 'nationality_job_French', 'nationality_job_Italian', 'nationality_job_Spanish', 'nationality_cv_Catalan', 'nationality_cv_English', 'nationality_cv_French', 'nationality_cv_German', 'nationality_cv_Irish', 'nationality_cv_Italian', 'nationality_cv_LowGerman', 'nationality_cv_Romanian', 'nationality_cv_Russian', 'nationality_cv_Spanish', 'nationality_cv_Swedish', 'age_min_job', 'age_max_job', 'distrib_test', 'check_it', 'check_de', 'people_of_world']
+
+Running Fake Right Example (Fake)
+
+Running K-Anonymity
+
+Running conditional_statistical_parity
+  Computing for feature: age_cv
+  Computing for feature: competences_coverage_required
+
+Running Conditional Use Accuracy Equality
+  Computing for feature: age_cv
+  Computing for feature: competences_coverage_required
+
+Running Demographic Parity
+  Computing for feature: age_cv
+  Computing for feature: competences_coverage_required
+
+=== FINAL RESULTS ===
+
+--- Metrics: new_metric ---
+
+  Feature: (global)
+    Metric: Fake Right Example
+    Value: {'status': 'success', 'metric': 'Fake Right Example', 'used_column': 'age_cv', 'mean': 35.3406, 'median': 32.0, 'ratio_rule': 'mean/median', 'computed': 1.10439375, 'threshold': 0.2, 'result': 0.2}
+
+--- Metrics: k_anonymity ---
+
+  Combined result:
+    Metric: K-Anonymity
+    k: 2
+    Compliance: False (86.88%)
+    Min group size: 1
+    Max group size: 62
+    Avg group size: 9.94
+
+[COMPACT] Example groups (max 5):
+      Group:
+None
+      Count: 1
+      Compliant: False
+
+      Group:
+None
+      Count: 4
+      Compliant: True
+
+      Group:
+None
+      Count: 1
+      Compliant: False
+
+      Group:
+None
+      Count: 1
+      Compliant: False
+
+      Group:
+None
+      Count: 2
+      Compliant: True
+
+    ... (498 groups omitted)
+
+--- Metrics: conditional_statistical_parity ---
+
+  Feature: age_cv
+    Metric: Conditional Statistical Parity
+    Value: {'metric': 'Conditional Statistical Parity', 'status': 'success', 'conditional_variable': 'competences_coverage_optional', 'sensitive_feature': 'age_cv', 'conditions': {'0.0': {'16': 0.0, '17': 0.0, '18': 0.2222222222222222, '19': 0.27586206896551724, '20': 0.12, '21': 0.55, '22': 0.4, '23': 0.37962962962962965, '24': 0.29508196721311475, '25': 0.5, '26': 0.5674157303370787, '27': 0.4246575342465753, '28': 0.43820224719101125, '29': 0.4896551724137931, '30': 0.5407407407407407, '31': 0.38461538461538464, '32': 0.42045454545454547, '33': 0.36904761904761907, '34': 0.425531914893617, '35': 0.40229885057471265, '36': 0.19318181818181818, '37': 0.25, '38': 0.21333333333333335, '39': 0.015873015873015872, '40': 0.0, '41': 0.0, '42': 0.0, '43': 0.0, '44': 0.0, '45': 0.0, '46': 0.0, '47': 0.0, '48': 0.0, '49': 0.0, '50': 0.0, '51': 0.0, '52': 0.0, '53': 0.0, '54': 0.0, '55': 0.0, '56': 0.0, '57': 0.0, '58': 0.0, '59': 0.0, '60': 0.0, 'raw_difference': 0.5674157303370787, 'normalized_score': 0.4325842696629213, 'weight': 0.6566, 'total_samples': 3283}, '0.3333333333333333': {'18': 0.5, '19': 0.75, '21': 1.0, '22': 1.0, '23': 1.0, '24': 1.0, '25': 1.0, '26': 1.0, '27': 1.0, '28': 1.0, '29': 1.0, '30': 1.0, '31': 1.0, '32': 1.0, '34': 1.0, '51': 0.0, '53': 0.0, 'raw_difference': 1.0, 'normalized_score': 0.0, 'weight': 0.0106, 'total_samples': 53}, '0.5': {'25': 0.8888888888888888, '26': 0.6, '27': 0.75, '28': 0.8181818181818182, '29': 0.8, '30': 1.0, '31': 0.5, '32': 1.0, '33': 0.0, '34': 0.6, '35': 0.6, '36': 0.2857142857142857, '37': 0.0, '38': 1.0, '40': 0.0, '43': 0.0, '50': 0.0, '51': 0.0, '52': 0.0, '55': 0.0, '57': 0.0, 'raw_difference': 1.0, 'normalized_score': 0.0, 'weight': 0.0178, 'total_samples': 89}, '0.6666666666666666': {'18': 1.0, '19': 0.0, '20': 0.0, '23': 1.0, '25': 1.0, '26': 1.0, '27': 1.0, '28': 1.0, '30': 1.0, '32': 0.5, 'raw_difference': 1.0, 'normalized_score': 0.0, 'weight': 0.003, 'total_samples': 15}, '1.0': {'16': 0.0, '17': 0.0, '18': 0.7692307692307693, '19': 0.7727272727272727, '20': 0.6724137931034483, '21': 0.896551724137931, '22': 0.7547169811320755, '23': 0.7317073170731707, '24': 0.6086956521739131, '25': 0.4864864864864865, '26': 0.5094339622641509, '27': 0.39285714285714285, '28': 0.34375, '29': 0.37662337662337664, '30': 0.38461538461538464, '31': 0.14285714285714285, '32': 0.29310344827586204, '33': 0.10869565217391304, '34': 0.14285714285714285, '35': 0.1111111111111111, '36': 0.14705882352941177, '37': 0.2, '38': 0.0, '39': 0.0, '40': 0.0, '41': 0.0, '42': 0.0, '43': 0.0, '44': 0.0, '45': 0.0, '46': 0.0, '47': 0.0, '48': 0.0, '49': 0.0, '50': 0.0, '51': 0.0, '52': 0.0, '53': 0.0, '54': 0.0, '55': 0.0, '56': 0.0, '57': 0.0, '58': 0.0, '59': 0.0, '60': 0.0, 'raw_difference': 0.896551724137931, 'normalized_score': 0.10344827586206895, 'weight': 0.312, 'total_samples': 1560}}, 'disparity_summary': {'raw_average': 0.6836893064703604, 'raw_max': 1.0, 'raw_min': 0.5674157303370787, 'normalized_average': 0.3163106935296396, 'normalized_max': 0.4325842696629213, 'normalized_min': 0.0, 'processed_conditions': 5, 'total_samples': 5000}}
+
+  Feature: competences_coverage_required
+    Metric: Conditional Statistical Parity
+    Value: {'metric': 'Conditional Statistical Parity', 'status': 'success', 'conditional_variable': 'competences_coverage_optional', 'sensitive_feature': 'competences_coverage_required', 'conditions': {'0.0': {'0.25': 0.09427609427609428, '0.3333333333333333': 0.9456521739130435, '0.5': 0.17945205479452056, '0.6666666666666666': 0.9555555555555556, '0.75': 0.0871559633027523, '1.0': 0.33978702807357214, 'raw_difference': 0.8683995922528033, 'normalized_score': 0.13160040774719672, 'weight': 0.6566, 'total_samples': 3283}, '0.3333333333333333': {'0.3333333333333333': 0.9285714285714286, '0.6666666666666666': 0.9444444444444444, '0.75': 0.3333333333333333, '1.0': 0.8888888888888888, 'raw_difference': 0.6111111111111112, 'normalized_score': 0.38888888888888884, 'weight': 0.0106, 'total_samples': 53}, '0.5': {'0.25': 0.0, '0.3333333333333333': 1.0, '0.5': 0.3076923076923077, '0.6666666666666666': 1.0, '0.75': 0.5, '1.0': 0.7, 'raw_difference': 1.0, 'normalized_score': 0.0, 'weight': 0.0178, 'total_samples': 89}, '0.6666666666666666': {'0.3333333333333333': 1.0, '0.6666666666666666': 0.8, '1.0': 0.6666666666666666, 'raw_difference': 0.33333333333333337, 'normalized_score': 0.6666666666666666, 'weight': 0.003, 'total_samples': 15}, '1.0': {'0.25': 0.14122137404580154, '0.3333333333333333': 0.9069767441860465, '0.5': 0.2722371967654987, '0.6666666666666666': 0.8736842105263158, '0.75': 0.08766233766233766, '1.0': 0.4490644490644491, 'raw_difference': 0.8193144065237088, 'normalized_score': 0.1806855934762912, 'weight': 0.312, 'total_samples': 1560}}, 'disparity_summary': {'raw_average': 0.8510950448863657, 'raw_max': 1.0, 'raw_min': 0.33333333333333337, 'normalized_average': 0.14890495511363444, 'normalized_max': 0.6666666666666666, 'normalized_min': 0.0, 'processed_conditions': 5, 'total_samples': 5000}}
+
+--- Metrics: conditional_use_accuracy_equality ---
+
+  Feature: age_cv
+    Metric: Conditional Use Accuracy Equality
+    Value: {'metric': 'Conditional Use Accuracy Equality', 'status': 'success', 'sensitive_feature': 'age_cv', 'accuracy_by_group': {'18': 0.9824561403508771, '19': 1.0, '20': 0.9761904761904762, '21': 0.9418604651162791, '22': 0.9130434782608695, '23': 0.9428571428571428, '24': 0.8615384615384616, '25': 0.8839285714285714, '26': 0.9568345323741008, '27': 0.963963963963964, '28': 0.9122807017543859, '29': 0.8909090909090909, '30': 0.9363636363636364, '31': 0.8727272727272727, '32': 0.8813559322033898, '33': 0.8055555555555556, '34': 0.8571428571428571, '35': 0.7073170731707317, '36': 0.625, '37': 0.8636363636363636, '38': 0.8235294117647058, '39': 0.0}, 'difference': 1.0, 'normalized_score': 0.0}
+
+  Feature: competences_coverage_required
+    Metric: Conditional Use Accuracy Equality
+    Value: {'metric': 'Conditional Use Accuracy Equality', 'status': 'success', 'sensitive_feature': 'competences_coverage_required', 'accuracy_by_group': {'0.25': 0.5913978494623656, '0.3333333333333333': 1.0, '0.5': 0.8416666666666667, '0.6666666666666666': 1.0, '0.75': 0.6744186046511628, '1.0': 0.9479674796747968}, 'difference': 0.4086021505376344, 'normalized_score': 0.5913978494623656}
+
+--- Metrics: demographic_parity ---
+
+  Feature: age_cv
+    Value: 0.2773109243697479
+
+  Feature: competences_coverage_required
+    Value: 0.14954091065776687
+[INFO] Saved UI schemas to: C:\Users\pc\Desktop\Alberto\Alberto\Tesi\FRIA_evaluation\FRIA_evaluation\evaluator\run_results\result_schemas.json

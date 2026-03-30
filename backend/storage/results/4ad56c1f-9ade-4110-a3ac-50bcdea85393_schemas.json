@@ -1,0 +1,22 @@
+{
+  "new_metric": {
+    "schema": "card_map",
+    "ui": "summary_cards_only"
+  },
+  "anonymity_set_size": {
+    "schema": "record_with_table",
+    "ui": "summary_plus_table"
+  },
+  "k_anonymity": {
+    "schema": "record_with_table",
+    "ui": "summary_plus_table"
+  },
+  "conditional_statistical_parity": {
+    "schema": "conditional_nested",
+    "ui": "condition_selector_then_group_chart"
+  },
+  "conditional_use_accuracy_equality": {
+    "schema": "group_metric_map",
+    "ui": "group_bar_chart_plus_summary"
+  }
+}

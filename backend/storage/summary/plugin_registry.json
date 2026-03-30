@@ -1,0 +1,440 @@
+{
+  "conditional_statistical_parity": {
+    "id": "conditional_statistical_parity",
+    "name": "Conditional Statistical Parity",
+    "right": "Fairness",
+    "description": "Measures disparity in selection rates across sensitive groups conditioned on another variable.",
+    "requires": [
+      "X_test",
+      "y_pred"
+    ],
+    "plugin_path": "plugins.fairness.conditional_statistical_parity",
+    "params": [
+      {
+        "key": "sensitive_features",
+        "type": "list[string]",
+        "required": true,
+        "default": null,
+        "label": "Sensitive features",
+        "help": "Select one or more sensitive feature columns (e.g., sex, age).",
+        "enum": null
+      },
+      {
+        "key": "conditional_variable",
+        "type": "string",
+        "required": true,
+        "default": null,
+        "label": "Conditional variable",
+        "help": "Column name used to condition the fairness comparison.",
+        "enum": null
+      }
+    ],
+    "need_sensitive_feature": true,
+    "needs_all_sensitive_features": false,
+    "needs_conditional_variable": true,
+    "version": "1.0"
+  },
+  "conditional_use_accuracy_equality": {
+    "id": "conditional_use_accuracy_equality",
+    "name": "Conditional Use Accuracy Equality",
+    "right": "Fairness",
+    "description": "Accuracy parity across sensitive groups, computed only on samples with positive predictions (\u0177=1).",
+    "requires": [
+      "X_test",
+      "y_true",
+      "y_pred"
+    ],
+    "plugin_path": "plugins.fairness.conditional_use_accuracy_equality",
+    "params": [
+      {
+        "key": "sensitive_features",
+        "type": "list[string]",
+        "required": true,
+        "default": null,
+        "label": "Sensitive features",
+        "help": "Select one or more sensitive feature columns (e.g., sex, age).",
+        "enum": null
+      }
+    ],
+    "need_sensitive_feature": true,
+    "needs_all_sensitive_features": false,
+    "needs_conditional_variable": false,
+    "version": "1.0"
+  },
+  "demographic_parity": {
+    "id": "demographic_parity",
+    "name": "Demographic Parity",
+    "right": "Fairness",
+    "description": "Measures demographic parity by computing selection rate differences across sensitive groups.",
+    "requires": [
+      "X_test",
+      "y_true",
+      "y_pred"
+    ],
+    "plugin_path": "plugins.fairness.demographic_parity",
+    "params": [
+      {
+        "key": "sensitive_features",
+        "type": "list[string]",
+        "required": true,
+        "default": null,
+        "label": "Sensitive features",
+        "help": "Select one or more sensitive feature columns (e.g., sex, age).",
+        "enum": null
+      }
+    ],
+    "need_sensitive_feature": true,
+    "needs_all_sensitive_features": false,
+    "needs_conditional_variable": false,
+    "version": "1.0"
+  },
+  "disparate_impact": {
+    "id": "disparate_impact",
+    "name": "Disparate Impact",
+    "right": "Fairness",
+    "description": "Disparate Impact based on selection rates across sensitive groups (min SR / max SR).",
+    "requires": [
+      "X_test",
+      "y_true",
+      "y_pred"
+    ],
+    "plugin_path": "plugins.fairness.disparate_impact",
+    "params": [
+      {
+        "key": "sensitive_features",
+        "type": "list[string]",
+        "required": true,
+        "default": null,
+        "label": "Sensitive features",
+        "help": "Select one or more sensitive feature columns (e.g., sex, age).",
+        "enum": null
+      }
+    ],
+    "need_sensitive_feature": true,
+    "needs_all_sensitive_features": false,
+    "needs_conditional_variable": false,
+    "version": "1.0"
+  },
+  "equal_opportunity": {
+    "id": "equal_opportunity",
+    "name": "Equal Opportunity",
+    "right": "Fairness",
+    "description": "Measures Equal Opportunity by comparing True Positive Rates across sensitive groups.",
+    "requires": [
+      "X_test",
+      "y_true",
+      "y_pred"
+    ],
+    "plugin_path": "plugins.fairness.equal_opportunity",
+    "params": [
+      {
+        "key": "sensitive_features",
+        "type": "list[string]",
+        "required": true,
+        "default": null,
+        "label": "Sensitive features",
+        "help": "Select one or more sensitive feature columns (e.g., sex, age).",
+        "enum": null
+      }
+    ],
+    "need_sensitive_feature": true,
+    "needs_all_sensitive_features": false,
+    "needs_conditional_variable": false,
+    "version": "1.0"
+  },
+  "equalized_odds_difference": {
+    "id": "equalized_odds_difference",
+    "name": "Equalized Odds Difference",
+    "right": "Fairness",
+    "description": "Measures Equalized Odds difference across sensitive groups (lower is better).",
+    "requires": [
+      "X_test",
+      "y_true",
+      "y_pred"
+    ],
+    "plugin_path": "plugins.fairness.equalized_odds_difference",
+    "params": [
+      {
+        "key": "sensitive_features",
+        "type": "list[string]",
+        "required": true,
+        "default": null,
+        "label": "Sensitive features",
+        "help": "Select one or more sensitive feature columns (e.g., sex, age).",
+        "enum": null
+      }
+    ],
+    "need_sensitive_feature": true,
+    "needs_all_sensitive_features": false,
+    "needs_conditional_variable": false,
+    "version": "1.0"
+  },
+  "overall_accuracy_equality": {
+    "id": "overall_accuracy_equality",
+    "name": "Overall Accuracy Equality",
+    "right": "Fairness",
+    "description": "Compares accuracy across sensitive groups and reports difference/ratio (higher equality_score is better).",
+    "requires": [
+      "X_test",
+      "y_true",
+      "y_pred"
+    ],
+    "plugin_path": "plugins.fairness.overall_accuracy_equality",
+    "params": [
+      {
+        "key": "sensitive_features",
+        "type": "list[string]",
+        "required": true,
+        "default": null,
+        "label": "Sensitive features",
+        "help": "Select one or more sensitive feature columns (e.g., sex, age).",
+        "enum": null
+      }
+    ],
+    "need_sensitive_feature": true,
+    "needs_all_sensitive_features": false,
+    "needs_conditional_variable": false,
+    "version": "1.0"
+  },
+  "predictive_parity": {
+    "id": "predictive_parity",
+    "name": "Predictive Parity",
+    "right": "Fairness",
+    "description": "Compares precision across sensitive groups (higher equality means smaller precision gap).",
+    "requires": [
+      "X_test",
+      "y_true",
+      "y_pred"
+    ],
+    "plugin_path": "plugins.fairness.predictive_parity",
+    "params": [
+      {
+        "key": "sensitive_features",
+        "type": "list[string]",
+        "required": true,
+        "default": null,
+        "label": "Sensitive features",
+        "help": "Select one or more sensitive feature columns (e.g., sex, age).",
+        "enum": null
+      }
+    ],
+    "need_sensitive_feature": true,
+    "needs_all_sensitive_features": false,
+    "needs_conditional_variable": false,
+    "version": "1.0"
+  },
+  "fake_right_example": {
+    "id": "fake_right_example",
+    "name": "Fake Right Example",
+    "right": "Fake Right",
+    "description": "Fake metric for testing param inference: uses first numeric column in X_test.",
+    "requires": [
+      "X_test"
+    ],
+    "plugin_path": "plugins.fake_right.new_metric",
+    "params": [
+      {
+        "key": "threshold",
+        "type": "float",
+        "required": true,
+        "default": null,
+        "label": "Threshold",
+        "help": "If computed value > threshold, return threshold; otherwise return computed value.",
+        "enum": null
+      }
+    ],
+    "need_sensitive_feature": false,
+    "needs_all_sensitive_features": false,
+    "needs_conditional_variable": false,
+    "version": "1.0"
+  },
+  "gdpr_right_example": {
+    "id": "gdpr_right_example",
+    "name": "GDPR Right Example",
+    "right": "GDPR Right",
+    "description": "Analysis of the right for GDPR",
+    "requires": [
+      "X_test",
+      "y_true",
+      "y_pred",
+      "other_dataset"
+    ],
+    "plugin_path": "plugins.new_right.new_plugin",
+    "params": [
+      {
+        "key": "explainable_parameter",
+        "type": "list[string]",
+        "required": true,
+        "default": null,
+        "label": "Explainable parameter",
+        "help": "Select one or more explainable parameters",
+        "enum": null
+      }
+    ],
+    "need_sensitive_feature": true,
+    "needs_all_sensitive_features": false,
+    "needs_conditional_variable": false,
+    "version": "1.0"
+  },
+  "anonymity_set_size": {
+    "id": "anonymity_set_size",
+    "name": "Anonymity Set Size",
+    "right": "Privacy",
+    "description": "Computes anonymity set sizes for combinations of sensitive features (quasi-identifiers).",
+    "requires": [
+      "X_test"
+    ],
+    "plugin_path": "plugins.privacy.anonymity_set_size",
+    "params": [
+      {
+        "key": "sensitive_features",
+        "type": "list[string]",
+        "required": true,
+        "default": null,
+        "label": "Sensitive features",
+        "help": "Select one or more sensitive feature columns (e.g., sex, age).",
+        "enum": null
+      }
+    ],
+    "need_sensitive_feature": true,
+    "needs_all_sensitive_features": true,
+    "needs_conditional_variable": false,
+    "version": "1.0"
+  },
+  "k_anonymity": {
+    "id": "k_anonymity",
+    "name": "K-Anonymity",
+    "right": "Privacy",
+    "description": "Evaluates K-Anonymity over quasi-identifiers (each equivalence class must have at least k records).",
+    "requires": [
+      "X_test"
+    ],
+    "plugin_path": "plugins.privacy.k_anonymity",
+    "params": [
+      {
+        "key": "k_value",
+        "type": "int",
+        "required": true,
+        "default": 2,
+        "label": "k value",
+        "help": "Minimum group size for k-anonymity compliance.",
+        "enum": null
+      },
+      {
+        "key": "quasi_identifiers",
+        "type": "list[string]",
+        "required": false,
+        "default": null,
+        "label": "Quasi-identifiers",
+        "help": "Columns used to form equivalence classes. If empty, falls back to the selected sensitive_features.",
+        "enum": null
+      }
+    ],
+    "need_sensitive_feature": false,
+    "needs_all_sensitive_features": true,
+    "needs_conditional_variable": false,
+    "version": "1.0"
+  },
+  "l_diversity": {
+    "id": "l_diversity",
+    "name": "L-Diversity",
+    "right": "Privacy",
+    "description": "Computes L-Diversity by grouping on quasi-identifiers and counting distinct values of a sensitive attribute.",
+    "requires": [
+      "X_test"
+    ],
+    "plugin_path": "plugins.privacy.l_diversity",
+    "params": [
+      {
+        "key": "quasi_identifiers",
+        "type": "list[string]",
+        "required": true,
+        "default": [],
+        "label": "Quasi-identifiers",
+        "help": "Columns used to form groups. If empty, falls back to selected sensitive_features.",
+        "enum": null
+      },
+      {
+        "key": "sensitive_attribute",
+        "type": "string",
+        "required": false,
+        "default": null,
+        "label": "Sensitive attribute",
+        "help": "Column name whose diversity within each group is measured.",
+        "enum": null
+      }
+    ],
+    "need_sensitive_feature": false,
+    "needs_all_sensitive_features": true,
+    "needs_conditional_variable": false,
+    "version": "1.0"
+  },
+  "mutual_information": {
+    "id": "mutual_information",
+    "name": "Mutual Information",
+    "right": "Privacy",
+    "description": "Computes Mutual Information between each feature and a selected sensitive attribute.",
+    "requires": [
+      "X_test"
+    ],
+    "plugin_path": "plugins.privacy.mutual_information_metric",
+    "params": [
+      {
+        "key": "sensitive_attribute",
+        "type": "string",
+        "required": true,
+        "default": null,
+        "label": "Sensitive Attribute",
+        "help": "Column used as target variable for Mutual Information computation.",
+        "enum": null
+      },
+      {
+        "key": "columns_to_exclude",
+        "type": "list[string]",
+        "required": false,
+        "default": [],
+        "label": "Columns to Exclude",
+        "help": "Columns excluded from MI computation (besides the sensitive attribute).",
+        "enum": null
+      }
+    ],
+    "need_sensitive_feature": false,
+    "needs_all_sensitive_features": true,
+    "needs_conditional_variable": false,
+    "version": "1.0"
+  },
+  "t_closeness": {
+    "id": "t_closeness",
+    "name": "T-Closeness",
+    "right": "Privacy",
+    "description": "Computes Wasserstein distance between global and group distributions of a sensitive attribute, grouped by quasi-identifiers.",
+    "requires": [
+      "X_test"
+    ],
+    "plugin_path": "plugins.privacy.t_closeness",
+    "params": [
+      {
+        "key": "quasi_identifiers",
+        "type": "list[string]",
+        "required": true,
+        "default": null,
+        "label": "Quasi-identifiers",
+        "help": "Columns used to form groups. If empty, falls back to selected sensitive_features.",
+        "enum": null
+      },
+      {
+        "key": "sensitive_attribute",
+        "type": "string",
+        "required": false,
+        "default": null,
+        "label": "Sensitive attribute",
+        "help": "Column whose distribution is compared globally vs within each group.",
+        "enum": null
+      }
+    ],
+    "need_sensitive_feature": false,
+    "needs_all_sensitive_features": true,
+    "needs_conditional_variable": false,
+    "version": "1.0"
+  }
+}

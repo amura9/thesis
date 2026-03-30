@@ -1,0 +1,113 @@
+{
+  "datasets": {
+    "train": null,
+    "X_test": "Data&OtherTestEvaluator/Data-testDiCristo/X_test_MIN.pkl",
+    "y_true": "Data&OtherTestEvaluator/Data-testDiCristo/y_test.pkl",
+    "y_pred": "Data&OtherTestEvaluator/Data-testDiCristo/y_pred_MIN.pkl"
+  },
+
+  "model": {
+    "path": null
+  },
+
+
+  "features": {
+  "gender_cv": { "sensitive": true },
+  "age_cv": { "sensitive": true },
+  "disability_cv": { "sensitive": true },
+  "nationality_cv": { "sensitive": true },
+  "education_cv_encoded": { "sensitive": true }
+},
+
+  "postprocessing": {
+  "use_inverse_encoding": true,
+  "inverse_encoding_prefixes": [
+    "gender_cv_",
+    "nationality_cv_",
+    "disability_cv_"
+  ],
+  "binning": {
+    "use_binning": true,
+    "features": {
+      "age_cv": {
+        "bins": [16, 25, 35, 45, 55, 100],
+        "labels": ["16-25", "26-35", "36-45", "46-55", "56+"]
+      }
+    }
+  }
+},
+
+  "rights_to_evaluate": [
+    "non_discrimination",
+    "privacy"
+  ],
+
+  
+  "metrics": {
+    "non_discrimination": [
+      "demographic_parity",
+      "disparate_impact",
+      "equal_opportunity",
+      "equalized_odds_difference",
+      "predictive_parity",
+      "overall_accuracy_equality",
+      "conditional_statistical_parity",
+      "conditional_use_accuracy_equality"
+      
+    ],
+    "privacy":[
+      "anonymity_set_size",
+      "k_anonymity",
+      "l_diversity",
+      "t_closeness",
+      "mutual_information_metric"
+
+    ]
+  },
+ 
+    "k_anonymity": {
+        "enabled": true,
+        "quasi_identifiers": ["age_cv_binned", "gender_cv", "nationality_cv"],
+        "k_value": 2
+                    },
+
+    "l_diversity": {
+      "enabled": true,
+      "quasi_identifiers": ["age_cv_binned", "gender_cv", "nationality_cv"],
+      "sensitive_attribute": "disability_cv"
+                        },
+                    
+                    
+    "t_closeness": {
+      "enabled": true,
+      "quasi_identifiers": ["age_cv_binned", "gender_cv", "nationality_cv"],
+      "sensitive_attribute": "disability_cv"
+                          },    
+
+     "mutual_information": {
+      "sensitive_attribute": "disability_cv_Yes",
+      "columns_to_exclude": ["disability_cv_No", "disability_cv_Not declared"]
+      },
+
+      "conditional_fairness": {
+          "conditional_variable": "competences_coverage_required"
+          },
+
+    
+  "plugins": [
+    "plugins.fairness.demographic_parity",
+    "plugins.fairness.disparate_impact",
+    "plugins.fairness.equal_opportunity",
+    "plugins.fairness.equalized_odds_difference",
+    "plugins.fairness.predictive_parity",
+    "plugins.fairness.overall_accuracy_equality",
+    "plugins.fairness.conditional_statistical_parity",
+    "plugins.fairness.conditional_use_accuracy_equality",
+    "plugins.privacy.anonymity_set_size",
+    "plugins.privacy.k_anonymity",
+    "plugins.privacy.l_diversity",
+    "plugins.privacy.t_closeness",
+    "plugins.privacy.mutual_information_metric"
+
+  ]
+}

@@ -1,0 +1,58 @@
+{
+  "conditional_statistical_parity": {
+    "schema": "conditional_nested",
+    "ui": "condition_selector_then_group_chart"
+  },
+  "conditional_use_accuracy_equality": {
+    "schema": "conditional_nested",
+    "ui": "condition_selector_then_group_chart"
+  },
+  "demographic_parity": {
+    "schema": "scalar_map",
+    "ui": "simple_table_or_cards"
+  },
+  "disparate_impact": {
+    "schema": "conditional_nested",
+    "ui": "condition_selector_then_group_chart"
+  },
+  "equal_opportunity": {
+    "schema": "conditional_nested",
+    "ui": "condition_selector_then_group_chart"
+  },
+  "equalized_odds_difference": {
+    "schema": "scalar_map",
+    "ui": "simple_table_or_cards"
+  },
+  "overall_accuracy_equality": {
+    "schema": "conditional_nested",
+    "ui": "condition_selector_then_group_chart"
+  },
+  "predictive_parity": {
+    "schema": "conditional_nested",
+    "ui": "condition_selector_then_group_chart"
+  },
+  "new_metric": {
+    "schema": "group_metric_map",
+    "ui": "group_bar_chart_plus_summary"
+  },
+  "anonymity_set_size": {
+    "schema": "conditional_nested",
+    "ui": "condition_selector_then_group_chart"
+  },
+  "k_anonymity": {
+    "schema": "conditional_nested",
+    "ui": "condition_selector_then_group_chart"
+  },
+  "l_diversity": {
+    "schema": "conditional_nested",
+    "ui": "condition_selector_then_group_chart"
+  },
+  "mutual_information_metric": {
+    "schema": "conditional_nested",
+    "ui": "condition_selector_then_group_chart"
+  },
+  "t_closeness": {
+    "schema": "group_metric_map",
+    "ui": "group_bar_chart_plus_summary"
+  }
+}

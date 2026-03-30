@@ -1,0 +1,49 @@
+{
+    "datasets": {
+      "train": "data/train.csv",
+      "test": "data/test.csv",
+      "predictions": "data/predictions.csv"
+                },
+    
+    "model": {
+      "path": "models/model.pkl", 
+      "type": "sklearn" 
+             },
+    
+    "sensitive_features": {
+      "gender": "sesso",
+      "age": "età",
+      "ethnicity": null,           
+      "disability": null,
+      "nationality": "nazionalità",
+      "religion": null,
+      "sexual_orientation": null,
+      "socioeconomic_status": null,
+      "marital_status": null,
+      "parental_status": null
+                           },
+    
+    "rights_to_evaluate": [
+      "non_discrimination",
+      "privacy"
+                          ],
+    
+    "metrics": {
+      "non_discrimination": [
+        "demographic_parity",
+        "equal_opportunity"
+                            ],
+      "privacy": [
+     "membership_inference_risk"
+                 ]
+               },
+    
+    "plugins": [
+      "plugins.fairness.demographic_parity",
+      "plugins.fairness.equal_opportunity",
+      "plugins.privacy.membership_inference"
+               ]
+    
+    
+}
+  
