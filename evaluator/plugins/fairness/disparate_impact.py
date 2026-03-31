@@ -12,6 +12,7 @@ class DisparateImpact:
             name="Disparate Impact",
             right="Fairness",
             description="Disparate Impact based on selection rates across sensitive groups (min SR / max SR).",
+            interpretation="Values near 1 indicates fairness, while values below 0.8 often signal potential discrimination.",
             requires=["X_test", "y_true", "y_pred"], #datasets
             
             #parameters specification

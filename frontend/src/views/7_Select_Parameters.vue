@@ -10,68 +10,58 @@ const loading = ref(true);
 const cfg = ref({});
 const columns = ref([]);
 
-const pluginRegistry = ref({});   // /plugin-registry
-const selectedMetricIds = ref([]); // from cfg.metrics (dynamic)
-const form = ref({});             // { [metricId]: { [paramKey]: value } }
+const pluginRegistry = ref({});   // /for metric description
+const selectedMetricIds = ref([]); // all metrics previosuly selected (cfg.metrics)
+const form = ref({});             // params entered: [metricId]: { [paramKey]: value } } ex. k_value: 2
 
-// ---------- helpers ----------
+// flatten metrics from config file
 function flattenSelectedMetrics(metricsObj) {
-  // cfg.metrics is like { privacy:[...], fairness:[...], gdpr_right:[...], ... }
   const vals = Object.values(metricsObj || {});
   return vals.flat().filter(Boolean);
 }
 
+//initialize default value for params (inferring by type)
 function initDefaultValue(param) {
-  // Use default if provided
-  if (param?.default !== undefined && param.default !== null) return param.default;
-
-  // else infer by type
   const t = (param?.type || "").toLowerCase();
   if (t.startsWith("list")) return [];
   if (t === "int" || t === "integer" || t === "float" || t === "number") return null;
+
   return ""; // string default
-}
+} 
 
-function isMetricSelected(metricId) {
-  return selectedMetricIds.value.includes(metricId);
-}
-
-//if was collected already in the sensitive step, no need to display it
+//skip sensitive features collection
 function shouldSkipParam(p) {
-  // skip if it was already collected in the ISF step
   return p?.key === "sensitive_features";
 }
 
-// ---------- dynamic model for UI ----------
+//UI based on selected metrics
 const metricCards = computed(() => {
   const out = [];
 
+  //Use plugin registry for: description and other metadata
   for (const metricId of selectedMetricIds.value) {
     const spec = pluginRegistry.value?.[metricId];
-    if (!spec) continue;
 
     const params = (Array.isArray(spec.params) ? spec.params : []).filter(
     (p) => !shouldSkipParam(p)
     );
     
-    //if not parameters, then do not display the metric (it actually means that all the params have already been collected)
+    //if not params -> no display
     if (params.length === 0) continue;
 
-    // init form object per metric
+    // init metric & default params 
     if (!form.value[metricId]) form.value[metricId] = {};
 
-    // init default values for params
 for (const p of params) {
   if (form.value[metricId][p.key] === undefined) {
     form.value[metricId][p.key] = initDefaultValue(p);
   }
 }
 
-
+//Metric card display (name, description and params content)
     out.push({
       id: metricId,
       name: spec.name || metricId,
-      right: spec.right || "",
       description: spec.description || "",
       params,
     });
@@ -80,7 +70,7 @@ for (const p of params) {
   return out;
 });
 
-// ---------- validation ----------
+//before saving -> all params need to be filled
 function validate() {
   error.value = "";
 
@@ -98,12 +88,12 @@ function validate() {
       const t = (p.type || "").toLowerCase();
       if (t.startsWith("list")) {
         if (!Array.isArray(val) || val.length === 0) {
-          error.value = `${card.name}: "${p.label || p.key}" is required.`;
+          error.value = `At least one value for ${card.name}: "${p.label || p.key}" is required.`;
           return false;
         }
       } else if (t === "int" || t === "integer" || t === "float" || t === "number") {
         if (val === null || val === undefined || val === "") {
-          error.value = `${card.name}: "${p.label || p.key}" is required.`;
+          error.value = `At least one value for ${card.name}: "${p.label || p.key}" is required.`;
           return false;
         }
       } else {
@@ -118,7 +108,7 @@ function validate() {
   return true;
 }
 
-// ---------- payload builder ----------
+//Payload
 function buildPayload() {
   const payload = {};
 
@@ -142,7 +132,7 @@ function buildPayload() {
   return payload;
 }
 
-// ---------- fetches ----------
+//FIRST: get most recent config for user -> onMounted
 async function fetchLatestConfig() {
   const res = await fetch("http://127.0.0.1:8000/configs/latest");
   if (!res.ok) throw new Error(await res.text());
@@ -154,16 +144,17 @@ async function fetchLatestConfig() {
 
   console.log("Latest config:", cfg.value);
 
-  // selected metrics come from cfg.metrics (dynamic keys)
   selectedMetricIds.value = flattenSelectedMetrics(c.metrics || {});
 }
 
+//FIRST: get pluginRegstry -> onMounted
 async function fetchPluginRegistry() {
   const res = await fetch("http://127.0.0.1:8000/plugin-registry");
   if (!res.ok) throw new Error(await res.text());
   pluginRegistry.value = await res.json();
 }
 
+//FIRST: get Columns for conditional variable -> onMounted
 async function fetchLatestColumns() {
   const res = await fetch("http://127.0.0.1:8000/datasets/latest/columns");
   if (!res.ok) throw new Error(await res.text());
@@ -175,8 +166,9 @@ function goBack() {
   router.back();
 }
 
+//PUT: calls config/parameters and put params in the config file
 async function goNext() {
-  if (!validate()) return;
+  if (!validate()) return; 
 
   try {
     const payload = buildPayload();
@@ -204,7 +196,6 @@ onMounted(async () => {
 
   try {
     await Promise.all([fetchLatestConfig(), fetchPluginRegistry()]);
-    // for all your current params, columns are needed (lists/radios)
     await fetchLatestColumns();
   } catch (e) {
     error.value = e?.message || String(e);
@@ -366,8 +357,8 @@ onMounted(async () => {
   border: 1px solid #d9d9d9;
   border-radius: 8px;
   padding: 8px;
-  height: 140px;              /* fixed height like a select box */
-  overflow-y: auto;           /* vertical scroll */
+  height: 140px;            
+  overflow-y: auto;         
   overflow-x: hidden;
   background: #fff;
   display: flex;

@@ -4,6 +4,7 @@
     "name": "Conditional Statistical Parity",
     "right": "Fairness",
     "description": "Measures disparity in selection rates across sensitive groups conditioned on another variable.",
+    "interpretation": "",
     "requires": [
       "X_test",
       "y_pred"
@@ -31,14 +32,14 @@
     ],
     "need_sensitive_feature": true,
     "needs_all_sensitive_features": false,
-    "needs_conditional_variable": true,
-    "version": "1.0"
+    "needs_conditional_variable": true
   },
   "conditional_use_accuracy_equality": {
     "id": "conditional_use_accuracy_equality",
     "name": "Conditional Use Accuracy Equality",
     "right": "Fairness",
     "description": "Accuracy parity across sensitive groups, computed only on samples with positive predictions (\u0177=1).",
+    "interpretation": "Values near 0 reflects equal reliability of model decisions.",
     "requires": [
       "X_test",
       "y_true",
@@ -58,14 +59,14 @@
     ],
     "need_sensitive_feature": true,
     "needs_all_sensitive_features": false,
-    "needs_conditional_variable": false,
-    "version": "1.0"
+    "needs_conditional_variable": false
   },
   "demographic_parity": {
     "id": "demographic_parity",
     "name": "Demographic Parity",
     "right": "Fairness",
     "description": "Measures demographic parity by computing selection rate differences across sensitive groups.",
+    "interpretation": "Values close to 1 indicate better demographic parity (less disparity) between groups.",
     "requires": [
       "X_test",
       "y_true",
@@ -85,14 +86,14 @@
     ],
     "need_sensitive_feature": true,
     "needs_all_sensitive_features": false,
-    "needs_conditional_variable": false,
-    "version": "1.0"
+    "needs_conditional_variable": false
   },
   "disparate_impact": {
     "id": "disparate_impact",
     "name": "Disparate Impact",
     "right": "Fairness",
     "description": "Disparate Impact based on selection rates across sensitive groups (min SR / max SR).",
+    "interpretation": "Values near 1 indicates fairness, while values below 0.8 often signal potential discrimination.",
     "requires": [
       "X_test",
       "y_true",
@@ -112,14 +113,14 @@
     ],
     "need_sensitive_feature": true,
     "needs_all_sensitive_features": false,
-    "needs_conditional_variable": false,
-    "version": "1.0"
+    "needs_conditional_variable": false
   },
   "equal_opportunity": {
     "id": "equal_opportunity",
     "name": "Equal Opportunity",
     "right": "Fairness",
     "description": "Measures Equal Opportunity by comparing True Positive Rates across sensitive groups.",
+    "interpretation": "Values close to 0 means equal opportunity is preserved.",
     "requires": [
       "X_test",
       "y_true",
@@ -139,14 +140,14 @@
     ],
     "need_sensitive_feature": true,
     "needs_all_sensitive_features": false,
-    "needs_conditional_variable": false,
-    "version": "1.0"
+    "needs_conditional_variable": false
   },
   "equalized_odds_difference": {
     "id": "equalized_odds_difference",
     "name": "Equalized Odds Difference",
     "right": "Fairness",
     "description": "Measures Equalized Odds difference across sensitive groups (lower is better).",
+    "interpretation": "Values near 0 indicate prediction errors are evenly distributed.",
     "requires": [
       "X_test",
       "y_true",
@@ -166,14 +167,14 @@
     ],
     "need_sensitive_feature": true,
     "needs_all_sensitive_features": false,
-    "needs_conditional_variable": false,
-    "version": "1.0"
+    "needs_conditional_variable": false
   },
   "overall_accuracy_equality": {
     "id": "overall_accuracy_equality",
     "name": "Overall Accuracy Equality",
     "right": "Fairness",
     "description": "Compares accuracy across sensitive groups and reports difference/ratio (higher equality_score is better).",
+    "interpretation": "Values close to 0 indicate uniform predictive performance.",
     "requires": [
       "X_test",
       "y_true",
@@ -193,14 +194,14 @@
     ],
     "need_sensitive_feature": true,
     "needs_all_sensitive_features": false,
-    "needs_conditional_variable": false,
-    "version": "1.0"
+    "needs_conditional_variable": false
   },
   "predictive_parity": {
     "id": "predictive_parity",
     "name": "Predictive Parity",
     "right": "Fairness",
     "description": "Compares precision across sensitive groups (higher equality means smaller precision gap).",
+    "interpretation": "A 0 difference means the model is equally reliable when predicting positives.",
     "requires": [
       "X_test",
       "y_true",
@@ -220,14 +221,14 @@
     ],
     "need_sensitive_feature": true,
     "needs_all_sensitive_features": false,
-    "needs_conditional_variable": false,
-    "version": "1.0"
+    "needs_conditional_variable": false
   },
   "fake_right_example": {
     "id": "fake_right_example",
     "name": "Fake Right Example",
     "right": "Fake Right",
     "description": "Fake metric for testing param inference: uses first numeric column in X_test.",
+    "interpretation": "",
     "requires": [
       "X_test"
     ],
@@ -245,42 +246,14 @@
     ],
     "need_sensitive_feature": false,
     "needs_all_sensitive_features": false,
-    "needs_conditional_variable": false,
-    "version": "1.0"
-  },
-  "gdpr_right_example": {
-    "id": "gdpr_right_example",
-    "name": "GDPR Right Example",
-    "right": "GDPR Right",
-    "description": "Analysis of the right for GDPR",
-    "requires": [
-      "X_test",
-      "y_true",
-      "y_pred",
-      "other_dataset"
-    ],
-    "plugin_path": "plugins.new_right.new_plugin",
-    "params": [
-      {
-        "key": "explainable_parameter",
-        "type": "list[string]",
-        "required": true,
-        "default": null,
-        "label": "Explainable parameter",
-        "help": "Select one or more explainable parameters",
-        "enum": null
-      }
-    ],
-    "need_sensitive_feature": true,
-    "needs_all_sensitive_features": false,
-    "needs_conditional_variable": false,
-    "version": "1.0"
+    "needs_conditional_variable": false
   },
   "anonymity_set_size": {
     "id": "anonymity_set_size",
     "name": "Anonymity Set Size",
     "right": "Privacy",
     "description": "Computes anonymity set sizes for combinations of sensitive features (quasi-identifiers).",
+    "interpretation": "",
     "requires": [
       "X_test"
     ],
@@ -298,14 +271,14 @@
     ],
     "need_sensitive_feature": true,
     "needs_all_sensitive_features": true,
-    "needs_conditional_variable": false,
-    "version": "1.0"
+    "needs_conditional_variable": false
   },
   "k_anonymity": {
     "id": "k_anonymity",
     "name": "K-Anonymity",
     "right": "Privacy",
     "description": "Evaluates K-Anonymity over quasi-identifiers (each equivalence class must have at least k records).",
+    "interpretation": "",
     "requires": [
       "X_test"
     ],
@@ -332,14 +305,14 @@
     ],
     "need_sensitive_feature": false,
     "needs_all_sensitive_features": true,
-    "needs_conditional_variable": false,
-    "version": "1.0"
+    "needs_conditional_variable": false
   },
   "l_diversity": {
     "id": "l_diversity",
     "name": "L-Diversity",
     "right": "Privacy",
     "description": "Computes L-Diversity by grouping on quasi-identifiers and counting distinct values of a sensitive attribute.",
+    "interpretation": "",
     "requires": [
       "X_test"
     ],
@@ -366,14 +339,14 @@
     ],
     "need_sensitive_feature": false,
     "needs_all_sensitive_features": true,
-    "needs_conditional_variable": false,
-    "version": "1.0"
+    "needs_conditional_variable": false
   },
   "mutual_information": {
     "id": "mutual_information",
     "name": "Mutual Information",
     "right": "Privacy",
     "description": "Computes Mutual Information between each feature and a selected sensitive attribute.",
+    "interpretation": "",
     "requires": [
       "X_test"
     ],
@@ -400,14 +373,14 @@
     ],
     "need_sensitive_feature": false,
     "needs_all_sensitive_features": true,
-    "needs_conditional_variable": false,
-    "version": "1.0"
+    "needs_conditional_variable": false
   },
   "t_closeness": {
     "id": "t_closeness",
     "name": "T-Closeness",
     "right": "Privacy",
     "description": "Computes Wasserstein distance between global and group distributions of a sensitive attribute, grouped by quasi-identifiers.",
+    "interpretation": "",
     "requires": [
       "X_test"
     ],
@@ -434,7 +407,6 @@
     ],
     "need_sensitive_feature": false,
     "needs_all_sensitive_features": true,
-    "needs_conditional_variable": false,
-    "version": "1.0"
+    "needs_conditional_variable": false
   }
 }

@@ -6,7 +6,6 @@ import { useRouter } from "vue-router";
 
 const router = useRouter();
 
-const role = ref("");
 const autoSimplify = ref(false);
 
 // Store files

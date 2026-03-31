@@ -9,6 +9,7 @@ class DemographicParity:
             name="Demographic Parity",
             right="Fairness",
             description="Measures demographic parity by computing selection rate differences across sensitive groups.",
+            interpretation="Values close to 1 indicate better demographic parity (less disparity) between groups.",
             requires=["X_test", "y_true", "y_pred"], #datasets
 
             #parameters specification

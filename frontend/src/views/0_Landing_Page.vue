@@ -5,7 +5,6 @@ import { useRouter } from "vue-router";
 onMounted(() => console.log("HOME MOUNTED"));
 
 const router = useRouter();
-const role = ref("");
 
 function start() {
   console.log("clicked", { role: role.value });

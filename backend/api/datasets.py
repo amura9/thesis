@@ -1,5 +1,6 @@
 from backend.core.settings import BASE_DIR, STORAGE_DIR, UPLOAD_DIR, CONFIG_DIR, RESULTS_DIR, RUN_DIR #all the dir to be imported
 from backend.services.dataset_services import save_upload
+from backend.services.config_services import latest_upload_for_type
 from backend.services.utils.csv_tools import read_columns_from_file
 from fastapi import APIRouter, HTTPException, Query, Body, UploadFile, File, Form
 from pathlib import Path
@@ -28,20 +29,10 @@ async def upload_dataset(
         "path": str(path.resolve()),
     }
 
-
-
-
-
-
-
-
-
-
-
-#DS sensitive columns listing
+#GET: columns to be used for sensitive features selection
 @router.get("/datasets/latest/columns")
 def latest_columns():
-    x_path = latest_main_ds_upload(UPLOAD_DIR)  # must return a Path
+    x_path = latest_upload_for_type(UPLOAD_DIR, "X_test") 
     if not x_path or not Path(x_path).exists():
         raise HTTPException(status_code=404, detail="No X_test uploaded")
 
@@ -62,3 +53,12 @@ def latest_columns():
     cols = [c.strip() for c in header if c and c.strip()]
 
     return {"columns": cols, "delimiter": delim, "path": str(x_path)}
+
+
+
+
+
+
+
+
+

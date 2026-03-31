@@ -11,13 +11,23 @@ const loading = ref(true);
 const error = ref("");
 
 //define columns and sensitive options
-const columns = ref([]);               // list of strings
-const sensitiveMap = reactive({});     
+const columns = ref([]);               
+const sensitiveMap = reactive({});    //creates toggle map, ex: age: {sensitive: True}
 
-const selectedSensitive = computed(() =>
-  columns.value.filter((c) => !!sensitiveMap[c])
-);
+//takes only sensitive features with active toggle
+function fillSensitiveFeatures() {
+  const features = {};
 
+  for (const col of columns.value) {
+    if (sensitiveMap[col]) { 
+      features[col] = { sensitive: true };
+    }
+  }
+
+  return features;
+}
+
+//FIRST: fetch columns from dataset -> onMounted
 async function fetchColumns() {
   try {
     loading.value = true;
@@ -41,32 +51,32 @@ async function fetchColumns() {
   }
 }
 
-function fillSensitiveFeatures() {
-  const features = {};
-
-  for (const col of columns.value) {
-    if (sensitiveMap[col]) { //checks only active toggles
-      features[col] = { sensitive: true };
-    }
-  }
-
-  return features;
-}
-
-
 function goBack() {
   router.back();
 }
 
+//SECOND: selected sensitive features -> payoload to config file
 async function goNext() {
-  const features = fillSensitiveFeatures();
+  try {
+    error.value = "";
+
+    const features = fillSensitiveFeatures();
+
+    if (Object.keys(features).length === 0) {
+      error.value = "Select at least one sensitive feature to continue.";
+      return;
+    }
 
   const patch = {
     features,
   };
 
-  //
-  localStorage.setItem("features", JSON.stringify(features));
+  /*{
+    features: {
+      age: { sensitive: true },
+      sex: { sensitive: true }
+    }
+  }*/
 
   const res = await fetch("http://127.0.0.1:8000/configs/sensitive_features", {
     method: "PUT",
@@ -81,20 +91,17 @@ async function goNext() {
   }
 
   router.push("/em"); // next step
+} catch (e) {
+  error.value = `Unexpected error: ${e?.message || e}`;
+    }
 }
-
+//FIRST: fetch columns 
 onMounted(fetchColumns);
 
 </script>
 
 <template>
   <div class="page">
-    <!-- top left select pill -->
-    <div class="top-left">
-      <button class="select-pill">
-        Select <span class="caret">▾</span>
-      </button>
-    </div>
 
     <main class="container">
       <h1 class="title">Step 4- Identify sensitive<br />features</h1>
@@ -193,27 +200,6 @@ onMounted(fetchColumns);
   color: #111;
   font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
   position: relative;
-}
-
-.top-left {
-  position: absolute;
-  top: 18px;
-  left: 18px;
-}
-
-.select-pill {
-  border: 3px solid #111;
-  background: #fff;
-  border-radius: 999px;
-  padding: 6px 14px;
-  font-weight: 700;
-  font-size: 18px;
-  line-height: 1;
-}
-
-.caret {
-  margin-left: 10px;
-  font-weight: 900;
 }
 
 .container {

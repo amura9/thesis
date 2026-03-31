@@ -10,6 +10,7 @@ class EqualizedOddsDifference:
             name="Equalized Odds Difference",
             right="Fairness",
             description="Measures Equalized Odds difference across sensitive groups (lower is better).",
+            interpretation="Values near 0 indicate prediction errors are evenly distributed.",
             requires=["X_test", "y_true", "y_pred"], #datasets
 
             #parameters specification

@@ -1,0 +1,288 @@
+{
+  "datasets": {
+    "train": null,
+    "X_test": "C:\\Users\\pc\\Desktop\\Alberto\\Alberto\\Tesi\\FRIA_evaluation\\FRIA_evaluation\\backend\\storage\\uploads\\X_test__0a7fac46-ef30-4393-b7d4-71caf1f2d048__X_test_MIN.csv",
+    "y_true": null,
+    "y_pred": null
+  },
+  "model": {
+    "path": null
+  },
+  "features": {
+    "age_cv": {
+      "sensitive": true
+    },
+    "competences_coverage_required": {
+      "sensitive": true
+    },
+    "competences_coverage_optional": {
+      "sensitive": true
+    },
+    "education_cv_encoded": {
+      "sensitive": true
+    }
+  },
+  "postprocessing": {
+    "use_inverse_encoding": false,
+    "inverse_encoding_prefixes": [],
+    "binning": {
+      "use_binning": true,
+      "features": {
+        "distrib_test": {
+          "bins": [
+            -39373,
+            -31683,
+            -23994,
+            -16304,
+            -8615,
+            -926,
+            6764,
+            14453,
+            22143,
+            29832,
+            37521
+          ],
+          "labels": [
+            "-39373--31683",
+            "-31682--23994",
+            "-23993--16304",
+            "-16303--8615",
+            "-8614--926",
+            "-925-6764",
+            "6765-14453",
+            "14454-22143",
+            "22144-29832",
+            "29833+"
+          ]
+        },
+        "people_of_world": {
+          "bins": [
+            -39373,
+            -31683,
+            -23994,
+            -16304,
+            -8615,
+            -926,
+            6764,
+            14453,
+            22143,
+            29832,
+            37521
+          ],
+          "labels": [
+            "-39373--31683",
+            "-31682--23994",
+            "-23993--16304",
+            "-16303--8615",
+            "-8614--926",
+            "-925-6764",
+            "6765-14453",
+            "14454-22143",
+            "22144-29832",
+            "29833+"
+          ]
+        },
+        "age_cv": {
+          "bins": [
+            16,
+            58,
+            60
+          ],
+          "labels": [
+            "16-58",
+            "59+"
+          ]
+        }
+      }
+    }
+  },
+  "rights_to_evaluate": [
+    "fairness",
+    "fake_right"
+  ],
+  "metrics": {
+    "fairness": [],
+    "fake_right": [
+      "fake_right_example"
+    ]
+  },
+  "plugins": [
+    "plugins.fake_right.new_metric"
+  ],
+  "metric_requirements": {
+    "conditional_statistical_parity": {
+      "name": "Conditional Statistical Parity",
+      "right": "fairness",
+      "selected_right": "Fairness",
+      "required_inputs": [
+        "X_test",
+        "y_pred"
+      ],
+      "available_inputs": [
+        "X_test"
+      ],
+      "missing_inputs": [
+        "y_pred"
+      ],
+      "computable": false
+    },
+    "conditional_use_accuracy_equality": {
+      "name": "Conditional Use Accuracy Equality",
+      "right": "fairness",
+      "selected_right": "Fairness",
+      "required_inputs": [
+        "X_test",
+        "y_true",
+        "y_pred"
+      ],
+      "available_inputs": [
+        "X_test"
+      ],
+      "missing_inputs": [
+        "y_true",
+        "y_pred"
+      ],
+      "computable": false
+    },
+    "demographic_parity": {
+      "name": "Demographic Parity",
+      "right": "fairness",
+      "selected_right": "Fairness",
+      "required_inputs": [
+        "X_test",
+        "y_true",
+        "y_pred"
+      ],
+      "available_inputs": [
+        "X_test"
+      ],
+      "missing_inputs": [
+        "y_true",
+        "y_pred"
+      ],
+      "computable": false
+    },
+    "disparate_impact": {
+      "name": "Disparate Impact",
+      "right": "fairness",
+      "selected_right": "Fairness",
+      "required_inputs": [
+        "X_test",
+        "y_true",
+        "y_pred"
+      ],
+      "available_inputs": [
+        "X_test"
+      ],
+      "missing_inputs": [
+        "y_true",
+        "y_pred"
+      ],
+      "computable": false
+    },
+    "equal_opportunity": {
+      "name": "Equal Opportunity",
+      "right": "fairness",
+      "selected_right": "Fairness",
+      "required_inputs": [
+        "X_test",
+        "y_true",
+        "y_pred"
+      ],
+      "available_inputs": [
+        "X_test"
+      ],
+      "missing_inputs": [
+        "y_true",
+        "y_pred"
+      ],
+      "computable": false
+    },
+    "equalized_odds_difference": {
+      "name": "Equalized Odds Difference",
+      "right": "fairness",
+      "selected_right": "Fairness",
+      "required_inputs": [
+        "X_test",
+        "y_true",
+        "y_pred"
+      ],
+      "available_inputs": [
+        "X_test"
+      ],
+      "missing_inputs": [
+        "y_true",
+        "y_pred"
+      ],
+      "computable": false
+    },
+    "overall_accuracy_equality": {
+      "name": "Overall Accuracy Equality",
+      "right": "fairness",
+      "selected_right": "Fairness",
+      "required_inputs": [
+        "X_test",
+        "y_true",
+        "y_pred"
+      ],
+      "available_inputs": [
+        "X_test"
+      ],
+      "missing_inputs": [
+        "y_true",
+        "y_pred"
+      ],
+      "computable": false
+    },
+    "predictive_parity": {
+      "name": "Predictive Parity",
+      "right": "fairness",
+      "selected_right": "Fairness",
+      "required_inputs": [
+        "X_test",
+        "y_true",
+        "y_pred"
+      ],
+      "available_inputs": [
+        "X_test"
+      ],
+      "missing_inputs": [
+        "y_true",
+        "y_pred"
+      ],
+      "computable": false
+    },
+    "fake_right_example": {
+      "name": "Fake Right Example",
+      "right": "fake_right",
+      "selected_right": "Fake Right",
+      "required_inputs": [
+        "X_test"
+      ],
+      "available_inputs": [
+        "X_test"
+      ],
+      "missing_inputs": [],
+      "computable": true
+    }
+  },
+  "metrics_by_right": {
+    "fairness": [
+      "conditional_statistical_parity",
+      "conditional_use_accuracy_equality",
+      "demographic_parity",
+      "disparate_impact",
+      "equal_opportunity",
+      "equalized_odds_difference",
+      "overall_accuracy_equality",
+      "predictive_parity"
+    ],
+    "fake_right": [
+      "fake_right_example"
+    ]
+  },
+  "fake_right_example": {
+    "threshold": 0.2,
+    "enabled": true
+  }
+}

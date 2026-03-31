@@ -11,6 +11,7 @@ class OverallAccuracyEquality:
             name="Overall Accuracy Equality",
             right="Fairness",
             description="Compares accuracy across sensitive groups and reports difference/ratio (higher equality_score is better).",
+            interpretation="Values close to 0 indicate uniform predictive performance.",
             requires=["X_test", "y_true", "y_pred"],  # datasets
             params=[
                 ParamSpec(

@@ -2,37 +2,24 @@
 
 //http://localhost:5173/cr
 
-//etrics will be defined on the backend based on what uploaded
-
 import { ref, computed, onMounted } from "vue";
 import { useRouter } from "vue-router";
 
 const router = useRouter();
 
 const error = ref("");
-const role = ref(localStorage.getItem("role") || "");
-
 const registry = ref({});
 const rights = ref([]); // [{ key, label, description }]
 const selectedRights = ref({}); // { [rightKey]: boolean }
 
-// Nice labels if known right
-const RIGHT_UI = {
-  fairness: {
-    label: "Non-discrimination",
-  },
-  privacy: {
-    label: "Privacy",
-  },
-};
-
-//make it as title
+//Display Right nicely
 function titleizeRight(key) {
   return key
     .replace(/_/g, " ")
     .replace(/\b\w/g, (c) => c.toUpperCase());
 }
 
+//From registry: find rights + toggle
 function buildRightsFromRegistry(reg) {
   const set = new Set();
 
@@ -45,27 +32,21 @@ function buildRightsFromRegistry(reg) {
       if (spec?.right) set.add(spec.right); // <-- right id
     });
 
-  const out = [...set].map((rightId) => {
-    const preset = RIGHT_UI[rightId];
-    return {
+  const out = [...set].map((rightId) => ({
       id: rightId, //put id to config
-      label: preset?.label ?? titleizeRight(rightId),
+      label: titleizeRight(rightId),
       description:
-        preset?.description ??
         `Evaluate metrics available for the "${titleizeRight(rightId)}"`,
-    };
-  });
+  }));
 
   const toggles = {};
   out.forEach((r) => (toggles[r.id] = false));
   selectedRights.value = toggles;
 
-  console.log("Rights list:", out);
-  console.log("Toggle keys:", Object.keys(toggles));
-
   return out;
 }
 
+//FIRST: build registry in backend -> onMounted
 async function fetchRegistry() {
   error.value = "";
   try {
@@ -85,6 +66,7 @@ async function fetchRegistry() {
 
 onMounted(fetchRegistry);
 
+//Rights to compute:["privacy", "fairness"]
 const rights_to_evaluate = computed(() =>
   Object.entries(selectedRights.value)
     .filter(([_, v]) => v)
@@ -103,9 +85,9 @@ async function goNext() {
     return;
   }
 
+  //build payload for config
   const cfg = {
     rights_to_evaluate: rights_to_evaluate.value,
-    role: role.value || null,
     auto_simplify: false,
   };
 
@@ -122,7 +104,7 @@ async function goNext() {
       return;
     }
 
-    const data = await res.json();
+    const data = await res.json(); //read content of capability report to 
     localStorage.setItem("config_id", data.config_id);
 
     function normalizeRightId(s) {
@@ -132,12 +114,12 @@ async function goNext() {
     .replace(/\s+/g, "_");
 }
 
-const normalizedRights = computed(() =>
-  rights_to_evaluate.value.map(normalizeRightId)
-);
+const normalizedRights = rights_to_evaluate.value.map(normalizeRightId);
 
-//if there is a fairness/non-discrimination right got to selection of the sensitive features
-if (normalizedRights.value.includes("fairness") || normalizedRights.value.includes("non_discrimination")) {
+//depends if called fairness or non_discrimination -> /isf else /em
+if (normalizedRights.includes("fairness") || 
+    normalizedRights.includes("non_discrimination")
+) {
   router.push("/isf");
 } else {
   router.push("/em");
@@ -150,15 +132,7 @@ if (normalizedRights.value.includes("fairness") || normalizedRights.value.includ
 
 <template>
   <div class="page">
-    <!-- top-left select -->
-    <div class="top-left">
-      <select class="select" v-model="role">
-        <option value="" disabled>Select</option>
-        <option value="beginner">Beginner</option>
-        <option value="expert">Expert</option>
-        <option value="technical_auditor">Technical auditor</option>
-      </select>
-    </div>
+    
 
     <div class="wrap">
       <!-- Title -->

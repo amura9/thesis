@@ -1,0 +1,18 @@
+Namespace(config='C:\\Users\\pc\\Desktop\\Alberto\\Alberto\\Tesi\\FRIA_evaluation\\FRIA_evaluation\\backend\\storage\\configs\\7a8dee8b-cc47-4b7a-97eb-833364c330ba.json')
+C:\Users\pc\Desktop\Alberto\Alberto\Tesi\FRIA_evaluation\FRIA_evaluation\backend\storage\configs\7a8dee8b-cc47-4b7a-97eb-833364c330ba.json
+[INFO] Using config: C:\Users\pc\Desktop\Alberto\Alberto\Tesi\FRIA_evaluation\FRIA_evaluation\backend\storage\configs\7a8dee8b-cc47-4b7a-97eb-833364c330ba.json
+
+Selected sensitive features: ['age_cv', 'competences_coverage_required', 'competences_coverage_optional', 'education_cv_encoded']
+
+Columns available after preprocessing: ['competences_coverage_required', 'competences_coverage_optional', 'education_cv_encoded', 'education_job_req', 'education_job_encoded', 'gender_job_Any', 'gender_job_Female', 'gender_job_Male', 'gender_cv_Female', 'gender_cv_Male', 'gender_cv_Not binary', 'gender_cv_Not declared', 'disability_cv_No', 'disability_cv_Not declared', 'disability_cv_Yes', 'disability_job_Any', 'disability_job_No', 'PCA_1', 'PCA_2', 'nationality_job_Any', 'nationality_job_Catalan', 'nationality_job_English', 'nationality_job_French', 'nationality_job_Italian', 'nationality_job_Spanish', 'nationality_cv_Catalan', 'nationality_cv_English', 'nationality_cv_French', 'nationality_cv_German', 'nationality_cv_Irish', 'nationality_cv_Italian', 'nationality_cv_LowGerman', 'nationality_cv_Romanian', 'nationality_cv_Russian', 'nationality_cv_Spanish', 'nationality_cv_Swedish', 'age_min_job', 'age_max_job', 'check_it', 'check_de', 'distrib_test_binned', 'people_of_world_binned', 'age_cv_binned']
+
+Running Fake Right Example (Fake)
+
+=== FINAL RESULTS ===
+
+--- Metrics: new_metric ---
+
+  Feature: (global)
+    Metric: Fake Right Example
+    Value: {'status': 'success', 'metric': 'Fake Right Example', 'used_column': 'competences_coverage_required', 'mean': 0.6676666666666666, 'median': 0.75, 'ratio_rule': 'median/mean', 'computed': 1.1233150274588117, 'threshold': 0.2, 'result': 0.2}
+[INFO] Saved UI schemas to: C:\Users\pc\Desktop\Alberto\Alberto\Tesi\FRIA_evaluation\FRIA_evaluation\evaluator\run_results\result_schemas.json

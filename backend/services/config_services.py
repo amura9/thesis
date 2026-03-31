@@ -4,6 +4,7 @@ from backend.core.settings import CONFIG_DIR
 from pathlib import Path
 from fastapi import HTTPException
 import json
+import re
 
 #SAVES UPLOADED FILES IN CONFIG WITH ABSOLUTE PATH
 def attach_uploads_to_config(cfg_path: Path, upload_dir: Path) -> None:
@@ -53,7 +54,24 @@ def latest_config_path():
         raise HTTPException(status_code=404, detail="No configs found")
     return max(config_files, key=lambda p: p.stat().st_mtime)
 
+#WRITE CONFIG UPDATES into config file
+def write_config(path: Path, cfg: dict) -> None:
+    path.write_text(json.dumps(cfg, indent=2), encoding="utf-8")
 
+#Make sure rights are normalized when written in config file, returns: right / right_abc
+def normalize_right(value: str) -> str:
+    """
+    Convert right label to machine format:
+    - lowercase
+    - spaces -> underscore
+    - collapse multiple underscores
+    - remove leading/trailing underscores
+    """
+    s = (value or "").strip().lower()
+    s = re.sub(r"\s+", "_", s)          
+    s = re.sub(r"_+", "_", s)           
+    s = re.sub(r"[^a-z0-9_]", "", s)    
+    return s.strip("_")
 
 
 
@@ -69,16 +87,6 @@ def read_config(path: Path) -> dict:
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Failed to read config: {e}")
     
-#WRITE CONFIG
-def write_config(path: Path, cfg: dict) -> None:
-    path.write_text(json.dumps(cfg, indent=2), encoding="utf-8")
 
-def deep_merge(a: dict, b: dict) -> dict:
-    out = dict(a)
-    for k, v in b.items():
-        if isinstance(v, dict) and isinstance(out.get(k), dict):
-            out[k] = deep_merge(out[k], v)
-        else:
-            out[k] = v
-    return out
+
 

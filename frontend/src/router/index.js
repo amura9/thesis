@@ -1,15 +1,15 @@
 import { createRouter, createWebHistory } from "vue-router";
-import Home from "../views/0Home.vue";
-import SelectUser from "../views/1SelectUser.vue";
-import UploadYourDataAndModel from "../views/2UyDaM.vue";
-import PostProcessing from "../views/3Binning&OHE.vue";
-import ChooseRight from "../views/4CtR.vue";
-import IdentifySensitiveFeatures from "../views/5IsF.vue";
-import ExploreMetrics from "../views/6Em.vue";
-import MetricsParameters from "../views/7Rm.vue";
-import RunModel from "../views/8Start_Evaluation.vue";
-import ReviewResults from "../views/9Result.vue";
-import MetricResults from "../views/10Values_to_display.vue";
+import Home from "../views/0_Landing_Page.vue";
+import SelectUser from "../views/1_Select_User.vue";
+import UploadYourDataAndModel from "../views/2_Upload_Datasets.vue";
+import PostProcessing from "../views/3_Postprocessing.vue";
+import ChooseRight from "../views/4_Select_Right.vue";
+import IdentifySensitiveFeatures from "../views/5_Select_Sensitive_Feature.vue";
+import ExploreMetrics from "../views/6_Select_Metrics.vue";
+import MetricsParameters from "../views/7_Select_Parameters.vue";
+import RunModel from "../views/8_Start_Evaluation.vue";
+import ReviewResults from "../views/9_Display_Metrics.vue";
+import MetricResults from "../views/10_Display_Results.vue";
 //import Report from "../views/11Report.vue" redundant
 
 
@@ -28,7 +28,7 @@ const router = createRouter({
     { path: "/rm2", component: RunModel },
     { path: "/r", component: ReviewResults },
     { path: "/metric/:group/:metric", name: "MetricResults", component: MetricResults },
-    { path: "/report/:runId", name: "Report", component: () => import("../views/11Report.vue"),} //map to the different pages
+    { path: "/report/:runId", name: "Report", component: () => import("../views/11_Generate_Report.vue"),} //map to the different pages
   ],
 });
 

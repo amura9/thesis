@@ -1,4 +1,4 @@
-from backend.services.config_services import attach_uploads_to_config, latest_config_path, read_config, write_config, deep_merge
+from backend.services.config_services import attach_uploads_to_config, latest_config_path, read_config, write_config
 from backend.services.utils.capability_report import capability_report, normalize_right
 from evaluator.core.plugin_loader import discover_all_plugins #cancel
 from evaluator.core.plugin_registry import build_registry_from_plugins
@@ -46,16 +46,12 @@ def save_config(cfg: ConfigIn):
 
     return {"config_id": config_id}
 
-
-
-
-
-#SAVE FIRST PLUGIN REGISTRY
+#GET: Build Plugin registry: maps all the metrics and rights existing in the system
 @configs_router.get("/plugin-registry")
 def get_plugin_registry():
-    plugins = discover_all_plugins("evaluator.plugins")
-
-    reg = build_registry_from_plugins(plugins)
+    plugins = discover_all_plugins("evaluator.plugins") #returns: evaluator.plugins.fairness.demographic_parity.DemographicParity
+    
+    reg = build_registry_from_plugins(plugins)  #store registry
 
     try:
         REGISTRY_DIR.mkdir(parents=True, exist_ok=True)
@@ -69,46 +65,46 @@ def get_plugin_registry():
 
     return reg
 
-#GET MOST RECENT CONFIG FILE
-@configs_router.get("/configs/latest")
-def get_latest_config():
-    latest_path = latest_config_path()
-    try:
-        cfg = json.loads(latest_path.read_text(encoding="utf-8"))
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Failed to read latest config: {e}")
+#POST: rights selected into config + capability report based on right and requires
+class RightsPayload(BaseModel):
+    rights_to_evaluate: List[str]
 
-    return {"config_id": latest_path.stem, "config": cfg}
+@rights_router.post("/rights/configs")
+def save_rights(payload: RightsPayload):
+    path = latest_config_path() 
+    cfg = read_config(path)
 
-#PUT SENSITIVE FEATURES into config file
+    normalized_rights = [normalize_right(r) for r in payload.rights_to_evaluate] 
+    cfg["rights_to_evaluate"] = normalized_rights
+
+    write_config(path, cfg)
+    
+    registry_path = REGISTRY_DIR / "plugin_registry.json"
+
+    result = capability_report(path, cfg, registry_path) 
+    return result
+    #compares plugin_registry (requires datasets) 
+    #with config (uploaded datasets) and rights 
+
+#PUT: Add SensitiveFeatures in the config file
 class SensitiveFeaturesUpdate(BaseModel):
     features: Dict[str, Dict[str, Any]] = Field(default_factory=dict)
 
 @configs_router.put("/configs/sensitive_features")
 def update_sensitive_features(payload: SensitiveFeaturesUpdate):
-    configs = sorted(
-        CONFIG_DIR.glob("*.json"),
-        key=lambda p: p.stat().st_mtime,
-        reverse=True
-    )
-    if not configs:
-        raise HTTPException(status_code=404, detail="No config found")
+    path = latest_config_path() 
 
-    path = configs[0]
-
-    # read config
     try:
         current = json.loads(path.read_text(encoding="utf-8"))
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Failed to read config: {e}")
 
     features = current.get("features")
-    if not isinstance(features, dict):
-        # If it's missing, null, list, string, etc. -> replace with empty object
+    if not isinstance(features, dict): #if none selected -> empty dict
         features = {}
         current["features"] = features
 
-    # Merge incoming features into config using your desired shape
+    # Into config file
     for feat_name, feat_obj in payload.features.items():
         sensitive_value = True
         if isinstance(feat_obj, dict) and "sensitive" in feat_obj:
@@ -116,7 +112,6 @@ def update_sensitive_features(payload: SensitiveFeaturesUpdate):
 
         features[feat_name] = {"sensitive": sensitive_value}
 
-    # write back
     try:
         path.write_text(json.dumps(current, indent=2, ensure_ascii=False), encoding="utf-8")
     except Exception as e:
@@ -124,37 +119,68 @@ def update_sensitive_features(payload: SensitiveFeaturesUpdate):
 
     return {"config_id": path.stem, "features": current["features"]}
 
-#Put latest metrics selected in .json
+#GET: last config file
+@configs_router.get("/configs/latest")
+def get_latest_config():
+    path = latest_config_path()
+    try:
+        cfg = json.loads(path.read_text(encoding="utf-8"))
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Failed to find config: {e}")
+
+    return {"config_id": path.stem, "config": cfg}
+
+#PUT: metrics to be computed + plugin paths
 class Update(BaseModel):
     metrics: Dict[str, List[str]]
     plugins: List[str]
 
-#save metrics to be computed in .json
 @configs_router.put("/configs/metrics_to_compute")
 def update_latest_metrics(payload: Update):
-    # get latest config file path
-    latest = latest_config_path()  # ← pass CONFIG_DIR
+    path = latest_config_path() 
 
-    # read current config from file
     try:
-        cfg = json.loads(latest.read_text(encoding="utf-8"))
+        cfg = json.loads(path.read_text(encoding="utf-8"))
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Failed to read latest config: {e}")
 
-    # update metrics
     cfg["metrics"] = payload.metrics
     cfg["plugins"] = payload.plugins
 
-    # write back to same file
     try:
-        latest.write_text(
+        path.write_text(
             json.dumps(cfg, indent=2, ensure_ascii=False),
             encoding="utf-8"
         )
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Failed to write latest config: {e}")
 
-    return {"config_id": latest.stem, "config": cfg}
+    return {"config_id": path.stem, "config": cfg}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 #Save parameters for metrics to be computed in .json
 
@@ -243,32 +269,5 @@ def update_latest_metrics(payload: ParametersPayload):
     return {"config_id": latest.stem, "config": cfg}
 
 
-#RIGHTS ROUTER - SAVE RIGHTS INTO CONFIG
-class RightsPayload(BaseModel):
-    rights_to_evaluate: List[str]
 
-@rights_router.post("/rights/configs")
-def save_rights(payload: RightsPayload):
-    try:
-        path = latest_config_path() #ADDED!!! (CONFIG_DIR)
-        cfg = read_config(path)
-    except FileNotFoundError:
-        # create new config if none exists
-        config_id = str(uuid.uuid4())
-        path = CONFIG_DIR / f"{config_id}.json"
-        cfg = {}
-
-    cfg.setdefault("datasets", {})   #Generate first available 
-    cfg.setdefault("metrics", {})
-    cfg.setdefault("plugins", [])
-
-    normalized_rights = [normalize_right(r) for r in payload.rights_to_evaluate] 
-    cfg["rights_to_evaluate"] = normalized_rights
-
-
-    write_config(path, cfg)
-    registry_path = REGISTRY_DIR / "plugin_registry.json"
-
-    result = capability_report(path, cfg, registry_path) #COMPARE PLUGIN REGISTRY WITH UPLOADED 
-    return  result #all passed
 

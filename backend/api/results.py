@@ -1,4 +1,4 @@
-from backend.services.config_services import attach_uploads_to_config, latest_config_path, read_config, write_config, deep_merge
+from backend.services.config_services import attach_uploads_to_config, latest_config_path, read_config, write_config
 from backend.services.utils.detect_metric_schema import detect_all_result_schemas
 from backend.core.settings import BASE_DIR, STORAGE_DIR, UPLOAD_DIR, CONFIG_DIR, RESULTS_DIR, RUN_DIR #all the dir to be imported
 from fastapi import APIRouter, HTTPException, Query, Body, UploadFile, File, Form

@@ -3,7 +3,6 @@ import { ref } from "vue";
 import { useRouter } from "vue-router";
 
 const router = useRouter();
-const role = ref("");
 
 function goToEvaluation(selectedRole) {
   role.value = selectedRole;

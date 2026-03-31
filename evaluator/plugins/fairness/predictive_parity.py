@@ -11,6 +11,7 @@ class PredictiveParity:
             name="Predictive Parity",
             right="Fairness",
             description="Compares precision across sensitive groups (higher equality means smaller precision gap).",
+            interpretation="A 0 difference means the model is equally reliable when predicting positives.",
             requires=["X_test", "y_true", "y_pred"],  # datasets
             params=[
                 ParamSpec(

@@ -7,36 +7,35 @@ const router = useRouter();
 const loadingMetrics = ref(true);
 const metricsError = ref("");
 
-const plugins = ref([]);         // ["plugins.fake_right.new_metric", ...]
-const latestResults = ref(null); // { run_id, results: { key: {...} } }
+const plugins = ref([]);         // plugins.fake_right.new_metric
+const latestResults = ref(null); 
 
-//run_id reference + pdf link
+//evaluation run
 const runId = ref("");
 const pdfBusy = ref(false);
 const pdfError = ref("");
 
-// prettify the displaying (Group titles)
+//Prettify
 function prettify(s) {
   return String(s || "")
     .replaceAll("_", " ")
     .replace(/\b\w/g, (c) => c.toUpperCase());
 }
 
-//for report generation (generate report for the current run)
+//Generate report for current id
 function generatePdf() {
   pdfError.value = "";
   if (!runId.value) {
     pdfError.value = "runId is missing";
     return;
   }
-  router.push({ name: "Report", params: { runId: runId.value } });
+  router.push({ name: "Report", params: { runId: runId.value } }); 
 }
 
 
-// --- build groups dynamically from plugins
-// group = 2nd segment (index 1), metricKey = last segment
+//Metrics grouped by right: "plugins.right1.metric1"
 const groupedMetrics = computed(() => {
-  const out = {}; // { fairness: [{key,label}], fake_right:[...] }
+  const out = {};
 
   for (const p of plugins.value || []) {
     const parts = String(p).split(".");
@@ -50,43 +49,47 @@ const groupedMetrics = computed(() => {
       key: metricKey,
       label: prettify(metricKey),
     });
+    /*fairness: [
+    { key: "demographic_parity", label: "Demographic Parity" } -> label used for display*/
   }
 
   return out;
 });
 
-// optional: stable ordering of groups
+//sorted group names for display
 const groupNames = computed(() => Object.keys(groupedMetrics.value).sort());
 
+
+//Fetch computation results
 async function fetchData() {
   try {
     loadingMetrics.value = true;
     metricsError.value = "";
 
-    // 1) fetch plugins from config
+    //Plugins from config
     const resPlugins = await fetch("http://127.0.0.1:8000/results/plugins");
     if (!resPlugins.ok) throw new Error(await resPlugins.text());
     const pluginsData = await resPlugins.json();
     plugins.value = pluginsData.plugins || [];
 
-    // 2) fetch latest computed results (needed to display metric names)
-    const resVals = await fetch("http://127.0.0.1:8000/results/values_to_display");
-    if (!resVals.ok) throw new Error(await resVals.text());
-    const valsData = await resVals.json();
+    //Results to display
+    const results = await fetch("http://127.0.0.1:8000/results/values_to_display");
+    if (!results.ok) throw new Error(await results.text());
+    const valsData = await results.json();
 
-    // normalize if needed
     if (valsData?.results?.results) {
       latestResults.value = valsData.results;
     } else {
       latestResults.value = valsData;
-    }
+    } 
+    console.log("Latest Results:", latestResults.value);
     
-    //fetch the id in order to have the report Printed
+    //report: /report/d16b4920-f796-4684-85e2-8f62588714c1
     runId.value =
     latestResults.value?.run_id ||
     latestResults.value?.results?.run_id ||
     "";
-    console.log("RUN ID:", runId.value); //run_Id from values_to_display
+    console.log("RUN ID:", runId.value); 
   } catch (e) {
     metricsError.value = e?.message || String(e);
   } finally {
@@ -94,6 +97,7 @@ async function fetchData() {
   }
 }
 
+//push: each metric landing result page: metric/fairness/conditional_statistical_parity
 function openMetric(group, metricKey) {
   router.push({ name: "MetricResults", params: { group, metric: metricKey } });
 }

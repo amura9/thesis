@@ -12,6 +12,7 @@ class ConditionalUseAccuracyEquality:
             name="Conditional Use Accuracy Equality",
             right="Fairness",
             description="Accuracy parity across sensitive groups, computed only on samples with positive predictions (ŷ=1).",
+            interpretation="Values near 0 reflects equal reliability of model decisions.",
             requires=["X_test", "y_true", "y_pred"],  
             params=[
                 ParamSpec( #Parameters specs

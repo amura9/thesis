@@ -6,31 +6,39 @@ import { useRouter } from "vue-router";
 
 const router = useRouter();
 
-const role = ref(localStorage.getItem("role") || "");
 const error = ref("");
 
 const cfg = ref({});
-const metricsByRight = ref({});        // cfg.metrics_by_right: { rightId: [metricId,...] }
-const metricRequirements = ref({});     // cfg.metric_requirements: { metricId: {computable, missing_inputs,...} }
+const metricsByRight = ref({});        //{ rightId: [metricId,...] }
+const metricRequirements = ref({});     //{ metricId: {computable / missing_inputs,...} }
 
 const pluginRegistry = ref({});         // /plugin-registry (optional but useful for labels/desc)
 
 const selected = ref({});               // { [rightId]: { [metricId]: boolean } }
 
-// --- helpers ---
+//fake_right -> Fake Right
 function titleizeRight(rightId) {
   return (rightId || "")
     .replace(/_/g, " ")
     .replace(/\b\w/g, (c) => c.toUpperCase());
 }
 
+//fake_metric -> Fake Metric
 function titleizeMetric(metricId) {
   return (metricId || "")
     .replace(/_/g, " ")
     .replace(/\b\w/g, (c) => c.toUpperCase());
 }
 
+//looks for requirements
 function reqFor(metricId) {
+  /*
+  k_anonymity: {
+    computable: true,
+    required_inputs: ["X_test"],
+    missing_inputs: []
+  }
+  */
   return metricRequirements.value?.[metricId] || null;
 }
 
@@ -38,6 +46,7 @@ function isComputable(metricId) {
   return !!reqFor(metricId)?.computable;
 }
 
+//if computable -> tooltip: metrics description / if not computable -> tooltip: missing inputs 
 function tooltipFor(metricId) {
   const r = reqFor(metricId);
 
@@ -55,10 +64,11 @@ function tooltipFor(metricId) {
   return "Requires additional inputs.";
 }
 
+//Right display
 function displayRightTitle(rightId, metricIds) {
   for (const mid of metricIds || []) {
     const sr = metricRequirements.value?.[mid]?.selected_right;
-    if (sr) return sr; // e.g. "GDPR Right"
+    if (sr) return sr; 
   }
   return titleizeRight(rightId); // fallback
 }
@@ -106,12 +116,12 @@ const sections = computed(() => {
   return out;
 });
 
-// Load config + registry
-async function loadConfigAndUI() {
+//FIRST: Build UI based on rights selected and respective metrics
+async function buildUI() {
   try {
     error.value = "";
 
-    // 1) latest config
+    //pick the config
     const res = await fetch("http://localhost:8000/configs/latest", {
       method: "GET",
       headers: { Accept: "application/json" },
@@ -123,15 +133,18 @@ async function loadConfigAndUI() {
     }
     if (!res.ok) throw new Error(await res.text());
 
-    const payload = await res.json();
-    cfg.value = payload.config || {};
+    const data = await res.json();
+    cfg.value = data.config || {};
 
+    //To Display:
+
+    //from config file: metrics & requirements
     metricsByRight.value = cfg.value.metrics_by_right || {};
     metricRequirements.value = cfg.value.metric_requirements || {};
 
-    // 2) plugin registry (for nice names/descriptions)
-    const regRes = await fetch("http://127.0.0.1:8000/plugin-registry");
-    if (regRes.ok) pluginRegistry.value = await regRes.json();
+    //from plugin registry: descriptions
+    const reg = await fetch("http://127.0.0.1:8000/plugin-registry");
+    if (reg.ok) pluginRegistry.value = await reg.json();
 
   } catch (e) {
     error.value = e?.message || String(e);
@@ -145,11 +158,19 @@ function goBack() {
 async function goNext() {
   error.value = "";
 
-  // Build metrics payload: only selected AND computable
+  //Payload: For right & metric to config file
+  /*
+  "metrics": {
+    "fairness": [],
+    "fake_right": [
+      "fake_right_example"
+    ]
+  */
   const metricsPayload = {};
   const plugins = [];
 
   for (const section of sections.value) {
+
     const rightId = section.rightId;
     const chosen = section.cards
       .filter((m) => m.selectable && selected.value?.[rightId]?.[m.id])
@@ -157,13 +178,18 @@ async function goNext() {
 
     metricsPayload[rightId] = chosen;
 
-    //get the plugin_path from plugin registry and sent it to the .json
+    //add plugin path for metrics and patch): 
+    /*
+    "plugins": [
+    "plugins.fake_right.new_metric"
+    ],
+    */
     for (const metricId of chosen) {
       const pluginPath = pluginRegistry.value?.[metricId]?.plugin_path;
 
       if (!pluginPath) {
         error.value = `Missing plugin_path for metric "${metricId}". Please refresh /plugin-registry.`;
-        return; // stop to avoid writing a broken config
+        return; 
       }
 
       plugins.push(pluginPath);
@@ -175,6 +201,7 @@ async function goNext() {
     plugins,
   };
 
+  //PUT: metrics to be computed
   try {
     const res = await fetch("http://localhost:8000/configs/metrics_to_compute", {
       method: "PUT",
@@ -197,20 +224,12 @@ async function goNext() {
   }
 }
 
-onMounted(loadConfigAndUI);
+//First: build the UI based on the metrics and rights selected & computable
+onMounted(buildUI);
 </script>
 
 <template>
   <div class="page">
-    <!-- top-left select -->
-    <div class="top-left">
-      <select class="select" v-model="role">
-        <option value="" disabled>Select</option>
-        <option value="beginner">Beginner</option>
-        <option value="expert">Expert</option>
-        <option value="technical_auditor">Technical auditor</option>
-      </select>
-    </div>
 
     <div class="wrap">
       <h1 class="title">Step 4-Evaluation metrics overview</h1>
@@ -230,13 +249,13 @@ onMounted(loadConfigAndUI);
       <p class="intro">
         This is the capability report. It indicates the computable metrics based on uploaded data.<br />
         If any metric is greyed out, it means that it does require additional information to be computed <br />
-        This tooltip <span class="tiny-info">?</span> will indicate the additional information required. <br />
-        If instead the metrics is computable, the tooltip <span class="tiny-info">?</span> provides a brief description of the metric.
+        The tooltip <span class="tiny-info">?</span> in this case will indicate the additional information required. <br />
+        If is instead computable, the tooltip <span class="tiny-info">?</span> provides a brief description of the metric.
       </p>
 
       <div v-if="error" class="err">{{ error }}</div>
 
-      <!-- ✅ DYNAMIC SECTIONS (one per right) -->
+      <!-- DYNAMIC SECTIONS (one per right) -->
       <template v-for="section in sections" :key="section.rightId">
         <div class="section-title">
           {{ section.title }}

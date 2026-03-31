@@ -26,9 +26,9 @@ async function startEvaluation() {
     
     const data = await res.json();
     
-    //if get completed go to the next page
+    //if completed
     if (data.status === "completed") {
-      router.push("/r"); //Once evaluation done, go to the report
+      router.push("/r"); 
     }
   } catch (e) {
     error.value = e?.message || "Failed to start evaluation.";

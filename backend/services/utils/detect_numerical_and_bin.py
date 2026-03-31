@@ -1,6 +1,7 @@
 import math 
 import numpy as np
 import pandas as pd
+from typing import List, Dict
 from scipy.stats import shapiro
 
 #remove float for binning
@@ -16,18 +17,12 @@ def safe_ceil_int(x):
         return None
 
 
-#returns numerical features only if contain more than 3 different values
+#Returns numerical features only if contain more than 3 different values
 def detect_numerical_and_bin(
     df: pd.DataFrame,
     bins: int = 10,
     alpha: float = 0.05,
 ):
-    """
-    Check each numeric column for normality (QQ-plot proxy via Shapiro-Wilk).
-    If normal, suggest Equal-Width Binning.
-
-    Returns a dict keyed by column name.
-    """
 
     results = {}
 
@@ -45,7 +40,6 @@ def detect_numerical_and_bin(
         u = clean.unique()
         if len(u) <= 3:
             continue
-
 
         # Shapiro-Wilk (QQ-plot statistical proxy)
         stat, p_value = shapiro(clean.sample(
@@ -82,3 +76,16 @@ def detect_numerical_and_bin(
 
         results[col] = result
     return results
+
+#Define adjacent bins
+def edges_to_labels(edges: List[int]) -> List[str]:
+    # edges: [16,25,35,45,55,100] -> ["16-25","26-35","36-45","46-55","56+"]
+    if not edges or len(edges) < 2:
+        return []
+    labels = []
+    for i in range(len(edges) - 1):
+        start = edges[i] if i == 0 else edges[i] + 1
+        end = edges[i + 1]
+        is_last = i == len(edges) - 2
+        labels.append(f"{start}+" if is_last else f"{start}-{end}")
+    return labels

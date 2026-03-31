@@ -10,6 +10,7 @@ class EqualOpportunity:
             name="Equal Opportunity",
             right="Fairness",
             description="Measures Equal Opportunity by comparing True Positive Rates across sensitive groups.",
+            interpretation="Values close to 0 means equal opportunity is preserved.",
             requires=["X_test", "y_true", "y_pred"], #datasets
 
             #parameters specification

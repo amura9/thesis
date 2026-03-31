@@ -1,34 +1,21 @@
-# core/plugin_loader.py
-
 import importlib
 import inspect 
 import pkgutil
 from typing import Any, Dict, List, Union, Tuple, Optional
 
+#returns: evaluator.plugins.fairness.demographic_parity.DemographicParity.
 
 def _snake_to_camel(s: str) -> str:
-    # "demographic_parity" -> "DemographicParity"
-    return ''.join(part.capitalize() for part in s.split('_') if part)
+    return ''.join(part.capitalize() for part in s.split('_') if part) # "demographic_parity" -> "DemographicParity"
 
 
 def _import_module(module_path: str):
-    return importlib.import_module(module_path) #import plugins
+    return importlib.import_module(module_path) #plugins.fairness.demographic_parity
 
 
 def _pick_class_from_module(mod, preferred_name: Optional[str] = None): #class defined by
-    #module name
-    """
-    Select a class from a module:
-    - If `preferred_name` is provided, try that first (case-insensitive).
-    - If the module defines exactly one class, use that one.
-    - Otherwise, raise an explicit error listing available classes.
-
-    Only classes defined in the module itself are considered
-    (i.e., classes whose __module__ equals mod.__name__).
-    """
-    classes = [] #else a list of classes
+    classes = [] 
     for name, obj in inspect.getmembers(mod, inspect.isclass):
-        # keep only classes defined in this module (not imported ones)
         if getattr(obj, "__module__", None) == mod.__name__:
             classes.append((name, obj))
 
@@ -42,40 +29,22 @@ def _pick_class_from_module(mod, preferred_name: Optional[str] = None): #class d
         return classes[0][1]
 
     available = [name for name, _ in classes]
-    raise AttributeError(
-        f"Unable to determine which class to load in '{mod.__name__}'. "
-        f"Specify the class name in the JSON or use the expected name. "
-        f"Classes available in the module: {available}"
-    )
 
-
-def _infer_class_name_from_module_path(module_path: str) -> str: #infer it from path 
-    # e.g., "plugins.fairness.demographic_parity" -> "DemographicParity"
+def _infer_class_name_from_module_path(module_path: str) -> str: #e.g., "plugins.fairness.demographic_parity" -> "DemographicParity"
     last_token = module_path.split('.')[-1]
     return _snake_to_camel(last_token)
 
-
 def _split_module_and_class(path: str) -> Tuple[str, Optional[str]]: #if module.class
-    """
-    If the last token contains at least one uppercase letter, treat it as a class name.
-    Otherwise, consider the path to be a module-only path.
-    """
     tokens = path.split('.')
     if len(tokens) >= 2 and any(c.isupper() for c in tokens[-1]):
         module = '.'.join(tokens[:-1])
         class_name = tokens[-1]
         return module, class_name
-    # module-only
     return path, None
 
+def _load_one_plugin(entry: Union[str, Dict[str, Any]], config: Dict[str, Any]): 
+      #entry: "plugins.fairness.demographic_parity.DemographicParity" (module + class)
 
-def _load_one_plugin(entry: Union[str, Dict[str, Any]], config: Dict[str, Any]): #core
-    """
-    `entry` can be:
-      - string: "plugins.fairness.demographic_parity" (module only)
-                "plugins.fairness.demographic_parity.DemographicParity" (module + class)
-      - dict:   {"module": "...", "class": "OptionalClassName", "enabled": true/false}
-    """
     # 1) normalize input #getting module and class
     enabled = True
     if isinstance(entry, dict):
@@ -119,7 +88,6 @@ def _load_one_plugin(entry: Union[str, Dict[str, Any]], config: Dict[str, Any]):
 
     return plugin
 
-#ex. ["plugin.module", "plugin.other.Class"], {"threshold": 0.5}
 def load_plugins(entries: List[Union[str, Dict[str, Any]]], config: Optional[Dict[str, Any]] = None):
     """
     Load all plugins listed in `entries` (strings or dicts).
@@ -134,9 +102,7 @@ def load_plugins(entries: List[Union[str, Dict[str, Any]]], config: Optional[Dic
             plugins.append(plugin)
     return plugins
 
-
-#---------------Dinamycally change UI if a new plugin is created
-#discover all available plugins (NOT DEPENDING ON .JSON LISTING)
+#Update UI if new plugins discovered
 def discover_all_plugins(base_package: str = "plugins"):
     discovered = []
     package = importlib.import_module(base_package)
