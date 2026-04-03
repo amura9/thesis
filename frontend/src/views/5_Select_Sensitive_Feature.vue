@@ -27,13 +27,18 @@ function fillSensitiveFeatures() {
   return features;
 }
 
+//compute the goNext if at least one sensitve feature selected
+const canGoNext = computed(() => {
+  return columns.value.some((col) => sensitiveMap[col]);
+});
+
 //FIRST: fetch columns from dataset -> onMounted
 async function fetchColumns() {
   try {
     loading.value = true;
     error.value = "";
 
-    const res = await fetch("http://127.0.0.1:8000/datasets/latest/columns"); 
+    const res = await fetch("http://127.0.0.1:8000/headers"); 
     if (!res.ok) throw new Error(await res.text());
 
     const data = await res.json();
@@ -122,10 +127,10 @@ onMounted(fetchColumns);
       <!-- explanation -->
       <p class="explain">
         <em>
-          Since you selected <strong>non-discrimination</strong> in the previous step, we now need to know which variables in your
+          Since you selected <strong>fairness rights</strong> in the previous step, we now need to know which variables in your
           dataset may reflect legally protected attributes such as age, gender, nationality, or disability.
-          This allows the evaluator to assess if the AI system produces unfair outcomes across different demographic groups.
-          <strong> Select the features</strong> that relate to protected characteristics, to enable fairness evaluation:
+          This allows the evaluator to assess if the AI system produces unfair outcomes across different demographic groups. Select the
+          <strong>features</strong> that relate to protected characteristics, to enable fairness evaluation:
         </em>
       </p>
 
@@ -186,9 +191,14 @@ onMounted(fetchColumns);
         </div>
       </div>
 
-      <!-- bottom navigation arrows -->
-      <button class="nav-arrow left" @click="goBack" aria-label="Back">‹</button>
-      <button class="nav-arrow right" @click="goNext" aria-label="Next">›</button>
+     <!-- Bottom navigation (left/back + right/next like Image 2 arrows) -->
+      <div class="bottom-nav">
+        <button class="ghost" @click="goBack" type="button">‹ Back</button>
+
+        <button class="primary" :disabled="!canGoNext" @click="goNext" type="button">
+          Next ›
+        </button>
+      </div>
     </main>
   </div>
 </template>
@@ -425,30 +435,48 @@ onMounted(fetchColumns);
   transform: translateX(24px);
 }
 
-/* bottom arrows */
-.nav-arrow {
-  position: absolute;
-  bottom: 10px;
-  width: 60px;
-  height: 60px;
-  border: none;
+/* arrows bottom */
+.bottom-nav {
+  position: fixed;
+  left: 28px;
+  right: 28px;
+  bottom: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.ghost {
   background: transparent;
-  font-size: 64px;
-  line-height: 56px;
+  border: 1px solid #111;
+  padding: 10px 18px;
+  border-radius: 8px;
   cursor: pointer;
+  font-size: 16px;
+}
+
+.primary {
+  background: #111;
+  color: #fff;
+  border: none;
+  padding: 10px 18px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.primary:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+.primary:not(:disabled) {
+  background: #fff;
   color: #111;
-  user-select: none;
+  border: 1px solid #111;
+  cursor: pointer;
 }
-
-.nav-arrow.left {
-  left: 18px;
-}
-
-.nav-arrow.right {
-  right: 18px;
-}
-
-/* ✅ responsive: move guidance above table so it doesn't overlap */
+/* responsive: move guidance above table so it doesn't overlap */
 @media (max-width: 1100px) {
   .guidance {
     position: static;

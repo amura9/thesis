@@ -1,4 +1,4 @@
-from backend.services.config_services import normalize_right
+from backend.services.config_services import normalize_key
 from fastapi import APIRouter, HTTPException, Query, Body, UploadFile, File, Form
 from backend.core.settings import BASE_DIR, STORAGE_DIR, UPLOAD_DIR, CONFIG_DIR, RESULTS_DIR, RUN_DIR,REGISTRY_DIR
 from backend.schemas.config import ConfigIn
@@ -33,7 +33,7 @@ def capability_report(path: Path, cfg: Dict[str, Any], registry_path: Path) -> D
     #Define what is computable, if not computable -> report dataset needed
     for plugin_id, spec in registry.items():
         right_raw = spec.get("right")
-        right = normalize_right(right_raw) if right_raw else None
+        right = normalize_key(right_raw) if right_raw else None
         if not right or right not in selected_rights:
             continue
 

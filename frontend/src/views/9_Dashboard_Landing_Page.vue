@@ -22,7 +22,7 @@ function prettify(s) {
     .replace(/\b\w/g, (c) => c.toUpperCase());
 }
 
-//Generate report for current id
+//Generate report with current id: report/d16b4920-f796-4684-85e2-8f62588714c1 
 function generatePdf() {
   pdfError.value = "";
   if (!runId.value) {
@@ -60,7 +60,7 @@ const groupedMetrics = computed(() => {
 const groupNames = computed(() => Object.keys(groupedMetrics.value).sort());
 
 
-//Fetch computation results
+//FIRST: Display the metrics and rights for which the evaluation was run
 async function fetchData() {
   try {
     loadingMetrics.value = true;
@@ -97,7 +97,7 @@ async function fetchData() {
   }
 }
 
-//push: each metric landing result page: metric/fairness/conditional_statistical_parity
+//Push: metric landing page result: metric/fairness/conditional_statistical_parity
 function openMetric(group, metricKey) {
   router.push({ name: "MetricResults", params: { group, metric: metricKey } });
 }

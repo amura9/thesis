@@ -3,7 +3,6 @@ import { computed, onMounted, ref } from "vue";
 import { useRoute, useRouter, onBeforeRouteLeave } from "vue-router";
 
 const router = useRouter();
-
 const route = useRoute();
 
 const group = computed(() => String(route.params.group || "")); //take the right from API route
@@ -12,13 +11,13 @@ const metricKey = computed(() => String(route.params.metric || ""));
 const loading = ref(false);
 const error = ref("");
 
+//metric object
 const metricObj = ref(null);
 const items = ref([]); // [{label, value}]
 
 const complexFeatureKey = ref(null);
 
-//saved features an metrics
-
+//provides the id or the run
 const props = defineProps({
   runId: { type: String, required: true },
 });

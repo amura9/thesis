@@ -1,7 +1,7 @@
 <script setup>
 // http://localhost:5173/ud
 
-import { ref, computed } from "vue";
+import { ref, computed, onMounted } from "vue";
 import { useRouter } from "vue-router";
 
 const router = useRouter();
@@ -43,7 +43,7 @@ const acceptTypes =
   ".joblib,application/octet-stream";
 
 
-//minimum to move next
+//To move next
 const canGoNext = computed(() => {
   // Require at least X_test
   return uploaded.value.X_test.ok;
@@ -160,6 +160,34 @@ async function goNext() {
     console.error(e);
   }
 }
+
+//LAST: everytime -> back, check existing uploads. If X_test present then Next button never disabled
+async function checkExistingUploads() {
+  try {
+    const res = await fetch("http://localhost:8000/datasets/latest-status");
+    const data = await res.json().catch(() => ({}));
+
+    if (!res.ok) {
+      throw new Error(data?.detail || `HTTP ${res.status}`);
+    }
+
+    for (const key of ["X_test", "y_true", "y_pred", "train", "model"]) {
+      if (data?.[key]?.filename) {
+        uploaded.value[key] = {
+          ok: key === "X_test" ? !!data[key].ok : true,
+          filename: data[key].filename,
+          serverPath: "",
+        };
+      }
+    }
+  } catch (e) {
+    console.error("Failed to check existing uploads:", e);
+  }
+}
+
+onMounted(() => {
+  checkExistingUploads();
+});
 
 </script>
 
@@ -280,13 +308,13 @@ async function goNext() {
     </main>
 
     <!-- Bottom navigation (left/back + right/next like Image 2 arrows) -->
-    <button class="backBtn" @click="$router.back()" aria-label="Back step">
-      <span class="arrow">‹</span>
-    </button>
+    <div class="bottom-nav">
+      <button class="ghost" @click="goBack" type="button">‹ Back</button>
 
-    <button class="nextBtn" :disabled="!canGoNext" @click="goNext" aria-label="Next step">
-      <span class="arrow">›</span>
-    </button>
+      <button class="primary" :disabled="!canGoNext" @click="goNext" type="button">
+        Next ›
+      </button>
+    </div>
   </div>
 </template>
 
@@ -474,26 +502,45 @@ async function goNext() {
 }
 
 /* arrows bottom */
-.backBtn,
-.nextBtn {
+.bottom-nav {
   position: fixed;
-  bottom: 18px;
-  border: none;
+  left: 28px;
+  right: 28px;
+  bottom: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.ghost {
   background: transparent;
+  border: 1px solid #111;
+  padding: 10px 18px;
+  border-radius: 8px;
   cursor: pointer;
+  font-size: 16px;
 }
-.backBtn {
-  left: 18px;
+
+.primary {
+  background: #111;
+  color: #fff;
+  border: none;
+  padding: 10px 18px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 16px;
 }
-.nextBtn {
-  right: 18px;
-}
-.arrow {
-  font-size: 56px;
-  line-height: 1;
-}
-.nextBtn:disabled {
+
+.primary:disabled {
   opacity: 0.3;
   cursor: not-allowed;
 }
+
+.primary:not(:disabled) {
+  background: #fff;
+  color: #111;
+  border: 1px solid #111;
+  cursor: pointer;
+}
+
 </style>

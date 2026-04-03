@@ -58,15 +58,21 @@ class ConditionalStatisticalParity:
     def evaluate(self, y_true, y_pred, X_test, sensitive_feature, conditional_variable=None, **kwargs): #
         # 1) get conditional variable 
         conditional_variable = conditional_variable or get_config_value(
-            self.config, "conditional_fairness", "conditional_variable", required=False
+            self.config, "conditional_statistical_parity", "conditional_variable", required=False
         )
+
+        print("Loaded conditional_variable:", conditional_variable)
+        print("Loaded sensitive_feature:", sensitive_feature)
+        print("Config section:", self.config.get("conditional_statistical_parity"))
+        print("Available X_test columns:", list(X_test.columns))
+
         if not conditional_variable:
             return {
                 "metric": self.get_spec().name,
                 "status": "error",
                 "sensitive_feature": sensitive_feature,
                 "message": "Missing 'conditional_variable' in config.",
-                "requested_columns": ["conditional_fairness.conditional_variable"]
+                "requested_columns": ["conditional_statistical_parity.conditional_variable"]
                 }
 
         # 2) column checks

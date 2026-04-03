@@ -5,10 +5,37 @@ import { useRouter } from "vue-router";
 onMounted(() => console.log("HOME MOUNTED"));
 
 const router = useRouter();
+const error = ref("");
 
-function start() {
-  console.log("clicked", { role: role.value });
-  router.push("/su");
+async function start() {
+  try {
+    error.value = "";
+
+    //initialize
+    const payload = {};
+
+    const res = await fetch("http://127.0.0.1:8000/first_config", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(payload),
+    });
+
+    if (!res.ok) {
+      throw new Error(await res.text());
+    }
+
+    const data = await res.json();
+
+    // optional: keep config_id for later pages
+    localStorage.setItem("config_id", data.config_id);
+
+    router.push("/su");
+  } catch (e) {
+    error.value = e?.message || String(e);
+    console.error("Failed to create first config:", e);
+  }
 }
 </script>
 

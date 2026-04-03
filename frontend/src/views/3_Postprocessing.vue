@@ -244,11 +244,11 @@ function labelsToEdges(labels) {
 onMounted(async () => {
   //headers
   try {
-    const res = await fetch("http://127.0.0.1:8000/inverse-encoding-prefixes");
+    const res = await fetch("http://127.0.0.1:8000/headers");
     if (!res.ok) throw new Error(`HTTP ${res.status}`);
 
     const data = await res.json();
-    prefixes.value = Array.isArray(data.prefixes) ? data.prefixes : [];
+    prefixes.value = Array.isArray(data.columns) ? data.columns : [];
   } catch (e) {
     error.value = e?.message ?? String(e);
     console.error("fetch prefixes failed:", e);
@@ -323,15 +323,6 @@ watch(toggleRecombine, (enabled) => {
 
 <template>
   <div class="page">
-    <!-- top-left "Select" pill -->
-    <div class="topLeft">
-      <button class="selectPill" type="button">
-        Select
-        <svg viewBox="0 0 20 20" fill="none" aria-hidden="true">
-          <path d="M5 7l5 6 5-6" stroke="#111" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
-      </button>
-    </div>
 
     <main class="wrap">
       <h1 class="title">Post-Processing Configuration</h1>
@@ -480,10 +471,13 @@ watch(toggleRecombine, (enabled) => {
       </section>
     </main>
 
-    <!-- bottom nav arrows -->
-    <div class="bottomNav">
-      <button class="navBtn" type="button" @click="goBack" aria-label="Go back">‹</button>
-      <button class="navBtn" type="button" @click="goNext" aria-label="Go next">›</button>
+    <!-- Bottom navigation (left/back + right/next like Image 2 arrows) -->
+    <div class="bottom-nav">
+      <button class="ghost" @click="goBack" type="button">‹ Back</button>
+
+      <button class="primary" @click="goNext" type="button">
+        Next ›
+      </button>
     </div>
   </div>
 </template>
@@ -816,6 +810,36 @@ select .control{
   margin-top:10px;
   font-size:14px;
   opacity:0.9;
+}
+
+/* arrows bottom */
+.bottom-nav {
+  position: fixed;
+  left: 28px;
+  right: 28px;
+  bottom: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.ghost {
+  background: transparent;
+  border: 1px solid #111;
+  padding: 10px 18px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.primary {
+  background: #fff;
+  color: #111;
+  border: 1px solid #111;
+  padding: 10px 18px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 16px;
 }
 
 </style>

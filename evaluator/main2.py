@@ -559,7 +559,7 @@ def main():
                 if requires(plugin, 'needs_conditional_variable', False):
                     try:
                         cond_var = get_config_value(
-                            config, "conditional_variable", "conditional_variable", required=True
+                            config, "conditional_statistical_parity", "conditional_variable", required=True
                         )
                         metric_result = plugin.evaluate(y_true, y_pred, current_X, feat_column, cond_var)
                     except ValueError as e:

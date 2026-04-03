@@ -54,28 +54,37 @@ def latest_config_path():
         raise HTTPException(status_code=404, detail="No configs found")
     return max(config_files, key=lambda p: p.stat().st_mtime)
 
+#Get config_id only
+def get_config_id():
+    CONFIG_DIR.mkdir(parents=True, exist_ok=True)
+    config_files = list(CONFIG_DIR.glob("*.json"))
+
+    if not config_files:
+        raise HTTPException(status_code=404, detail="No configs found")
+
+    latest_file = max(config_files, key=lambda p: p.stat().st_mtime)
+    cfg_id = latest_file.stem 
+
+    return cfg_id
+
 #WRITE CONFIG UPDATES into config file
 def write_config(path: Path, cfg: dict) -> None:
     path.write_text(json.dumps(cfg, indent=2), encoding="utf-8")
 
-#Make sure rights are normalized when written in config file, returns: right / right_abc
-def normalize_right(value: str) -> str:
-    """
-    Convert right label to machine format:
-    - lowercase
-    - spaces -> underscore
-    - collapse multiple underscores
-    - remove leading/trailing underscores
-    """
+#RNormalize: key / key_abc
+def normalize_key(value: str) -> str:
     s = (value or "").strip().lower()
-    s = re.sub(r"\s+", "_", s)          
-    s = re.sub(r"_+", "_", s)           
-    s = re.sub(r"[^a-z0-9_]", "", s)    
-    return s.strip("_")
+    s = re.sub(r"[\s\-]+", "_", s)
+    s = re.sub(r"[^a-z0-9_]", "", s)
+    s = re.sub(r"_+", "_", s).strip("_")
+    return s or "unknown"
 
 
 
 
+
+
+    
 
 
     

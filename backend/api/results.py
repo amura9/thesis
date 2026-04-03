@@ -1,8 +1,8 @@
 from backend.services.config_services import attach_uploads_to_config, latest_config_path, read_config, write_config
 from backend.services.utils.detect_metric_schema import detect_all_result_schemas
-from backend.core.settings import BASE_DIR, STORAGE_DIR, UPLOAD_DIR, CONFIG_DIR, RESULTS_DIR, RUN_DIR #all the dir to be imported
+from backend.core.settings import BASE_DIR, STORAGE_DIR, UPLOAD_DIR, CONFIG_DIR, RESULTS_DIR, RUN_DIR, REGISTRY_DIR#all the dir to be imported
 from fastapi import APIRouter, HTTPException, Query, Body, UploadFile, File, Form
-from backend.services.result_services import render_report_to_pdf
+from backend.services.result_services import render_report_to_pdf, load_plugin_registry
 from fastapi.responses import JSONResponse, FileResponse
 from backend.schemas.config import ConfigIn
 from pydantic import BaseModel, Field
@@ -17,126 +17,70 @@ import json
 import os
 import re
 
-#logger for debugging
-logger = logging.getLogger("uvicorn.error")
 
+logger = logging.getLogger("uvicorn.error")
 router = APIRouter(tags=["results"])
 
-#DESCRIPTION EXTRACTED FROM PLUGIN_REGISTRY
-PLUGIN_REGISTRY_PATH = STORAGE_DIR / "summary/plugin_registry.json"
-
-def load_plugin_registry() -> dict:
-    if not PLUGIN_REGISTRY_PATH.exists():
-        return {}
-    return json.loads(PLUGIN_REGISTRY_PATH.read_text(encoding="utf-8"))
-
-def _as_list(x):
-    """Normalize Path|List[Path]|None into List[Path]."""
-    if x is None:
-        return []
-    if isinstance(x, (list, tuple)):
-        return list(x)
-    if isinstance(x, Path):
-        return [x]
-    return []
-
-#METRICS TO BE DISPLAYED DYNAMICALLY IN RESULTS
+#GET: metrics to be displayed in dashboard
 @router.get("/results/plugins")
 def get_plugins():
-    cfg_path = latest_config_path()
-    cfg = json.loads(cfg_path.read_text(encoding="utf-8"))
+    path = latest_config_path()
+    cfg = json.loads(path.read_text(encoding="utf-8"))
     return {
-        "config_file": cfg_path.name,
+        "config_file": path.name,
         "plugins": cfg.get("plugins", [])
     }
 
-#make it jsonable
-def make_jsonable(x):
-
-    if isinstance(x, (np.integer,)):
-        return int(x)
-    if isinstance(x, (np.floating,)):
-        return float(x)
-    if isinstance(x, (np.bool_,)):
-        return bool(x)
-    if isinstance(x, np.ndarray):
-        return x.tolist()
-    if isinstance(x, pd.Series):
-        return x.tolist()
-    if isinstance(x, pd.DataFrame):
-        return x.to_dict(orient="records")
-    if isinstance(x, dict):
-        return {str(k): make_jsonable(v) for k, v in x.items()}
-    if isinstance(x, (list, tuple)):
-        return [make_jsonable(v) for v in x]
-    return x
-  
-
-#VALUES FOR METRICS TO BE DISPLAYED
+#GET: values to be displayed for the dashboard + metadata for report generation -> datset used, evaluation date
 @router.get("/results/values_to_display")
 def values_to_display():
-    cfgs = _as_list(latest_config_path())
-    if not cfgs:
+    cfg = latest_config_path()
+    if not cfg:
         raise HTTPException(status_code=404, detail="No config files found")
 
-    # try configs from newest to oldest (latest_config_path gives newest first)
+    run_id = cfg.stem    
+    cfg = json.loads(cfg.read_text(encoding="utf-8"))
 
-    for cfg_path in cfgs:
-        run_id = cfg_path.stem
-
-        #extract dataset_name
-        try:
-            cfg = json.loads(cfg_path.read_text(encoding="utf-8"))
-        except Exception:
-            cfg = {}
-
-        #get dataset name (Ex. 235h4hxn33__ABC_.csv -> ABC) and evaluation date
-        dataset_name = ""
-        x_test = (cfg.get("datasets") or {}).get("X_test")
-           
-        #dataset
-        if x_test:
-            fname = os.path.basename(str(x_test))
-            parts = fname.split("__")
-            if len(parts) >= 3:
-                dataset_name = parts[-1]
-                if dataset_name.lower().endswith(".csv"):
-                    dataset_name = dataset_name[:-4]  #no 
-
-        #date
-        evaluation_date = datetime.now().strftime("%B %d, %Y")
-        logger.info(f"dataset= {dataset_name}")
+    dataset_name = ""
+    x_test = (cfg.get("datasets") or {}).get("X_test")
         
-        #results only matching config id
-        res_path = RESULTS_DIR / f"{run_id}.json"
+    #dataset used to display in final report
+    if x_test:
+        fname = os.path.basename(str(x_test))
+        parts = fname.split("__")
+        if len(parts) >= 3:
+            dataset_name = parts[-1]
+            if dataset_name.lower().endswith(".csv"):
+                dataset_name = dataset_name[:-4]  #no 
 
-        if res_path.exists():
-            raw = json.loads(res_path.read_text(encoding="utf-8"))
-            cleaned = make_jsonable(raw)
-            
-            return {
-            "run_id": run_id,
-            "results": cleaned,
-            "evaluation_date": evaluation_date,
-            "dataset_name": dataset_name,
-        }
+    #date
+    evaluation_date = datetime.now().strftime("%B %d, %Y")
+    logger.info(f"dataset= {dataset_name}")
+    
+    #results only matching config id
+    res_path = RESULTS_DIR / f"{run_id}.json"
+
+    if res_path.exists():
+        results = json.loads(res_path.read_text(encoding="utf-8"))
+        
+        
+        return {
+        "run_id": run_id, 
+        "results": results, #to be displayed
+        "evaluation_date": evaluation_date, #needed for the report generation
+        "dataset_name": dataset_name, #needed for the report generation
+    }
 
     raise HTTPException(status_code=404, detail="No results found matching any config")
 
-#RESULTING SCHEMAS
+#GET: returns the schema identified for each metric in the results
 @router.get("/results/result_schemas")
 def get_result_schemas(run_id: str | None = Query(default=None)):
-    """
-    Returns the schema dictionary saved in backend/storage/results.
-
-    - If run_id is provided: reads RESULTS_DIR/{run_id}_schemas.json
-    - If run_id is not provided: uses latest_config_path().stem as run_id
-    """
     if run_id is None:
-        cfg_path = latest_config_path()
-        if not cfg_path:
+        cfg = latest_config_path()
+        if not cfg:
             raise HTTPException(status_code=404, detail="No config files found")
-        run_id = cfg_path.stem
+        run_id = cfg.stem
 
     schemas_path = RESULTS_DIR / f"{run_id}_schemas.json"
     if not schemas_path.exists():
@@ -146,6 +90,25 @@ def get_result_schemas(run_id: str | None = Query(default=None)):
         )
 
     return json.loads(schemas_path.read_text(encoding="utf-8"))
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 ###############################################################
 #Explicit saving
@@ -191,7 +154,7 @@ def save_weights(payload: WeightsSavePayload):
     metric = payload.metric
 
     #METRIC DESCRIPTION FROM PLUGIN REGISTRY
-    plugin_registry = load_plugin_registry()
+    plugin_registry = load_plugin_registry(REGISTRY_DIR)
 
     metric_meta = plugin_registry.get(metric, {})
     metric_description = metric_meta.get("description") #get description 

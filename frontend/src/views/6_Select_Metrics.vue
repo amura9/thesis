@@ -30,6 +30,15 @@ function titleizeMetric(metricId) {
     .replace(/\b\w/g, (c) => c.toUpperCase());
 }
 
+//GoNext: 
+const canGoNext = computed(() => {
+  return sections.value.some((section) =>
+    section.cards.some(
+      (card) => card.selectable && selected.value?.[section.rightId]?.[card.id]
+    )
+  );
+});
+
 //looks for requirements
 function reqFor(metricId) {
   /*
@@ -294,10 +303,14 @@ onMounted(buildUI);
         </div>
       </template>
 
-      <button class="nav left" @click="goBack" aria-label="Back">‹</button>
-      <button class="nav rightText" @click="goNext">
-        <span class="arrowRight">›</span>
-      </button>
+      <!-- Bottom navigation (left/back + right/next like Image 2 arrows) -->
+      <div class="bottom-nav">
+        <button class="ghost" @click="goBack" type="button">‹ Back</button>
+
+        <button class="primary" :disabled="!canGoNext" @click="goNext" type="button">
+          Next ›
+        </button>
+      </div>
     </div>
   </div>
 </template>
@@ -451,7 +464,7 @@ onMounted(buildUI);
   color: #111;
 }
 
-/* ✅ NEW: disabled styling */
+/* NEW: disabled styling */
 .metric.disabled {
   opacity: 0.35;
   cursor: not-allowed;
@@ -475,34 +488,46 @@ onMounted(buildUI);
   white-space: pre-line;
 }
 
-.nav {
-  position: absolute;
-  bottom: -300px;
-  border: none;
-  background: transparent;
-  cursor: pointer;
-  user-select: none;
-}
-
-.nav.left {
-  left: 18px;
-  font-size: 64px;
-  line-height: 56px;
-  color: #111;
-}
-
-.nav.rightText {
-  right: 18px;
-  font-size: 34px;
-  font-weight: 500;
-  color: #111;
-  display: inline-flex;
+/* arrows bottom */
+.bottom-nav {
+  position: fixed;
+  left: 28px;
+  right: 28px;
+  bottom: 20px;
+  display: flex;
   align-items: center;
-  gap: 14px;
+  justify-content: space-between;
 }
-.arrowRight {
-  font-size: 52px;
-  line-height: 1;
+
+.ghost {
+  background: transparent;
+  border: 1px solid #111;
+  padding: 10px 18px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.primary {
+  background: #111;
+  color: #fff;
+  border: none;
+  padding: 10px 18px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.primary:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+.primary:not(:disabled) {
+  background: #fff;
+  color: #111;
+  border: 1px solid #111;
+  cursor: pointer;
 }
 
 @media (max-width: 1100px) {

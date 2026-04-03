@@ -1,5 +1,5 @@
-from backend.services.config_services import attach_uploads_to_config, latest_config_path, read_config, write_config
-from backend.services.utils.capability_report import capability_report, normalize_right
+from backend.services.config_services import attach_uploads_to_config, latest_config_path, read_config, write_config, get_config_id, normalize_key
+from backend.services.utils.capability_report import capability_report, normalize_key
 from evaluator.core.plugin_loader import discover_all_plugins #cancel
 from evaluator.core.plugin_registry import build_registry_from_plugins
 from fastapi import APIRouter, HTTPException, Query, Body, UploadFile, File, Form
@@ -33,18 +33,29 @@ rights_router = APIRouter(tags=["rights"])
 
 ####################################
 
-#FIRST CONFIG & DS UPLOAD
-@configs_router.post("/config")
-def save_config(cfg: ConfigIn):
-    config_id = str(uuid.uuid4())
-    path = CONFIG_DIR / f"{config_id}.json"
+#POST: Create first config
+@configs_router.post("/first_config")
+def save_config(cfg_path: ConfigIn):
+    cfg_path_id = str(uuid.uuid4())
+    path = CONFIG_DIR / f"{cfg_path_id}.json"
 
-    payload = cfg.model_dump()
+    payload = cfg_path.model_dump()
+    path.write_text(json.dumps(payload, indent=2), encoding="utf-8")
+
+    return {"config_id": cfg_path_id}
+
+#POST: save datasets with {cfg_path_id}_X_test
+@configs_router.post("/config")
+def save_config(cfg_path: ConfigIn):
+    cfg_path_id = get_config_id() 
+    path = CONFIG_DIR / f"{cfg_path_id}.json"
+
+    payload = cfg_path.model_dump()
     path.write_text(json.dumps(payload, indent=2), encoding="utf-8")
 
     attach_uploads_to_config(path, UPLOAD_DIR) #save files from uploads to config.json
 
-    return {"config_id": config_id}
+    return {"config_id": cfg_path_id}
 
 #GET: Build Plugin registry: maps all the metrics and rights existing in the system
 @configs_router.get("/plugin-registry")
@@ -72,19 +83,18 @@ class RightsPayload(BaseModel):
 @rights_router.post("/rights/configs")
 def save_rights(payload: RightsPayload):
     path = latest_config_path() 
-    cfg = read_config(path)
+    cfg_path = read_config(path)
 
-    normalized_rights = [normalize_right(r) for r in payload.rights_to_evaluate] 
-    cfg["rights_to_evaluate"] = normalized_rights
+    normalized_rights = [normalize_key
+(r) for r in payload.rights_to_evaluate] 
+    cfg_path["rights_to_evaluate"] = normalized_rights
 
-    write_config(path, cfg)
+    write_config(path, cfg_path)
     
     registry_path = REGISTRY_DIR / "plugin_registry.json"
 
-    result = capability_report(path, cfg, registry_path) 
+    result = capability_report(path, cfg_path, registry_path) 
     return result
-    #compares plugin_registry (requires datasets) 
-    #with config (uploaded datasets) and rights 
 
 #PUT: Add SensitiveFeatures in the config file
 class SensitiveFeaturesUpdate(BaseModel):
@@ -124,11 +134,11 @@ def update_sensitive_features(payload: SensitiveFeaturesUpdate):
 def get_latest_config():
     path = latest_config_path()
     try:
-        cfg = json.loads(path.read_text(encoding="utf-8"))
+        cfg_path = json.loads(path.read_text(encoding="utf-8"))
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Failed to find config: {e}")
 
-    return {"config_id": path.stem, "config": cfg}
+    return {"config_id": path.stem, "config": cfg_path}
 
 #PUT: metrics to be computed + plugin paths
 class Update(BaseModel):
@@ -140,133 +150,58 @@ def update_latest_metrics(payload: Update):
     path = latest_config_path() 
 
     try:
-        cfg = json.loads(path.read_text(encoding="utf-8"))
+        cfg_path = json.loads(path.read_text(encoding="utf-8"))
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Failed to read latest config: {e}")
 
-    cfg["metrics"] = payload.metrics
-    cfg["plugins"] = payload.plugins
+    cfg_path["metrics"] = payload.metrics
+    cfg_path["plugins"] = payload.plugins
 
     try:
         path.write_text(
-            json.dumps(cfg, indent=2, ensure_ascii=False),
+            json.dumps(cfg_path, indent=2, ensure_ascii=False),
             encoding="utf-8"
         )
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Failed to write latest config: {e}")
 
-    return {"config_id": path.stem, "config": cfg}
+    return {"config_id": path.stem, "config": cfg_path}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-#Save parameters for metrics to be computed in .json
-
-class ParametersPayload(RootModel[Dict[str, Dict[str, Any]]]):
+#Save parameters selected for metrics.json
+class ParametersPayload(RootModel[Dict[str, Dict[str, Any]]]): 
     pass
 
-def _slugify(s: str) -> str:
-    s = (s or "").strip().lower()
-    s = re.sub(r"[\s\-]+", "_", s)      # spaces/dashes -> underscore
-    s = re.sub(r"[^a-z0-9_]", "", s)    # drop punctuation
-    s = re.sub(r"_+", "_", s).strip("_")
-    return s or "unknown"
-
-
-def _load_plugin_registry() -> Dict[str, Dict[str, Any]]:
-    reg_path = REGISTRY_DIR / "plugin_registry.json"
-    try:
-        return json.loads(reg_path.read_text(encoding="utf-8")) or {}
-    except Exception:
-        return {}
-
-
-def _is_fairness_metric(metric_id: str, registry: Dict[str, Dict[str, Any]]) -> bool:
-    meta = registry.get(metric_id) or {}
-    return (meta.get("right") or "").strip().lower() == "fairness"
-
-
-def _fairness_section_key(metric_id: str, registry: Dict[str, Dict[str, Any]]) -> str:
-    """
-    For fairness metrics, derive the section key from the param label shown in UI.
-    label 'Conditional variable' -> 'conditional_variable'
-    Fallback order:
-      1) label of param with key == 'conditional_variable'
-      2) the param key itself ('conditional_variable')
-      3) metric_id (last resort)
-    """
-    meta = registry.get(metric_id) or {}
-    params = meta.get("params") or []
-
-    # try to find the conditional_variable param
-    for p in params:
-        if (p or {}).get("key") == "conditional_variable":
-            label = (p or {}).get("label") or "conditional_variable"
-            return _slugify(label)
-
-    # fallback: if registry missing param spec
-    return "conditional_variable"
-
-
+'''{
+  "statistical_parity_difference": {
+    "threshold": 0.2
+  },
+'''
 @configs_router.put("/configs/parameters")
 def update_latest_metrics(payload: ParametersPayload):
-    latest = latest_config_path()
+    cfg_id = get_config_id()
+    cfg_path = CONFIG_DIR / f"{cfg_id}.json"
 
-    try:
-        cfg = json.loads(latest.read_text(encoding="utf-8"))
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Failed to read latest config: {e}")
-
-    registry = _load_plugin_registry()
-    incoming = payload.root or {}
+    #loads config file
+    with cfg_path.open("r", encoding="utf-8") as f:
+        config_file = json.load(f) 
+       
+    incoming = payload.root or {} #metrics from frontend + params -> {"statistical_parity_difference": {"threshold": 0.2}}
 
     for metric_id, params in incoming.items():
-        if not isinstance(params, dict):
-            continue
+        section_key = metric_id
 
-        # fairness rights params will be flagged like this
-        if _is_fairness_metric(metric_id, registry):
-            section_key = _fairness_section_key(metric_id, registry)  # e.g. "conditional_variable"
-        else:
-            section_key = metric_id
+        #Create dictionary with selected params in config file
+        if not isinstance(config_file.get(section_key), dict):
+            config_file[section_key] = {}
 
-        #else the section key takes metric as key and params as content
-        if not isinstance(cfg.get(section_key), dict):
-            cfg[section_key] = {}
-
-        cfg[section_key].update(params)
-
-        # optional: if you still want enabled for sections that get params
-        cfg[section_key]["enabled"] = True
+        config_file[section_key].update(params)
 
     try:
-        latest.write_text(json.dumps(cfg, indent=2, ensure_ascii=False), encoding="utf-8")
+        cfg_path.write_text(json.dumps(config_file, indent=2, ensure_ascii=False), encoding="utf-8")
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Failed to write latest config: {e}")
 
-    return {"config_id": latest.stem, "config": cfg}
+    return {"config_id": cfg_path.stem, "config": config_file}
 
 
 

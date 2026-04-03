@@ -4,7 +4,7 @@ from typing import Optional, Any
 from pathlib import Path
 import json
 
-#GET ALL METRICS CONFIG FROM PLUGIN_REGISTRY
+#Get all metrics from plugin registry
 def load_metric_ids_from_registry(path: Path) -> list[str]:
     try:
         reg = json.loads(path.read_text(encoding="utf-8"))
@@ -19,10 +19,9 @@ def load_metric_ids_from_registry(path: Path) -> list[str]:
         ids.append(metric_id)
     return ids
 
-# done once to get the ids
 _METRIC_IDS: list[str] = load_metric_ids_from_registry(REGISTRY_DIR / "plugin_registry.json")
 
-#SET FIRST CONFIG .JSON
+#Set first config for .json file
 class DatasetPaths(BaseModel):
     train: Optional[str] = None
     X_test: Optional[str] = None
@@ -54,18 +53,21 @@ class PostprocessingConfig(BaseModel):
     binning: BinningConfig = Field(default_factory=BinningConfig)
 
 
-# set of non discrimination & privacy metrics
+#Save metrics belonging for each right:
+'''
+"metrics": {
+    "new_right": [
+      "metric_example"
+    ],
+    "privacy": [
+      "anonymity_set_size",
+      "k_anonymity"]}'''
+
 class MetricsConfig(BaseModel):
     metrics: dict[str, list[str]] = Field(default_factory=dict)  # keep as you had it
 
-
+#Initializes full config strcture
 class ConfigIn(BaseModel):
-    """
-    Initialize metrics at top level
-      "fake_right_example": {}
-      "demographic_parity": {}
-      ...
-    """
 
     class Config:
         extra = "allow"
@@ -82,10 +84,3 @@ class ConfigIn(BaseModel):
     plugins: list[str] = Field(default_factory=list)
 
     #for each metric initialize empty dict
-    '''
-    def __init__(self, **data: Any):
-        super().__init__(**data)
-
-        for metric_id in _METRIC_IDS:
-            if metric_id not in self.__dict__:
-                setattr(self, metric_id, {}) '''

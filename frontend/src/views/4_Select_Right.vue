@@ -73,12 +73,19 @@ const rights_to_evaluate = computed(() =>
     .map(([k]) => k)
 );
 
+//To move next
+  const canGoNext = computed(() => {
+    //At least one selected
+    return rights_to_evaluate.value.length > 0;
+  });
+
 function goBack() {
   router.back();
 }
 
 async function goNext() {
   error.value = "";
+
 
   if (rights_to_evaluate.value.length === 0) {
     error.value = "At least one right must be selected to continue.";
@@ -201,9 +208,14 @@ if (normalizedRights.includes("fairness") ||
         </div>
       </div>
 
-      <!-- bottom arrows -->
-      <button class="nav left" @click="goBack">‹</button>
-      <button class="nav right" @click="goNext">›</button>
+      <!-- Bottom navigation (left/back + right/next like Image 2 arrows) -->
+      <div class="bottom-nav">
+        <button class="ghost" @click="goBack" type="button">‹ Back</button>
+
+        <button class="primary" :disabled="!canGoNext" @click="goNext" type="button">
+          Next ›
+        </button>
+      </div>
     </div>
   </div>
 </template>
@@ -403,26 +415,46 @@ if (normalizedRights.includes("fairness") ||
   margin-top: 12px;
 }
 
-/* bottom arrows */
-.nav {
-  position: absolute;
-  bottom: 10px;
-  width: 60px;
-  height: 60px;
-  border: none;
-  background: transparent;
-  font-size: 64px;
-  line-height: 56px;
-  cursor: pointer;
-  color: #111;
-  user-select: none;
+/* arrows bottom */
+.bottom-nav {
+  position: fixed;
+  left: 28px;
+  right: 28px;
+  bottom: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
-.nav.left { left: 18px; }
-.nav.right { right: 18px; }
 
-@media (max-width: 980px) {
-  .title { font-size: 46px; }
-  .grid { grid-template-columns: 1fr; }
-  .right-row { grid-template-columns: 1fr 70px; }
+.ghost {
+  background: transparent;
+  border: 1px solid #111;
+  padding: 10px 18px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 16px;
 }
+
+.primary {
+  background: #111;
+  color: #fff;
+  border: none;
+  padding: 10px 18px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.primary:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+.primary:not(:disabled) {
+  background: #fff;
+  color: #111;
+  border: 1px solid #111;
+  cursor: pointer;
+}
+
 </style>

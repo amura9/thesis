@@ -1,8 +1,37 @@
 from __future__ import annotations
 from pathlib import Path
 from typing import Optional
+import json
 
 from playwright.sync_api import sync_playwright
+
+#Load plugin registry
+def load_plugin_registry(directory: Path) -> dict:
+    path = directory / "plugin_registry.json"
+    if not path.exists():
+        return {}
+
+    return json.loads(path.read_text(encoding="utf-8"))
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 def render_report_to_pdf(

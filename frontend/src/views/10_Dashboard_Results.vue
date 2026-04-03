@@ -1,7 +1,8 @@
 <script setup>
 import { computed, onMounted, ref } from "vue";
-import { useRoute, useRouter } from "vue-router";
+import { useRoute, useRouter} from "vue-router";
 
+//5 different metric results renderer
 import ScalarMapView from "../components/metrics/ScalarMapView.vue";
 import ConditionalNestedView from "../components/metrics/ConditionalNestedView.vue";
 import GroupMetricMapView from "../components/metrics/GroupMetricMapView.vue";
@@ -11,8 +12,8 @@ import CardMap from "../components/metrics/CardMap.vue";
 const route = useRoute();
 const router = useRouter();
 
-const group = computed(() => String(route.params.group || ""));
-const metricKey = computed(() => String(route.params.metric || ""));
+const group = computed(() => String(route.params.group || "")); //right
+const metricKey = computed(() => String(route.params.metric || "")); //metric
 
 const prettyMetric = computed(() =>
   metricKey.value.replaceAll("_", " ").replace(/\b\w/g, (c) => c.toUpperCase())
@@ -22,19 +23,20 @@ const loading = ref(false);
 const error = ref("");
 
 const runId = ref("");   
-const allResults = ref({});
-const allSchemas = ref({});
+const allResults = ref({}); //results for all metrics
+const allSchemas = ref({}); //schemas for all metrics
 
+//gets data from the selected metric (metricKey selected)
 const metricObj = computed(() => allResults.value?.[metricKey.value] ?? null);
+
+//get schema type from backend -> ex. k_anonymity: { schema: "scalar_map" },
 const metricSchemaFromBackend = computed(
   () => allSchemas.value?.[metricKey.value]?.schema ?? "unknown"
 );
 
-//get the schema value and apply the renderer
-const effectiveSchema = computed (() => metricSchemaFromBackend.value)
-
+//apply renderer depending on identified schema per metric
 const renderer = computed(() => {
-  switch (effectiveSchema.value) {
+  switch (metricSchemaFromBackend.value) {
     
     case "card_map":
       return CardMap;
@@ -51,24 +53,21 @@ const renderer = computed(() => {
   }
 });
 
-//initial weights as default
-const initialWeights = computed(() => ({}));
-
+//FIRST: retrieve results to display
 onMounted(async () => {
   try {
     loading.value = true;
     error.value = "";
 
-    // 1) Fetch all_results.json
     const res = await fetch("http://127.0.0.1:8000/results/values_to_display");
     if (!res.ok) throw new Error(await res.text());
     const data = await res.json();
 
-    runId.value = String(data?.run_id || "");  //run id stored from results
+    runId.value = String(data?.run_id || "");  
 
-    allResults.value = data?.results?.results ?? data?.results ?? data ?? {};
+    //catchinng results
+    allResults.value = data?.results ?? {};
 
-    // 2) Fetch schemas
     if (data?.schemas) {
       allSchemas.value = data.schemas;
     } else {
@@ -76,7 +75,7 @@ onMounted(async () => {
       if (sres.ok) {
         allSchemas.value = await sres.json();
       } else {
-        console.warn("No schemas endpoint or failed fetch; using inferred schema.");
+        console.warn("No schema found for current results.");
         allSchemas.value = {};
       }
     }
@@ -113,7 +112,7 @@ onMounted(async () => {
         :is="renderer"
         :metric-key="metricKey"
         :metric-obj="metricObj"
-        :schema-type="effectiveSchema"
+        :schema-type="metricSchemaFromBackend"
         :run-id="runId"                 
         :initial-weights="initialWeights"
       />
@@ -121,7 +120,7 @@ onMounted(async () => {
       <div v-else class="card">
         <h3>Raw output</h3>
         <p style="opacity:0.7; font-size: 13px">
-          (No renderer for schema: <strong>{{ effectiveSchema }}</strong>)
+          (No renderer for schema: <strong>{{ metricSchemaFromBackend }}</strong>)
         </p>
         <pre class="pre">{{ JSON.stringify(metricObj, null, 2) }}</pre>
       </div>

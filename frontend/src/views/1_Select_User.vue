@@ -4,6 +4,12 @@ import { useRouter } from "vue-router";
 
 const router = useRouter();
 
+const role = ref("");
+
+function goBack() {
+  router.back();
+}
+
 function goToEvaluation(selectedRole) {
   role.value = selectedRole;
 

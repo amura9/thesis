@@ -2,6 +2,7 @@ from backend.core.settings import BASE_DIR, STORAGE_DIR, UPLOAD_DIR, CONFIG_DIR,
 from backend.services.config_services import latest_config_path, read_config, write_config
 from backend.services.utils.find_headers import detect_headers
 from backend.services.utils.detect_numerical_and_bin import detect_numerical_and_bin, safe_ceil_int, edges_to_labels
+from backend.services.utils.get_file_columns import get_file_columns
 from fastapi import APIRouter, HTTPException
 from backend.services.utils.csv_tools import load_dataframe
 from backend.services.dataset_services import latest_upload_for_type
@@ -25,20 +26,12 @@ class BinningPayload(BaseModel):
     use_binning: bool = True
     bins: Dict[str, List[int]]  # feature -> edges
     
-#GET headers of Main Dataset
-@router.get("/inverse-encoding-prefixes")
-def get_inverse_encoding_prefixes(recursive: bool = True):
-    try:
-        headers_map = detect_headers(UPLOAD_DIR, recursive=recursive)
+#GET headers for postprocessing
+@router.get("/postprocessing/headers")
+def latest_columns():
+    result = get_file_columns()
 
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Unexpected error: {e}")
-
-    #headers
-    groups = {str(path): cols for path, cols in headers_map.items()}
-    headers = sorted({c for cols in headers_map.values() for c in cols})
-    
-    return {"groups": groups, "prefixes": headers}
+    return {"columns": result["columns"]} 
 
 #GET n-distributed numerical features
 @router.get("/n-distrib")

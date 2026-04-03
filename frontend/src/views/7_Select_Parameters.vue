@@ -108,6 +108,9 @@ function validate() {
   return true;
 }
 
+//if validate = False -> GoNext: greyed
+const canGoNext = computed(() => validate(false));
+
 //Payload
 function buildPayload() {
   const payload = {};
@@ -156,7 +159,7 @@ async function fetchPluginRegistry() {
 
 //FIRST: get Columns for conditional variable -> onMounted
 async function fetchLatestColumns() {
-  const res = await fetch("http://127.0.0.1:8000/datasets/latest/columns");
+  const res = await fetch("http://127.0.0.1:8000/headers");
   if (!res.ok) throw new Error(await res.text());
   const data = await res.json();
   columns.value = Array.isArray(data?.columns) ? data.columns : [];
@@ -206,29 +209,30 @@ onMounted(async () => {
 </script>
 
 <template>
-  <div class="rm-page">
-    <header class="rm-header">
+  <div class="page">
+    <header class="header">
       <h1>Step 4C - Select the metrics<br />you want to evaluate</h1>
-      <p class="rm-subtitle">
+      <p class="subtitle">
+      
         Some of the metrics you selected require additional information, such as which feature should be treated as sensitive,
         or which attributes may be used for re-identification risk. Please fill in the required fields below.
       </p>
     </header>
 
-    <div v-if="loading" class="rm-loading">Loading configuration…</div>
-    <div v-if="error" class="rm-error">{{ error }}</div>
+    <div v-if="loading" class="loading">Loading configuration…</div>
+    <div v-if="error" class="error">{{ error }}</div>
 
-    <div v-if="!loading" class="rm-grid">
+    <div v-if="!loading" class="grid">
       <!-- DYNAMIC METRICS + PARAMS -->
       <section
         v-for="card in metricCards"
         :key="card.id"
-        class="rm-card rm-span-3"
+        class="card span-3"
       >
-        <div class="rm-card-title">
+        <div class="card-title">
           <div>
-            <div class="rm-metric-name">{{ card.name }}</div>
-            <div class="rm-required">Required by: {{ card.name }}</div>
+            <div class="metric-name">{{ card.name }}</div>
+            <div class="required">Required by: {{ card.name }}</div>
           </div>
         </div>
 
@@ -239,11 +243,12 @@ onMounted(async () => {
           {{ card.description }}
         </p>
 
-        <div v-if="!card.params.length" class="rm-disabled-note">
+        <div v-if="!card.params.length" class="disabled-note">
           No parameters required for this metric.
         </div>
 
-        <div v-for="p in card.params" :key="p.key" class="rm-field">
+        <div v-for="p in card.params" :key="p.key" class="field">
+
           <label>
             {{ p.label || p.key }}
             <span v-if="p.required" style="color:#b30000;"> *</span>
@@ -310,49 +315,182 @@ onMounted(async () => {
       </section>
     </div>
 
-    <footer class="rm-footer">
-      <button class="rm-btn" @click="goBack">‹</button>
-      <div class="rm-spacer"></div>
-      <button class="rm-btn rm-btn-primary" @click="goNext"> ›</button>
-    </footer>
+    <!-- Bottom navigation (left/back + right/next like Image 2 arrows) -->
+      <div class="bottom-nav">
+        <button class="ghost" @click="goBack" type="button">‹ Back</button>
+
+        <button class="primary" :disabled="!canGoNext" @click="goNext" type="button">
+          Next ›
+        </button>
+      </div>
   </div>
 </template>
 
 <style scoped>
 /* (your same CSS) */
-.rm-page { max-width: 1100px; margin: 0 auto; padding: 22px 18px 18px; }
-.rm-header h1 { font-size: 34px; line-height: 1.15; text-align: center; margin: 8px 0 6px; }
-.rm-subtitle { text-align: center; margin: 0 auto 18px; max-width: 900px; color: #555; font-size: 14px; }
-.rm-loading { text-align: center; color: #666; margin: 12px 0 18px; font-size: 14px; }
-
-.rm-grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 14px; }
-.rm-span-2 { grid-column: span 2; }
-.rm-span-3 { grid-column: span 3; }
-
-@media (max-width: 900px) {
-  .rm-grid { grid-template-columns: 1fr; }
-  .rm-span-2, .rm-span-3 { grid-column: auto; }
+.page { 
+  max-width: 1100px; 
+  margin: 0 auto; 
+  padding: 22px 18px 18px; 
 }
 
-.rm-card { border: none; border-radius: 10px; padding: 14px; background: #fff; box-shadow: none; }
-.rm-card-title { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin-bottom: 10px; }
-.rm-metric-name { font-weight: 700; font-size: 14px; }
-.rm-required { font-size: 12px; color: #777; margin-top: 2px; }
+.header h1 { 
+  font-size: 34px; 
+  line-height: 1.15; 
+  text-align: center;
+  margin: 8px 0 6px; 
+}
 
-.rm-field { display: flex; flex-direction: column; gap: 6px; margin-top: 10px; }
-.rm-field label { font-size: 13px; font-weight: 600; }
-.rm-field select, .rm-field input { border: 1px solid #d9d9d9; border-radius: 8px; padding: 9px 10px; font-size: 14px; outline: none; }
-.rm-field select[multiple] { min-height: 90px; }
+.subtitle { 
+  text-align: center; 
+  margin: 0 auto 18px; 
+  max-width: 900px; 
+  color: #555; 
+  font-size: 14px; 
+}
 
-.rm-error { margin-top: 14px; background: #fff2f2; border: 1px solid #ffd2d2; color: #b30000; padding: 10px 12px; border-radius: 10px; }
+.loading { 
+  text-align: center; 
+  color: #666; 
+  margin: 12px 0 18px; 
+  font-size: 14px; 
+}
 
-.rm-footer { display: flex; align-items: center; margin-top: 16px; gap: 10px; }
-.rm-spacer { flex: 1; }
-.rm-btn { border: 1px solid #e0e0e0; background: #fff; border-radius: 999px; padding: 10px 14px; cursor: pointer; font-size: 14px; }
-.rm-btn-primary { border-color: #111; background: #111; color: #fff; }
+.grid { 
+  display: grid; 
+  grid-template-columns: repeat(6, 1fr); 
+  gap: 14px; 
+}
 
-.rm-disabled { opacity: 0.45; filter: grayscale(1); }
-.rm-disabled-note { margin-top: 8px; font-size: 12px; color: #777; }
+.span-2 { 
+  grid-column: span 2; 
+}
+
+.span-3 { 
+  grid-column: span 3; 
+}
+
+@media (max-width: 900px) {
+  .grid { grid-template-columns: 1fr; }
+  .span-2, .span-3 { grid-column: auto; }
+}
+
+.card { 
+  border: none; 
+  border-radius: 10px; 
+  padding: 14px; 
+  background: #fff; 
+  box-shadow: none; 
+}
+
+.card-title { 
+  display: flex; 
+  justify-content: space-between; 
+  align-items: center; 
+  gap: 12px; margin-bottom: 10px; 
+}
+
+.metric-name { 
+  font-weight: 700; 
+  font-size: 14px; 
+}
+
+.required { 
+  font-size: 12px; 
+  color: #777; 
+  margin-top: 2px; 
+}
+
+.field { 
+  display: flex; 
+  flex-direction: column; 
+  gap: 6px; 
+  margin-top: 10px; 
+}
+
+.field label { 
+  font-size: 13px; 
+  font-weight: 600; 
+}
+
+.field select, .field input { 
+  border: 1px solid #d9d9d9; 
+  border-radius: 8px; 
+  padding: 9px 10px; 
+  font-size: 14px; 
+  outline: none; 
+}
+
+.field select[multiple] { 
+  min-height: 90px; 
+}
+
+.error { 
+  margin-top: 14px; 
+  background: #fff2f2; 
+  border: 1px solid #ffd2d2; 
+  color: #b30000; 
+  padding: 10px 12px; 
+  border-radius: 10px; 
+}
+
+.spacer { 
+  flex: 1; 
+}
+
+/* arrows bottom */
+.bottom-nav {
+  position: fixed;
+  left: 28px;
+  right: 28px;
+  bottom: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.ghost {
+  background: transparent;
+  border: 1px solid #111;
+  padding: 10px 18px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.primary {
+  background: #111;
+  color: #fff;
+  border: none;
+  padding: 10px 18px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.primary:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+.primary:not(:disabled) {
+  background: #fff;
+  color: #111;
+  border: 1px solid #111;
+  cursor: pointer;
+}
+
+.disabled { 
+  opacity: 0.45; 
+  filter: grayscale(1); 
+}
+
+.disabled-note { 
+  margin-top: 8px; 
+  font-size: 12px; 
+  color: #777; 
+}
+
 .tick-box {
   border: 1px solid #d9d9d9;
   border-radius: 8px;

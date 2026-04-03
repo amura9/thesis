@@ -1,9 +1,9 @@
 {
   "datasets": {
     "train": null,
-    "X_test": "C:\\Users\\pc\\Desktop\\Alberto\\Alberto\\Tesi\\FRIA_evaluation\\FRIA_evaluation\\backend\\storage\\uploads\\X_test__12bc74bb-a36b-42fd-b9e7-eda65ace5998__X_test_MIN.csv",
-    "y_true": "C:\\Users\\pc\\Desktop\\Alberto\\Alberto\\Tesi\\FRIA_evaluation\\FRIA_evaluation\\backend\\storage\\uploads\\y_true__675d6896-d61e-46ec-8e03-390073634e84__y_true.csv",
-    "y_pred": "C:\\Users\\pc\\Desktop\\Alberto\\Alberto\\Tesi\\FRIA_evaluation\\FRIA_evaluation\\backend\\storage\\uploads\\y_pred__c9852be6-dc58-4b55-964c-107b2376a186__y_pred_MIN.csv"
+    "X_test": "C:\\Users\\pc\\Desktop\\Alberto\\Alberto\\Tesi\\FRIA_evaluation\\FRIA_evaluation\\backend\\storage\\uploads\\X_test__dd35443e-b6cb-477b-bd4f-c183ca10e453__X_test_MIN.csv",
+    "y_true": "C:\\Users\\pc\\Desktop\\Alberto\\Alberto\\Tesi\\FRIA_evaluation\\FRIA_evaluation\\backend\\storage\\uploads\\y_true__dd35443e-b6cb-477b-bd4f-c183ca10e453__y_true.csv",
+    "y_pred": "C:\\Users\\pc\\Desktop\\Alberto\\Alberto\\Tesi\\FRIA_evaluation\\FRIA_evaluation\\backend\\storage\\uploads\\y_pred__dd35443e-b6cb-477b-bd4f-c183ca10e453__y_test.csv"
   },
   "model": {
     "path": null
@@ -30,42 +30,14 @@
     "privacy"
   ],
   "metrics": {
-    "fake_right": [
-      "fake_right_example"
-    ],
-    "privacy": [
-      "anonymity_set_size",
-      "k_anonymity",
-      "l_diversity",
-      "mutual_information",
-      "t_closeness"
-    ],
+    "privacy": [],
     "fairness": [
-      "conditional_statistical_parity",
-      "conditional_use_accuracy_equality",
-      "demographic_parity",
-      "disparate_impact",
-      "equal_opportunity",
-      "equalized_odds_difference",
-      "overall_accuracy_equality",
-      "predictive_parity"
-    ]
+      "conditional_statistical_parity"
+    ],
+    "fake_right": []
   },
   "plugins": [
-    "plugins.fake_right.new_metric",
-    "plugins.privacy.anonymity_set_size",
-    "plugins.privacy.k_anonymity",
-    "plugins.privacy.l_diversity",
-    "plugins.privacy.mutual_information_metric",
-    "plugins.privacy.t_closeness",
-    "plugins.fairness.conditional_statistical_parity",
-    "plugins.fairness.conditional_use_accuracy_equality",
-    "plugins.fairness.demographic_parity",
-    "plugins.fairness.disparate_impact",
-    "plugins.fairness.equal_opportunity",
-    "plugins.fairness.equalized_odds_difference",
-    "plugins.fairness.overall_accuracy_equality",
-    "plugins.fairness.predictive_parity"
+    "plugins.fairness.conditional_statistical_parity"
   ],
   "metric_requirements": {
     "conditional_statistical_parity": {
@@ -295,9 +267,6 @@
     }
   },
   "metrics_by_right": {
-    "fake_right": [
-      "fake_right_example"
-    ],
     "privacy": [
       "anonymity_set_size",
       "k_anonymity",
@@ -314,45 +283,39 @@
       "equalized_odds_difference",
       "overall_accuracy_equality",
       "predictive_parity"
+    ],
+    "fake_right": [
+      "fake_right_example"
     ]
-  },
-  "fake_right_example": {
-    "threshold": 0.2,
-    "enabled": true
   },
   "k_anonymity": {
     "k_value": 2,
     "quasi_identifiers": [
       "age_cv",
       "competences_coverage_required"
-    ],
-    "enabled": true
+    ]
   },
   "l_diversity": {
     "quasi_identifiers": [
-      "age_cv",
-      "competences_coverage_required"
+      "competences_coverage_optional",
+      "education_cv_encoded"
     ],
-    "sensitive_attribute": "competences_coverage_optional",
-    "enabled": true
+    "sensitive_attribute": "age_cv"
   },
   "mutual_information": {
     "sensitive_attribute": "age_cv",
     "columns_to_exclude": [
-      "education_cv_encoded"
-    ],
-    "enabled": true
+      "competences_coverage_optional"
+    ]
   },
   "t_closeness": {
     "quasi_identifiers": [
-      "age_cv",
-      "competences_coverage_required"
+      "competences_coverage_required",
+      "competences_coverage_optional"
     ],
-    "sensitive_attribute": "education_cv_encoded",
-    "enabled": true
+    "sensitive_attribute": "education_job_req"
   },
-  "conditional_variable": {
-    "conditional_variable": "age_cv",
-    "enabled": true
+  "conditional_statistical_parity": {
+    "conditional_variable": "age_cv"
   }
 }

@@ -8,8 +8,8 @@ import IdentifySensitiveFeatures from "../views/5_Select_Sensitive_Feature.vue";
 import ExploreMetrics from "../views/6_Select_Metrics.vue";
 import MetricsParameters from "../views/7_Select_Parameters.vue";
 import RunModel from "../views/8_Start_Evaluation.vue";
-import ReviewResults from "../views/9_Display_Metrics.vue";
-import MetricResults from "../views/10_Display_Results.vue";
+import ReviewResults from "../views/9_Dashboard_Landing_Page.vue";
+import MetricResults from "../views/10_Dashboard_Results.vue";
 //import Report from "../views/11Report.vue" redundant
 
 
