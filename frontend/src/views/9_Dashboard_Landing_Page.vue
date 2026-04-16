@@ -2,6 +2,17 @@
 import { onMounted, ref, computed } from "vue";
 import { useRouter } from "vue-router";
 
+//for first report building
+import {
+  DEFAULT_WEIGHT,
+  DEFAULT_WEIGHT_JUSTIFICATION,
+  buildConditionalNestedFeatureSavePayload,
+  buildGroupMapFeatureSavePayload,
+  buildScalarMapSavePayload,
+  buildRecordWithTableSavePayload,
+  buildCardMapSavePayload,
+} from "../utils/report_builder_helper";
+
 const router = useRouter();
 
 const loadingMetrics = ref(true);
@@ -9,6 +20,12 @@ const metricsError = ref("");
 
 const plugins = ref([]);         // plugins.fake_right.new_metric
 const latestResults = ref(null); 
+
+//schemas
+const resultSchemas = ref({});
+
+//preserve existingReport generated with weights assigned by user
+const existingReport = ref({});
 
 //evaluation run
 const runId = ref("");
@@ -23,13 +40,26 @@ function prettify(s) {
 }
 
 //Generate report with current id: report/d16b4920-f796-4684-85e2-8f62588714c1 
-function generatePdf() {
+async function generatePdf() {
   pdfError.value = "";
-  if (!runId.value) {
-    pdfError.value = "runId is missing";
-    return;
+  pdfBusy.value = true;
+
+  try {
+    if (!runId.value) {
+      throw new Error("runId is missing");
+    }
+
+    await buildReportPayloadWithDefaults();
+
+    router.push({
+      name: "Report",
+      params: { runId: runId.value },
+    });
+  } catch (e) {
+    pdfError.value = e?.message || String(e);
+  } finally {
+    pdfBusy.value = false;
   }
-  router.push({ name: "Report", params: { runId: runId.value } }); 
 }
 
 
@@ -82,18 +112,238 @@ async function fetchData() {
     } else {
       latestResults.value = valsData;
     } 
-    console.log("Latest Results:", latestResults.value);
     
     //report: /report/d16b4920-f796-4684-85e2-8f62588714c1
     runId.value =
     latestResults.value?.run_id ||
     latestResults.value?.results?.run_id ||
     "";
-    console.log("RUN ID:", runId.value); 
+    
+    //fetch schema as well
+    const schemasResp = await fetch(
+      `http://127.0.0.1:8000/results/result_schemas?run_id=${encodeURIComponent(runId.value)}`
+    );
+    if (!schemasResp.ok) throw new Error(await schemasResp.text());
+    resultSchemas.value = await schemasResp.json();
+
+    //load _report.json if weights saved
+    try {
+      const reportResp = await fetch(
+        `http://127.0.0.1:8000/results/${runId.value}_report`
+      );
+
+      if (reportResp.ok) {
+        existingReport.value = await reportResp.json();
+      } else {
+        existingReport.value = {};
+      }
+    } catch {
+      existingReport.value = {};
+    }
+
   } catch (e) {
     metricsError.value = e?.message || String(e);
   } finally {
     loadingMetrics.value = false;
+  }
+}
+
+//Preserve user saved weights and justification
+function getReportRoot() {
+  return existingReport.value?.results ?? existingReport.value ?? {};
+}
+
+function getSavedGlobalWeight(metric) {
+  return getReportRoot()?.[metric]?.["(global)"]?.user_weight_report ?? DEFAULT_WEIGHT;
+}
+
+function getSavedGlobalJustification(metric) {
+  return (
+    getReportRoot()?.[metric]?.["(global)"]?.user_justification_report ??
+    DEFAULT_WEIGHT_JUSTIFICATION
+  );
+}
+
+function getSavedMetricWeight(metric) {
+  return getReportRoot()?.[metric]?.user_weight_report ?? DEFAULT_WEIGHT;
+}
+
+function getSavedMetricJustification(metric) {
+  return (
+    getReportRoot()?.[metric]?.user_justification_report ??
+    DEFAULT_WEIGHT_JUSTIFICATION
+  );
+}
+
+function getSavedFeatureWeight(metric, feature) {
+  return getReportRoot()?.[metric]?.[feature]?.user_weight_report ?? DEFAULT_WEIGHT;
+}
+
+function getSavedFeatureJustification(metric, feature) {
+  return (
+    getReportRoot()?.[metric]?.[feature]?.user_justification_report ??
+    DEFAULT_WEIGHT_JUSTIFICATION
+  );
+}
+
+//Build report payload with default weights and justification. How: loads results, look go
+async function buildReportPayloadWithDefaults() {
+  const all = latestResults.value?.results ?? latestResults.value ?? {};
+
+  for (const [groupName, metrics] of Object.entries(groupedMetrics.value)) {
+    for (const metricEntry of metrics) {
+      const metric = metricEntry.key;
+      const schemaType = resultSchemas.value?.[metric]?.schema ?? null;
+
+      if (schemaType !== "conditional_nested" && schemaType !== "group_metric_map"  && schemaType !== "scalar_map" &&
+          schemaType !== "record_with_table" && schemaType !== "card_map") {
+        continue;
+      }
+
+      const metricObj = all?.[metric];
+      if (!metricObj || typeof metricObj !== "object") continue;
+
+      if (schemaType === "card_map") {
+        const payload = buildCardMapSavePayload({
+          runId: runId.value,
+          group: groupName,
+          metric,
+          schemaType,
+          metricObj,
+          userWeight: getSavedGlobalWeight(metric),
+          userJustification: getSavedGlobalJustification(metric),
+        });
+
+        const resp = await fetch("http://127.0.0.1:8000/results/save_weights", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload),
+        });
+
+        if (!resp.ok) {
+          const err = await resp.json().catch(() => ({}));
+          throw new Error(
+            err.detail || (await resp.text()) || `Failed to save defaults for ${metric}`
+          );
+        }
+
+        continue;
+      }
+
+      if (schemaType === "record_with_table") {
+        const payload = buildRecordWithTableSavePayload({
+          runId: runId.value,
+          group: groupName,
+          metric,
+          metricObj,
+          userWeight: getSavedMetricWeight(metric),
+          userJustification: getSavedMetricJustification(metric),
+        });
+
+        const resp = await fetch("http://127.0.0.1:8000/results/save_weights", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload),
+        });
+
+        if (!resp.ok) {
+          const err = await resp.json().catch(() => ({}));
+          throw new Error(
+            err.detail || (await resp.text()) || `Failed to save defaults for ${metric}`
+          );
+        }
+
+        continue;
+      }
+
+           if (schemaType === "scalar_map") {
+        const rows = Object.entries(metricObj)
+          .map(([label, value]) => ({ label, value }));
+
+        if (!rows.length) continue;
+
+        const weightsByLabel = {};
+        const justificationsByLabel = {};
+
+        for (const row of rows) {
+          weightsByLabel[row.label] = getSavedFeatureWeight(metric, row.label);
+          justificationsByLabel[row.label] = getSavedFeatureJustification(metric, row.label);
+        }
+
+        const payload = buildScalarMapSavePayload({
+          runId: runId.value,
+          group: groupName,
+          metric,
+          rows,
+          weightsByLabel,
+          justificationsByLabel,
+        });
+
+        const resp = await fetch("http://127.0.0.1:8000/results/save_weights", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload),
+        });
+
+        if (!resp.ok) {
+          const err = await resp.json().catch(() => ({}));
+          throw new Error(
+            err.detail || (await resp.text()) || `Failed to save defaults for ${metric}`
+          );
+        }
+        continue;
+      }
+
+      const featureKeys = Object.keys(metricObj).filter(
+        (k) => k !== "(global)" && metricObj[k] && typeof metricObj[k] === "object"
+      );
+
+      for (const feature of featureKeys) {
+        let payload;
+
+        if (schemaType === "conditional_nested") {
+          payload = buildConditionalNestedFeatureSavePayload({
+            runId: runId.value,
+            group: groupName,
+            metric,
+            schemaType,
+            feature,
+            metricObj,
+            weight: getSavedFeatureWeight(metric, feature),
+            justification: getSavedFeatureJustification(metric, feature),
+            formatLabel: prettify,
+            formatValue: (v) => v,
+          });
+        } else if (schemaType === "group_metric_map") {
+          payload = buildGroupMapFeatureSavePayload({
+            runId: runId.value,
+            metric,
+            schemaType,
+            feature,
+            metricObj,
+            weight: getSavedFeatureWeight(metric, feature),
+            justification: getSavedFeatureJustification(metric, feature),
+            formatLabel: prettify,
+            formatValue: (v) => v,
+          });
+        } else {
+          continue;
+        }
+
+        const resp = await fetch("http://127.0.0.1:8000/results/save_weights", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload),
+        });
+
+        if (!resp.ok) {
+          const err = await resp.json().catch(() => ({}));
+          throw new Error(
+            err.detail || (await resp.text()) || `Failed to save defaults for ${metric}/${feature}`
+          );
+        }
+      }
+    }
   }
 }
 

@@ -391,8 +391,8 @@ if (normalizedRights.includes("fairness") ||
   inset: 0;
   background: #d9d9d9;
   border-radius: 999px;
-  border: 2px solid #999;
 }
+
 .slider:before {
   content: "";
   position: absolute;
@@ -400,10 +400,11 @@ if (normalizedRights.includes("fairness") ||
   width: 22px;
   left: 3px;
   top: 3px;
-  background: #777;
+  background: #fff;
   border-radius: 50%;
   transition: 0.2s;
 }
+
 .switch input:checked + .slider:before {
   transform: translateX(24px);
 }

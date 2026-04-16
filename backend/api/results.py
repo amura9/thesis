@@ -1,8 +1,8 @@
 from backend.services.config_services import attach_uploads_to_config, latest_config_path, read_config, write_config
 from backend.services.utils.detect_metric_schema import detect_all_result_schemas
-from backend.core.settings import BASE_DIR, STORAGE_DIR, UPLOAD_DIR, CONFIG_DIR, RESULTS_DIR, RUN_DIR, REGISTRY_DIR#all the dir to be imported
+from backend.core.settings import BASE_DIR, STORAGE_DIR, UPLOAD_DIR, CONFIG_DIR, RESULTS_DIR, RUN_DIR, REGISTRY_DIR #all the dir to be imported
 from fastapi import APIRouter, HTTPException, Query, Body, UploadFile, File, Form
-from backend.services.result_services import render_report_to_pdf, load_plugin_registry
+from backend.services.result_services import render_report_to_pdf, load_plugin_registry, compute_total_score
 from fastapi.responses import JSONResponse, FileResponse
 from backend.schemas.config import ConfigIn
 from pydantic import BaseModel, Field
@@ -61,8 +61,7 @@ def values_to_display():
     res_path = RESULTS_DIR / f"{run_id}.json"
 
     if res_path.exists():
-        results = json.loads(res_path.read_text(encoding="utf-8"))
-        
+        results = json.loads(res_path.read_text(encoding="utf-8"))  
         
         return {
         "run_id": run_id, 
@@ -91,96 +90,63 @@ def get_result_schemas(run_id: str | None = Query(default=None)):
 
     return json.loads(schemas_path.read_text(encoding="utf-8"))
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-###############################################################
-#Explicit saving
-#Save: weights, justification, report content (if save clicked or not)
-DEFAULT_WEIGHT = 5
-
 #payload for report
 class WeightsSavePayload(BaseModel):
-    run_id: str
-    group: Optional[str] = None
-    metric: str
+    run_id: str #id
+    group: Optional[str] = None #right
+    metric: str #metric
 
-    #weights provided at metrics level 
-    user_weight: Optional[int] = None
+    #metric description will instead be taken from the plugin_registry
+
+    #weights / justification at metric level
+    user_weight: Optional[float] = None
     user_justification: Optional[str] = ""
     
-    #weights provided at sensitive features level
-    weights: Dict[str, int] = Field(default_factory=dict)           # {feature: weight}
-    justifications: Dict[str, str] = Field(default_factory=dict)    # {feature: text}
+    #weights / justification at sensitive features level
+    weights: Dict[str, float] = Field(default_factory=dict)           
+    justifications: Dict[str, str] = Field(default_factory=dict)    
 
-    #save also the schema_type
+    #schema 
     schema_type_report: Optional[str] = None
 
-    #context table / summary table
+    #context and summary
     context_report: Optional[Dict[str, Any]] = None
     summary_report: Optional[Dict[str, Any]] = None
 
-import json
-from fastapi import HTTPException
-
-def _clamp_weight(w: int) -> int:
-    try:
-        w = int(w)
-    except Exception:
-        w = DEFAULT_WEIGHT
-    return max(0, min(10, w))
-
-#WEIGHTS SAVING AND GENERATION OF REPORT DATA
+#POST: save weights, justification and report content (context + summary)
 @router.post("/results/save_weights")
 def save_weights(payload: WeightsSavePayload):
     run_id = payload.run_id
     group = payload.group
     metric = payload.metric
 
-    #METRIC DESCRIPTION FROM PLUGIN REGISTRY
+    #Metric deascription, right taken from plugin registry
     plugin_registry = load_plugin_registry(REGISTRY_DIR)
 
     metric_meta = plugin_registry.get(metric, {})
     metric_description = metric_meta.get("description") #get description 
     metric_right = metric_meta.get("right")#get right
+
+    #create {id}_report.json path
     source_path = RESULTS_DIR / f"{run_id}.json"
     report_path = RESULTS_DIR / f"{run_id}_report.json"
 
     if not source_path.exists():
         raise HTTPException(status_code=404, detail=f"Results file not found for run_id={run_id}")
 
-    # Build report file starting from original results once, then keep updating report file
     if report_path.exists():
         report_raw = json.loads(report_path.read_text(encoding="utf-8"))
     else:
         report_raw = json.loads(source_path.read_text(encoding="utf-8"))
 
     report_results = report_raw.get("results") if isinstance(report_raw, dict) and "results" in report_raw else report_raw
-    if not isinstance(report_results, dict):
-        raise HTTPException(status_code=500, detail="Invalid report structure")
 
     if metric not in report_results or not isinstance(report_results[metric], dict):
         raise HTTPException(status_code=400, detail=f"Metric '{metric}' not found in results/report")
 
-    metric_obj = report_results[metric]
+    metric_obj = report_results[metric] #select results per metric
     # --------------------
-    # CASE A: GLOBAL METRIC  - no need of sensitive features / new metric
+    # CASE A: GLOBAL METRIC  - Case: a new metric
     '''
     "New Metric": {
         "(global)": {
@@ -190,8 +156,8 @@ def save_weights(payload: WeightsSavePayload):
     '''
     # --------------------
     if payload.user_weight is not None and "(global)" in metric_obj:
-        w = _clamp_weight(payload.user_weight)
-        just = (payload.user_justification or "").strip()
+        w = payload.user_weight
+        just = (payload.user_justification).strip()
 
         if not isinstance(metric_obj["(global)"], dict):
             if isinstance(metric_obj["(global)"], (int, float)):
@@ -199,7 +165,15 @@ def save_weights(payload: WeightsSavePayload):
             else:
                 metric_obj["(global)"] = {}
 
-        metric_obj["(global)"]["user_weight_report"] = w
+        metric_value = (payload.context_report or {}).get("final_score")
+
+        final_score = compute_total_score(metric_value, w)
+        if final_score is not None:
+            metric_obj["(global)"]["total_score_report"] = final_score
+
+        #in report: weight, right, metric description, justification, context
+        if w: 
+            metric_obj["(global)"]["user_weight_report"] = w
 
         if group:
             metric_obj["(global)"]["group_report"] = group
@@ -208,29 +182,25 @@ def save_weights(payload: WeightsSavePayload):
             metric_obj["(global)"]["metric_description_report"] = metric_description
 
         if metric_right:
-            metric_obj["(global)"]["metric_right_report"] = metric_right
+                metric_obj["(global)"]["metric_right_report"] = metric_right #save right
 
-        if w != DEFAULT_WEIGHT:
+        if just:
             metric_obj["(global)"]["user_justification_report"] = just
-        else:
-            metric_obj["(global)"].pop("user_justification_report", None)
-
-        if payload.context_report is not None:
-            metric_obj["(global)"]["context_report"] = payload.context_report
 
         if payload.schema_type_report is not None:
             metric_obj["(global)"]["schema_type_report"] = payload.schema_type_report
 
-        if payload.summary_report is not None:
-            metric_obj["(global)"]["summary_report"] = payload.summary_report
+        if payload.context_report is not None:
+            metric_obj["(global)"]["context_report"] = payload.context_report
 
         report_path.write_text(json.dumps(report_raw, ensure_ascii=False, indent=2), encoding="utf-8")
         return {"ok": True, "mode": "global", "run_id": run_id}
 
     # --------------------
-    # CASE B: Metric-level weights, justistifaction and report saving
+    # CASE B, Store at metric-level: weights, justistifaction and report saving
     '''
     "user_weight_report": 5,
+    "user_justification_report": ""
     "metric_description_report": "Evaluates K-Anonymity over quasi-identifiers (each equivalence class must have at least k records).",
     "metric_right_report": "Privacy",
     "context_report": {
@@ -250,13 +220,19 @@ def save_weights(payload: WeightsSavePayload):
     '''
     # --------------------
     if payload.user_weight is not None:
-        w = _clamp_weight(payload.user_weight)
+        w = payload.user_weight
         just = (payload.user_justification or "").strip()
 
-        # store at metric level
-        metric_obj["user_weight_report"] = w
+        metric_value = (payload.context_report or {}).get("final_score")
 
-        #store also the rights
+        final_score = compute_total_score(metric_value, w)
+        if final_score is not None:
+            metric_obj["total_score_report"] = final_score
+
+        ##in report: weight, right, metric description, justification, context
+        if w: 
+            metric_obj["user_weight_report"] = w
+
         if group:
             metric_obj["right_report"] = group
 
@@ -266,16 +242,14 @@ def save_weights(payload: WeightsSavePayload):
         if metric_right:
             metric_obj["metric_right_report"] = metric_right #save right
 
-        if w != DEFAULT_WEIGHT:
+        if just:
             metric_obj["user_justification_report"] = just
-        else:
-            metric_obj.pop("user_justification_report", None)
+
+        if payload.schema_type_report is not None:
+                metric_obj["schema_type_report"] = payload.schema_type_report
         
         if payload.context_report is not None:
             metric_obj["context_report"] = payload.context_report
-        
-        if payload.schema_type_report is not None:
-                metric_obj["schema_type_report"] = payload.schema_type_report
         
         report_path.write_text(json.dumps(report_raw, ensure_ascii=False, indent=2), encoding="utf-8")
         return {"ok": True, "mode": "metric", "run_id": run_id}
@@ -306,17 +280,26 @@ def save_weights(payload: WeightsSavePayload):
     # --------------------
     if payload.weights:
         for feature, w_raw in payload.weights.items():
-            w = _clamp_weight(w_raw)
+            w = w_raw
             just = (payload.justifications.get(feature) or "").strip()
 
-            # ensure dict container for feature
+            # feature to be a dict
             if feature not in metric_obj or not isinstance(metric_obj[feature], dict):
-                # if numeric, wrap
                 if isinstance(metric_obj.get(feature), (int, float)):
                     metric_obj[feature] = {"value": metric_obj[feature]}
-                else:
-                    metric_obj[feature] = {}
+            else:
+                metric_obj[feature] = {}
 
+            metric_value = ((payload.summary_report or {}).get(feature, {}).get("Final Score")
+                            or (payload.context_report or {}).get(feature, {}).get("Final Score")
+                            or ((payload.context_report or {}).get(feature, {}).get("value")*10)
+            )
+
+            final_score = compute_total_score(metric_value, w)
+            if final_score is not None:
+                metric_obj[feature]["total_score_report"] = final_score
+
+            ##in report: weight, right, metric description, justification, context report, summary report
             metric_obj[feature]["user_weight_report"] = w
 
             if group:
@@ -328,15 +311,12 @@ def save_weights(payload: WeightsSavePayload):
             if metric_right:
                 metric_obj[feature]["metric_right_report"] = metric_right #save right
 
-            if w != DEFAULT_WEIGHT:
+            if just:
                 metric_obj[feature]["user_justification_report"] = just
-            else:
-                metric_obj[feature].pop("user_justification_report", None)
-
+        
             if payload.schema_type_report is not None:
                 metric_obj[feature]["schema_type_report"] = payload.schema_type_report
-
-            #slightly different context report to be used
+            
             if payload.context_report is not None:
                 if feature in payload.context_report and isinstance(payload.context_report.get(feature), dict):
                     metric_obj[feature]["context_report"] = payload.context_report[feature]
@@ -356,7 +336,8 @@ def save_weights(payload: WeightsSavePayload):
 
     raise HTTPException(status_code=400, detail="No weights provided (metric-level or feature-level).")
 
-#USING ABC123_REPORT.json
+
+#GET: take the _report.json to generate the final PDF
 @router.get("/results/{run_id}_report")
 def get_report_json(run_id: str):
     report_path = RESULTS_DIR / f"{run_id}_report.json"
@@ -379,7 +360,7 @@ def generate_pdf(req: GeneratePDFRequest):
     if not run_id:
         raise HTTPException(status_code=400, detail="run_id is required")
 
-    frontend_base_url = os.getenv("FRONTEND_BASE_URL", "http://127.0.0.1:5173")
+    frontend_base_url = os.getenv("FRONTEND_BASE_URL", "http://localhost:5173")
 
     out_dir = Path("backend/storage/reports")
     out_path = out_dir / f"{run_id}_report.pdf"

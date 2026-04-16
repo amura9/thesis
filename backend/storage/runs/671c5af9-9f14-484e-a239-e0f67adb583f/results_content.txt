@@ -1,0 +1,114 @@
+Namespace(config='C:\\Users\\pc\\Desktop\\Alberto\\Alberto\\Tesi\\FRIA_evaluation\\FRIA_evaluation\\backend\\storage\\configs\\671c5af9-9f14-484e-a239-e0f67adb583f.json')
+C:\Users\pc\Desktop\Alberto\Alberto\Tesi\FRIA_evaluation\FRIA_evaluation\backend\storage\configs\671c5af9-9f14-484e-a239-e0f67adb583f.json
+[INFO] Using config: C:\Users\pc\Desktop\Alberto\Alberto\Tesi\FRIA_evaluation\FRIA_evaluation\backend\storage\configs\671c5af9-9f14-484e-a239-e0f67adb583f.json
+
+Selected sensitive features: ['competences_coverage_required', 'competences_coverage_optional']
+
+Columns available after preprocessing: ['age_cv', 'competences_coverage_required', 'competences_coverage_optional', 'education_cv_encoded', 'education_job_req', 'education_job_encoded', 'gender_job_Any', 'gender_job_Female', 'gender_job_Male', 'gender_cv_Female', 'gender_cv_Male', 'gender_cv_Not binary', 'gender_cv_Not declared', 'disability_cv_No', 'disability_cv_Not declared', 'disability_cv_Yes', 'disability_job_Any', 'disability_job_No', 'PCA_1', 'PCA_2', 'nationality_job_Any', 'nationality_job_Catalan', 'nationality_job_English', 'nationality_job_French', 'nationality_job_Italian', 'nationality_job_Spanish', 'nationality_cv_Catalan', 'nationality_cv_English', 'nationality_cv_French', 'nationality_cv_German', 'nationality_cv_Irish', 'nationality_cv_Italian', 'nationality_cv_LowGerman', 'nationality_cv_Romanian', 'nationality_cv_Russian', 'nationality_cv_Spanish', 'nationality_cv_Swedish', 'age_min_job', 'age_max_job', 'distrib_test', 'check_it', 'check_de', 'people_of_world']
+
+Running Fake Right Example (Fake)
+
+Running conditional_statistical_parity
+  Computing for feature: competences_coverage_required
+Loaded conditional_variable: education_cv_encoded
+Loaded sensitive_feature: competences_coverage_required
+Config section: {'conditional_variable': 'education_cv_encoded'}
+Available X_test columns: ['age_cv', 'competences_coverage_required', 'competences_coverage_optional', 'education_cv_encoded', 'education_job_req', 'education_job_encoded', 'gender_job_Any', 'gender_job_Female', 'gender_job_Male', 'gender_cv_Female', 'gender_cv_Male', 'gender_cv_Not binary', 'gender_cv_Not declared', 'disability_cv_No', 'disability_cv_Not declared', 'disability_cv_Yes', 'disability_job_Any', 'disability_job_No', 'PCA_1', 'PCA_2', 'nationality_job_Any', 'nationality_job_Catalan', 'nationality_job_English', 'nationality_job_French', 'nationality_job_Italian', 'nationality_job_Spanish', 'nationality_cv_Catalan', 'nationality_cv_English', 'nationality_cv_French', 'nationality_cv_German', 'nationality_cv_Irish', 'nationality_cv_Italian', 'nationality_cv_LowGerman', 'nationality_cv_Romanian', 'nationality_cv_Russian', 'nationality_cv_Spanish', 'nationality_cv_Swedish', 'age_min_job', 'age_max_job', 'distrib_test', 'check_it', 'check_de', 'people_of_world']
+  Computing for feature: competences_coverage_optional
+Loaded conditional_variable: education_cv_encoded
+Loaded sensitive_feature: competences_coverage_optional
+Config section: {'conditional_variable': 'education_cv_encoded'}
+Available X_test columns: ['age_cv', 'competences_coverage_required', 'competences_coverage_optional', 'education_cv_encoded', 'education_job_req', 'education_job_encoded', 'gender_job_Any', 'gender_job_Female', 'gender_job_Male', 'gender_cv_Female', 'gender_cv_Male', 'gender_cv_Not binary', 'gender_cv_Not declared', 'disability_cv_No', 'disability_cv_Not declared', 'disability_cv_Yes', 'disability_job_Any', 'disability_job_No', 'PCA_1', 'PCA_2', 'nationality_job_Any', 'nationality_job_Catalan', 'nationality_job_English', 'nationality_job_French', 'nationality_job_Italian', 'nationality_job_Spanish', 'nationality_cv_Catalan', 'nationality_cv_English', 'nationality_cv_French', 'nationality_cv_German', 'nationality_cv_Irish', 'nationality_cv_Italian', 'nationality_cv_LowGerman', 'nationality_cv_Romanian', 'nationality_cv_Russian', 'nationality_cv_Spanish', 'nationality_cv_Swedish', 'age_min_job', 'age_max_job', 'distrib_test', 'check_it', 'check_de', 'people_of_world']
+
+Running Conditional Use Accuracy Equality
+  Computing for feature: competences_coverage_required
+  Computing for feature: competences_coverage_optional
+
+Running Demographic Parity
+  Computing for feature: competences_coverage_required
+  Computing for feature: competences_coverage_optional
+
+Running Anonymity Set Size
+
+Running K-Anonymity
+
+=== FINAL RESULTS ===
+
+--- Metrics: new_metric ---
+
+  Feature: (global)
+    Metric: Fake Right Example
+    Value: {'status': 'success', 'metric': 'Fake Right Example', 'used_column': 'age_cv', 'mean': 35.3406, 'median': 32.0, 'ratio_rule': 'mean/median', 'computed': 1.10439375, 'threshold': 0.2, 'result': 0.2}
+
+--- Metrics: conditional_statistical_parity ---
+
+  Feature: competences_coverage_required
+    Metric: Conditional Statistical Parity
+    Value: {'metric': 'Conditional Statistical Parity', 'status': 'success', 'conditional_variable': 'education_cv_encoded', 'sensitive_feature': 'competences_coverage_required', 'conditions': {'0': {'0.25': 0.043478260869565216, '0.5': 0.06896551724137931, '0.75': 0.0, '1.0': 0.05303030303030303, 'raw_difference': 0.06896551724137931, 'normalized_score': 0.9310344827586207, 'weight': 0.1052, 'total_samples': 526}, '1': {'0.25': 0.04519774011299435, '0.3333333333333333': 0.8571428571428571, '0.5': 0.182648401826484, '0.6666666666666666': 0.8979591836734694, '0.75': 0.028409090909090908, '1.0': 0.4252199413489736, 'raw_difference': 0.8695500927643784, 'normalized_score': 0.13044990723562155, 'weight': 0.2106, 'total_samples': 1053}, '2': {'0.25': 0.17119565217391305, '0.3333333333333333': 0.9642857142857143, '0.5': 0.2088167053364269, '0.6666666666666666': 0.9565217391304348, '0.75': 0.09829059829059829, '1.0': 0.41379310344827586, 'raw_difference': 0.865995115995116, 'normalized_score': 0.13400488400488397, 'weight': 0.4358, 'total_samples': 2179}, '3': {'0.25': 0.08496732026143791, '0.3333333333333333': 0.9743589743589743, '0.5': 0.3222591362126246, '0.6666666666666666': 0.8837209302325582, '0.75': 0.18716577540106952, '1.0': 0.44711538461538464, 'raw_difference': 0.8893916540975364, 'normalized_score': 0.1106083459024636, 'weight': 0.2278, 'total_samples': 1139}, '4': {'0.25': 0.12, '0.5': 0.0967741935483871, '0.75': 0.0, '1.0': 0.045454545454545456, 'raw_difference': 0.12, 'normalized_score': 0.88, 'weight': 0.0206, 'total_samples': 103}}, 'disparity_summary': {'raw_average': 0.7728585123040617, 'raw_max': 0.8893916540975364, 'raw_min': 0.06896551724137931, 'normalized_average': 0.22714148769593845, 'normalized_max': 0.9310344827586207, 'normalized_min': 0.1106083459024636, 'processed_conditions': 5, 'total_samples': 5000}}
+
+  Feature: competences_coverage_optional
+    Metric: Conditional Statistical Parity
+    Value: {'metric': 'Conditional Statistical Parity', 'status': 'success', 'conditional_variable': 'education_cv_encoded', 'sensitive_feature': 'competences_coverage_optional', 'conditions': {'0': {'0.0': 0.04735376044568245, '0.5': 0.0, '1.0': 0.03614457831325301, 'raw_difference': 0.04735376044568245, 'normalized_score': 0.9526462395543176, 'weight': 0.1052, 'total_samples': 526}, '1': {'0.0': 0.23248882265275708, '0.3333333333333333': 0.7692307692307693, '0.5': 0.0, '0.6666666666666666': 0.5, '1.0': 0.425, 'raw_difference': 0.7692307692307693, 'normalized_score': 0.23076923076923073, 'weight': 0.2106, 'total_samples': 1053}, '2': {'0.0': 0.2849779086892489, '0.3333333333333333': 1.0, '0.5': 0.631578947368421, '0.6666666666666666': 1.0, '1.0': 0.35224274406332456, 'raw_difference': 0.7150220913107511, 'normalized_score': 0.2849779086892489, 'weight': 0.4358, 'total_samples': 2179}, '3': {'0.0': 0.3507917174177832, '0.3333333333333333': 0.4, '0.5': 0.6212121212121212, '1.0': 0.3076923076923077, 'raw_difference': 0.3135198135198135, 'normalized_score': 0.6864801864801865, 'weight': 0.2278, 'total_samples': 1139}, '4': {'0.0': 0.08108108108108109, '1.0': 0.034482758620689655, 'raw_difference': 0.04659832246039143, 'normalized_score': 0.9534016775396086, 'weight': 0.0206, 'total_samples': 103}}, 'disparity_summary': {'raw_average': 0.5509679819546088, 'raw_max': 0.7692307692307693, 'raw_min': 0.04659832246039143, 'normalized_average': 0.4490320180453913, 'normalized_max': 0.9534016775396086, 'normalized_min': 0.23076923076923073, 'processed_conditions': 5, 'total_samples': 5000}}
+
+--- Metrics: conditional_use_accuracy_equality ---
+
+  Feature: competences_coverage_required
+    Metric: Conditional Use Accuracy Equality
+    Value: {'metric': 'Conditional Use Accuracy Equality', 'status': 'success', 'sensitive_feature': 'competences_coverage_required', 'accuracy_by_group': {'0.25': 0.5913978494623656, '0.3333333333333333': 1.0, '0.5': 0.8416666666666667, '0.6666666666666666': 1.0, '0.75': 0.6744186046511628, '1.0': 0.9479674796747968}, 'difference': 0.4086021505376344, 'normalized_score': 0.5913978494623656}
+
+  Feature: competences_coverage_optional
+    Metric: Conditional Use Accuracy Equality
+    Value: {'metric': 'Conditional Use Accuracy Equality', 'status': 'success', 'sensitive_feature': 'competences_coverage_optional', 'accuracy_by_group': {'0.0': 0.9156908665105387, '0.3333333333333333': 0.9787234042553191, '0.5': 0.9811320754716981, '0.6666666666666666': 1.0, '1.0': 0.8767395626242545}, 'difference': 0.12326043737574555, 'normalized_score': 0.8767395626242545}
+
+--- Metrics: demographic_parity ---
+
+  Feature: competences_coverage_required
+    Value: 0.14954091065776687
+
+  Feature: competences_coverage_optional
+    Value: 0.3733354789395341
+
+--- Metrics: anonymity_set_size ---
+
+  Combined result:
+    Metric: Anonymity Set Size
+    Value: {'metric': 'Anonymity Set Size', 'status': 'success', 'average': 200.0, 'min': 2, 'max': 1033, 'unique_combinations': 25, 'total_records': 5000, 'sensitive_features': ['competences_coverage_required', 'competences_coverage_optional'], 'score': 0.995, 'example_groups': [{'competences_coverage_required': np.float64(1.0), 'competences_coverage_optional': np.float64(0.0), 'count': 1033}, {'competences_coverage_required': np.float64(0.5), 'competences_coverage_optional': np.float64(0.0), 'count': 730}, {'competences_coverage_required': np.float64(0.75), 'competences_coverage_optional': np.float64(0.0), 'count': 654}, {'competences_coverage_required': np.float64(0.25), 'competences_coverage_optional': np.float64(0.0), 'count': 594}, {'competences_coverage_required': np.float64(1.0), 'competences_coverage_optional': np.float64(1.0), 'count': 481}, {'competences_coverage_required': np.float64(0.5), 'competences_coverage_optional': np.float64(1.0), 'count': 371}, {'competences_coverage_required': np.float64(0.75), 'competences_coverage_optional': np.float64(1.0), 'count': 308}, {'competences_coverage_required': np.float64(0.25), 'competences_coverage_optional': np.float64(1.0), 'count': 262}, {'competences_coverage_required': np.float64(0.6666666666666666), 'competences_coverage_optional': np.float64(0.0), 'count': 180}, {'competences_coverage_required': np.float64(0.6666666666666666), 'competences_coverage_optional': np.float64(1.0), 'count': 95}], 'full_results': [{'competences_coverage_required': 1.0, 'competences_coverage_optional': 0.0, 'count': 1033}, {'competences_coverage_required': 0.5, 'competences_coverage_optional': 0.0, 'count': 730}, {'competences_coverage_required': 0.75, 'competences_coverage_optional': 0.0, 'count': 654}, {'competences_coverage_required': 0.25, 'competences_coverage_optional': 0.0, 'count': 594}, {'competences_coverage_required': 1.0, 'competences_coverage_optional': 1.0, 'count': 481}, {'competences_coverage_required': 0.5, 'competences_coverage_optional': 1.0, 'count': 371}, {'competences_coverage_required': 0.75, 'competences_coverage_optional': 1.0, 'count': 308}, {'competences_coverage_required': 0.25, 'competences_coverage_optional': 1.0, 'count': 262}, {'competences_coverage_required': 0.6666666666666666, 'competences_coverage_optional': 0.0, 'count': 180}, {'competences_coverage_required': 0.6666666666666666, 'competences_coverage_optional': 1.0, 'count': 95}, {'competences_coverage_required': 0.3333333333333333, 'competences_coverage_optional': 0.0, 'count': 92}, {'competences_coverage_required': 0.3333333333333333, 'competences_coverage_optional': 1.0, 'count': 43}, {'competences_coverage_required': 1.0, 'competences_coverage_optional': 0.5, 'count': 40}, {'competences_coverage_required': 0.5, 'competences_coverage_optional': 0.5, 'count': 26}, {'competences_coverage_required': 1.0, 'competences_coverage_optional': 0.3333333333333333, 'count': 18}, {'competences_coverage_required': 0.6666666666666666, 'competences_coverage_optional': 0.3333333333333333, 'count': 18}, {'competences_coverage_required': 0.3333333333333333, 'competences_coverage_optional': 0.3333333333333333, 'count': 14}, {'competences_coverage_required': 0.3333333333333333, 'competences_coverage_optional': 0.5, 'count': 12}, {'competences_coverage_required': 1.0, 'competences_coverage_optional': 0.6666666666666666, 'count': 6}, {'competences_coverage_required': 0.6666666666666666, 'competences_coverage_optional': 0.6666666666666666, 'count': 5}, {'competences_coverage_required': 0.25, 'competences_coverage_optional': 0.5, 'count': 5}, {'competences_coverage_required': 0.3333333333333333, 'competences_coverage_optional': 0.6666666666666666, 'count': 4}, {'competences_coverage_required': 0.6666666666666666, 'competences_coverage_optional': 0.5, 'count': 4}, {'competences_coverage_required': 0.75, 'competences_coverage_optional': 0.3333333333333333, 'count': 3}, {'competences_coverage_required': 0.75, 'competences_coverage_optional': 0.5, 'count': 2}]}
+
+--- Metrics: k_anonymity ---
+
+  Combined result:
+    Metric: K-Anonymity
+    k: 2
+    Compliance: False (86.88%)
+    Min group size: 1
+    Max group size: 62
+    Avg group size: 9.94
+
+[COMPACT] Example groups (max 5):
+      Group:
+None
+      Count: 1
+      Compliant: False
+
+      Group:
+None
+      Count: 4
+      Compliant: True
+
+      Group:
+None
+      Count: 1
+      Compliant: False
+
+      Group:
+None
+      Count: 1
+      Compliant: False
+
+      Group:
+None
+      Count: 2
+      Compliant: True
+
+    ... (498 groups omitted)
+[INFO] Saved UI schemas to: C:\Users\pc\Desktop\Alberto\Alberto\Tesi\FRIA_evaluation\FRIA_evaluation\evaluator\run_results\result_schemas.json

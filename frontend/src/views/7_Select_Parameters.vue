@@ -109,7 +109,27 @@ function validate() {
 }
 
 //if validate = False -> GoNext: greyed
-const canGoNext = computed(() => validate(false));
+const canGoNext = computed(() => {
+  if (!metricCards.value.length) return false;
+
+  for (const card of metricCards.value) { //loo through params of each metric
+    for (const p of card.params) {
+
+      const val = form.value?.[card.id]?.[p.key];
+      const t = String(p.type || "").toLowerCase();
+
+      if (t.startsWith("list")) { //for multiple selectable params like quasi identifiers, one needs to be selected
+        if (!Array.isArray(val) || val.length === 0) return false;
+      } else if (["int", "integer", "float", "number"].includes(t)) {
+        if (val === null || val === undefined || val === "") return false;
+      } else {
+        if (!val) return false;
+      }
+    }
+  }
+
+  return true;
+});
 
 //Payload
 function buildPayload() {
@@ -225,14 +245,15 @@ onMounted(async () => {
     <div v-if="!loading" class="grid">
       <!-- DYNAMIC METRICS + PARAMS -->
       <section
-        v-for="card in metricCards"
+        v-for="(card,index) in metricCards"
         :key="card.id"
         class="card span-3"
+        :class="{ separatorRight: index % 2 === 0 }"
       >
         <div class="card-title">
           <div>
             <div class="metric-name">{{ card.name }}</div>
-            <div class="required">Required by: {{ card.name }}</div>
+
           </div>
         </div>
 
@@ -381,18 +402,27 @@ onMounted(async () => {
   padding: 14px; 
   background: #fff; 
   box-shadow: none; 
+  text-align: left;
+  border-bottom: 1px solid #e2e2e2;
+}
+
+.separatorRight {
+  border-right: 1px solid #e2e2e2;
+  padding-right: 20px;
+  margin-right: 6px;
 }
 
 .card-title { 
-  display: flex; 
-  justify-content: space-between; 
-  align-items: center; 
-  gap: 12px; margin-bottom: 10px; 
+  width: 100%;
+  margin-bottom: 10px; 
 }
 
-.metric-name { 
-  font-weight: 700; 
-  font-size: 14px; 
+.metric-name {
+  display: block;
+  width: 100%;
+  font-weight: 700;
+  font-size: 14px;
+  text-align: center;
 }
 
 .required { 

@@ -1,0 +1,25 @@
+Traceback (most recent call last):
+  File "C:\Users\pc\Desktop\Alberto\Alberto\Tesi\FRIA_evaluation\FRIA_evaluation\evaluator\main2.py", line 638, in <module>
+    main()
+    ~~~~^^
+  File "C:\Users\pc\Desktop\Alberto\Alberto\Tesi\FRIA_evaluation\FRIA_evaluation\evaluator\main2.py", line 480, in main
+    plugins = load_plugins(config.get('plugins', []), config=config)
+  File "C:\Users\pc\Desktop\Alberto\Alberto\Tesi\FRIA_evaluation\FRIA_evaluation\evaluator\core\plugin_loader.py", line 100, in load_plugins
+    plugin = _load_one_plugin(entry, config=config) #load plugins  and eventually configs (imagine config: threshold:0.5, nromalize:True)
+  File "C:\Users\pc\Desktop\Alberto\Alberto\Tesi\FRIA_evaluation\FRIA_evaluation\evaluator\core\plugin_loader.py", line 64, in _load_one_plugin
+    mod = _import_module(module_path)
+  File "C:\Users\pc\Desktop\Alberto\Alberto\Tesi\FRIA_evaluation\FRIA_evaluation\evaluator\core\plugin_loader.py", line 13, in _import_module
+    return importlib.import_module(module_path) #plugins.fairness.demographic_parity
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "C:\Users\pc\AppData\Local\Programs\Python\Python313\Lib\importlib\__init__.py", line 88, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 935, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 1023, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "C:\Users\pc\Desktop\Alberto\Alberto\Tesi\FRIA_evaluation\FRIA_evaluation\evaluator\plugins\non_discrimination\demographic_parity.py", line 2, in <module>
+    from backend.api import results
+ModuleNotFoundError: No module named 'backend.api'

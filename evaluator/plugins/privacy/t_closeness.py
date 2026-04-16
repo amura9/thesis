@@ -115,6 +115,8 @@ class TCloseness(PrivacyMetricBase):
 
             # Maximum observed value
             t_optimal = float(t_closeness_values.max()) if len(t_closeness_values) else 0.0
+            normalized_score = max(0.0, min(1.0, 1 - t_optimal))
+            final_score = 10 * normalized_score
 
             group_cols = self.quasi_identifiers + [self.sensitive_attribute]
 
@@ -127,15 +129,6 @@ class TCloseness(PrivacyMetricBase):
                 t_closeness_values_serialized[key] = float(val)
 
             t_limited = t_closeness_values.sort_values(ascending=False).head(self.max_display)
-
-            #example groups
-            example_groups = []
-            for idx, val in t_limited.items():
-                if not isinstance(idx, tuple):
-                    idx = (idx,)
-                obj = {col: v for col, v in zip(group_cols, idx)}
-                obj["t"] = float(val)
-                example_groups.append(obj)
 
             #full_results -> for auditing
             full_results = []
@@ -160,11 +153,9 @@ class TCloseness(PrivacyMetricBase):
                 "sensitive_attribute": self.sensitive_attribute,
                 "t_optimal": float(t_optimal),
 
-                #Representation subset of interest
-                "example_groups": example_groups,
-
                 #All -> for audit trailing
                 "full_results": full_results,
+                "final_score": final_score,
 
                 #Old
                 #"result": result

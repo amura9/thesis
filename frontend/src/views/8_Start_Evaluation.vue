@@ -57,6 +57,11 @@ async function startEvaluation() {
         <span v-else>Running…</span>
       </button>
 
+      <div v-if="running" class="loader-wrap">
+        <div class="spinner"></div>
+        <p class="loader-text">Evaluation is running...</p>
+    </div>
+
       <p v-if="error" class="error">{{ error }}</p>
     </div>
   </div>
@@ -117,5 +122,34 @@ async function startEvaluation() {
   margin-top: 20px;
   color: #b00020;
   font-weight: 600;
+}
+
+.loader-wrap {
+  margin-top: 28px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+}
+
+.spinner {
+  width: 42px;
+  height: 42px;
+  border: 4px solid #ddd;
+  border-top: 4px solid #000;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+.loader-text {
+  font-size: 16px;
+  color: #444;
+  font-weight: 600;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
 }
 </style>

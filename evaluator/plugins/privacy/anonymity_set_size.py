@@ -102,13 +102,6 @@ class AnonymitySetSize:
             ###NORMALIZATION SCORE###
             normalized_average = self.normalized_score(average)
 
-            # Examples
-            example_groups = []
-            for _, row in group_sizes.head(self.max_display).iterrows():
-                item = {col: row[col] for col in sensitive_features}
-                item["count"] = int(row["count"])
-                example_groups.append(item)
-
             #make it json
             return {
                 #Summary statistics
@@ -120,11 +113,7 @@ class AnonymitySetSize:
                 "unique_combinations": unique_combinations,
                 "total_records": total_records,
                 "sensitive_features": sensitive_features,
-                "score": normalized_average,
-
-                #Representation subset of interest
-                "example_groups": example_groups, 
-                #"distribution": histogram,
+                "final_score": (10*normalized_average),
 
                 #All -> for audit trailing
                 "full_results": group_sizes.to_dict(orient="records")    

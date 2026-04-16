@@ -1,6 +1,0 @@
-{
-  "conditional_statistical_parity": {
-    "schema": "conditional_nested",
-    "ui": "condition_selector_then_group_chart"
-  }
-}

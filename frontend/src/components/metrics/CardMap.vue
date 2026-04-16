@@ -2,6 +2,15 @@
 import { computed, ref } from "vue";
 import { useRoute, useRouter } from "vue-router";
 
+import {
+  DEFAULT_WEIGHT,
+  DEFAULT_WEIGHT_JUSTIFICATION,
+  rowsToDict,
+  isPlainObject,
+  isScalar,
+  buildCardMapSavePayload,
+} from "../../utils/report_builder_helper";
+
 const router = useRouter();
 
 const route = useRoute();
@@ -10,7 +19,7 @@ const group = computed(() => String(route.params.group || "")); //take the right
 
 const props = defineProps({
   metricKey: { type: String, required: true },
-  metricObj: { type: Object, required: true }, // card_map: { "(global)": { ...flat... } } (or similar)
+  metricObj: { type: Object, required: true }, 
   runId: { type: [String, Number], required: true },
 });
 
@@ -22,12 +31,7 @@ function prettifyLabel(str) {
     .toLowerCase()
     .replace(/\b\w/g, (c) => c.toUpperCase());
 }
-function isPlainObject(v) {
-  return v && typeof v === "object" && !Array.isArray(v);
-}
-function isScalar(v) {
-  return v === null || v === undefined || ["string", "number", "boolean"].includes(typeof v);
-}
+
 function isListOfDicts(v) {
   return Array.isArray(v) && v.length > 0 && v.every(isPlainObject);
 }
@@ -78,11 +82,8 @@ const summaryRows = computed(() => {
   return rows;
 });
 
-/* ===================================================================== */
-/* ============ Metric-level Weight (single slider) ====================== */
-/* ===================================================================== */
+//Metric level weight
 
-const DEFAULT_WEIGHT = 5;
 const MIN_JUST_LENGTH = 10;
 
 const metricWeight = ref(DEFAULT_WEIGHT);
@@ -126,28 +127,33 @@ const saving = ref(false);
 const saveError = ref("");
 const saveOk = ref(false);
 
-//for full payload
-function rowsToDict(rows) {
-  const out = {};
-  for (const r of rows || []) {
-    if (!r?.key) continue;
-    out[String(r.key)] = r.value; // r.key -> r.value (exactly what you want)
-  }
-  return out;
-}
+//for full payload - rowsToDict
 
-//PAYLOAD IF PRESS GO BACK
+//If back -> 
 //build same payload as when onSave()
-//make the POST somehow reusable
 function buildSavePayload() {
-  return {
-    run_id: props.runId,
+  const contextReport = Object.fromEntries(
+    summaryRows.value.map((row) => [
+      prettifyLabel(row.key),
+      row.value,
+    ])
+  );
+
+  return buildCardMapSavePayload({
+    runId: props.runId,
     group: group.value,
     metric: props.metricKey,
-    user_weight: Number(metricWeight.value),
-    user_justification: String(metricJustification.value || ""),
-    context_report: rowsToDict(summaryRows.value),
-  };
+    metricObj: {
+      "(global)": {
+        context_report: contextReport,
+      },
+    },
+    userWeight: Number(metricWeight.value),
+    userJustification:
+      Number(metricWeight.value) === DEFAULT_WEIGHT
+        ? DEFAULT_WEIGHT_JUSTIFICATION
+        : String(metricJustification.value || ""),
+  });
 }
 
 async function postSaveWeights() {
@@ -183,6 +189,7 @@ async function onSave() {
     saving.value = false;
   }
 }
+
 </script>
 
 <template>
@@ -208,7 +215,7 @@ async function onSave() {
     <div class="contextWrap">
       <div class="impactRow">
         <div class="impactText">
-          Adjust the impact score (0–10) for this metric using the slider. A higher value means the metric is more
+          Adjust the impact score (0–10) for this metric. A higher value means the metric is more
           relevant for your evaluation scenario.
         </div>
 
@@ -233,7 +240,7 @@ async function onSave() {
               type="range"
               min="0"
               max="10"
-              step="1"
+              step="0.1"
               v-model.number="metricWeight"
               @input="onWeightInput"
               @change="onWeightInput"
@@ -245,10 +252,7 @@ async function onSave() {
         </div>
       </div>
 
-      <button class="contextToggle" @click="toggleContext">
-        <span class="chev">▼</span>
-        <span class="contextTitle">Contextual Evaluation</span>
-      </button>
+      
 
       <div v-if="showContext" class="contextCard">
         <div class="contextHint">
@@ -273,10 +277,9 @@ async function onSave() {
         </div>
 
         <div v-if="missingJustifications.length" class="blocker">
-          You changed the weight. Add justification to enable <strong>Saving</strong>.
+          You changed the weight. Add justification to enable <strong>saving</strong>.
         </div>
 
-        <div v-else class="okmsg">All changes are justified. You can Save.</div>
 
         <div v-if="saveOk" class="okmsg" style="margin-top: 10px;">Saved.</div>
       </div>
@@ -298,10 +301,21 @@ async function onSave() {
 
 <style scoped>
 .wrap {
+  --cardW: 980px;
   display: flex;
   flex-direction: column;
   gap: 14px;
   align-items: center;
+}
+
+.card,
+.impactText,
+.impactControls,
+.contextCard,
+.actions {
+  width: 100%;
+  max-width: var(--cardW);
+  box-sizing: border-box;
 }
 
 .card {
@@ -378,7 +392,6 @@ async function onSave() {
 
 .impactText,
 .impactControls,
-.contextToggle,
 .contextCard,
 .actions{
   width: 100%;
@@ -551,18 +564,21 @@ async function onSave() {
 }
 
 .contextCard {
-  margin-top: 10px;
+  width: 100%;
+  box-sizing: border-box;
+  margin-top: 5px;
   border: 1px solid #e6e6e6;
   border-radius: 16px;
-  padding: 18px 18px;
-  background: #fff;
-  text-align: center;
+  padding: 18px;
+  background: #fafafa;
+  text-align: left;
 }
 
 .contextHint {
-  opacity: 0.75;
+  opacity: 0.7;
   margin-bottom: 12px;
-  font-size: 13px;
+  font-size: 14px;
+  text-align: center;
 }
 
 .justRow {
@@ -595,7 +611,7 @@ async function onSave() {
 }
 
 .textarea {
-  width: 100%;
+  width: 97%;
   border: 1px solid #ddd;
   border-radius: 12px;
   padding: 10px 12px;
@@ -611,16 +627,6 @@ async function onSave() {
   border: 1px solid #ffd2d2;
   font-weight: 800;
   text-align: left;
-}
-
-.okmsg {
-  margin-top: 10px;
-  padding: 14px 12px;
-  border-radius: 10px;
-  background: #eaffea;
-  border: 1px solid #bfe8c6;
-  font-weight: 900;
-  text-align: center;
 }
 
 .actions {

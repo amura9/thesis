@@ -1,0 +1,10 @@
+Traceback (most recent call last):
+  File "C:\Users\pc\Desktop\Alberto\Alberto\Tesi\FRIA_evaluation\FRIA_evaluation\evaluator\main2.py", line 638, in <module>
+    main()
+    ~~~~^^
+  File "C:\Users\pc\Desktop\Alberto\Alberto\Tesi\FRIA_evaluation\FRIA_evaluation\evaluator\main2.py", line 593, in main
+    score = plugin.evaluate(y_true, y_pred, current_X)
+  File "C:\Users\pc\Desktop\Alberto\Alberto\Tesi\FRIA_evaluation\FRIA_evaluation\evaluator\plugins\new_right\new_metric.py", line 98, in evaluate
+    "metric": PluginSpec.name,
+              ^^^^^^^^^^^^^^^
+AttributeError: type object 'PluginSpec' has no attribute 'name'

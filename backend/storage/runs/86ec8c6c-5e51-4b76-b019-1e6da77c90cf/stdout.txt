@@ -1,0 +1,7 @@
+Namespace(config='C:\\Users\\pc\\Desktop\\Alberto\\Alberto\\Tesi\\FRIA_evaluation\\FRIA_evaluation\\backend\\storage\\configs\\86ec8c6c-5e51-4b76-b019-1e6da77c90cf.json')
+C:\Users\pc\Desktop\Alberto\Alberto\Tesi\FRIA_evaluation\FRIA_evaluation\backend\storage\configs\86ec8c6c-5e51-4b76-b019-1e6da77c90cf.json
+[INFO] Using config: C:\Users\pc\Desktop\Alberto\Alberto\Tesi\FRIA_evaluation\FRIA_evaluation\backend\storage\configs\86ec8c6c-5e51-4b76-b019-1e6da77c90cf.json
+
+Selected sensitive features: ['competences_coverage_required', 'competences_coverage_optional']
+
+Columns available after preprocessing: ['age_cv', 'competences_coverage_required', 'competences_coverage_optional', 'education_cv_encoded', 'education_job_req', 'education_job_encoded', 'gender_job_Any', 'gender_job_Female', 'gender_job_Male', 'gender_cv_Female', 'gender_cv_Male', 'gender_cv_Not binary', 'gender_cv_Not declared', 'disability_cv_No', 'disability_cv_Not declared', 'disability_cv_Yes', 'disability_job_Any', 'disability_job_No', 'PCA_1', 'PCA_2', 'nationality_job_Any', 'nationality_job_Catalan', 'nationality_job_English', 'nationality_job_French', 'nationality_job_Italian', 'nationality_job_Spanish', 'nationality_cv_Catalan', 'nationality_cv_English', 'nationality_cv_French', 'nationality_cv_German', 'nationality_cv_Irish', 'nationality_cv_Italian', 'nationality_cv_LowGerman', 'nationality_cv_Romanian', 'nationality_cv_Russian', 'nationality_cv_Spanish', 'nationality_cv_Swedish', 'age_min_job', 'age_max_job', 'distrib_test', 'check_it', 'check_de', 'people_of_world']

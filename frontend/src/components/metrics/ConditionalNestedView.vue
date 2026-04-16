@@ -1,234 +1,311 @@
 <script setup>
 import { computed, onMounted, ref } from "vue";
-import { useRoute, useRouter, onBeforeRouteLeave } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
 
-const router = useRouter();
 const route = useRoute();
+const router = useRouter();
 
-const group = computed(() => String(route.params.group || "")); //take the right from API route
+//read from URL -> right: group, metricKey: metric
+const group = computed(() => String(route.params.group || ""));
 const metricKey = computed(() => String(route.params.metric || ""));
 
+//page state
 const loading = ref(false);
 const error = ref("");
 
-//metric object
+// metric object
 const metricObj = ref(null);
-const items = ref([]); // [{label, value}]
+const items = ref([]); //extracted feature content
+/*
+[
+  { label: "age", value: 7.4 },
+  { label: "gender", value: 5.9 }
+]
+*/
 
-const complexFeatureKey = ref(null);
-
-//provides the id or the run
+// runId - same as config file
 const props = defineProps({
   runId: { type: String, required: true },
 });
 
-const featureKeys = computed(() => {
-  const obj = metricObj.value;
-  if (!obj || typeof obj !== "object") return [];
-  return Object.keys(obj).filter((k) => k !== "__combined__" && k !== "(global)");
-});
+//Depending on the selected feature, jumps to its part
+const selectedFeatureForJump = ref("");
 
-const complexFeatureObj = computed(() =>
-  complexFeatureKey.value && metricObj.value ? metricObj.value[complexFeatureKey.value] : null
-);
+//emit goBack to the parent 
+const emit = defineEmits(["go-back-safe"]);
 
-/////////////////////////////////////////////////////////////
-//NAVIGAION WIZARD FOR WEIGHTS AND PER FEATURE WEIGHT STORAGE
-/////////////////////////////////////////////////////////////
+function scrollToFeature() {
+  if (!selectedFeatureForJump.value) return;
 
-// order of features for next/finish
-const featureOrder = computed(() => featureKeys.value || []);
-
-const currentIdx = computed(() => {
-  const i = featureOrder.value.indexOf(complexFeatureKey.value);
-  return i < 0 ? 0 : i;
-});
-
-const hasNextFeature = computed(() => currentIdx.value < featureOrder.value.length - 1);
-
-// store weights/justifications per feature
-const featureWeights = ref({});         // { [featureKey]: number }
-const featureJustifications = ref({});  // { [featureKey]: string }
-
-/////////////////////////////////////////////
-//ADD counter for features and weights saved
-////////////////////////////////////////////
-const savedFeatures = ref(new Set()); //keeps track of which features were already saved
-const metricSaved = ref(false); //for metric level case (will never activate)
-
-const totalFeatures = computed(() => {
-  return featureOrder.value.length; //nr of existing features (in order to see how many have been saved)
-});
-
-const savedCount = computed(() => { //how many features have been saved
-  if (!currentFeatureKey.value) {
-    return metricSaved.value ? 1 : 0;
+  const el = document.getElementById(`feature-${selectedFeatureForJump.value}`);
+  if (el) {
+    el.scrollIntoView({ behavior: "smooth", block: "start" });
   }
-  return featureOrder.value.filter((f) => savedFeatures.value.has(f)).length;
-});
+}
 
-const isComplete = computed(() => { //if workflow is finished
-  if (!currentFeatureKey.value) {
-    return metricSaved.value;
-  }
-  return totalFeatures.value > 0 && savedCount.value === totalFeatures.value;
-});
-
-// current selected feature
-const currentFeatureKey = computed(() => String(complexFeatureKey.value || ""));
-
-// IMPORTANT: use per-feature values when complexFeatureKey exists,
-// otherwise fallback to DEFAULT WEIGHT
-const metricWeight = computed({
-  get() {
-    // complex mode (feature selected)
-    if (currentFeatureKey.value) {
-      const v = featureWeights.value[currentFeatureKey.value];
-      return Number.isFinite(Number(v)) ? Number(v) : DEFAULT_WEIGHT;
-    }
-    // fallback to default weight
-    return Number.isFinite(Number(metricWeightRef.value)) 
-      ? Number(metricWeightRef.value) 
-      : DEFAULT_WEIGHT;
-  },
-  set(val) {
-    if (currentFeatureKey.value) {
-      featureWeights.value = { ...featureWeights.value, [currentFeatureKey.value]: Number(val) };
-      return;
-    }
-    metricWeightRef.value = Number(val);
-  },
-});
-
-const metricJustification = computed({
-  get() {
-    if (currentFeatureKey.value) {
-      return String(featureJustifications.value[currentFeatureKey.value] || "");
-    }
-    return String(metricJustificationRef.value || "");
-  },
-  set(val) {
-    if (currentFeatureKey.value) {
-      featureJustifications.value = { ...featureJustifications.value, [currentFeatureKey.value]: String(val) };
-      return;
-    }
-    metricJustificationRef.value = String(val);
-  },
-});
-
-//weight related component and saving
-// ------- Metric-level weight (single slider) ----------
+//Default values by feature: weight = 5, justification length, justification 
 const DEFAULT_WEIGHT = 5;
 const MIN_JUST_LENGTH = 10;
+const DEFAULT_WEIGHT_JUSTIFICATION =
+  "Since no weight has been assigned, the default weight 5 has been used";
 
-// backing refs for metric-level mode (when no complexFeatureKey is selected)
-const metricWeightRef = ref(DEFAULT_WEIGHT);
-const metricJustificationRef = ref("");
+//dictionary with weights, justification, saved flag for each feature
+const featureWeights = ref({});
+const featureJustifications = ref({});
+const savedFeatures = ref({});
 
-const contextualOpen = ref(true);
-
-function isChangedMetric() {
-  return Number(metricWeight.value) !== DEFAULT_WEIGHT;
-}
-
-const missingJustifications = computed(() => {
-  // keep same name as ScalarMapView (array)
-  if (!isChangedMetric()) return [];
-  const txt = String(metricJustification.value || "").trim();
-  return txt.length < MIN_JUST_LENGTH ? ["(global)"] : [];
-});
-
-const canSave = computed(() => {
-  if (!isChangedMetric()) return true; // weight = 5 => can save
-  return missingJustifications.value.length === 0;
-});
-
-const lockContextual = computed(() => isChangedMetric() && !canSave.value);
-const showContext = computed(() => contextualOpen.value);
-
-function toggleContext() {
-  if (lockContextual.value) {
-    contextualOpen.value = true;
-    return;
-  }
-  contextualOpen.value = !contextualOpen.value;
-}
-
-async function onWeightInput() {
-  // Same behavior: if changed -> open; if blocked -> keep open
-  if (isChangedMetric()) contextualOpen.value = true;
-  if (lockContextual.value) contextualOpen.value = true;
-}
-
-/*same as ScalarMapView
-/* =============================================================== */
-/* saving weights = 5 at feature level even if go back and not save*/
-/* =============================================================== */
-const saving = ref(false); ///a
+const saving = ref(false);
 const saveError = ref("");
 const saveOk = ref(false);
 
-//logic to avoid leaving without saving /save before going back
-const leaving = ref(false);
+//Initialized state for each feature: 
+// - weight = 5, 
+// - justification = Since no weight has been assigned, the default weight 5 has been used
+// - saving = false
+function ensureFeatureState(feature) {
+  if (!(feature in featureWeights.value)) {
+    featureWeights.value = {
+      ...featureWeights.value,
+      [feature]: DEFAULT_WEIGHT,
+    };
+  }
 
-//before saves and missing features, then it goes back 
-async function attemptLeave() {
-  if (leaving.value) return; //if saving / leaving then block
+  if (!(feature in featureJustifications.value)) {
+    featureJustifications.value = {
+      ...featureJustifications.value,
+      [feature]: "",
+    };
+  }
 
-  leaving.value = true;
-  saveError.value = "";
-
-  try {
-    if (!isComplete.value) {
-      await autoSaveMissingFeatures();
-    }
-    router.back();
-  } catch (e) {
-    saveError.value = e?.message || String(e);
-  } finally {
-    leaving.value = false;
+  if (!(feature in savedFeatures.value)) {
+    savedFeatures.value = {
+      ...savedFeatures.value,
+      [feature]: false,
+    };
   }
 }
 
-//triggers autoSaveMissingFeatures() also if nothing is done in the page
-onBeforeRouteLeave(async () => {
-  // If we're already leaving via attemptLeave(), allow navigation
-  if (leaving.value) return true;
+function isFeatureSaved(feature) {
+  ensureFeatureState(feature);
+  return !!savedFeatures.value[feature];
+}
 
-  // If a manual save is running, block route change until it finishes
-  if (saving.value) return false;
+//Getter and Setter: initialize, reads, fallback
+function getFeatureWeight(feature) {
+  ensureFeatureState(feature);
+  const v = featureWeights.value[feature];
+  return Number.isFinite(Number(v)) ? Number(v) : DEFAULT_WEIGHT;
+}
+
+//updates value, save logic
+function setFeatureWeight(feature, val) {
+  ensureFeatureState(feature);
+
+  featureWeights.value = {
+    ...featureWeights.value,
+    [feature]: Number(val),
+  };
+
+  savedFeatures.value = {
+    ...savedFeatures.value,
+    [feature]: false,
+  };
+
+  saveOk.value = false;
+  saveError.value = "";
+}
+
+//same for justification
+function getFeatureJustification(feature) {
+  ensureFeatureState(feature);
+  return String(featureJustifications.value[feature] || "");
+}
+
+function setFeatureJustification(feature, val) {
+  ensureFeatureState(feature);
+
+  featureJustifications.value = {
+    ...featureJustifications.value,
+    [feature]: String(val),
+  };
+
+  savedFeatures.value = {
+    ...savedFeatures.value,
+    [feature]: false,
+  };
+
+  saveOk.value = false;
+  saveError.value = "";
+}
+
+//weight = 5 no justification
+function featureNeedsJustification(feature) {
+  ensureFeatureState(feature);
+  return Number(getFeatureWeight(feature)) !== DEFAULT_WEIGHT;
+}
+
+//w !=5 -> justification 
+function isFeatureValid(feature) {
+  ensureFeatureState(feature);
+
+  if (!featureNeedsJustification(feature)) return true;
+
+  return String(getFeatureJustification(feature)).trim().length >= MIN_JUST_LENGTH;
+}
+
+//It triggers if the user press save
+async function saveFeature(feature) {
+  ensureFeatureState(feature);
+
+  if (saving.value) return;
+
+  const weight = Number(getFeatureWeight(feature));
+  const justification = //if no justification provided 
+  Number(weight) === DEFAULT_WEIGHT
+    ? DEFAULT_WEIGHT_JUSTIFICATION
+    : String(getFeatureJustification(feature) || "");
+
+  if (!isFeatureValid(feature)) {
+    saveError.value = `Justification required for ${prettifyLabel(feature)}.`;
+    return;
+  }
+
+  saving.value = true;
+  saveError.value = "";
+  saveOk.value = false;
 
   try {
-    leaving.value = true;
-    saveError.value = "";
+    const contextRows = buildContextSummaryRows(feature);
+    const summaryRowsLocal = buildSummaryRows(feature);
 
-    if (!isComplete.value) {
-      await autoSaveMissingFeatures();
+    const resp = await fetch("http://127.0.0.1:8000/results/save_weights", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        run_id: props.runId,
+        group: group.value,
+        metric: metricKey.value,
+        schema_type_report: schemaTypeReport.value,
+        context_report: { [feature]: rowsToDict(contextRows) },
+        summary_report: { [feature]: rowsToDict(summaryRowsLocal) },
+        weights: { [feature]: weight },
+        justifications: { [feature]: justification },
+      }),
+    });
+
+    if (!resp.ok) {
+      const err = await resp.json().catch(() => ({}));
+      throw new Error(err.detail || (await resp.text()) || "Failed to save feature");
     }
 
-    return true;
+    savedFeatures.value = {
+      ...savedFeatures.value,
+      [feature]: true,
+    };
+
+    saveOk.value = true;
   } catch (e) {
     saveError.value = e?.message || String(e);
-    return false;
   } finally {
-    leaving.value = false;
+    saving.value = false;
   }
+}
+
+////It triggers if the user does not press save
+async function saveMissingFeaturesWithDefaultWeight() {
+  if (saving.value) return;
+
+  saving.value = true;
+  saveError.value = "";
+  saveOk.value = false;
+
+  try {
+    for (const feature of featureKeys.value) {
+      ensureFeatureState(feature);
+
+      if (isFeatureSaved(feature)) continue;
+
+      const contextRows = buildContextSummaryRows(feature);
+      const summaryRowsLocal = buildSummaryRows(feature);
+
+      const resp = await fetch("http://127.0.0.1:8000/results/save_weights", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          run_id: props.runId,
+          group: group.value,
+          metric: metricKey.value,
+          schema_type_report: schemaTypeReport.value,
+          weights: { [feature]: DEFAULT_WEIGHT },
+          justifications: { [feature]: DEFAULT_WEIGHT_JUSTIFICATION },
+          context_report: { [feature]: rowsToDict(contextRows) },
+          summary_report: { [feature]: rowsToDict(summaryRowsLocal) },
+        }),
+      });
+
+      if (!resp.ok) {
+        const err = await resp.json().catch(() => ({}));
+        throw new Error(
+          err.detail || (await resp.text()) || `Failed to save default weight for ${feature}`
+        );
+      }
+
+      featureWeights.value = {
+        ...featureWeights.value,
+        [feature]: DEFAULT_WEIGHT,
+      };
+
+      featureJustifications.value = {
+        ...featureJustifications.value,
+        [feature]: DEFAULT_WEIGHT_JUSTIFICATION,
+      };
+
+      savedFeatures.value = {
+        ...savedFeatures.value,
+        [feature]: true,
+      };
+    }
+
+    saveOk.value = true;
+  } catch (e) {
+    saveError.value = e?.message || String(e);
+  } finally {
+    saving.value = false;
+  }
+}
+
+//if user does not save weigths, weigths gets automatically saved as 5 
+async function goBackSafely() {
+  await saveMissingFeaturesWithDefaultWeight();
+  emit("go-back-safe");
+}
+
+defineExpose({
+  goBackSafely,
 });
 
-//helper to save context and summary report
+//featureKeys list available: ["age", "gender", "competences"]
+const featureKeys = computed(() => {
+  const obj = metricObj.value;
+  if (!obj || typeof obj !== "object") return [];
+  return Object.keys(obj);
+});
+
+// helper to save context and summary report
 function rowsToDict(rows) {
   const out = {};
   for (const r of rows || []) out[String(r.key)] = r.value;
   return out;
 }
 
-//get the schema type and pass it into payload
+// get the schema type and pass it into payload
 const resultSchemas = ref({});
 
 const schemaTypeReport = computed(() => {
-  return resultSchemas.value?.[props.metricKey]?.schema ?? null;
+  return resultSchemas.value?.[metricKey.value]?.schema ?? null;
 });
 
+//Loads schema type to determine how then to display data 
 async function loadResultSchemas() {
   try {
     const resp = await fetch(
@@ -244,185 +321,7 @@ async function loadResultSchemas() {
 
 onMounted(loadResultSchemas);
 
-async function onSave() {
-  if (!canSave.value || saving.value) return;
-
-  saving.value = true;
-  saveError.value = "";
-  saveOk.value = false;
-
-  try {
-    // if we are in complex mode, save weight for the current feature
-    if (currentFeatureKey.value) {
-      const feature = currentFeatureKey.value;
-      const weight = Number(metricWeight.value);
-      const justification = String(metricJustification.value || "");
-
-      const resp = await fetch("http://127.0.0.1:8000/results/save_weights", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          run_id: props.runId,
-          group: group.value,
-          metric: metricKey.value,
-          schema_type_report:schemaTypeReport.value,//add also the type of schema in order to have it mapped for the report
-          weights: { [feature]: weight },
-          justifications: { [feature]: justification },
-          context_report: rowsToDict(contextSummaryRows.value),
-          summary_report: rowsToDict(summaryRows.value),
-        }),
-      });
-
-      if (!resp.ok) {
-        const err = await resp.json().catch(() => ({}));
-        throw new Error(err.detail || (await resp.text()) || "Failed to save weight");
-      }
-
-      //feature-level save
-      savedFeatures.value = new Set([...savedFeatures.value, feature]);
-
-      saveOk.value = true;
-      contextualOpen.value = false;
-
-      // wizard next/finish
-      if (hasNextFeature.value) {
-        complexFeatureKey.value = featureOrder.value[currentIdx.value + 1];
-        contextualOpen.value = true;
-        return;
-      }
-
-      //do not go back if not saved everything
-      await attemptLeave();
-      return;
-    }
-
-    // otherwise fallback: metric-level save (global) -> here to guide to a metric level save. 
-    const resp = await fetch("http://127.0.0.1:8000/results/save_weights", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        run_id: props.runId,
-        group: group.value,
-        metric: metricKey.value,
-
-        //save weights per feature
-        user_weight: Number(metricWeight.value),
-        user_justification: String(metricJustification.value || ""),
-
-        //context report and summary report
-        context_report: rowsToDict(contextSummaryRows.value),
-        summary_report: rowsToDict(summaryRows.value),
-      }),
-    });
-
-    if (!resp.ok) {
-      const err = await resp.json().catch(() => ({}));
-      throw new Error(err.detail || (await resp.text()) || "Failed to save weight");
-    }
-    
-    //saved metric level
-    metricSaved.value = true;
-
-    saveOk.value = true;
-    contextualOpen.value = false;
-
-    // wizard next/finish
-      if (hasNextFeature.value) {
-        complexFeatureKey.value = featureOrder.value[currentIdx.value + 1];
-        contextualOpen.value = true;
-        return;
-      }
-    
-    //use safe mechanism so then if nothing saved, no router.back
-    await attemptLeave();
-    return
-  } catch (e) {
-    saveError.value = e?.message || String(e);
-  } finally {
-    saving.value = false;
-  }
-}
-
-//save all the unsaved features, if feature not saved will be saved
-//with weight = 5, empty justification, context_report, summary_report
-async function autoSaveMissingFeatures() {
-  // metric-level mode
-  if (!currentFeatureKey.value) {
-    if (metricSaved.value) return;
-
-    const resp = await fetch("http://127.0.0.1:8000/results/save_weights", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        run_id: props.runId,
-        group: group.value,
-        metric: metricKey.value,
-        schema_type_report: schemaTypeReport.value,
-        user_weight: DEFAULT_WEIGHT,
-        user_justification: "",
-        context_report: rowsToDict(contextSummaryRows.value),
-        summary_report: rowsToDict(summaryRows.value),
-      }),
-    });
-
-    if (!resp.ok) {
-      const err = await resp.json().catch(() => ({}));
-      throw new Error(err.detail || (await resp.text()) || "Failed to auto-save metric");
-    }
-
-    metricSaved.value = true;
-    return;
-  }
-
-  // feature-level mode
-  const missing = featureOrder.value.filter((f) => !savedFeatures.value.has(f));
-  if (!missing.length) return;
-
-  for (const feature of missing) {
-    const contextRows = buildContextSummaryRows(feature);
-    const summaryRowsLocal = buildSummaryRows(feature);
-
-    const resp = await fetch("http://127.0.0.1:8000/results/save_weights", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        run_id: props.runId,
-        metric: metricKey.value,
-        schema_type_report: schemaTypeReport.value,
-        weights: { [feature]: DEFAULT_WEIGHT },
-        justifications: { [feature]: "" },
-        context_report: { [feature]: rowsToDict(contextRows) },
-        summary_report: { [feature]: rowsToDict(summaryRowsLocal) },
-      }),
-    });
-
-    if (!resp.ok) {
-      const err = await resp.json().catch(() => ({}));
-      throw new Error(
-        err.detail || (await resp.text()) || `Failed to auto-save feature "${feature}"`
-      );
-    }
-
-    savedFeatures.value = new Set([...savedFeatures.value, feature]);
-  }
-}
-
-
-//-----------------------------------
-
-//table title and first column title 
-// ---- Conditions table titles (same logic as ScalarFeatureView) ----
-const conditionsBaseTitle = computed(() =>
-  conditionsKey.value ? prettifyLabel(conditionsKey.value) : "Conditions"
-);
-
-const conditionsTableTitle = computed(() =>
-  conditionsKey.value ? `${prettifyLabel(conditionsKey.value)} Table` : "Conditions Table"
-);
-
-const conditionsFirstColTitle = computed(() => conditionsBaseTitle.value);
-
-// ---------- helpers ----------
+//Helpers
 function prettifyLabel(str) {
   if (!str || typeof str !== "string") return "";
   return str
@@ -458,6 +357,14 @@ function formatAny(v) {
   }
 }
 
+function formatHeaderKey(k) {
+  const num = Number(k);
+  if (!Number.isNaN(num) && k !== "") {
+    return num.toFixed(3);
+  }
+  return prettifyLabel(k);
+}
+
 // if value not number make it number
 function toNumberMaybe(x) {
   if (typeof x === "number") return x;
@@ -468,7 +375,7 @@ function toNumberMaybe(x) {
   return null;
 }
 
-// get feature names (numeric DP-like mode)
+// get feature names
 function extractFeatureValues(metricObjLocal) {
   const out = [];
   if (!metricObjLocal || typeof metricObjLocal !== "object") return out;
@@ -504,28 +411,22 @@ function flattenObject(obj, prefix = "", out = {}) {
   return out;
 }
 
-//Same logic as GroupMetricMap
-function looksLikeGroupMap(v) { 
+function looksLikeGroupMap(v) {
   if (!isPlainObject(v)) return false;
   const entries = Object.entries(v);
   if (!entries.length) return false;
   return entries.every(([k, val]) => typeof k === "string" && isScalar(val));
 }
 
-////////////////////////////////////////////////
-//adding helpers to generate saving for feature/
-// both in case they have been saved or not    /
-// -> context_report and summary_report 
-// const contextRows = buildContextSummaryRows(feature);
-// const summaryRowsLocal = buildSummaryRows(feature);  //
-// will always be generated and used //
-////////////////////////////////////////////////
+// feature helpers
 function getFeatureObject(featureKey) {
   if (!metricObj.value || !featureKey) return null;
   const obj = metricObj.value[featureKey];
   return isPlainObject(obj) ? obj : null;
 }
 
+//render the conditions table -> 
+//the most nested object will be the condition table and its objects
 function getConditionsKeyForFeature(featureObjLocal) {
   if (!isPlainObject(featureObjLocal)) return null;
 
@@ -548,26 +449,42 @@ function getConditionsKeyForFeature(featureObjLocal) {
   return bestKey;
 }
 
+//distinguish which are for summary card and which are for table
+//Ex: part of table will be: 
+/*
+"distribution_by_group": {
+    "male": 120,
+    "female": 130
+  }
+this instead will be part summary card: 
+"sensitive_feature": "gender",
+*/
 function getTableDictKeysForFeature(featureObjLocal) {
   if (!isPlainObject(featureObjLocal)) return [];
 
   const keys = Object.keys(featureObjLocal);
 
-  const groupMaps = keys.filter((k) => looksLikeGroupMap(featureObjLocal[k]));
+  const groupMaps = keys.filter((k) =>
+    looksLikeGroupMap(featureObjLocal[k])
+  );
 
   const dictOfDicts = keys.filter((k) => {
     const v = featureObjLocal[k];
     if (!isPlainObject(v)) return false;
+
     const rows = Object.values(v);
     return rows.length > 0 && rows.every(isPlainObject);
   });
 
-  const preferred = groupMaps.filter((k) => k.endsWith("_by_group"));
-  const fallback = groupMaps.filter((k) => !preferred.includes(k));
-
-  return Array.from(new Set([...preferred, ...fallback, ...dictOfDicts]));
+  return Array.from(new Set([...groupMaps, ...dictOfDicts]));
 }
 
+//builds content for the context card
+/*
+[
+  { key: "status", value: "ok" },
+  { key: "conditional_variable", value: "gender" }
+]*/
 function buildContextSummaryRows(featureKey) {
   const o = getFeatureObject(featureKey);
   if (!isPlainObject(o)) return [];
@@ -577,144 +494,73 @@ function buildContextSummaryRows(featureKey) {
 
   for (const [k, v] of Object.entries(o)) {
     if (exclude.has(k)) continue;
-    if (isScalar(v)) rows.push({ key: k, value: v });
+    if (!isScalar(v)) continue;
+
+    rows.push({
+      key: prettifyLabel(k),
+      value:
+        typeof v === "string"
+          ? prettifyLabel(v)
+          : formatAny(v),
+    });
   }
 
-  rows.sort((a, b) => prettifyLabel(a.key).localeCompare(prettifyLabel(b.key)));
+  rows.sort((a, b) => a.key.localeCompare(b.key));
   return rows;
 }
 
+//Same as before but for the summary card
 function buildSummaryRows(featureKey) {
   const f = getFeatureObject(featureKey);
   if (!isPlainObject(f)) return [];
 
-  const condKey = getConditionsKeyForFeature(f);
+  const summaryKey = getSummaryKeyForFeature(featureKey);
+  if (!summaryKey || !isPlainObject(f[summaryKey])) return [];
 
-  let bestKey = null;
-  let bestScore = -1;
+  const flat = flattenObject(f[summaryKey]);
 
-  for (const [k, v] of Object.entries(f)) {
-    if (k === condKey) continue;
-    if (!isPlainObject(v)) continue;
-
-    const flat = flattenObject(v);
-    const keys = Object.keys(flat);
-    if (!keys.length) continue;
-
-    const looksLikeSummary = keys.some(
-      (kk) =>
-        kk.startsWith("raw_") ||
-        kk.startsWith("normalized_") ||
-        kk === "processed_conditions" ||
-        kk === "total_samples"
-    );
-
-    const score = (looksLikeSummary ? 10000 : 0) + keys.length;
-
-    if (score > bestScore) {
-      bestScore = score;
-      bestKey = k;
-    }
-  }
-
-  if (!bestKey || !isPlainObject(f[bestKey])) return [];
-
-  const flat = flattenObject(f[bestKey]);
   return Object.keys(flat)
     .sort((a, b) => a.localeCompare(b))
-    .map((k) => ({ key: k, value: flat[k] }));
+    .map((k) => ({
+      key: prettifyLabel(k),
+      value: formatAny(flat[k]),
+    }));
 }
 
-//Dynamic table
-// Dict-of-dicts key (e.g. "cond", "conditions", "ca")
-const conditionsKey = computed(() => {
-  const f = complexFeatureObj.value;
-  if (!isPlainObject(f)) return null;
+//returning the context card and summary card for each feature
+function getContextSummaryRows(feature) {
+  return buildContextSummaryRows(feature);
+}
 
-  let bestKey = null;
-  let bestRows = -1;
+function getSummaryRows(feature) {
+  return buildSummaryRows(feature);
+}
 
-  for (const [k, v] of Object.entries(f)) {
-    if (!isPlainObject(v)) continue;
+function getConditionsKey(feature) {
+  const obj = getFeatureObject(feature);
+  if (!obj) return null;
+  return getConditionsKeyForFeature(obj);
+}
 
-    const rows = Object.values(v);
-    const isDictOfDicts = rows.length > 0 && rows.every(isPlainObject);
-    if (!isDictOfDicts) continue;
+function getConditionsRows(feature) {
+  const obj = getFeatureObject(feature);
+  const key = getConditionsKey(feature);
 
-    if (rows.length > bestRows) {
-      bestRows = rows.length;
-      bestKey = k;
-    }
-  }
+  if (!obj || !key || !isPlainObject(obj[key])) return [];
 
-  return bestKey;
-});
-
-const conditionsRows = computed(() => {
-  const f = complexFeatureObj.value;
-  const key = conditionsKey.value;
-  if (!isPlainObject(f) || !key) return [];
-
-  const conds = f[key];
-  if (!isPlainObject(conds)) return [];
-
-  return Object.entries(conds).map(([condName, condObj]) => ({
+  return Object.entries(obj[key]).map(([condName, condObj]) => ({
     condition: condName,
     ...(isPlainObject(condObj) ? condObj : {}),
   }));
-});
+}
 
-// Compute the dictionaries used
-const tableDictKeys = computed(() => { 
-  const o = complexFeatureObj.value;
-  if (!isPlainObject(o)) return [];
-
-  const keys = Object.keys(o);
-
-  // 1) dict<string, scalar> (like *_by_group)
-  const groupMaps = keys.filter((k) => looksLikeGroupMap(o[k]));
-
-  // 2) dict<string, object> (like conditions)
-  const dictOfDicts = keys.filter((k) => {
-    const v = o[k];
-    if (!isPlainObject(v)) return false;
-    const rows = Object.values(v);
-    return rows.length > 0 && rows.every(isPlainObject);
-  });
-
-  // prefer *_by_group first, then others, then dict-of-dicts
-  const preferred = groupMaps.filter((k) => k.endsWith("_by_group"));
-  const fallback = groupMaps.filter((k) => !preferred.includes(k));
-  return Array.from(new Set([...preferred, ...fallback, ...dictOfDicts]));
-});
-
-// Context Summary rows = scalar entries excluding dicts used for tables
-const contextSummaryRows = computed(() => { 
-  const o = complexFeatureObj.value;
-  if (!isPlainObject(o)) return [];
-
-  const exclude = new Set(tableDictKeys.value); // dicts used as tables
-  const rows = [];
-
-  for (const [k, v] of Object.entries(o)) {
-    if (exclude.has(k)) continue;      // exclude table dictionaries
-    if (isScalar(v)) rows.push({ key: k, value: v });
-  }
-
-  // keep stable ordering for your example (status, conditional_variable, sensitive_feature)
-
-    rows.sort((a, b) => prettifyLabel(a.key).localeCompare(prettifyLabel(b.key)));
-  return rows;
-});
-
-// Union-of-keys across ALL rows, with "raw/normalized/weight/total_samples" at end
-const conditionsColumns = computed(() => {
-  const rows = conditionsRows.value;
+function getConditionsColumns(feature) {
+  const rows = getConditionsRows(feature);
   if (!rows.length) return [];
 
   const set = new Set();
-  for (const r of rows) {
-    for (const k of Object.keys(r)) {
+  for (const row of rows) {
+    for (const k of Object.keys(row)) {
       if (k !== "condition") set.add(k);
     }
   }
@@ -726,85 +572,69 @@ const conditionsColumns = computed(() => {
   const end = tail.filter((k) => all.includes(k));
 
   return [...head, ...end];
-});
-
-//GRID CONDITION TO KEEP COLUMNS ALIGNED
-const conditionsGrid = computed(() => {
-  const n = conditionsColumns.value.length;
-  return `minmax(90px, 1.2fr) repeat(${n}, minmax(90px, 1fr))`;
-});
-
-function formatHeaderKey(k) {
-  const num = Number(k);
-  if (!Number.isNaN(num) && k !== "") {
-    return num.toFixed(3);
-  }
-  return prettifyLabel(k);
 }
 
-// Pick best summary object key (e.g. "sum_summary", "check
-// ", "disparity_summary")
-const summaryKey = computed(() => {
-  const f = complexFeatureObj.value;
+function getConditionsGrid(feature) {
+  const n = getConditionsColumns(feature).length;
+  return `minmax(90px, 1.2fr) repeat(${n}, minmax(90px, 1fr))`;
+}
+
+//Context Title
+
+
+//Summary Card Titles - detects the summary key
+function getSummaryKeyForFeature(featureKey) {
+  const f = getFeatureObject(featureKey);
   if (!isPlainObject(f)) return null;
 
-  const condKey = conditionsKey.value;
-
   let bestKey = null;
-  let bestScore = -1;
+  let bestSize = -1;
 
   for (const [k, v] of Object.entries(f)) {
-    if (k === condKey) continue;
     if (!isPlainObject(v)) continue;
 
+    // skip table-like dict-of-dicts
+    const rows = Object.values(v);
+    const isDictOfDicts = rows.length > 0 && rows.every(isPlainObject);
+    if (isDictOfDicts) continue;
+
     const flat = flattenObject(v);
-    const keys = Object.keys(flat);
-    if (!keys.length) continue;
+    const size = Object.keys(flat).length;
 
-    const looksLikeSummary = keys.some(
-      (kk) =>
-        kk.startsWith("raw_") ||
-        kk.startsWith("normalized_") ||
-        kk === "processed_conditions" ||
-        kk === "total_samples"
-    );
+    if (!size) continue;
 
-    const score = (looksLikeSummary ? 10000 : 0) + keys.length;
-
-    if (score > bestScore) {
-      bestScore = score;
+    if (size > bestSize) {
+      bestSize = size;
       bestKey = k;
     }
   }
 
   return bestKey;
-});
+}
 
-const summaryObj = computed(() => {
-  const f = complexFeatureObj.value;
-  const k = summaryKey.value;
-  if (!isPlainObject(f) || !k) return null;
-  return f[k];
-});
+function getSummaryTitle(featureKey) {
+  const key = getSummaryKeyForFeature(featureKey);
+  return key ? prettifyLabel(key) : "Summary";
+}
 
-const summaryRows = computed(() => {
-  const s = summaryObj.value;
-  if (!isPlainObject(s)) return [];
+//Table titles
+function getConditionsFirstColTitle(feature) {
+  const key = getConditionsKey(feature);
+  return key ? prettifyLabel(key) : "Conditions";
+}
 
-  const flat = flattenObject(s);
-  return Object.keys(flat)
-    .sort((a, b) => a.localeCompare(b))
-    .map((k) => ({ key: k, value: flat[k] }));
-});
+function getConditionsTableTitle(feature) {
+  const key = getConditionsKey(feature);
+  return key ? `${prettifyLabel(key)} Table` : "Conditions Table";
+}
 
-// ---------- data fetch ----------
+//Loading data results
 onMounted(async () => {
   try {
     loading.value = true;
     error.value = "";
     metricObj.value = null;
     items.value = [];
-    complexFeatureKey.value = null;
 
     const res = await fetch("http://127.0.0.1:8000/results/values_to_display");
     if (!res.ok) throw new Error(await res.text());
@@ -820,46 +650,15 @@ onMounted(async () => {
 
     metricObj.value = obj;
 
+    for (const feature of Object.keys(obj).filter((k) => k !== "__combined__" && k !== "(global)")) {
+      ensureFeatureState(feature);
+    }
+
     // numeric mode
     const extracted = extractFeatureValues(obj);
     if (extracted.length) {
       items.value = extracted;
       return;
-    }
-
-    // complex mode: pick first best feature
-    const pickBestFeatureKey = () => {
-      if (!obj || typeof obj !== "object") return null;
-
-      let firstValidKey = null;
-
-      for (const [k, v] of Object.entries(obj)) {
-        if (k === "__combined__" || k === "(global)") continue;
-        if (!isPlainObject(v)) continue;
-
-        if (!firstValidKey) firstValidKey = k;
-
-        const hasDictOfDictsInside = Object.values(v).some((vv) => {
-          if (!isPlainObject(vv)) return false;
-          const inner = Object.values(vv);
-          return inner.length > 0 && inner.every((x) => isPlainObject(x));
-        });
-
-        if (hasDictOfDictsInside) return k;
-      }
-
-      return firstValidKey;
-    };
-
-    complexFeatureKey.value = pickBestFeatureKey();
-
-    // fallback: if still null but featureKeys exist
-    if (!complexFeatureKey.value && featureKeys.value.length) {
-      complexFeatureKey.value = featureKeys.value[0];
-    }
-
-    if (!complexFeatureKey.value) {
-      error.value = "No feature-like object found for this metric.";
     }
   } catch (e) {
     error.value = e?.message || String(e);
@@ -905,11 +704,15 @@ onMounted(async () => {
 
       <!-- COMPLEX MODE -->
       <div v-else class="complex-wrap">
-        <!-- Feature selector -->
         <div v-if="featureKeys.length > 1" class="card">
           <div class="feature-select">
             <strong>Feature:</strong>
-            <select v-model="complexFeatureKey" class="select">
+            <select
+              v-model="selectedFeatureForJump"
+              class="select"
+              @change="scrollToFeature"
+            >
+              <option value="" disabled>Select a feature</option>
               <option v-for="k in featureKeys" :key="k" :value="k">
                 {{ prettifyLabel(k) }}
               </option>
@@ -917,171 +720,171 @@ onMounted(async () => {
           </div>
         </div>
 
-        <!-- Context card -->
-        <div v-if="complexFeatureObj" class="card">
-          <h3>Summary</h3>
-          <div class="summary-grid">
-            <div v-for="r in contextSummaryRows" :key="r.key" class="summary-line">
-              <strong>{{ prettifyLabel(r.key) }}</strong><br />
-              <span class="mono">{{ prettifyLabel(String(r.value)) }}</span>
-            </div>
+        <section
+          v-for="feature in featureKeys"
+          :key="feature"
+          :id="`feature-${feature}`"
+          class="feature-section"
+        >
+          <div class="card">
+            <h2>{{ prettifyLabel(feature) }}</h2>
           </div>
-        </div>
 
-        <!-- Summary card -->
-        <div v-if="summaryRows.length" class="card">
-          <h3>{{ summaryKey ? prettifyLabel(summaryKey) : "Summary" }}</h3>
-
-          <div class="summary-grid">
-            <div v-for="row in summaryRows" :key="row.key" class="summary-line">
-              <strong>{{ prettifyLabel(row.key) }}</strong><br />
-              <span class="mono">{{ formatAny(row.value) }}</span>
-            </div>
-          </div>
-        </div>
-
-        <!-- Conditions table -->
-        <div v-if="conditionsRows.length" class="card">
-          <h3>{{ conditionsTableTitle }}</h3>
-
-          <div class="table-scroll">
-            <div class="conditions-list">
+          <!-- Context card -->
+          <div class="card">
+            <h3>Context</h3>
+            <div class="summary-grid">
               <div
-                class="condition-row condition-header"
-                :style="{ gridTemplateColumns: conditionsGrid }"
+                v-for="r in getContextSummaryRows(feature)"
+                :key="r.key"
+                class="summary-line"
               >
-                <div>{{ conditionsFirstColTitle }}</div>
-                <div v-for="c in conditionsColumns" :key="c">
-                  {{ formatHeaderKey(c) }}
+                <strong>{{ prettifyLabel(r.key) }}</strong><br />
+                <span class="mono">{{ formatAny(r.value) }}</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Summary card -->
+          <div v-if="getSummaryRows(feature).length" class="card">
+            <h3>{{ getSummaryTitle(feature) }}</h3>
+            <div class="summary-grid">
+              <div
+                v-for="row in getSummaryRows(feature)"
+                :key="row.key"
+                class="summary-line"
+              >
+                <strong>{{ prettifyLabel(row.key) }}</strong><br />
+                <span class="mono">{{ formatAny(row.value) }}</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Conditions table -->
+          <div v-if="getConditionsRows(feature).length" class="card">
+            <h3>{{ getConditionsTableTitle(feature) }}</h3>
+
+            <div class="table-scroll">
+              <div class="conditions-list">
+                <div
+                  class="condition-row condition-header"
+                  :style="{ gridTemplateColumns: getConditionsGrid(feature) }"
+                >
+                  <div>{{ getConditionsFirstColTitle(feature) }}</div>
+                  <div v-for="c in getConditionsColumns(feature)" :key="c">
+                    {{ formatHeaderKey(c) }}
+                  </div>
                 </div>
+
+                <div
+                  v-for="r in getConditionsRows(feature)"
+                  :key="r.condition"
+                  class="condition-row"
+                  :style="{ gridTemplateColumns: getConditionsGrid(feature) }"
+                >
+                  <div>{{ Number(r.condition).toFixed(3) }}</div>
+                  <div
+                    v-for="c in getConditionsColumns(feature)"
+                    :key="`${r.condition}-${c}`"
+                    class="mono"
+                  >
+                    {{ formatAny(r[c]) }}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Weight / save area -->
+          <div class="contextWrap">
+            <div class="impactRow">
+              <div class="impactText">
+                Adjust the impact score (0–10) for
+                <strong>{{ prettifyLabel(feature) }}</strong>
+                . A higher value means the metric is more relevant for your evaluation scenario.
+              </div>
+
+              <div class="impactControls">
+                <div class="barWrap">
+                  <div class="barVisual" aria-hidden="true">
+                    <div class="barLine"></div>
+                    <div class="barTicks">
+                      <span v-for="t in 11" :key="t" class="tick" />
+                    </div>
+                    <div class="barLabels">
+                      <span class="lab lab0">0</span>
+                      <span class="lab lab5">5</span>
+                      <span class="lab lab10">10</span>
+                    </div>
+                  </div>
+
+                  <input
+                    class="barRange"
+                    type="range"
+                    min="0"
+                    max="10"
+                    step="0.1"
+                    :value="getFeatureWeight(feature)"
+                    @input="setFeatureWeight(feature, $event.target.value)"
+                  />
+                </div>
+
+                <div class="wval">w={{ getFeatureWeight(feature) }}</div>
+              </div>
+            </div>
+
+            <div class="saveProgress">
+              {{ isFeatureSaved(feature) ? "Saved" : "Not saved" }}
+            </div>
+
+            <div class="contextCard">
+              <div class="contextHint">
+                Standard weight is 5. If a different weight is provided, it needs a textual justification.
+              </div>
+
+              <div v-if="featureNeedsJustification(feature)" class="justRow">
+                <div class="justHead">
+                  <strong class="justLabel">Feature impact</strong>
+                  <span class="pill">w={{ getFeatureWeight(feature) }}</span>
+                  <span class="req">
+                    justification required (min {{ MIN_JUST_LENGTH }} characters)
+                  </span>
+                </div>
+
+                <textarea
+                  class="textarea"
+                  :value="getFeatureJustification(feature)"
+                  @input="setFeatureJustification(feature, $event.target.value)"
+                  rows="3"
+                  placeholder="Explain why you changed this weight…"
+                />
               </div>
 
               <div
-                class="condition-row"
-                v-for="r in conditionsRows"
-                :key="r.condition"
-                :style="{ gridTemplateColumns: conditionsGrid }"
+                v-if="featureNeedsJustification(feature) && !isFeatureValid(feature)"
+                class="blocker"
               >
-                <div>{{ prettifyLabel(r.condition) }}</div>
-                <div v-for="c in conditionsColumns" :key="c" class="mono">
-                  {{ formatAny(r[c]) }}
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- ================= Metric-level Weight Assignment (same layout as reference) ================= -->
-      <div class="contextWrap" v-if="!loading && !error">
-        <div class="impactRow">
-          <div class="impactText">
-            Adjust the impact score (0–10) for <strong>{{ prettifyLabel(currentFeatureKey) }}</strong> using the slider. A higher value means the
-            metric is more relevant for your evaluation scenario.
-          </div>
-
-          <div class="impactControls">
-            <div class="barWrap">
-              <div class="barVisual" aria-hidden="true">
-                <div class="barLine"></div>
-                <div class="barTicks">
-                  <span v-for="t in 11" :key="t" class="tick" />
-                </div>
-                <div class="barLabels">
-                  <span class="lab lab0">0</span>
-                  <span class="lab lab5">5</span>
-                  <span class="lab lab10">10</span>
-                </div>
+                You changed the weight. Add justification to enable <strong>Saving</strong>.
               </div>
 
-              <input
-                class="barRange"
-                type="range"
-                min="0"
-                max="10"
-                step="1"
-                v-model.number="metricWeight"
-                @input="onWeightInput"
-                @change="onWeightInput"
-                aria-label="Impact score for this metric"
-              />
+            
+
+              <div v-if="saveError" class="blocker">
+                {{ saveError }}
+              </div>
             </div>
 
-            <div class="wval">w={{ metricWeight }}</div>
-          </div>
-        </div>
-
-        <!-- saving progress inside the contextWrap-->
-        <div v-if="currentFeatureKey" class="saveProgress">
-          Saved {{ savedCount }} of {{ totalFeatures }} features
-        </div>
-
-        <div v-else class="saveProgress">
-          {{ metricSaved ? "Metric saved" : "Metric not saved yet" }}
-        </div>
-
-        <button class="contextToggle" @click="toggleContext">
-          <span class="chev">▼</span>
-          <span class="contextTitle">Contextual Evaluation</span>
-        </button>
-
-        <div v-if="showContext" class="contextCard">
-          <div class="contextHint">
-            Standard weight is 5. If a different weight is provided, it will need a textual
-            justification.
-          </div>
-
-          <div v-if="isChangedMetric()" class="justRow">
-            <div class="justHead">
-              <strong class="justLabel">Metric impact</strong>
-              <span class="pill">w={{ metricWeight }} (new weight assigned)</span>
-              <span
-                v-if="String(metricJustification || '').trim().length < MIN_JUST_LENGTH"
-                class="req"
+            <div class="actions">
+              <button
+                class="primary"
+                :disabled="saving || !isFeatureValid(feature)"
+                @click="saveFeature(feature)"
               >
-                justification required (min {{ MIN_JUST_LENGTH }} characters)
-              </span>
+                {{ saving ? "saving…" : `save` }}
+              </button>
             </div>
-
-            <textarea
-              class="textarea"
-              v-model="metricJustification"
-              rows="3"
-              placeholder="Explain why you changed this weight…"
-            />
           </div>
-
-          <div v-if="missingJustifications.length" class="blocker">
-            You changed the weight. Add justification to enable <strong>Saving</strong>.
-          </div>
-          <div v-else class="okmsg">
-            All changes are justified. You can Save.
-          </div>
-        </div>
-
-        
-
-        <div class="actions">
-          <button class="ghost" @click="attemptLeave" :disabled="saving || leaving">
-            {{ leaving ? "saving…" : "‹ back" }}
-          </button>
-
-          <button class="primary" :disabled="saving || (!isComplete && !canSave)" @click="isComplete ? attemptLeave() : onSave()">
-            {{
-              saving
-                ? "saving…"
-                : isComplete
-                  ? "finish ›"
-                  : currentFeatureKey
-                    ? (hasNextFeature ? "save & next ›" : "save & finish ›")
-                    : "save ›"
-            }}
-          </button>
-        </div>
-
-        <div v-if="saveError" class="blocker" style="margin-top: 12px;">
-          {{ saveError }}
-        </div>
+        </section>
       </div>
     </main>
   </div>
@@ -1111,7 +914,8 @@ onMounted(async () => {
   width: 100%;
   background: #fafafa;
   text-align: center;
-  margin-top: 0;
+  margin: 0 auto;
+  box-sizing: border-box;
 }
 
 .card h3 {
@@ -1515,21 +1319,11 @@ onMounted(async () => {
   font-weight: 800;
 }
 
-.okmsg {
-  margin-top: 14px;
-  padding: 10px 12px;
-  border-radius: 12px;
-  background: #effff0;
-  border: 1px solid #c8f2cc;
-  font-weight: 800;
-  text-align: center; 
-}
-
 /* actions */
 .actions{
   margin-top: 16px;
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-end;
   align-items: center;
 }
 
@@ -1565,4 +1359,16 @@ onMounted(async () => {
   font-size: 14px;
   opacity: 1.0;
 }
+
+.feature-section {
+  width: 100%;
+  max-width: 980px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  margin: 28px auto 0;
+  scroll-margin-top: 24px;
+  box-sizing: border-box;
+}
+
 </style>

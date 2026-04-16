@@ -1,3 +1,4 @@
+
 from typing import Dict, Any
 import pandas as pd
 from core.load_config_value import get_config_value
@@ -36,6 +37,15 @@ class LDiversity(PrivacyMetricBase):
                     label="Sensitive attribute",
                     help="Column name whose diversity within each group is measured."
                 ),
+                #l-value target
+                ParamSpec(
+                    key="l_value",
+                    type="int",
+                    required=True,
+                    default=2,
+                    label="l value",
+                    help="Minimum number of distinct sensitive values required in each equivalence class."
+                ),
             ],
         )
 
@@ -48,6 +58,9 @@ class LDiversity(PrivacyMetricBase):
         self.sensitive_attribute = get_config_value(
             self.config, "l_diversity", "sensitive_attribute", default=None, required=False
         )
+        self.l_value = get_config_value(
+        self.config, "l_diversity", "l_value", default=2, required=False
+    )
 
     def evaluate(
         self, y_true, y_pred, X_test: pd.DataFrame, sensitive_features: list
@@ -95,6 +108,11 @@ class LDiversity(PrivacyMetricBase):
             l_avg = float(l_series.mean())
             total_groups = int(l_series.shape[0])
 
+            #compute a final score againt 
+            group_scores = l_series.apply(lambda l: min(float(l) / float(self.l_value), 1.0))
+            normalized_score = round(float(group_scores.mean()), 3) if len(group_scores) else None
+            final_score = round(10 * normalized_score, 3) if normalized_score is not None else None
+
             # Serialize groups as strings for output
             l_by_group = {}
             for idx, val in l_series.items():
@@ -102,21 +120,6 @@ class LDiversity(PrivacyMetricBase):
                     idx = (idx,)
                 key = str(tuple(zip(qi, idx)))
                 l_by_group[key] = int(val)
-
-            #limit to 10
-            l_series_limited = (
-                l_series.sort_values(ascending=True)
-                .head(self.max_display)
-            )
-
-            l_by_group_structured = []
-            for idx, val in l_series_limited.items():
-                if not isinstance(idx, tuple):
-                    idx = (idx,)
-
-                obj = {col: v for col, v in zip(qi, idx)}
-                obj["l"] = int(val)  # the l-diversity value for that group
-                l_by_group_structured.append(obj)
                         
             full_results = []
             for idx, val in l_series.items():
@@ -137,11 +140,9 @@ class LDiversity(PrivacyMetricBase):
                 "quasi_identifiers": qi,
                 "sensitive_attribute": self.sensitive_attribute,
 
-                #Representation subset of interest
-                "example_groups": l_by_group_structured, 
-
                 #All -> for audit trailing
                 "full_results": full_results,
+                "final_score": final_score,
 
                 #Old
                 #"l_by_group": l_by_group

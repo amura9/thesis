@@ -1,20 +1,38 @@
 <script setup>
-import { computed, ref, watch, onMounted } from "vue";
-import { useRoute, useRouter, onBeforeRouteLeave } from "vue-router";
+import { computed, ref, onMounted } from "vue";
 
-const router = useRouter();
-
-const route = useRoute();
-
-const group = computed(() => String(route.params.group || "")); //take the right from API route
+const emit = defineEmits(["go-back-safe"]);
 
 const props = defineProps({
-  runId: { type: [String, Number], required: true }, 
+  runId: { type: [String, Number], required: true },
   metricKey: { type: String, required: true },
-  metricObj: { type: Object, required: true }, // whole metric results object for this metricKey
+  metricObj: { type: Object, required: true },
 });
 
-/** ---------- helpers ---------- */
+//Default values by feature: weight = 5, justification length, justification 
+const DEFAULT_WEIGHT = 5;
+const MIN_JUST_LENGTH = 10;
+const DEFAULT_WEIGHT_JUSTIFICATION =
+  "Since no weight has been assigned, the default weight 5 has been used";
+
+//page state
+const saving = ref(false);
+const saveError = ref("");
+const saveOk = ref(false);
+
+//jump from feature to another
+const selectedFeatureForJump = ref("");
+
+function scrollToFeature() {
+  if (!selectedFeatureForJump.value) return;
+
+  const el = document.getElementById(`feature-${selectedFeatureForJump.value}`);
+  if (el) {
+    el.scrollIntoView({ behavior: "smooth", block: "start" });
+  }
+}
+
+//Helpers
 function prettifyLabel(str) {
   if (!str) return "";
   return String(str)
@@ -22,18 +40,26 @@ function prettifyLabel(str) {
     .toLowerCase()
     .replace(/\b\w/g, (c) => c.toUpperCase());
 }
+
 function isScalar(v) {
-  return v === null || v === undefined || ["string", "number", "boolean"].includes(typeof v);
+  return (
+    v === null ||
+    v === undefined ||
+    ["string", "number", "boolean"].includes(typeof v)
+  );
 }
+
 function isPlainObject(v) {
   return v && typeof v === "object" && !Array.isArray(v);
 }
+
 function looksLikeGroupMap(v) {
   if (!isPlainObject(v)) return false;
   const entries = Object.entries(v);
   if (!entries.length) return false;
   return entries.every(([k, val]) => typeof k === "string" && isScalar(val));
 }
+
 function formatAny(v) {
   if (v === null || v === undefined) return "—";
   if (typeof v === "boolean") return v ? "True" : "False";
@@ -42,110 +68,135 @@ function formatAny(v) {
   return String(v);
 }
 
-/** ---------- feature selection ---------- */
+function formatGroupLabel(v) {
+  const num = Number(v);
+  if (!Number.isNaN(num) && String(v).trim() !== "") {
+    if (Number.isInteger(num)) return String(num);
+    return num.toFixed(3);
+  }
+  return prettifyLabel(String(v));
+}
+
+//Features identified 
 const featureKeys = computed(() =>
   props.metricObj && typeof props.metricObj === "object"
-    ? Object.keys(props.metricObj).filter((k) => k !== "__combined__" && k !== "(global)")
+    ? Object.keys(props.metricObj)
     : []
 );
 
-const selectedFeature = ref("");
-watch(
-  featureKeys,
-  (keys) => {
-    if (!selectedFeature.value && keys.length) selectedFeature.value = keys[0];
-    if (selectedFeature.value && !keys.includes(selectedFeature.value)) selectedFeature.value = keys[0] || "";
-  },
-  { immediate: true }
-);
+////Initialized state for each feature: 
+// - weight = 5, 
+// - justification = Since no weight has been assigned, the default weight 5 has been used
+// - saving = false
+const featureWeights = ref({});
+const featureJustifications = ref({});
+const savedFeatures = ref({});
 
-const featureObj = computed(() =>
-  selectedFeature.value ? props.metricObj?.[selectedFeature.value] ?? null : null
-);
-
-/** ---------- detect group-maps inside featureObj ---------- */
-const groupMapKeys = computed(() => {
-  const o = featureObj.value;
-  if (!isPlainObject(o)) return [];
-
-  const keys = Object.keys(o);
-  const preferred = keys.filter((k) => k.endsWith("_by_group") && looksLikeGroupMap(o[k]));
-  const fallback = keys.filter((k) => !preferred.includes(k) && looksLikeGroupMap(o[k]));
-  return [...preferred, ...fallback];
-});
-
-/** pick ONE group-map for the 2-col table */
-const groupMapKey = computed(() => groupMapKeys.value[0] ?? null);
-
-const groupMapObj = computed(() =>
-  groupMapKey.value ? featureObj.value?.[groupMapKey.value] ?? null : null
-);
-
-// Table title and first column title
-const baseTitle = computed(() => prettifyLabel(groupMapKey.value));
-const byGroupTitle = computed(() => `${prettifyLabel(groupMapKey.value)} Table`
-);
-const firstColTitle = computed(() => baseTitle.value);
-const valueColTitle = "Value";
-
-const tableGrid2 = computed(() => `minmax(220px, 1.2fr) minmax(140px, 1fr)`);
-
-/** build 2-col rows */
-const rows = computed(() => {
-  const obj = groupMapObj.value;
-  if (!isPlainObject(obj)) return [];
-  return Object.entries(obj).map(([group, value]) => {
-    const vNum = Number(value);
-    return { group, value: Number.isFinite(vNum) ? vNum : null };
-  });
-});
-
-/** ---------- dynamic summary (exclude the group map we display) ---------- */
-/*  --------------------- used also for weights logic -----------------------*/
-function buildSummaryRows(featureKey) { 
-  const o = props.metricObj?.[featureKey];
-  if (!isPlainObject(o)) return [];
-
-  const localGroupMapKey = //GroupMap "a":0.2
-  Object.keys(o).find((k) => looksLikeGroupMap(o[k])) ?? null; //picks inside the key:value ones (dict of dict excluded)
-
-  const exclude = new Set(localGroupMapKey ? [localGroupMapKey] : []); //fields to exclude
-  const out = [];
-
-  for (const [k, v] of Object.entries(o)) { //loop over every field
-    if (exclude.has(k)) continue; //excludes them
-
-    const scalar = isScalar(v);
-    const smallArray =
-      Array.isArray(v) &&
-      v.length <= 30 &&
-      v.every((x) => ["string", "number", "boolean"].includes(typeof x));
-
-    if (scalar || smallArray) out.push({ key: k, value: v });
+function ensureFeatureState(feature) {
+  if (!(feature in featureWeights.value)) {
+    featureWeights.value = {
+      ...featureWeights.value,
+      [feature]: DEFAULT_WEIGHT,
+    };
   }
 
-  out.sort((a, b) => a.key.localeCompare(b.key));
-  return out;
+  if (!(feature in featureJustifications.value)) {
+    featureJustifications.value = {
+      ...featureJustifications.value,
+      [feature]: "",
+    };
+  }
+
+  if (!(feature in savedFeatures.value)) {
+    savedFeatures.value = {
+      ...savedFeatures.value,
+      [feature]: false,
+    };
+  }
 }
 
-/** ---------- dynamic summary (exclude the group map we display) ---------- */
-const summaryRows = computed(() => {
-  return selectedFeature.value ? buildSummaryRows(selectedFeature.value) : [];
-});
+function isFeatureSaved(feature) {
+  ensureFeatureState(feature);
+  return !!savedFeatures.value[feature];
+}
 
-/* =============================================================== */
-/* saving weights = 5 at feature level even if go back and not save*/
-/* =============================================================== */
+//Getter and Setter: initialize, reads, fallback
+function getFeatureWeight(feature) {
+  ensureFeatureState(feature);
+  const v = featureWeights.value[feature];
+  return Number.isFinite(Number(v)) ? Number(v) : DEFAULT_WEIGHT;
+}
+
+function setFeatureWeight(feature, val) {
+  ensureFeatureState(feature);
+
+  featureWeights.value = {
+    ...featureWeights.value,
+    [feature]: Number(val),
+  };
+
+  savedFeatures.value = {
+    ...savedFeatures.value,
+    [feature]: false,
+  };
+
+  saveOk.value = false;
+  saveError.value = "";
+}
+
+function getFeatureJustification(feature) {
+  ensureFeatureState(feature);
+  return String(featureJustifications.value[feature] || "");
+}
+
+function setFeatureJustification(feature, val) {
+  ensureFeatureState(feature);
+
+  featureJustifications.value = {
+    ...featureJustifications.value,
+    [feature]: String(val),
+  };
+
+  savedFeatures.value = {
+    ...savedFeatures.value,
+    [feature]: false,
+  };
+
+  saveOk.value = false;
+  saveError.value = "";
+}
+
+//weight = 5 no justification
+function featureNeedsJustification(feature) {
+  ensureFeatureState(feature);
+  return Number(getFeatureWeight(feature)) !== DEFAULT_WEIGHT;
+}
+
+//w !=5 -> justification 
+function isFeatureValid(feature) {
+  ensureFeatureState(feature);
+
+  if (!featureNeedsJustification(feature)) return true;
+
+  return (
+    String(getFeatureJustification(feature)).trim().length >= MIN_JUST_LENGTH
+  );
+}
+
+/** ---------- schema ---------- */
 const resultSchemas = ref({});
 
 const schemaTypeReport = computed(() => {
   return resultSchemas.value?.[props.metricKey]?.schema ?? null;
 });
 
+//Loads schema type to determine how then to display data 
 async function loadResultSchemas() {
   try {
     const resp = await fetch(
-      `http://127.0.0.1:8000/results/result_schemas?run_id=${encodeURIComponent(props.runId)}`
+      `http://127.0.0.1:8000/results/result_schemas?run_id=${encodeURIComponent(
+        props.runId
+      )}`
     );
     if (!resp.ok) throw new Error("Failed to load result schemas");
     resultSchemas.value = await resp.json();
@@ -157,127 +208,112 @@ async function loadResultSchemas() {
 
 onMounted(loadResultSchemas);
 
-
-/* ===================================================================== */
-/* =================== ADDED: Metric-level Weight (ScalarMapView style) == */
-/* ===================================================================== */
-
-const DEFAULT_WEIGHT = 5;
-const MIN_JUST_LENGTH = 10;
-
-const metricWeight = ref(DEFAULT_WEIGHT);
-const metricJustification = ref("");
-
-const contextualOpen = ref(true);
-
-function isChangedMetric() {
-  return Number(metricWeight.value) !== DEFAULT_WEIGHT;
+//feature helpers
+function getFeatureObject(featureKey) {
+  if (!props.metricObj || !featureKey) return null;
+  const obj = props.metricObj[featureKey];
+  return isPlainObject(obj) ? obj : null;
 }
 
-const missingJustifications = computed(() => {
-  if (!isChangedMetric()) return [];
-  const txt = String(metricJustification.value || "").trim();
-  return txt.length < MIN_JUST_LENGTH ? ["(global)"] : [];
-});
+//builds content for the summary card
+function buildSummaryRows(featureKey) {
+  const o = getFeatureObject(featureKey);
+  if (!isPlainObject(o)) return [];
 
-const canSave = computed(() => {
-  if (!isChangedMetric()) return true;
-  return missingJustifications.value.length === 0;
-});
+  const localGroupMapKey =
+    Object.keys(o).find((k) => looksLikeGroupMap(o[k])) ?? null;
 
-const lockContextual = computed(() => isChangedMetric() && !canSave.value);
-const showContext = computed(() => contextualOpen.value);
+  const exclude = new Set(localGroupMapKey ? [localGroupMapKey] : []);
+  const out = [];
 
-function toggleContext() {
-  if (lockContextual.value) {
-    contextualOpen.value = true;
-    return;
+  for (const [k, v] of Object.entries(o)) {
+    if (exclude.has(k)) continue;
+
+    const scalar = isScalar(v);
+    const smallArray =
+      Array.isArray(v) &&
+      v.length <= 30 &&
+      v.every((x) => ["string", "number", "boolean"].includes(typeof x));
+
+    if (scalar || smallArray) {
+      out.push({
+        key: prettifyLabel(k),
+        value:
+          typeof v === "string"
+            ? prettifyLabel(v)
+            : formatAny(v),
+      });
+    }
   }
-  contextualOpen.value = !contextualOpen.value;
+
+  out.sort((a, b) => a.key.localeCompare(b.key));
+  return out;
 }
 
-async function onWeightInput() {
-  if (isChangedMetric()) contextualOpen.value = true;
-  if (lockContextual.value) contextualOpen.value = true;
+function getSummaryRows(feature) {
+  return buildSummaryRows(feature);
 }
 
-//for saving weights = 5 if go back
-const saving = ref(false);
-const saveError = ref("");
-const saveOk = ref(false);
-
-//logic to keep track and saving of weights at feature level. It keeps track of the saving.
-const savedFeatures = ref(new Set()); //which features already saved
-const totalFeatures = computed(() => featureOrder.value.length); //counts of all features
-const savedCount = computed(() => savedFeatures.value.size); //saved so far
-
-//for saving weights = 5 if go back
-const isComplete = computed(() => {
-  return totalFeatures.value > 0 && savedCount.value === totalFeatures.value;
-});
-
-const leaving = ref(false);
-
-/////////////////////////////////////////////////////////////
-//NAVIGAION WIZARD FOR WEIGHTS AND PER FEATURE WEIGHT STORAGE
-/////////////////////////////////////////////////////////////
-
-//selectedFeature declared???
-
-// order of features for next/finish
-const featureOrder = computed(() => featureKeys.value || []);
-
-watch(
-  featureOrder,
-  (arr) => {
-    // pick first feature by default
-    if (!selectedFeature.value && arr.length) selectedFeature.value = arr[0];
+//get content for the table
+/*{
+  "distribution_by_group": {
+    "male": 0.52,
+    "female": 0.48
   },
-  { immediate: true }
-);
+}
+*/
+function getGroupMapKey(feature) {
+  const o = getFeatureObject(feature);
+  if (!isPlainObject(o)) return null;
 
-const currentIdx = computed(() => {
-  const i = featureOrder.value.indexOf(selectedFeature.value);
-  return i < 0 ? 0 : i;
-});
+  return (
+    Object.keys(o).find((k) => looksLikeGroupMap(o[k])) ?? null
+  );
+}
 
-const hasNextFeature = computed(() => currentIdx.value < featureOrder.value.length - 1);
+//What to show in the table -> "male" : 0.52
+function getGroupMapObj(feature) {
+  const o = getFeatureObject(feature);
+  const key = getGroupMapKey(feature);
+  return key ? o?.[key] ?? null : null;
+}
 
-const featureWeights = ref({});         // { [featureKey]: number }
-const featureJustifications = ref({});  // { [featureKey]: string }
+//Table title
+function getGroupMapTitle(feature) {
+  const key = getGroupMapKey(feature);
+  return key ? `${prettifyLabel(key)} Table` : "Table";
+}
 
-// when user changes selected feature, load saved values into UI
-watch(
-  () => selectedFeature.value,
-  (fk) => {
-    if (!fk) return;
-    const key = String(fk);
+//First Column Title
+function getFirstColTitle(feature) {
+  const key = getGroupMapKey(feature);
+  return key ? prettifyLabel(key) : "Group";
+}
 
-    metricWeight.value = Number.isFinite(Number(featureWeights.value[key]))
-      ? Number(featureWeights.value[key])
-      : 5;
+//Second Column Title
+function getValueColTitle() {
+  return "Values";
+}
 
-    metricJustification.value = String(featureJustifications.value[key] || "");
-  },
-  { immediate: true }
-);
+function getTableGrid2() {
+  return `minmax(220px, 1.2fr) minmax(140px, 1fr)`;
+}
 
-// keep per-feature stores updated as user types
-watch(metricWeight, (v) => {
-  const k = selectedFeature.value;
-  if (!k) return;
-  featureWeights.value[String(k)] = Number(v);
-});
+//Helper to render rows in the table
+function getRows(feature) {
+  const obj = getGroupMapObj(feature);
+  if (!isPlainObject(obj)) return [];
 
-watch(metricJustification, (v) => {
-  const k = selectedFeature.value;
-  if (!k) return;
-  featureJustifications.value[String(k)] = String(v || "");
-});
+  return Object.entries(obj).map(([group, value]) => {
+    const vNum = Number(value);
+    return {
+      group,
+      value: Number.isFinite(vNum) ? vNum : null,
+    };
+  });
+}
 
-///////////////////////////////////////////////////////////
-
-//for the payload generation
+//converts back summary table into dict for report saving
 function rowsToDict(rows) {
   const out = {};
   for (const r of rows || []) {
@@ -287,291 +323,305 @@ function rowsToDict(rows) {
   return out;
 }
 
-//save weights = 5 if go back//
-async function autoSaveMissingFeatures() {
-  const missing = featureOrder.value.filter((f) => !savedFeatures.value.has(f)); //finds unsaved features and POST
-  if (!missing.length) return;
+//saving for the report generation if weight is saved
+async function saveFeature(feature) {
+  ensureFeatureState(feature);
 
-  for (const feature of missing) { 
-    const resp = await fetch("http://127.0.0.1:8000/results/save_weights", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        run_id: props.runId,
-        group: group.value,
-        metric: props.metricKey,
-        schema_type_report: schemaTypeReport.value,
-        weights: { [feature]: DEFAULT_WEIGHT },
-        justifications: { [feature]: "" },
-        context_report: {
-          [feature]: rowsToDict(buildSummaryRows(feature)),
-        },
-      }),
-    });
+  if (saving.value) return;
 
-    if (!resp.ok) {
-      const err = await resp.json().catch(() => ({}));
-      throw new Error(
-        err.detail || (await resp.text()) || `Failed to auto-save feature "${feature}"`
-      );
-    }
+  const weight = Number(getFeatureWeight(feature));
+  const justification =
+    weight === DEFAULT_WEIGHT
+      ? DEFAULT_WEIGHT_JUSTIFICATION
+      : String(getFeatureJustification(feature) || "");
 
-    savedFeatures.value = new Set([...savedFeatures.value, feature]);
+  if (!isFeatureValid(feature)) {
+    saveError.value = `Justification required for ${prettifyLabel(feature)}.`;
+    return;
   }
-}
-
-//save weights = 5 if go back//
-async function attemptLeave() {
-  if (leaving.value) return;
-
-  leaving.value = true;
-  saveError.value = "";
-
-  try {
-    if (!isComplete.value) {
-      await autoSaveMissingFeatures();
-    }
-    router.back();
-  } catch (e) {
-    saveError.value = e?.message || String(e);
-  } finally {
-    leaving.value = false;
-  }
-}
-
-//triggers autoSaveMissingFeatures() also if nothing is done in the page
-onBeforeRouteLeave(async () => {
-  // If we're already leaving via attemptLeave(), allow navigation
-  if (leaving.value) return true;
-
-  // If a manual save is running, block route change until it finishes
-  if (saving.value) return false;
-
-  try {
-    leaving.value = true;
-    saveError.value = "";
-
-    if (!isComplete.value) {
-      await autoSaveMissingFeatures();
-    }
-
-    return true;
-  } catch (e) {
-    saveError.value = e?.message || String(e);
-    return false;
-  } finally {
-    leaving.value = false;
-  }
-});
-
-async function onSave() {
-  if (!canSave.value || saving.value) return;
 
   saving.value = true;
   saveError.value = "";
   saveOk.value = false;
 
   try {
-      const feature = selectedFeature.value;
-      if (!feature) throw new Error("No feature selected");
-      const weight = Number(metricWeight.value);
-      const justification = String(metricJustification.value || "");
+    const summaryRowsLocal = buildSummaryRows(feature);
 
     const resp = await fetch("http://127.0.0.1:8000/results/save_weights", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         run_id: props.runId,
-        group: group.value, //right
         metric: props.metricKey,
         schema_type_report: schemaTypeReport.value,
-        weights: { [feature]: weight },
-        justifications: { [feature]: justification }, 
-        //context report and summary report
         context_report: {
-        [feature]: rowsToDict(summaryRows.value),
+          [feature]: rowsToDict(summaryRowsLocal),
         },
-        
+        weights: { [feature]: weight },
+        justifications: { [feature]: justification },
       }),
     });
 
     if (!resp.ok) {
       const err = await resp.json().catch(() => ({}));
-      throw new Error(err.detail || (await resp.text()) || "Failed to save weight");
+      throw new Error(
+        err.detail || (await resp.text()) || "Failed to save feature"
+      );
     }
 
-    savedFeatures.value = new Set([...savedFeatures.value, feature]); //for every new savedFeatures, it saves a new set (not in place but ok)
+    savedFeatures.value = {
+      ...savedFeatures.value,
+      [feature]: true,
+    };
 
     saveOk.value = true;
-    contextualOpen.value = false;
-
-    // wizard next/finish
-    if (hasNextFeature.value) {
-      selectedFeature.value = featureOrder.value[currentIdx.value + 1];
-      contextualOpen.value = true;
-      return;
-    }
-
-    await attemptLeave();
   } catch (e) {
     saveError.value = e?.message || String(e);
   } finally {
     saving.value = false;
   }
 }
+
+//saving for the report generation if no weight is saved -> weight will be = 5 and justification will be default
+async function saveMissingFeaturesWithDefaultWeight() {
+  if (saving.value) return;
+
+  saving.value = true;
+  saveError.value = "";
+  saveOk.value = false;
+
+  try {
+    for (const feature of featureKeys.value) {
+      ensureFeatureState(feature);
+
+      if (isFeatureSaved(feature)) continue;
+
+      const summaryRowsLocal = buildSummaryRows(feature);
+
+      const resp = await fetch("http://127.0.0.1:8000/results/save_weights", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          run_id: props.runId,
+          metric: props.metricKey,
+          schema_type_report: schemaTypeReport.value,
+          context_report: {
+            [feature]: rowsToDict(summaryRowsLocal),
+          },
+          weights: { [feature]: DEFAULT_WEIGHT },
+          justifications: { [feature]: DEFAULT_WEIGHT_JUSTIFICATION },
+        }),
+      });
+
+      if (!resp.ok) {
+        const err = await resp.json().catch(() => ({}));
+        throw new Error(
+          err.detail ||
+            (await resp.text()) ||
+            `Failed to save default weight for "${feature}"`
+        );
+      }
+
+      featureWeights.value = {
+        ...featureWeights.value,
+        [feature]: DEFAULT_WEIGHT,
+      };
+
+      featureJustifications.value = {
+        ...featureJustifications.value,
+        [feature]: DEFAULT_WEIGHT_JUSTIFICATION,
+      };
+
+      savedFeatures.value = {
+        ...savedFeatures.value,
+        [feature]: true,
+      };
+    }
+
+    saveOk.value = true;
+  } catch (e) {
+    saveError.value = e?.message || String(e);
+  } finally {
+    saving.value = false;
+  }
+}
+
+async function goBackSafely() {
+  await saveMissingFeaturesWithDefaultWeight();
+  emit("go-back-safe");
+}
+
+defineExpose({
+  goBackSafely,
+});
+
+//OnMount features 
+onMounted(() => {
+  for (const feature of featureKeys.value) {
+    ensureFeatureState(feature);
+  }
+});
 </script>
 
 <template>
   <div class="wrap">
-    <!-- Feature selector -->
-    <div class="card">
-      <div class="feature-select" v-if="featureKeys.length > 1">
+    <!-- Feature jump -->
+    <div class="card" v-if="featureKeys.length > 1">
+      <div class="feature-select">
         <strong>Feature:</strong>
-        <select v-model="selectedFeature" class="select">
+        <select
+          v-model="selectedFeatureForJump"
+          class="select"
+          @change="scrollToFeature"
+        >
+          <option value="" disabled>Select a feature</option>
           <option v-for="k in featureKeys" :key="k" :value="k">
             {{ prettifyLabel(k) }}
           </option>
         </select>
       </div>
-      <div v-else>
-        <strong>Feature:</strong> {{ prettifyLabel(selectedFeature || featureKeys[0]) }}
-      </div>
     </div>
 
-    <!-- Summary -->
-    <div v-if="summaryRows.length" class="card">
-      <h3>Summary</h3>
-      <div class="summary-grid">
-        <div v-for="r in summaryRows" :key="r.key" class="summary-line">
-          <strong>{{ prettifyLabel(r.key) }}</strong><br />
-          <span class="mono">{{ formatAny(r.value) }}</span>
+    <section
+      v-for="feature in featureKeys"
+      :key="feature"
+      :id="`feature-${feature}`"
+      class="feature-section"
+    >
+      <div class="card">
+        <h2>{{ prettifyLabel(feature) }}</h2>
+      </div>
+
+      <!-- Summary -->
+      <div v-if="getSummaryRows(feature).length" class="card">
+        <h3>Summary</h3>
+        <div class="summary-grid">
+          <div
+            v-for="r in getSummaryRows(feature)"
+            :key="r.key"
+            class="summary-line"
+          >
+            <strong>{{ r.key }}</strong><br />
+            <span class="mono">{{ r.value }}</span>
+          </div>
         </div>
       </div>
-    </div>
 
-    <!-- 2-column group table -->
-    <div v-if="rows.length && groupMapKey" class="card">
-      <h3>{{ byGroupTitle }}</h3>
+      <!-- 2-column group table -->
+      <div v-if="getRows(feature).length && getGroupMapKey(feature)" class="card">
+        <h3>{{ getGroupMapTitle(feature) }}</h3>
 
-      <div class="table-scroll">
-        <div class="table table-2" :style="{ gridTemplateColumns: tableGrid2 }">
-          <div class="th">{{ firstColTitle }}</div>
-          <div class="th">{{ valueColTitle }}</div>
+        <div class="table-scroll">
+          <div class="table table-2" :style="{ gridTemplateColumns: getTableGrid2() }">
+            <div class="th">{{ getFirstColTitle(feature) }}</div>
+            <div class="th">{{ getValueColTitle() }}</div>
 
-          <template v-for="r in rows" :key="r.group">
-            <div class="td">{{ prettifyLabel(r.group) }}</div>
-            <div class="td mono">{{ r.value === null ? "—" : r.value.toFixed(3) }}</div>
-          </template>
-        </div>
-      </div>
-    </div>
-
-    <!-- Raw fallback -->
-    <div v-else class="card">
-      <h3>Raw output</h3>
-      <pre class="pre">{{ JSON.stringify(featureObj || metricObj, null, 2) }}</pre>
-    </div>
-
-    <!-- ================= Metric-level Weight Assignment (ScalarMapView style) ================= -->
-    <div class="contextWrap">
-      <!-- Sentence (left) + slider (right) -->
-      <div class="impactRow">
-        <div class="impactText">
-          Adjust the impact score (0–10) for <strong>{{ prettifyLabel(selectedFeature)}}</strong> using the slider. A higher value means the
-          metric is more relevant for your evaluation scenario.
-        </div>
-
-        <div class="impactControls">
-          <div class="barWrap">
-            <div class="barVisual" aria-hidden="true">
-              <div class="barLine"></div>
-              <div class="barTicks">
-                <span v-for="t in 11" :key="t" class="tick" />
+            <template v-for="r in getRows(feature)" :key="r.group">
+              <div class="td">{{ formatGroupLabel(r.group) }}</div>
+              <div class="td mono">
+                {{ r.value === null ? "—" : r.value.toFixed(3) }}
               </div>
-              <div class="barLabels">
-                <span class="lab lab0">0</span>
-                <span class="lab lab5">5</span>
-                <span class="lab lab10">10</span>
+            </template>
+          </div>
+        </div>
+      </div>
+
+      <!-- Raw fallback -->
+      <div v-else class="card">
+        <h3>Raw output</h3>
+        <pre class="pre">{{ JSON.stringify(getFeatureObject(feature), null, 2) }}</pre>
+      </div>
+
+      <!-- Weight / save area -->
+      <div class="contextWrap">
+        <div class="impactRow">
+          <div class="impactText">
+            Adjust the impact score (0–10) for
+            <strong>{{ prettifyLabel(feature) }}</strong> using the slider.
+            A higher value means the metric is more relevant for your evaluation scenario.
+          </div>
+
+          <div class="impactControls">
+            <div class="barWrap">
+              <div class="barVisual" aria-hidden="true">
+                <div class="barLine"></div>
+                <div class="barTicks">
+                  <span v-for="t in 11" :key="t" class="tick" />
+                </div>
+                <div class="barLabels">
+                  <span class="lab lab0">0</span>
+                  <span class="lab lab5">5</span>
+                  <span class="lab lab10">10</span>
+                </div>
               </div>
+
+              <input
+                class="barRange"
+                type="range"
+                min="0"
+                max="10"
+                step="0.1"
+                :value="getFeatureWeight(feature)"
+                @input="setFeatureWeight(feature, $event.target.value)"
+                aria-label="Impact score for this feature"
+              />
             </div>
 
-            <input
-              class="barRange"
-              type="range"
-              min="0"
-              max="10"
-              step="1"
-              v-model.number="metricWeight"
-              @input="onWeightInput"
-              @change="onWeightInput"
-              aria-label="Impact score for this metric"
+            <div class="wval">w={{ getFeatureWeight(feature) }}</div>
+          </div>
+        </div>
+
+        <div class="saveProgress">
+          {{ isFeatureSaved(feature) ? "Saved" : "Not saved" }}
+        </div>
+
+        <div class="contextCard">
+          <div class="contextHint">
+            Standard weight is 5. If a different weight is provided, it will need a textual justification.
+          </div>
+
+          <div v-if="featureNeedsJustification(feature)" class="justRow">
+            <div class="justHead">
+              <strong class="justLabel">Feature impact</strong>
+              <span class="pill">w={{ getFeatureWeight(feature) }}</span>
+              <span class="req">
+                justification required (min {{ MIN_JUST_LENGTH }} characters)
+              </span>
+            </div>
+
+            <textarea
+              class="textarea"
+              :value="getFeatureJustification(feature)"
+              @input="setFeatureJustification(feature, $event.target.value)"
+              rows="3"
+              placeholder="Explain why you changed this weight…"
             />
           </div>
 
-          <div class="wval">w={{ metricWeight }}</div>
-        </div>
-      </div>
-
-      <!-- saving progress for features saved (vs totalFeatures)-->
-      <div v-if="selectedFeature" class="saveProgress">
-        Saved {{ savedCount }} of {{ totalFeatures }} features
-      </div>
-
-      <!-- Contextual Evaluation toggle -->
-      <button class="contextToggle" @click="toggleContext">
-        <span class="chev">▼</span>
-        <span class="contextTitle">Contextual Evaluation</span>
-      </button>
-
-      <div v-if="showContext" class="contextCard">
-        <div class="contextHint">
-          Standard weight is 5. If a different weight is provided, it will need a textual
-          justification.
-        </div>
-
-        <div v-if="isChangedMetric()" class="justRow">
-          <div class="justHead">
-            <strong class="justLabel">Metric impact</strong>
-            <span class="pill">w={{ metricWeight }} (new weight assigned)</span>
-            <span
-              v-if="String(metricJustification || '').trim().length < MIN_JUST_LENGTH"
-              class="req"
-            >
-              justification required (min {{ MIN_JUST_LENGTH }} characters)
-            </span>
+          <div
+            v-if="featureNeedsJustification(feature) && !isFeatureValid(feature)"
+            class="blocker"
+          >
+            You changed the weight. Add justification to enable <strong>Saving</strong>.
           </div>
 
-          <textarea
-            class="textarea"
-            v-model="metricJustification"
-            rows="3"
-            placeholder="Explain why you changed this weight…"
-          />
+
+          <div v-if="saveError" class="blocker" style="margin-top: 12px;">
+            {{ saveError }}
+          </div>
         </div>
 
-        <div v-if="missingJustifications.length" class="blocker">
-          You changed the weight. Add justification to enable <strong>Saving</strong>.
+        <div class="actions">
+          <button
+            class="primary"
+            :disabled="saving || !isFeatureValid(feature)"
+            @click="saveFeature(feature)"
+          >
+            {{ saving ? "saving…" : `save` }}
+          </button>
         </div>
-
-        <div v-else class="okmsg">
-          All changes are justified. You can Save.
-        </div>
       </div>
-
-      <div class="actions">
-        <button class="ghost" @click="attemptLeave" :disabled="saving || leaving">
-         {{ leaving ? "saving…" : "‹ back" }}
-        </button>
-
-        <button class="primary" :disabled="!canSave || saving || leaving" @click="onSave">
-          {{ saving ? "saving…" : (hasNextFeature ? "save & next ›" : "save & finish") }}
-        </button>
-      </div>
-
-      <div v-if="saveError" class="blocker" style="margin-top: 12px;">
-        {{ saveError }}
-      </div>
-    </div>
+    </section>
   </div>
 </template>
 
@@ -579,9 +629,17 @@ async function onSave() {
 .wrap {
   display: flex;
   flex-direction: column;
-  gap: 24px;          /* ✅ match reference spacing */
+  gap: 24px;
   align-items: center;
-  margin-top: 40px;   /* ✅ match reference complex-wrap top spacing */
+  margin-top: 40px;
+}
+
+.feature-section {
+  width: 100%;
+  max-width: 980px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
 }
 
 .card {
@@ -592,10 +650,10 @@ async function onSave() {
   width: 100%;
   background: #fafafa;
   text-align: center;
-
-  margin-top: 0;      /* ✅ IMPORTANT: remove extra spacing (was 14px) */
+  margin: 0 auto;
+  box-sizing: border-box;
 }
-
+.card h2,
 .card h3 {
   margin: 0 0 18px;
   font-size: 20px;
@@ -616,7 +674,7 @@ async function onSave() {
   background: #fff;
 }
 
-.summary-grid{
+.summary-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(160px, 1fr));
   gap: 22px 34px;
@@ -627,21 +685,26 @@ async function onSave() {
   line-height: 1.35;
 }
 
-.summary-line { width: 100%; }
-.summary-line strong { display: block; font-weight: 900; margin-bottom: 4px; }
-.summary-line { word-break: break-word; overflow-wrap: anywhere; }
-
 .summary-line {
+  width: 100%;
+  word-break: break-word;
+  overflow-wrap: anywhere;
   border: 1px solid #eee;
-  background: #fff;   /* 👈 THIS is the white box */
+  background: #fff;
   border-radius: 12px;
   padding: 12px 12px;
 }
 
+.summary-line strong {
+  display: block;
+  font-weight: 900;
+  margin-bottom: 4px;
+}
+
 .mono {
   font-variant-numeric: tabular-nums;
-  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New",
-    monospace;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+    "Liberation Mono", "Courier New", monospace;
 }
 
 .table-scroll {
@@ -653,10 +716,10 @@ async function onSave() {
 }
 
 .table {
-  width: 100%;              
-  min-width: 900px;         
+  width: 100%;
+  min-width: 900px;
   display: grid;
-  gap: 6px 8px;             
+  gap: 6px 8px;
   align-items: center;
   text-align: left;
   background: #fff;
@@ -666,29 +729,27 @@ async function onSave() {
 }
 
 .table.table-2 {
-  width: max-content;     /* shrink to content */
-  min-width: unset;       /* cancel the 900px from .table */
-  margin: 0 auto;         /* center inside the card */
-  column-gap: 22px;       /* tighter column spacing */
+  width: max-content;
+  min-width: unset;
+  margin: 0 auto;
+  column-gap: 22px;
   row-gap: 8px;
 }
 
-/* optional: keep header separation like your reference */
 .table.table-2 > .th {
   border-bottom: 1px solid #eee;
   padding-bottom: 8px;
   margin-bottom: 6px;
 }
 
-/* ✅ center the first column values (like you asked) */
 .table.table-2 > .td:nth-child(odd) {
   text-align: center;
   justify-self: center;
 }
 
-.th{
+.th {
   font-weight: 900;
-  white-space: normal;      /* allow wrapping */
+  white-space: normal;
   line-height: 1.2;
 }
 
@@ -709,12 +770,7 @@ async function onSave() {
   white-space: pre-wrap;
 }
 
-/* ===================================================================== */
-/* =================== ADDED: ScalarMapView weight + context ============= */
-/* ===================================================================== */
-
 .contextWrap {
-  margin-top: 60px;
   max-width: 980px;
   width: 100%;
 }
@@ -727,21 +783,12 @@ async function onSave() {
   gap: 10px;
 }
 
-
-
-@media (max-width: 820px) {
-  .impactRow {
-    grid-template-columns: 1fr;
-  }
-}
-
-/* center the sentence + use same */ 
 .impactText{
   width: 100%;
   max-width: var(--impactW);
   margin: 0 auto;
   text-align: center;
-  padding: 0;              
+  padding: 0;
 }
 
 .impactControls{
@@ -753,7 +800,7 @@ async function onSave() {
   justify-content: center;
 }
 
-.wval{
+.wval {
   position: absolute;
   right: 0;
   bottom: -18px;
@@ -763,12 +810,12 @@ async function onSave() {
 }
 
 /* slider */
-.barWrap{
+.barWrap {
   position: relative;
   width: 100%;
   height: 34px;
-  min-width: 0;          /* prevents weird flex min widths */
-  flex: 1 1 auto;        /* overrides your old flex rule */
+  min-width: 0;
+  flex: 1 1 auto;
 }
 
 .barVisual {
@@ -826,9 +873,11 @@ async function onSave() {
   left: 0%;
   transform: translateX(0%);
 }
+
 .lab5 {
   left: 50%;
 }
+
 .lab10 {
   left: 100%;
   transform: translateX(-100%);
@@ -849,11 +898,13 @@ async function onSave() {
   background: transparent;
   border: none;
 }
+
 .barRange::-moz-range-track {
   height: 4px;
   background: transparent;
   border: none;
 }
+
 .barRange::-webkit-slider-thumb {
   -webkit-appearance: none;
   appearance: none;
@@ -865,6 +916,7 @@ async function onSave() {
   cursor: pointer;
   margin-top: 10px;
 }
+
 .barRange::-moz-range-thumb {
   width: 14px;
   height: 14px;
@@ -873,28 +925,6 @@ async function onSave() {
   border-radius: 2px;
   cursor: pointer;
   border: none;
-}
-
-/* contextual evaluation */
-.contextToggle {
-  border: none;
-  background: transparent;
-  cursor: pointer;
-  display: flex;
-  gap: 10px;
-  align-items: center;
-  padding: 10px 0 6px;
-}
-
-.chev {
-  color: #1f5cff;
-  font-weight: 900;
-  font-size: 18px;
-}
-
-.contextTitle {
-  font-weight: 900;
-  font-size: 18px;
 }
 
 .contextCard {
@@ -910,7 +940,7 @@ async function onSave() {
   opacity: 0.7;
   margin-bottom: 12px;
   font-size: 14px;
-  text-align: center; 
+  text-align: center;
 }
 
 .justRow {
@@ -959,30 +989,12 @@ async function onSave() {
   font-weight: 800;
 }
 
-.okmsg {
-  margin-top: 14px;
-  padding: 10px 12px;
-  border-radius: 12px;
-  background: #effff0;
-  border: 1px solid #c8f2cc;
-  font-weight: 800;
-  text-align: center; 
-}
 
-/* actions */
-.actions{
+.actions {
   margin-top: 16px;
   display: flex;
-  justify-content: space-between; /* <-- this is what keeps back on left, save on right */
+  justify-content: flex-end;
   align-items: center;
-}
-
-.ghost{
-  border: none;
-  background: transparent;
-  cursor: pointer;
-  font-size: 22px;
-  font-weight: 700;
 }
 
 .primary {
@@ -1001,12 +1013,11 @@ async function onSave() {
   opacity: 0.35;
 }
 
-/* save with progress bar */
 .saveProgress {
   margin-top: 14px;
   text-align: center;
   font-weight: 800;
   font-size: 14px;
-  opacity: 1.0;
+  opacity: 1;
 }
-</style>>
+</style>

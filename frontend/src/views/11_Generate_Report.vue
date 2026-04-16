@@ -1,16 +1,16 @@
 <script setup>
-import { onMounted, ref, computed } from "vue";
+import { onMounted, ref, computed, nextTick } from "vue";
 import { useRoute } from "vue-router";
 
 import CoverPage0_1 from "../components/report/0CoverPage.vue";
 import MetricReportPage2 from "../components/report/1MetricReportPage.vue";
 
 //Report pages layout (per metric & sensitive_feature or per metric)
-//import ScalarMapViewReport from "../components/report/ScalarMapViewReport.vue";
+import ScalarMapViewReport from "../components/report/ScalarMapViewReport.vue";
 import ConditionalNestedViewReport from "../components/report/ConditionalNestedViewReport.vue";
 import GroupMetricMapViewReport from "../components/report/GroupMetricMapViewReport.vue";
 import RecordWithTableViewReport from "../components/report/RecordWithTableViewReport.vue";
-//import CardMapReport from "../components/report/CardMapReport.vue";
+import CardMapReport from "../components/report/CardMapReport.vue";
 
 const route = useRoute();
 
@@ -27,6 +27,10 @@ const meta = ref({
 const loading = ref(false);
 const error = ref("");
 
+//printPDF
+const isPrintMode = computed(() => route.query.print === "1");
+const pdfTriggered = ref(false);
+
 
 // Dynamic metric pages and its schemas
 const resultSchemas = ref({})
@@ -38,10 +42,10 @@ function resolveSchema(metricKey, schemaMap) {
 //renderer for displaying
 function getReportRenderer(schema) {
   switch (schema) {
-    //case "card_map":
-      //return CardMapReport;
-    //case "scalar_map":
-      //return ScalarMapViewReport;
+    case "card_map":
+      return CardMapReport;
+    case "scalar_map":
+      return ScalarMapViewReport;
     case "conditional_nested":
       return ConditionalNestedViewReport;
     case "group_metric_map":
@@ -57,6 +61,7 @@ function getReportRenderer(schema) {
 function buildMetricPages(reportJson, schemaMap) {
   const pages = [];
 
+  //looping over top level metrics
   for (const [metricKey, metricGroup] of Object.entries(reportJson || {})) {
     if (!metricGroup || typeof metricGroup !== "object") continue;
 
@@ -65,8 +70,8 @@ function buildMetricPages(reportJson, schemaMap) {
 
     if (!schema || !reportComponent) continue;
 
-    // CASE 1: one page per sensitive feature
-    if (schema === "conditional_nested" || schema === "group_metric_map") {
+    // CASE 1: One report page for each feature of the metric
+    if (schema === "conditional_nested" || schema === "group_metric_map" || schema === "scalar_map") {
       for (const [featureKey, metricEntry] of Object.entries(metricGroup)) {
         if (!metricEntry || typeof metricEntry !== "object") continue;
 
@@ -81,7 +86,22 @@ function buildMetricPages(reportJson, schemaMap) {
       }
     }
 
-    // CASE 2: one page for the whole metric
+    // CASE 2: One report page for global-wrapper metrics
+    else if (
+      metricGroup["(global)"] &&
+      typeof metricGroup["(global)"] === "object"
+    ) {
+      pages.push({
+        id: `${metricKey}`,
+        metricKey,
+        featureKey: "(global)",
+        schema,
+        reportComponent,
+        data: metricGroup["(global)"],
+      });
+    }
+
+    // CASE 3: One report page for standard metric-level metrics
     else {
       pages.push({
         id: metricKey,
@@ -97,9 +117,48 @@ function buildMetricPages(reportJson, schemaMap) {
   return pages;
 }
 
-//////////////////////////////////////////////////
-//reactive array for additional pages afer 1 and 2
-//////////////////////////////////////////////////
+//generatePDF
+async function generatePdf() {
+  if (pdfTriggered.value) return;
+  pdfTriggered.value = true;
+
+  try {
+    error.value = "";
+
+    const res = await fetch("http://127.0.0.1:8000/results/generate_pdf", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        run_id: runId.value,
+      }),
+    });
+
+    if (!res.ok) {
+      throw new Error(await res.text());
+    }
+
+    const blob = await res.blob();
+    const url = window.URL.createObjectURL(blob);
+
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = `final_evaluation_report_${runId.value}.pdf`;
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+
+    window.URL.revokeObjectURL(url);
+  } catch (e) {
+    error.value = e?.message || String(e);
+    pdfTriggered.value = false;
+  }
+}
+
+/////////////////////////////////////////////////////
+//dynamic pages adjustment after pages afer 1 and 2//
+/////////////////////////////////////////////////////
 onMounted(async () => {
   
   window.__REPORT_READY__ = false;
@@ -135,16 +194,30 @@ onMounted(async () => {
     resultSchemas.value = schemaData;
     metricPages.value = buildMetricPages(reportData, schemaData);
 
-  } catch (e) {
-    error.value = e?.message || String(e);
-  } finally {
-    loading.value = false;
+    await nextTick();
 
-    //here take instead the report content with the weights updated
-    
-    //Vue rendering
+    if (document.fonts?.ready) {
+      await document.fonts.ready;
+    }
+
+    await new Promise((resolve) => requestAnimationFrame(() => resolve()));
+    await new Promise((resolve) => requestAnimationFrame(() => resolve()));
+    await new Promise((resolve) => setTimeout(resolve, 200));
+
     window.__REPORT_READY__ = true;
-  }
+
+    if (!isPrintMode.value) {
+      setTimeout(() => {
+      generatePdf();
+      }, 300);
+    }
+
+    } catch (e) {
+      error.value = e?.message || String(e);
+      window.__REPORT_READY__ = false;
+    } finally {
+      loading.value = false;
+    }
 });
 </script>
 

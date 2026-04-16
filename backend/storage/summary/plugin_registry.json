@@ -1,15 +1,40 @@
 {
+  "new_metric": {
+    "id": "new_metric",
+    "name": "New Metric",
+    "right": "New Right",
+    "description": "New metric used to test parameters: uses first numeric column in Test Dataset",
+    "interpretation": "",
+    "requires": [
+      "X_test"
+    ],
+    "plugin_path": "plugins.new_right.new_metric",
+    "params": [
+      {
+        "key": "threshold",
+        "type": "float",
+        "required": true,
+        "default": null,
+        "label": "Threshold",
+        "help": "If computed value > threshold, return threshold; otherwise return computed value.",
+        "enum": null
+      }
+    ],
+    "need_sensitive_feature": false,
+    "needs_all_sensitive_features": false,
+    "needs_conditional_variable": false
+  },
   "conditional_statistical_parity": {
     "id": "conditional_statistical_parity",
     "name": "Conditional Statistical Parity",
-    "right": "Fairness",
+    "right": "Non_Discrimination",
     "description": "Measures disparity in selection rates across sensitive groups conditioned on another variable.",
     "interpretation": "",
     "requires": [
       "X_test",
       "y_pred"
     ],
-    "plugin_path": "plugins.fairness.conditional_statistical_parity",
+    "plugin_path": "plugins.non_discrimination.conditional_statistical_parity",
     "params": [
       {
         "key": "sensitive_features",
@@ -37,7 +62,7 @@
   "conditional_use_accuracy_equality": {
     "id": "conditional_use_accuracy_equality",
     "name": "Conditional Use Accuracy Equality",
-    "right": "Fairness",
+    "right": "Non_Discrimination",
     "description": "Accuracy parity across sensitive groups, computed only on samples with positive predictions (\u0177=1).",
     "interpretation": "Values near 0 reflects equal reliability of model decisions.",
     "requires": [
@@ -45,7 +70,7 @@
       "y_true",
       "y_pred"
     ],
-    "plugin_path": "plugins.fairness.conditional_use_accuracy_equality",
+    "plugin_path": "plugins.non_discrimination.conditional_use_accuracy_equality",
     "params": [
       {
         "key": "sensitive_features",
@@ -64,7 +89,7 @@
   "demographic_parity": {
     "id": "demographic_parity",
     "name": "Demographic Parity",
-    "right": "Fairness",
+    "right": "Non_Discrimination",
     "description": "Measures demographic parity by computing selection rate differences across sensitive groups.",
     "interpretation": "Values close to 1 indicate better demographic parity (less disparity) between groups.",
     "requires": [
@@ -72,7 +97,7 @@
       "y_true",
       "y_pred"
     ],
-    "plugin_path": "plugins.fairness.demographic_parity",
+    "plugin_path": "plugins.non_discrimination.demographic_parity",
     "params": [
       {
         "key": "sensitive_features",
@@ -91,7 +116,7 @@
   "disparate_impact": {
     "id": "disparate_impact",
     "name": "Disparate Impact",
-    "right": "Fairness",
+    "right": "Non_Discrimination",
     "description": "Disparate Impact based on selection rates across sensitive groups (min SR / max SR).",
     "interpretation": "Values near 1 indicates fairness, while values below 0.8 often signal potential discrimination.",
     "requires": [
@@ -99,7 +124,7 @@
       "y_true",
       "y_pred"
     ],
-    "plugin_path": "plugins.fairness.disparate_impact",
+    "plugin_path": "plugins.non_discrimination.disparate_impact",
     "params": [
       {
         "key": "sensitive_features",
@@ -118,7 +143,7 @@
   "equal_opportunity": {
     "id": "equal_opportunity",
     "name": "Equal Opportunity",
-    "right": "Fairness",
+    "right": "Non_Discrimination",
     "description": "Measures Equal Opportunity by comparing True Positive Rates across sensitive groups.",
     "interpretation": "Values close to 0 means equal opportunity is preserved.",
     "requires": [
@@ -126,7 +151,7 @@
       "y_true",
       "y_pred"
     ],
-    "plugin_path": "plugins.fairness.equal_opportunity",
+    "plugin_path": "plugins.non_discrimination.equal_opportunity",
     "params": [
       {
         "key": "sensitive_features",
@@ -145,7 +170,7 @@
   "equalized_odds_difference": {
     "id": "equalized_odds_difference",
     "name": "Equalized Odds Difference",
-    "right": "Fairness",
+    "right": "Non_Discrimination",
     "description": "Measures Equalized Odds difference across sensitive groups (lower is better).",
     "interpretation": "Values near 0 indicate prediction errors are evenly distributed.",
     "requires": [
@@ -153,7 +178,7 @@
       "y_true",
       "y_pred"
     ],
-    "plugin_path": "plugins.fairness.equalized_odds_difference",
+    "plugin_path": "plugins.non_discrimination.equalized_odds_difference",
     "params": [
       {
         "key": "sensitive_features",
@@ -172,7 +197,7 @@
   "overall_accuracy_equality": {
     "id": "overall_accuracy_equality",
     "name": "Overall Accuracy Equality",
-    "right": "Fairness",
+    "right": "Non_Discrimination",
     "description": "Compares accuracy across sensitive groups and reports difference/ratio (higher equality_score is better).",
     "interpretation": "Values close to 0 indicate uniform predictive performance.",
     "requires": [
@@ -180,7 +205,7 @@
       "y_true",
       "y_pred"
     ],
-    "plugin_path": "plugins.fairness.overall_accuracy_equality",
+    "plugin_path": "plugins.non_discrimination.overall_accuracy_equality",
     "params": [
       {
         "key": "sensitive_features",
@@ -199,7 +224,7 @@
   "predictive_parity": {
     "id": "predictive_parity",
     "name": "Predictive Parity",
-    "right": "Fairness",
+    "right": "Non_Discrimination",
     "description": "Compares precision across sensitive groups (higher equality means smaller precision gap).",
     "interpretation": "A 0 difference means the model is equally reliable when predicting positives.",
     "requires": [
@@ -207,7 +232,7 @@
       "y_true",
       "y_pred"
     ],
-    "plugin_path": "plugins.fairness.predictive_parity",
+    "plugin_path": "plugins.non_discrimination.predictive_parity",
     "params": [
       {
         "key": "sensitive_features",
@@ -220,31 +245,6 @@
       }
     ],
     "need_sensitive_feature": true,
-    "needs_all_sensitive_features": false,
-    "needs_conditional_variable": false
-  },
-  "fake_right_example": {
-    "id": "fake_right_example",
-    "name": "Fake Right Example",
-    "right": "Fake Right",
-    "description": "Fake metric for testing param inference: uses first numeric column in X_test.",
-    "interpretation": "",
-    "requires": [
-      "X_test"
-    ],
-    "plugin_path": "plugins.fake_right.new_metric",
-    "params": [
-      {
-        "key": "threshold",
-        "type": "float",
-        "required": true,
-        "default": null,
-        "label": "Threshold",
-        "help": "If computed value > threshold, return threshold; otherwise return computed value.",
-        "enum": null
-      }
-    ],
-    "need_sensitive_feature": false,
     "needs_all_sensitive_features": false,
     "needs_conditional_variable": false
   },
@@ -334,6 +334,15 @@
         "default": null,
         "label": "Sensitive attribute",
         "help": "Column name whose diversity within each group is measured.",
+        "enum": null
+      },
+      {
+        "key": "l_value",
+        "type": "int",
+        "required": true,
+        "default": 2,
+        "label": "l value",
+        "help": "Minimum number of distinct sensitive values required in each equivalence class.",
         "enum": null
       }
     ],

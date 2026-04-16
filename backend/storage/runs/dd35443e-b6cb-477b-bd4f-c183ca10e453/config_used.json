@@ -3,7 +3,7 @@
     "train": null,
     "X_test": "C:\\Users\\pc\\Desktop\\Alberto\\Alberto\\Tesi\\FRIA_evaluation\\FRIA_evaluation\\backend\\storage\\uploads\\X_test__dd35443e-b6cb-477b-bd4f-c183ca10e453__X_test_MIN.csv",
     "y_true": "C:\\Users\\pc\\Desktop\\Alberto\\Alberto\\Tesi\\FRIA_evaluation\\FRIA_evaluation\\backend\\storage\\uploads\\y_true__dd35443e-b6cb-477b-bd4f-c183ca10e453__y_true.csv",
-    "y_pred": "C:\\Users\\pc\\Desktop\\Alberto\\Alberto\\Tesi\\FRIA_evaluation\\FRIA_evaluation\\backend\\storage\\uploads\\y_pred__dd35443e-b6cb-477b-bd4f-c183ca10e453__y_test.csv"
+    "y_pred": "C:\\Users\\pc\\Desktop\\Alberto\\Alberto\\Tesi\\FRIA_evaluation\\FRIA_evaluation\\backend\\storage\\uploads\\y_pred__dd35443e-b6cb-477b-bd4f-c183ca10e453__y_pred_MIN.csv"
   },
   "model": {
     "path": null
@@ -13,6 +13,12 @@
       "sensitive": true
     },
     "competences_coverage_required": {
+      "sensitive": true
+    },
+    "competences_coverage_optional": {
+      "sensitive": true
+    },
+    "education_cv_encoded": {
       "sensitive": true
     }
   },
@@ -30,14 +36,26 @@
     "privacy"
   ],
   "metrics": {
-    "privacy": [],
-    "fairness": [
-      "conditional_statistical_parity"
+    "privacy": [
+      "anonymity_set_size",
+      "k_anonymity"
     ],
-    "fake_right": []
+    "fairness": [
+      "conditional_statistical_parity",
+      "conditional_use_accuracy_equality",
+      "demographic_parity"
+    ],
+    "fake_right": [
+      "fake_right_example"
+    ]
   },
   "plugins": [
-    "plugins.fairness.conditional_statistical_parity"
+    "plugins.privacy.anonymity_set_size",
+    "plugins.privacy.k_anonymity",
+    "plugins.fairness.conditional_statistical_parity",
+    "plugins.fairness.conditional_use_accuracy_equality",
+    "plugins.fairness.demographic_parity",
+    "plugins.fake_right.new_metric"
   ],
   "metric_requirements": {
     "conditional_statistical_parity": {
@@ -291,16 +309,16 @@
   "k_anonymity": {
     "k_value": 2,
     "quasi_identifiers": [
-      "age_cv",
-      "competences_coverage_required"
+      "competences_coverage_required",
+      "competences_coverage_optional"
     ]
   },
   "l_diversity": {
     "quasi_identifiers": [
-      "competences_coverage_optional",
-      "education_cv_encoded"
+      "age_cv",
+      "competences_coverage_required"
     ],
-    "sensitive_attribute": "age_cv"
+    "sensitive_attribute": "competences_coverage_optional"
   },
   "mutual_information": {
     "sensitive_attribute": "age_cv",
@@ -311,11 +329,14 @@
   "t_closeness": {
     "quasi_identifiers": [
       "competences_coverage_required",
-      "competences_coverage_optional"
+      "education_cv_encoded"
     ],
     "sensitive_attribute": "education_job_req"
   },
   "conditional_statistical_parity": {
     "conditional_variable": "age_cv"
+  },
+  "fake_right_example": {
+    "threshold": 0.2
   }
 }

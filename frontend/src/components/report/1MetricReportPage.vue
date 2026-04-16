@@ -27,7 +27,7 @@ const props = defineProps({
         <div class="dot red"></div>
         <div class="label">
           <div class="name">Low compliance</div>
-          <div class="range">(0 – 0.20)</div>
+          <div class="range">(0 – 2.0)</div>
         </div>
         <div class="text">
           Interpretation: critical values. Strong evidence of discrimination or
@@ -41,7 +41,7 @@ const props = defineProps({
         <div class="dot orange"></div>
         <div class="label">
           <div class="name">Low-Medium compliance</div>
-          <div class="range">(0.21 – 0.40)</div>
+          <div class="range">(2.01 – 4.0)</div>
         </div>
         <div class="text">
           Interpretation: problematic values. Significant imbalances between
@@ -55,7 +55,7 @@ const props = defineProps({
         <div class="dot yellow"></div>
         <div class="label">
           <div class="name">Medium compliance</div>
-          <div class="range">(0.41 – 0.60)</div>
+          <div class="range">(4.01 – 6.0)</div>
         </div>
         <div class="text">
           Interpretation: intermediate level. No extreme violations emerge, but
@@ -68,7 +68,7 @@ const props = defineProps({
         <div class="dot lightblue"></div>
         <div class="label">
           <div class="name">Medium-High compliance</div>
-          <div class="range">(0.61 – 0.80)</div>
+          <div class="range">(6.01 – 8.0)</div>
         </div>
         <div class="text">
           Interpretation: good level. The system is consistent with the
@@ -82,7 +82,7 @@ const props = defineProps({
         <div class="dot blue"></div>
         <div class="label">
           <div class="name">High compliance</div>
-          <div class="range">(0.81 – 1.00)</div>
+          <div class="range">(8.01 – 10.00)</div>
         </div>
         <div class="text">
           Interpretation: optimal level. No significant evidence of

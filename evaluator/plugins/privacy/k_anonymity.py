@@ -84,6 +84,12 @@ class KAnonymity(PrivacyMetricBase):
 
             compliance_series = (self.group_counts >= self.k_value)
             comp_pct = round(float(compliance_series.mean()) * 100.0, 2) if len(compliance_series) else None
+
+            #score definition
+            group_scores = self.group_counts.apply(lambda g: min(float(g) / float(self.k_value), 1.0)) #group_score = min(1, group_size (how many groups contain certain
+            #quasi identifiers) / k) 
+            normalized_score = round(float(group_scores.mean()), 3) if len(group_scores) else None #avg. anonimyty quality
+            final_score = round(10 * normalized_score, 3) if normalized_score is not None else None
             
 
             non_compliant = self.group_counts[self.group_counts < self.k_value]
@@ -100,21 +106,6 @@ class KAnonymity(PrivacyMetricBase):
                     "count": int(count),
                     "compliant": bool(count >= self.k_value)
                 })
-
-            #example group it is printed only from not compliant
-            example_groups = []
-            for group_key, count in non_compliant_limited.items():
-                if not isinstance(group_key, tuple):
-                    group_key = (group_key,)
-
-                obj = {col: val for col, val in zip(quasi_identifiers, group_key)}
-                obj["count"] = int(count)
-                obj["compliant"] = bool(count >= self.k_value)  # will be False here, but keep it consistent
-                example_groups.append(obj)
-           
-            if not example_groups:
-                example_groups.append({})
-
 
             #full result for audit 
             full_results = []
@@ -145,9 +136,8 @@ class KAnonymity(PrivacyMetricBase):
                 "compliance": bool(compliance_series.all()) if len(compliance_series) else None,
                 "compliance_percentage": comp_pct,
                 "quasi_identifiers": quasi_identifiers,
+                "final_score": final_score,
 
-                #Representation subset of interest 
-                "example_groups": example_groups, #subset of no compliants
             
                 #All -> for audit trailing
                 "full_results": full_results, #full result

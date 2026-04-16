@@ -1,6 +1,11 @@
 <script setup>
 import { computed, reactive, ref, watch, nextTick } from "vue";
-import { useRoute, useRouter, onBeforeRouteLeave } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
+import {
+  DEFAULT_WEIGHT,
+  DEFAULT_WEIGHT_JUSTIFICATION,
+  buildScalarMapSavePayload,
+} from "../../utils/report_builder_helper";
 
 const router = useRouter();
 
@@ -15,8 +20,6 @@ const props = defineProps({
   runId: { type: String, required: true },
 });
 
-const emit = defineEmits(["save"]);
-
 function prettifyLabel(str) {
   return String(str || "")
     .replace(/_/g, " ")
@@ -24,7 +27,6 @@ function prettifyLabel(str) {
     .replace(/\b\w/g, (c) => c.toUpperCase());
 }
 
-const DEFAULT_WEIGHT = 5;
 const MIN_JUST_LENGTH = 10;
 
 const weights = reactive({});         // { [label]: number }
@@ -40,10 +42,6 @@ const items = computed(() => {
     .map(([label, value]) => ({ label, value }));
 });
 
-function clampWeight(n) {
-  return Math.max(0, Math.min(10, Math.round(n)));
-}
-
 watch(
   items,
   async (rows) => {
@@ -51,7 +49,7 @@ watch(
 
     for (const r of rows) {
       const init = Number(props.initialWeights?.[r.label]);
-      weights[r.label] = Number.isFinite(init) ? clampWeight(init) : DEFAULT_WEIGHT;
+      weights[r.label] = Number.isFinite(init) ? init : DEFAULT_WEIGHT;
       if (justifications[r.label] === undefined) justifications[r.label] = "";
     }
 
@@ -113,46 +111,33 @@ const saving = ref(false);
 const saveError = ref("");
 const saveOk = ref(false);
 
-//for saving weights = 5 if go back
-const leaving = ref(false); 
-
-//for full payload (same ad toDict in the case of the other metrics)
-function buildContextReport(rows) {
-  const out = {};
-  for (const r of rows || []) {
-    out[r.label] = {
-      metric: props.metricKey,
-      sensitive_features: r.label,
-      value: r.value,
-    };
-  }
-  return out;
-}
-
-//for saving weights = 5 if go back
+//Generate payload
 function buildSavePayload() {
-  const normalizedWeights = {};
-  const normalizedJustifications = {};
+  const weightsByLabel = {};
+  const justificationsByLabel = {};
 
   for (const row of items.value) {
     const label = row.label;
 
     const w = Number(weights[label]);
-    normalizedWeights[label] = Number.isFinite(w) ? clampWeight(w) : DEFAULT_WEIGHT;
+    const finalWeight = Number.isFinite(w) ? w : DEFAULT_WEIGHT;
 
-    normalizedJustifications[label] = String(justifications[label] || "");
+    weightsByLabel[label] = finalWeight;
+    justificationsByLabel[label] =
+      finalWeight === DEFAULT_WEIGHT
+        ? DEFAULT_WEIGHT_JUSTIFICATION
+        : String(justifications[label] || "").trim();
   }
 
-  return {
-    run_id: props.runId,
+  return buildScalarMapSavePayload({
+    runId: props.runId,
     group: group.value,
     metric: props.metricKey,
-    weights: normalizedWeights,
-    justifications: normalizedJustifications,
-    context_report: buildContextReport(items.value),
-  };
+    rows: items.value,
+    weightsByLabel,
+    justificationsByLabel,
+  });
 }
-
 //shared POST
 async function postSaveMetric() {
   const resp = await fetch("http://127.0.0.1:8000/results/save_weights", {
@@ -169,41 +154,6 @@ async function postSaveMetric() {
   return resp.json().catch(() => ({}));
 }
 
-//if attemptLeave -> post payload
-async function attemptLeave() {
-  if (leaving.value) return;
-
-  leaving.value = true;
-  saveError.value = "";
-
-  try {
-    await postSaveMetric();
-    router.back();
-  } catch (e) {
-    saveError.value = e?.message || String(e);
-  } finally {
-    leaving.value = false;
-  }
-}
-
-
-onBeforeRouteLeave(async () => {
-  if (leaving.value) return true;
-  if (saving.value) return false;
-
-  try {
-    leaving.value = true;
-    saveError.value = "";
-    await postSaveMetric();
-    return true;
-  } catch (e) {
-    saveError.value = e?.message || String(e);
-    return false;
-  } finally {
-    leaving.value = false;
-  }
-});
-
 async function onSave() {
   if (!canSave.value || saving.value) return;
 
@@ -212,7 +162,7 @@ async function onSave() {
   saveOk.value = false;
 
   try {
-    awaiut = postSaveMetric()
+    await postSaveMetric()
     saveOk.value = true;
     contextualOpen.value = false; //close panel after saving
     router.back();
@@ -221,6 +171,10 @@ async function onSave() {
   } finally {
     saving.value = false;
   }
+}
+
+function back() {
+  router.back();
 }
 </script>
 
@@ -255,7 +209,7 @@ async function onSave() {
                     type="range"
                     min="0"
                     max="10"
-                    step="1"
+                    step="0.1"
                     v-model.number="weights[row.label]"
                     @input="onWeightInput(row.label)"
                     @change="onWeightInput(row.label)"
@@ -286,10 +240,7 @@ async function onSave() {
   </div>
 
   <div class="contextWrap">
-    <button class="contextToggle" @click="toggleContext">
-      <span class="chev">▼</span>
-      <span class="contextTitle">Contextual Evaluation</span>
-    </button>
+    
 
     <div v-if="showContext" class="contextCard">
       <div class="contextHint">
@@ -324,13 +275,10 @@ async function onSave() {
         <strong>Saving</strong>.
       </div>
 
-      <div v-else class="okmsg">
-        All changed weights are justified. You can save.
-      </div>
     </div>
 
     <div class="actions">
-      <button class="ghost" @click="attemptLeave" :disabled="saving || leaving">
+      <button class="ghost" @click="back()" :disabled="saving || leaving">
         {{ leaving ? "saving…" : "‹ back" }}
       </button>
 
@@ -524,16 +472,6 @@ async function onSave() {
   max-width: 980px;
 }
 
-.contextToggle {
-  border: none;
-  background: transparent;
-  cursor: pointer;
-  display: flex;
-  gap: 10px;
-  align-items: center;
-  padding: 6px 0;
-}
-
 .chev {
   color: #1f5cff;
   font-weight: 900;
@@ -591,7 +529,7 @@ async function onSave() {
 }
 
 .textarea {
-  width: 100%;
+  width: 97%;
   border: 1px solid #ddd;
   border-radius: 12px;
   padding: 10px 12px;
@@ -605,15 +543,6 @@ async function onSave() {
   border-radius: 12px;
   background: #fff1f1;
   border: 1px solid #ffd2d2;
-  font-weight: 800;
-}
-
-.okmsg {
-  margin-top: 14px;
-  padding: 10px 12px;
-  border-radius: 12px;
-  background: #effff0;
-  border: 1px solid #c8f2cc;
   font-weight: 800;
 }
 

@@ -1,0 +1,220 @@
+{
+  "datasets": {
+    "train": null,
+    "X_test": "C:\\Users\\pc\\Desktop\\Alberto\\Alberto\\Tesi\\FRIA_evaluation\\FRIA_evaluation\\backend\\storage\\uploads\\X_test__aa32c627-f8b4-4d9c-ac94-e14668297344__X_test_MIN.csv",
+    "y_true": "C:\\Users\\pc\\Desktop\\Alberto\\Alberto\\Tesi\\FRIA_evaluation\\FRIA_evaluation\\backend\\storage\\uploads\\y_true__aa32c627-f8b4-4d9c-ac94-e14668297344__y_true.csv",
+    "y_pred": "C:\\Users\\pc\\Desktop\\Alberto\\Alberto\\Tesi\\FRIA_evaluation\\FRIA_evaluation\\backend\\storage\\uploads\\y_pred__aa32c627-f8b4-4d9c-ac94-e14668297344__y_pred_MIN.csv"
+  },
+  "model": {
+    "path": null
+  },
+  "features": {
+    "competences_coverage_required": {
+      "sensitive": true
+    },
+    "competences_coverage_optional": {
+      "sensitive": true
+    }
+  },
+  "postprocessing": {
+    "use_inverse_encoding": false,
+    "inverse_encoding_prefixes": [],
+    "binning": {
+      "use_binning": false,
+      "features": {}
+    }
+  },
+  "rights_to_evaluate": [
+    "fairness",
+    "new_right"
+  ],
+  "metrics": {
+    "fairness": [
+      "conditional_statistical_parity",
+      "conditional_use_accuracy_equality",
+      "demographic_parity"
+    ],
+    "new_right": [
+      "new_metric_example"
+    ]
+  },
+  "plugins": [
+    "plugins.fairness.conditional_statistical_parity",
+    "plugins.fairness.conditional_use_accuracy_equality",
+    "plugins.fairness.demographic_parity",
+    "plugins.new_right.new_metric"
+  ],
+  "metric_requirements": {
+    "conditional_statistical_parity": {
+      "name": "Conditional Statistical Parity",
+      "right": "fairness",
+      "selected_right": "Fairness",
+      "required_inputs": [
+        "X_test",
+        "y_pred"
+      ],
+      "available_inputs": [
+        "X_test",
+        "y_pred",
+        "y_true"
+      ],
+      "missing_inputs": [],
+      "computable": true
+    },
+    "conditional_use_accuracy_equality": {
+      "name": "Conditional Use Accuracy Equality",
+      "right": "fairness",
+      "selected_right": "Fairness",
+      "required_inputs": [
+        "X_test",
+        "y_true",
+        "y_pred"
+      ],
+      "available_inputs": [
+        "X_test",
+        "y_pred",
+        "y_true"
+      ],
+      "missing_inputs": [],
+      "computable": true
+    },
+    "demographic_parity": {
+      "name": "Demographic Parity",
+      "right": "fairness",
+      "selected_right": "Fairness",
+      "required_inputs": [
+        "X_test",
+        "y_true",
+        "y_pred"
+      ],
+      "available_inputs": [
+        "X_test",
+        "y_pred",
+        "y_true"
+      ],
+      "missing_inputs": [],
+      "computable": true
+    },
+    "disparate_impact": {
+      "name": "Disparate Impact",
+      "right": "fairness",
+      "selected_right": "Fairness",
+      "required_inputs": [
+        "X_test",
+        "y_true",
+        "y_pred"
+      ],
+      "available_inputs": [
+        "X_test",
+        "y_pred",
+        "y_true"
+      ],
+      "missing_inputs": [],
+      "computable": true
+    },
+    "equal_opportunity": {
+      "name": "Equal Opportunity",
+      "right": "fairness",
+      "selected_right": "Fairness",
+      "required_inputs": [
+        "X_test",
+        "y_true",
+        "y_pred"
+      ],
+      "available_inputs": [
+        "X_test",
+        "y_pred",
+        "y_true"
+      ],
+      "missing_inputs": [],
+      "computable": true
+    },
+    "equalized_odds_difference": {
+      "name": "Equalized Odds Difference",
+      "right": "fairness",
+      "selected_right": "Fairness",
+      "required_inputs": [
+        "X_test",
+        "y_true",
+        "y_pred"
+      ],
+      "available_inputs": [
+        "X_test",
+        "y_pred",
+        "y_true"
+      ],
+      "missing_inputs": [],
+      "computable": true
+    },
+    "overall_accuracy_equality": {
+      "name": "Overall Accuracy Equality",
+      "right": "fairness",
+      "selected_right": "Fairness",
+      "required_inputs": [
+        "X_test",
+        "y_true",
+        "y_pred"
+      ],
+      "available_inputs": [
+        "X_test",
+        "y_pred",
+        "y_true"
+      ],
+      "missing_inputs": [],
+      "computable": true
+    },
+    "predictive_parity": {
+      "name": "Predictive Parity",
+      "right": "fairness",
+      "selected_right": "Fairness",
+      "required_inputs": [
+        "X_test",
+        "y_true",
+        "y_pred"
+      ],
+      "available_inputs": [
+        "X_test",
+        "y_pred",
+        "y_true"
+      ],
+      "missing_inputs": [],
+      "computable": true
+    },
+    "new_metric_example": {
+      "name": "New metric Example",
+      "right": "new_right",
+      "selected_right": "New Right",
+      "required_inputs": [
+        "X_test"
+      ],
+      "available_inputs": [
+        "X_test",
+        "y_pred",
+        "y_true"
+      ],
+      "missing_inputs": [],
+      "computable": true
+    }
+  },
+  "metrics_by_right": {
+    "fairness": [
+      "conditional_statistical_parity",
+      "conditional_use_accuracy_equality",
+      "demographic_parity",
+      "disparate_impact",
+      "equal_opportunity",
+      "equalized_odds_difference",
+      "overall_accuracy_equality",
+      "predictive_parity"
+    ],
+    "new_right": [
+      "new_metric_example"
+    ]
+  },
+  "conditional_statistical_parity": {
+    "conditional_variable": "age_cv"
+  },
+  "new_metric_example": {
+    "threshold": 0.2
+  }
+}

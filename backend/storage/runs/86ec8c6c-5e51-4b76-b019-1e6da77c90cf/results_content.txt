@@ -1,0 +1,77 @@
+Namespace(config='C:\\Users\\pc\\Desktop\\Alberto\\Alberto\\Tesi\\FRIA_evaluation\\FRIA_evaluation\\backend\\storage\\configs\\86ec8c6c-5e51-4b76-b019-1e6da77c90cf.json')
+C:\Users\pc\Desktop\Alberto\Alberto\Tesi\FRIA_evaluation\FRIA_evaluation\backend\storage\configs\86ec8c6c-5e51-4b76-b019-1e6da77c90cf.json
+[INFO] Using config: C:\Users\pc\Desktop\Alberto\Alberto\Tesi\FRIA_evaluation\FRIA_evaluation\backend\storage\configs\86ec8c6c-5e51-4b76-b019-1e6da77c90cf.json
+
+Selected sensitive features: ['competences_coverage_required', 'competences_coverage_optional']
+
+Columns available after preprocessing: ['age_cv', 'competences_coverage_required', 'competences_coverage_optional', 'education_cv_encoded', 'education_job_req', 'education_job_encoded', 'gender_job_Any', 'gender_job_Female', 'gender_job_Male', 'gender_cv_Female', 'gender_cv_Male', 'gender_cv_Not binary', 'gender_cv_Not declared', 'disability_cv_No', 'disability_cv_Not declared', 'disability_cv_Yes', 'disability_job_Any', 'disability_job_No', 'PCA_1', 'PCA_2', 'nationality_job_Any', 'nationality_job_Catalan', 'nationality_job_English', 'nationality_job_French', 'nationality_job_Italian', 'nationality_job_Spanish', 'nationality_cv_Catalan', 'nationality_cv_English', 'nationality_cv_French', 'nationality_cv_German', 'nationality_cv_Irish', 'nationality_cv_Italian', 'nationality_cv_LowGerman', 'nationality_cv_Romanian', 'nationality_cv_Russian', 'nationality_cv_Spanish', 'nationality_cv_Swedish', 'age_min_job', 'age_max_job', 'distrib_test', 'check_it', 'check_de', 'people_of_world']
+
+Running Anonymity Set Size
+
+Running K-Anonymity
+
+Running conditional_statistical_parity
+  Computing for feature: competences_coverage_required
+Loaded conditional_variable: competences_coverage_optional
+Loaded sensitive_feature: competences_coverage_required
+Config section: {'conditional_variable': 'competences_coverage_optional'}
+Available X_test columns: ['age_cv', 'competences_coverage_required', 'competences_coverage_optional', 'education_cv_encoded', 'education_job_req', 'education_job_encoded', 'gender_job_Any', 'gender_job_Female', 'gender_job_Male', 'gender_cv_Female', 'gender_cv_Male', 'gender_cv_Not binary', 'gender_cv_Not declared', 'disability_cv_No', 'disability_cv_Not declared', 'disability_cv_Yes', 'disability_job_Any', 'disability_job_No', 'PCA_1', 'PCA_2', 'nationality_job_Any', 'nationality_job_Catalan', 'nationality_job_English', 'nationality_job_French', 'nationality_job_Italian', 'nationality_job_Spanish', 'nationality_cv_Catalan', 'nationality_cv_English', 'nationality_cv_French', 'nationality_cv_German', 'nationality_cv_Irish', 'nationality_cv_Italian', 'nationality_cv_LowGerman', 'nationality_cv_Romanian', 'nationality_cv_Russian', 'nationality_cv_Spanish', 'nationality_cv_Swedish', 'age_min_job', 'age_max_job', 'distrib_test', 'check_it', 'check_de', 'people_of_world']
+  Computing for feature: competences_coverage_optional
+Loaded conditional_variable: competences_coverage_optional
+Loaded sensitive_feature: competences_coverage_optional
+Config section: {'conditional_variable': 'competences_coverage_optional'}
+Available X_test columns: ['age_cv', 'competences_coverage_required', 'competences_coverage_optional', 'education_cv_encoded', 'education_job_req', 'education_job_encoded', 'gender_job_Any', 'gender_job_Female', 'gender_job_Male', 'gender_cv_Female', 'gender_cv_Male', 'gender_cv_Not binary', 'gender_cv_Not declared', 'disability_cv_No', 'disability_cv_Not declared', 'disability_cv_Yes', 'disability_job_Any', 'disability_job_No', 'PCA_1', 'PCA_2', 'nationality_job_Any', 'nationality_job_Catalan', 'nationality_job_English', 'nationality_job_French', 'nationality_job_Italian', 'nationality_job_Spanish', 'nationality_cv_Catalan', 'nationality_cv_English', 'nationality_cv_French', 'nationality_cv_German', 'nationality_cv_Irish', 'nationality_cv_Italian', 'nationality_cv_LowGerman', 'nationality_cv_Romanian', 'nationality_cv_Russian', 'nationality_cv_Spanish', 'nationality_cv_Swedish', 'age_min_job', 'age_max_job', 'distrib_test', 'check_it', 'check_de', 'people_of_world']
+  [SKIP feature] The truth value of a Series is ambiguous. Use a.empty, a.bool(), a.item(), a.any() or a.all().
+
+=== FINAL RESULTS ===
+
+--- Metrics: anonymity_set_size ---
+
+  Combined result:
+    Metric: Anonymity Set Size
+    Value: {'metric': 'Anonymity Set Size', 'status': 'success', 'average': 200.0, 'min': 2, 'max': 1033, 'unique_combinations': 25, 'total_records': 5000, 'sensitive_features': ['competences_coverage_required', 'competences_coverage_optional'], 'final_score': 9.95, 'full_results': [{'competences_coverage_required': 1.0, 'competences_coverage_optional': 0.0, 'count': 1033}, {'competences_coverage_required': 0.5, 'competences_coverage_optional': 0.0, 'count': 730}, {'competences_coverage_required': 0.75, 'competences_coverage_optional': 0.0, 'count': 654}, {'competences_coverage_required': 0.25, 'competences_coverage_optional': 0.0, 'count': 594}, {'competences_coverage_required': 1.0, 'competences_coverage_optional': 1.0, 'count': 481}, {'competences_coverage_required': 0.5, 'competences_coverage_optional': 1.0, 'count': 371}, {'competences_coverage_required': 0.75, 'competences_coverage_optional': 1.0, 'count': 308}, {'competences_coverage_required': 0.25, 'competences_coverage_optional': 1.0, 'count': 262}, {'competences_coverage_required': 0.6666666666666666, 'competences_coverage_optional': 0.0, 'count': 180}, {'competences_coverage_required': 0.6666666666666666, 'competences_coverage_optional': 1.0, 'count': 95}, {'competences_coverage_required': 0.3333333333333333, 'competences_coverage_optional': 0.0, 'count': 92}, {'competences_coverage_required': 0.3333333333333333, 'competences_coverage_optional': 1.0, 'count': 43}, {'competences_coverage_required': 1.0, 'competences_coverage_optional': 0.5, 'count': 40}, {'competences_coverage_required': 0.5, 'competences_coverage_optional': 0.5, 'count': 26}, {'competences_coverage_required': 1.0, 'competences_coverage_optional': 0.3333333333333333, 'count': 18}, {'competences_coverage_required': 0.6666666666666666, 'competences_coverage_optional': 0.3333333333333333, 'count': 18}, {'competences_coverage_required': 0.3333333333333333, 'competences_coverage_optional': 0.3333333333333333, 'count': 14}, {'competences_coverage_required': 0.3333333333333333, 'competences_coverage_optional': 0.5, 'count': 12}, {'competences_coverage_required': 1.0, 'competences_coverage_optional': 0.6666666666666666, 'count': 6}, {'competences_coverage_required': 0.6666666666666666, 'competences_coverage_optional': 0.6666666666666666, 'count': 5}, {'competences_coverage_required': 0.25, 'competences_coverage_optional': 0.5, 'count': 5}, {'competences_coverage_required': 0.3333333333333333, 'competences_coverage_optional': 0.6666666666666666, 'count': 4}, {'competences_coverage_required': 0.6666666666666666, 'competences_coverage_optional': 0.5, 'count': 4}, {'competences_coverage_required': 0.75, 'competences_coverage_optional': 0.3333333333333333, 'count': 3}, {'competences_coverage_required': 0.75, 'competences_coverage_optional': 0.5, 'count': 2}]}
+
+--- Metrics: k_anonymity ---
+
+  Combined result:
+    Metric: K-Anonymity
+    k: 2
+    Compliance: False (85.51%)
+    Min group size: 1
+    Max group size: 178
+    Avg group size: 36.23
+
+[COMPACT] Example groups (max 5):
+      Group:
+None
+      Count: 8
+      Compliant: True
+
+      Group:
+None
+      Count: 2
+      Compliant: True
+
+      Group:
+None
+      Count: 8
+      Compliant: True
+
+      Group:
+None
+      Count: 1
+      Compliant: False
+
+      Group:
+None
+      Count: 18
+      Compliant: True
+
+    ... (133 groups omitted)
+
+--- Metrics: conditional_statistical_parity ---
+
+  Feature: competences_coverage_required
+    Metric: Conditional Statistical Parity
+    Value: {'metric': 'Conditional Statistical Parity', 'status': 'success', 'conditional_variable': 'competences_coverage_optional', 'sensitive_feature': 'competences_coverage_required', 'conditions': {'0.0': {'0.25': 0.09427609427609428, '0.3333333333333333': 0.9456521739130435, '0.5': 0.17945205479452056, '0.6666666666666666': 0.9555555555555556, '0.75': 0.0871559633027523, '1.0': 0.33978702807357214, 'raw_difference': 0.8683995922528033, 'normalized_score': 0.13160040774719672, 'weight': 0.6566, 'total_samples': 3283}, '0.3333333333333333': {'0.3333333333333333': 0.9285714285714286, '0.6666666666666666': 0.9444444444444444, '0.75': 0.3333333333333333, '1.0': 0.8888888888888888, 'raw_difference': 0.6111111111111112, 'normalized_score': 0.38888888888888884, 'weight': 0.0106, 'total_samples': 53}, '0.5': {'0.25': 0.0, '0.3333333333333333': 1.0, '0.5': 0.3076923076923077, '0.6666666666666666': 1.0, '0.75': 0.5, '1.0': 0.7, 'raw_difference': 1.0, 'normalized_score': 0.0, 'weight': 0.0178, 'total_samples': 89}, '0.6666666666666666': {'0.3333333333333333': 1.0, '0.6666666666666666': 0.8, '1.0': 0.6666666666666666, 'raw_difference': 0.33333333333333337, 'normalized_score': 0.6666666666666666, 'weight': 0.003, 'total_samples': 15}, '1.0': {'0.25': 0.14122137404580154, '0.3333333333333333': 0.9069767441860465, '0.5': 0.2722371967654987, '0.6666666666666666': 0.8736842105263158, '0.75': 0.08766233766233766, '1.0': 0.4490644490644491, 'raw_difference': 0.8193144065237088, 'normalized_score': 0.1806855934762912, 'weight': 0.312, 'total_samples': 1560}}, 'disparity_summary': {'raw_average': 0.8510950448863657, 'raw_max': 1.0, 'raw_min': 0.33333333333333337, 'normalized_average': 0.14890495511363444, 'normalized_max': 0.6666666666666666, 'normalized_min': 0.0, 'processed_conditions': 5, 'total_samples': 5000, 'final_score': 1.4890495511363444}}
+[INFO] Saved UI schemas to: C:\Users\pc\Desktop\Alberto\Alberto\Tesi\FRIA_evaluation\FRIA_evaluation\evaluator\run_results\result_schemas.json

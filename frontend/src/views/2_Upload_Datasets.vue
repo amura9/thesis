@@ -131,7 +131,7 @@ async function goNext() {
 
   try {
     if (!canGoNext.value) {
-      errorMsg.value = "Upload at least Main Dataset before continuing";
+      errorMsg.value = "Upload at least Test Dataset before continuing";
       return;
     }
 
@@ -221,19 +221,20 @@ onMounted(() => {
       <aside class="noteBox">
         <div class="warnIcon">⚠</div>
         <div class="noteText">
-          <strong>You don’t need to upload all files now</strong> — you can leave any missing field empty.
-          The evaluator will automatically compute only the metrics compatible with the provided data.
-        </div>
+        <strong>Only the test dataset is required.</strong> All other files are optional
+        and may be left empty for now. The evaluator will automatically compute only the
+        metrics compatible with the data you provide.
+      </div>
       </aside>
 
       <!-- Form block -->
       <section class="form">
         <!-- X_test -->
         <div class="row">
-          <div class="label">Main dataset</div>
+          <div class="label">Test dataset </div>
           <label class="uploadBar">
             <span class="placeholder">
-              {{ uploaded.X_test.ok ? `Uploaded: ${uploaded.X_test.filename}` : "Upload datset file format .pkl or csv" }}
+              {{ uploaded.X_test.ok ? `File Uploaded: ${uploaded.X_test.filename}` : "Upload datset file format .pkl or csv" }}
             </span>
 
             <span v-if="uploading.X_test" class="pill">Uploading…</span>
@@ -244,11 +245,11 @@ onMounted(() => {
         </div>
 
         <!-- y_true -->
-        <div class="row">
+         <div class="row optionalStart">
           <div class="label">Ground truth dataset</div>
           <label class="uploadBar">
             <span class="placeholder">
-              {{ uploaded.y_true.ok ? `Uploaded: ${uploaded.y_true.filename}` : "Upload ground truth file format .pkl or csv" }}
+              {{ uploaded.y_true.ok ? `File Uploaded: ${uploaded.y_true.filename}` : "Upload ground truth file format .pkl or csv" }}
             </span>
 
             <span v-if="uploading.y_true" class="pill">Uploading…</span>
@@ -262,7 +263,7 @@ onMounted(() => {
           <div class="label">Model prediction dataset </div>
           <label class="uploadBar">
             <span class="placeholder">
-              {{ uploaded.y_pred.ok ? `Uploaded: ${uploaded.y_pred.filename}` : "Upload model prediction dataset file format .pkl or csv" }}
+              {{ uploaded.y_pred.ok ? `File Uploaded: ${uploaded.y_pred.filename}` : "Upload model prediction dataset file format .pkl or csv" }}
             </span>
 
             <span v-if="uploading.y_pred" class="pill">Uploading…</span>
@@ -327,20 +328,8 @@ onMounted(() => {
   font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
 }
 
-/* top-left select */
-.top-left {
-  position: fixed;
-  top: 18px;
-  left: 18px;
-  z-index: 10;
-}
-.select {
-  font-size: 16px;
-  padding: 6px 14px;
-  border: 2px solid #000;
-  border-radius: 999px;
-  background: #fff;
-  outline: none;
+.optionalStart {
+  margin-top: 60px;
 }
 
 /* header */

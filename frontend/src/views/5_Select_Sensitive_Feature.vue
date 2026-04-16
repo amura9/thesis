@@ -415,7 +415,7 @@ onMounted(fetchColumns);
 .slider {
   position: absolute;
   inset: 0;
-  background: #222;
+  background: #d9d9d9;
   border-radius: 999px;
 }
 

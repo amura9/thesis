@@ -16,15 +16,9 @@ const pluginRegistry = ref({});         // /plugin-registry (optional but useful
 
 const selected = ref({});               // { [rightId]: { [metricId]: boolean } }
 
-//fake_right -> Fake Right
-function titleizeRight(rightId) {
-  return (rightId || "")
-    .replace(/_/g, " ")
-    .replace(/\b\w/g, (c) => c.toUpperCase());
-}
-
-//fake_metric -> Fake Metric
-function titleizeMetric(metricId) {
+//sample_right -> Sample Right
+//sample_metric -> Sample Metric
+function titleize(metricId) {
   return (metricId || "")
     .replace(/_/g, " ")
     .replace(/\b\w/g, (c) => c.toUpperCase());
@@ -77,9 +71,9 @@ function tooltipFor(metricId) {
 function displayRightTitle(rightId, metricIds) {
   for (const mid of metricIds || []) {
     const sr = metricRequirements.value?.[mid]?.selected_right;
-    if (sr) return sr; 
+    if (sr) return titleize(sr); 
   }
-  return titleizeRight(rightId); // fallback
+  return titleize(rightId); // fallback
 }
 
 // Build the UI model: sections[] where each section is a right with metric cards
@@ -103,7 +97,7 @@ const sections = computed(() => {
     const cards = metricIds.map((metricId) => {
       const label =
         pluginRegistry.value?.[metricId]?.name ||
-        titleizeMetric(metricId);
+        titleize(metricId);
 
       return {
         id: metricId,
@@ -125,7 +119,7 @@ const sections = computed(() => {
   return out;
 });
 
-//FIRST: Build UI based on rights selected and respective metrics
+//FIRST: Build UI based on selected rights and respective metrics
 async function buildUI() {
   try {
     error.value = "";

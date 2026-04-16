@@ -1,11 +1,13 @@
 <script setup>
-import { computed, onMounted, ref } from "vue";
+import { computed, onMounted, ref, shallowRef} from "vue";
 import { useRoute, useRouter} from "vue-router";
 
 //5 different metric results renderer
+//import ConditionalNestedView from "../components/metrics/ConditionalNestedView.vue";
+//import GroupMetricMapView from "../components/metrics/GroupMetricMapView.vue";
+import ConditionalNestedView2 from "../components/metrics/ConditionalNestedView2.vue";
 import ScalarMapView from "../components/metrics/ScalarMapView.vue";
-import ConditionalNestedView from "../components/metrics/ConditionalNestedView.vue";
-import GroupMetricMapView from "../components/metrics/GroupMetricMapView.vue";
+import GroupMetricMapView2 from "../components/metrics/GroupMetricMapView2.vue";
 import RecordWithTableView from "../components/metrics/RecordWithTableView.vue";
 import CardMap from "../components/metrics/CardMap.vue";
 
@@ -26,6 +28,33 @@ const runId = ref("");
 const allResults = ref({}); //results for all metrics
 const allSchemas = ref({}); //schemas for all metrics
 
+//for the emit from the child schema
+const metricViewRef = shallowRef(null);
+
+async function handleBack() {
+  const view = metricViewRef.value;
+
+  if (view && typeof view.goBackSafely === "function") {
+    await view.goBackSafely();
+    return;
+  }
+
+  router.back();
+}
+
+function handleChildSafeBack() {
+  router.back();
+}
+
+//Helper
+function prettifyLabel(str) {
+  if (!str || typeof str !== "string") return "";
+  return str
+    .replace(/_/g, " ")
+    .toLowerCase()
+    .replace(/\b\w/g, (c) => c.toUpperCase());
+}
+
 //gets data from the selected metric (metricKey selected)
 const metricObj = computed(() => allResults.value?.[metricKey.value] ?? null);
 
@@ -37,15 +66,15 @@ const metricSchemaFromBackend = computed(
 //apply renderer depending on identified schema per metric
 const renderer = computed(() => {
   switch (metricSchemaFromBackend.value) {
-    
+
     case "card_map":
       return CardMap;
     case "scalar_map":
       return ScalarMapView;
     case "conditional_nested":
-      return ConditionalNestedView;
+      return ConditionalNestedView2;
     case "group_metric_map":
-      return GroupMetricMapView; 
+      return GroupMetricMapView2; 
     case "record_with_table":
       return RecordWithTableView;
     default:
@@ -65,7 +94,7 @@ onMounted(async () => {
 
     runId.value = String(data?.run_id || "");  
 
-    //catchinng results
+    //catching results
     allResults.value = data?.results ?? {};
 
     if (data?.schemas) {
@@ -97,12 +126,12 @@ onMounted(async () => {
   <div class="page">
     <aside class="sidebar">
       <div class="side-title">Metrics<br />Overview</div>
-      <button class="back" @click="$router.back()">‹ Back</button>
+      <button class="back" @click="handleBack">‹ Back</button>
     </aside>
 
     <main class="content">
       <h1 class="title">{{ prettyMetric }}</h1>
-      <p class="subtitle">Group: <strong>{{ group }}</strong></p>
+      <p class="subtitle">Group: <strong>{{ prettifyLabel(group) }}</strong></p>
 
       <div v-if="loading" class="card">Loading results…</div>
       <div v-else-if="error" class="card">{{ error }}</div>
@@ -111,10 +140,12 @@ onMounted(async () => {
         v-else-if="renderer && metricObj"
         :is="renderer"
         :metric-key="metricKey"
+        ref="metricViewRef"
         :metric-obj="metricObj"
         :schema-type="metricSchemaFromBackend"
         :run-id="runId"                 
         :initial-weights="initialWeights"
+        @go-back-safe="handleChildSafeBack"
       />
 
       <div v-else class="card">

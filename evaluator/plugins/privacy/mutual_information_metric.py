@@ -1,3 +1,9 @@
+
+
+
+
+
+
 from typing import Dict, Any, Optional, Tuple
 import numpy as np
 import pandas as pd
@@ -162,25 +168,26 @@ class MutualInformationMetric(PrivacyMetricBase):
                 random_state=42
             )
 
+            #score inverted: the higher the better
+            total_mi = float(np.sum(mi))
+            normalized_score= 10 * (1 / (1 + total_mi)) #1/1+total_mi -> higher mi = lower score (if have more info -> i have less privacy)
+            final_score = round(10 - normalized_score, 3)
+
             # 7) Results
             mi_df = pd.DataFrame({
                 "Feature": X_enc.columns,
                 "Mutual_Information": mi
             }).sort_values(by="Mutual_Information", ascending=False, ignore_index=True)
 
-            #ADDED (not use)
-            full_results = [
-                {row["Feature"]: float(row["Mutual_Information"])}
-                for _, row in mi_df.iterrows()
-            ]
+            full_results = []
 
-            #ADDED
-            pairs = list(zip(X_enc.columns, mi))[: self.max_display]
-            mi_map = {str(f): float(v) for f, v in zip(X_enc.columns, mi)}
+            for _, row in mi_df.iterrows():
+                full_results.append({
+                    "feature": str(row["Feature"]),
+                    "mutual_information": float(row["Mutual_Information"])
+    })
 
-            #limit to 10 for display
-
-            mi_map_example = {str(f): float(v) for f, v in pairs}
+        
 
             return {
                 #Summary statistics
@@ -188,19 +195,13 @@ class MutualInformationMetric(PrivacyMetricBase):
                 "status": "success",
                 "total_mi": float(np.sum(mi)),
                 "sensitive_attribute": self.sensitive_attribute,
-                "used_features": list(X_enc.columns),
-
-                ##Representation subset of interest
-                "example_groups": mi_map_example, 
+                "final_score": final_score,
 
                 ##All -> for audit trailing
-                "full_results": mi_map,
-                
-                #Old
-                "discrete_mask": discrete_mask.tolist(), 
-                #"full_results": full_results
-                
+                "full_results": full_results,
+
             }
 
         except Exception as e:
             return {"status": "error", "message": str(e)}
+

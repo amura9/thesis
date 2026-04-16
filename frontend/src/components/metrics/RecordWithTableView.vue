@@ -1,12 +1,20 @@
 <script setup>
 import { computed, ref, watch } from "vue";
-import { useRoute, useRouter, onBeforeRouteLeave } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
+import {
+  DEFAULT_WEIGHT,
+  DEFAULT_WEIGHT_JUSTIFICATION,
+  rowsToDict,
+  isScalar,
+  isPlainObject,
+  buildRecordWithTableSavePayload,
+} from "../../utils/report_builder_helper";
 
 const router = useRouter();
 
 const route = useRoute();
 
-const group = computed(() => String(route.params.group || "")); //take the right from API route
+const group = computed(() => String(route.params.group || "")); 
 
 const props = defineProps({
   metricKey: { type: String, required: true },
@@ -18,7 +26,6 @@ const props = defineProps({
 const saving = ref(false);
 const saveError = ref("");
 const saveOk = ref(false);
-const leaving = ref(false);
 
 /** ---------- helpers ---------- */
 function prettifyLabel(str) {
@@ -28,12 +35,7 @@ function prettifyLabel(str) {
     .toLowerCase()
     .replace(/\b\w/g, (c) => c.toUpperCase());
 }
-function isScalar(v) {
-  return v === null || v === undefined || ["string", "number", "boolean"].includes(typeof v);
-}
-function isPlainObject(v) {
-  return v && typeof v === "object" && !Array.isArray(v);
-}
+
 function isListOfDicts(v) {
   return Array.isArray(v) && v.length > 0 && v.every(isPlainObject);
 }
@@ -130,11 +132,7 @@ const tableBlocks = computed(() => {
   return blocks;
 });
 
-/* ===================================================================== */
-/* ============ ADDED: Metric-level Weight (same layout + logic) ========= */
-/* ===================================================================== */
-
-const DEFAULT_WEIGHT = 5;
+//Metric level weight
 const MIN_JUST_LENGTH = 10;
 
 const metricWeight = ref(DEFAULT_WEIGHT);
@@ -173,27 +171,21 @@ async function onWeightInput() {
   if (lockContextual.value) contextualOpen.value = true;
 }
 
-//for full payload
-function rowsToDict(rows) {
-  const out = {};
-  for (const r of rows || []) {
-    if (!r?.key) continue;
-    out[String(r.key)] = r.value; // r.key -> r.value (exactly what you want)
-  }
-  return out;
-}
-
-//for saving weights = 5 if go back
-//build payload if leave before save
+//build payload 
 function buildSavePayload() {
-  return {
-    run_id: props.runId,
+  const contextReport = rowsToDict(summaryRows.value);
+
+  return buildRecordWithTableSavePayload({
+    runId: props.runId,
     group: group.value,
     metric: props.metricKey,
-    user_weight: isChangedMetric() ? Number(metricWeight.value) : DEFAULT_WEIGHT,
-    user_justification: String(metricJustification.value || ""),
-    context_report: rowsToDict(summaryRows.value),
-  };
+    metricObj: contextReport,
+    userWeight: isChangedMetric() ? Number(metricWeight.value) : DEFAULT_WEIGHT,
+    userJustification:
+      Number(metricWeight.value) === DEFAULT_WEIGHT
+        ? DEFAULT_WEIGHT_JUSTIFICATION
+        : String(metricJustification.value || "").trim(),
+  });
 }
 
 async function postSaveMetric() {
@@ -210,41 +202,6 @@ async function postSaveMetric() {
 
   return resp.json().catch(() => ({}));
 }
-
-//with also the attemptLeave
-async function attemptLeave() {
-  if (leaving.value) return;
-
-  leaving.value = true;
-  saveError.value = "";
-
-  try {
-    await postSaveMetric();
-    router.back();
-  } catch (e) {
-    saveError.value = e?.message || String(e);
-  } finally {
-    leaving.value = false;
-  }
-}
-
-//RouteLeaveGuard
-onBeforeRouteLeave(async () => {
-  if (leaving.value) return true;
-  if (saving.value) return false;
-
-  try {
-    leaving.value = true;
-    saveError.value = "";
-    await postSaveMetric();
-    return true;
-  } catch (e) {
-    saveError.value = e?.message || String(e);
-    return false;
-  } finally {
-    leaving.value = false;
-  }
-});
 
 async function onSave() {
   if (!canSave.value || saving.value) return;
@@ -263,6 +220,10 @@ async function onSave() {
   } finally {
     saving.value = false;
   }
+}
+
+function back() {
+  router.back();
 }
 </script>
 
@@ -317,7 +278,7 @@ async function onSave() {
     <div class="contextWrap">
       <div class="impactRow">
         <div class="impactText">
-          Adjust the impact score (0–10) for this metric using the slider. A higher value means the metric is more
+          Adjust the impact score (0–10) for this metric. A higher value means the metric is more
           relevant for your evaluation scenario.
         </div>
 
@@ -347,7 +308,7 @@ async function onSave() {
               type="range"
               min="0"
               max="10"
-              step="1"
+              step="0.1"
               v-model.number="metricWeight"
               @input="onWeightInput"
               @change="onWeightInput"
@@ -358,11 +319,6 @@ async function onSave() {
           <div class="wval">w={{ metricWeight }}</div>
         </div>
       </div>
-
-      <button class="contextToggle" @click="toggleContext">
-        <span class="chev">▼</span>
-        <span class="contextTitle">Contextual Evaluation</span>
-      </button>
 
       <div v-if="showContext" class="contextCard">
         <div class="contextHint">
@@ -387,11 +343,7 @@ async function onSave() {
         </div>
 
         <div v-if="missingJustifications.length" class="blocker">
-          You changed the weight. Add justification to enable <strong>Saving</strong>.
-        </div>
-
-        <div v-else class="okmsg">
-          All changes are justified. You can Save.
+          You changed the weight. Add justification to enable <strong>saving</strong>.
         </div>
 
         <div v-if="saveOk" class="okmsg" style="margin-top: 10px;">
@@ -400,7 +352,7 @@ async function onSave() {
       </div>
 
       <div class="actions">
-        <button class="ghost" @click="$router.back()">‹ back</button>
+        <button class="ghost" @click="back()">‹ back</button>
 
         <button class="primary" :disabled="!canSave || saving" @click="onSave">
           {{ saving ? "saving…" : "save ›" }}
@@ -416,6 +368,7 @@ async function onSave() {
 
 <style scoped>
 .wrap {
+  --cardW: 980px;
   display: flex;
   flex-direction: column;
   gap: 14px;
@@ -526,24 +479,25 @@ async function onSave() {
 /* =================== ADDED: ScalarMapView weight + context ============= */
 /* ===================================================================== */
 
-/* ✅ Make weight block match .card width exactly */
+/* Make weight block match .card width exactly */
 .contextWrap{
-  --impactW: 980px;      /* == .card max-width */
+  --impactW: 980px;
   margin-top: 40px;
   width: 100%;
 }
 
 /* Ensure all major pieces use the same width */
+.contextCard
 .impactText,
 .impactControls,
-.contextToggle,
-.contextCard,
 .actions{
   width: 100%;
   max-width: var(--impactW);
   margin-left: auto;
   margin-right: auto;
 }
+
+
 
 .impactRow {
   display: flex;
@@ -686,43 +640,22 @@ async function onSave() {
   border: none;
 }
 
-/* contextual evaluation */
-.contextToggle {
-  margin: 14px auto 0;
-  border: none;
-  background: transparent;
-  cursor: pointer;
-  display: flex;
-  gap: 10px;
-  align-items: center;
-  justify-content: flex-start;
-  padding: 6px 0;
-}
-
-.chev {
-  color: #1f5cff;
-  font-weight: 900;
-  font-size: 16px;
-}
-
-.contextTitle {
-  font-weight: 900;
-  font-size: 18px;
-}
-
 .contextCard {
-  margin-top: 10px;
+  width: 100%;
+  box-sizing: border-box;
+  margin-top: 30px;
   border: 1px solid #e6e6e6;
   border-radius: 16px;
-  padding: 18px 18px;
-  background: #fff;
-  text-align: center;
+  padding: 18px;
+  background: #fafafa;
+  text-align: left;
 }
 
 .contextHint {
-  opacity: 0.75;
+  opacity: 0.7;
   margin-bottom: 12px;
-  font-size: 13px;
+  font-size: 14px;
+  text-align: center;
 }
 
 .justRow {
@@ -761,6 +694,7 @@ async function onSave() {
 
 .textarea {
   width: 100%;
+  box-sizing: border-box;
   border: 1px solid #ddd;
   border-radius: 12px;
   padding: 10px 12px;
@@ -776,16 +710,6 @@ async function onSave() {
   border: 1px solid #ffd2d2;
   font-weight: 800;
   text-align: left;
-}
-
-.okmsg {
-  margin-top: 10px;
-  padding: 14px 12px;
-  border-radius: 10px;
-  background: #eaffea;
-  border: 1px solid #bfe8c6;
-  font-weight: 900;
-  text-align: center;
 }
 
 /* actions */
