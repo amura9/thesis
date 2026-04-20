@@ -1,9 +1,9 @@
 {
   "datasets": {
     "train": null,
-    "X_test": "C:\\Users\\pc\\Desktop\\Alberto\\Alberto\\Tesi\\FRIA_evaluation\\FRIA_evaluation\\backend\\storage\\uploads\\X_test__0ee5ebb6-9755-4afa-b89f-53afcebac021__X_test_MIN.csv",
-    "y_true": "C:\\Users\\pc\\Desktop\\Alberto\\Alberto\\Tesi\\FRIA_evaluation\\FRIA_evaluation\\backend\\storage\\uploads\\y_true__0ee5ebb6-9755-4afa-b89f-53afcebac021__y_true.csv",
-    "y_pred": "C:\\Users\\pc\\Desktop\\Alberto\\Alberto\\Tesi\\FRIA_evaluation\\FRIA_evaluation\\backend\\storage\\uploads\\y_pred__0ee5ebb6-9755-4afa-b89f-53afcebac021__y_pred_MIN.csv"
+    "X_test": "C:\\Users\\pc\\Desktop\\Alberto\\Alberto\\Tesi\\FRIA_evaluation\\FRIA_evaluation\\backend\\storage\\uploads\\X_test__fa3cd042-6a8f-4ce2-af5d-84f3708d88d8__X_test_MIN.csv",
+    "y_true": "C:\\Users\\pc\\Desktop\\Alberto\\Alberto\\Tesi\\FRIA_evaluation\\FRIA_evaluation\\backend\\storage\\uploads\\y_true__fa3cd042-6a8f-4ce2-af5d-84f3708d88d8__y_true.csv",
+    "y_pred": "C:\\Users\\pc\\Desktop\\Alberto\\Alberto\\Tesi\\FRIA_evaluation\\FRIA_evaluation\\backend\\storage\\uploads\\y_pred__fa3cd042-6a8f-4ce2-af5d-84f3708d88d8__y_pred_MIN.csv"
   },
   "model": {
     "path": null
@@ -30,21 +30,42 @@
     "privacy"
   ],
   "metrics": {
+    "new_right": [
+      "new_metric"
+    ],
     "non_discrimination": [
       "conditional_statistical_parity",
       "conditional_use_accuracy_equality",
-      "demographic_parity"
+      "demographic_parity",
+      "disparate_impact",
+      "equal_opportunity",
+      "equalized_odds_difference",
+      "overall_accuracy_equality",
+      "predictive_parity"
     ],
-    "new_right": [],
     "privacy": [
-      "k_anonymity"
+      "anonymity_set_size",
+      "k_anonymity",
+      "l_diversity",
+      "mutual_information",
+      "t_closeness"
     ]
   },
   "plugins": [
+    "plugins.new_right.new_metric",
     "plugins.non_discrimination.conditional_statistical_parity",
     "plugins.non_discrimination.conditional_use_accuracy_equality",
     "plugins.non_discrimination.demographic_parity",
-    "plugins.privacy.k_anonymity"
+    "plugins.non_discrimination.disparate_impact",
+    "plugins.non_discrimination.equal_opportunity",
+    "plugins.non_discrimination.equalized_odds_difference",
+    "plugins.non_discrimination.overall_accuracy_equality",
+    "plugins.non_discrimination.predictive_parity",
+    "plugins.privacy.anonymity_set_size",
+    "plugins.privacy.k_anonymity",
+    "plugins.privacy.l_diversity",
+    "plugins.privacy.mutual_information_metric",
+    "plugins.privacy.t_closeness"
   ],
   "metric_requirements": {
     "new_metric": {
@@ -274,6 +295,9 @@
     }
   },
   "metrics_by_right": {
+    "new_right": [
+      "new_metric"
+    ],
     "non_discrimination": [
       "conditional_statistical_parity",
       "conditional_use_accuracy_equality",
@@ -284,9 +308,6 @@
       "overall_accuracy_equality",
       "predictive_parity"
     ],
-    "new_right": [
-      "new_metric"
-    ],
     "privacy": [
       "anonymity_set_size",
       "k_anonymity",
@@ -296,17 +317,17 @@
     ]
   },
   "conditional_statistical_parity": {
-    "conditional_variable": "competences_coverage_required"
+    "conditional_variable": "age_cv"
+  },
+  "k_anonymity": {
+    "k_value": 0,
+    "quasi_identifiers": [
+      "age_cv",
+      "competences_coverage_required"
+    ]
   },
   "new_metric": {
     "threshold": 0.2
-  },
-  "k_anonymity": {
-    "k_value": 2,
-    "quasi_identifiers": [
-      "competences_coverage_required",
-      "age_cv"
-    ]
   },
   "l_diversity": {
     "quasi_identifiers": [
@@ -319,7 +340,7 @@
   "mutual_information": {
     "sensitive_attribute": "age_cv",
     "columns_to_exclude": [
-      "competences_coverage_required"
+      "competences_coverage_optional"
     ]
   },
   "t_closeness": {
@@ -327,6 +348,6 @@
       "age_cv",
       "competences_coverage_required"
     ],
-    "sensitive_attribute": "age_cv"
+    "sensitive_attribute": "competences_coverage_required"
   }
 }

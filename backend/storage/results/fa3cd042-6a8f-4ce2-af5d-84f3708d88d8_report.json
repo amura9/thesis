@@ -1,0 +1,2940 @@
+{
+  "new_metric": {
+    "(global)": {
+      "status": "success",
+      "metric": "New Metric",
+      "used_column": "age_cv",
+      "mean": 35.341,
+      "median": 32.0,
+      "ratio_rule": "mean/median",
+      "computed": 1.104,
+      "threshold": 0.2,
+      "result": 0.2,
+      "final_score": 2.0,
+      "total_score_report": 2.0,
+      "metric_report": "new_metric",
+      "user_weight_report": 5.0,
+      "group_report": "new_right",
+      "metric_description_report": "New metric used to test parameters: uses first numeric column in Test Dataset",
+      "metric_right_report": "New Right",
+      "user_justification_report": "Since no weight has been assigned, the default weight 5 has been used",
+      "schema_type_report": "card_map",
+      "context_report": {
+        "status": "success",
+        "metric": "New Metric",
+        "used_column": "age_cv",
+        "mean": 35.341,
+        "median": 32,
+        "ratio_rule": "mean/median",
+        "computed": 1.104,
+        "threshold": 0.2,
+        "result": 0.2,
+        "final_score": 2
+      }
+    }
+  },
+  "conditional_statistical_parity": {
+    "competences_coverage_required": {
+      "total_score_report": 4.344,
+      "metric_report": "conditional_statistical_parity",
+      "user_weight_report": 5.0,
+      "group_report": "non_discrimination",
+      "metric_description_report": "Measures disparity in selection rates across sensitive groups conditioned on another variable.",
+      "metric_right_report": "Non_Discrimination",
+      "user_justification_report": "Since no weight has been assigned, the default weight 5 has been used",
+      "schema_type_report": "conditional_nested",
+      "context_report": {
+        "Conditional Variable": "Age Cv",
+        "Metric": "Conditional Statistical Parity",
+        "Sensitive Feature": "Competences Coverage Required",
+        "Status": "Success"
+      },
+      "summary_report": {
+        "Final Score": 4.344,
+        "Normalized Average": 0.434,
+        "Normalized Max": 1,
+        "Normalized Min": 0,
+        "Processed Conditions": 45,
+        "Raw Average": 0.566,
+        "Raw Max": 1,
+        "Raw Min": 0,
+        "Total Samples": 5000
+      }
+    },
+    "competences_coverage_optional": {
+      "total_score_report": 6.018,
+      "metric_report": "conditional_statistical_parity",
+      "user_weight_report": 5.0,
+      "group_report": "non_discrimination",
+      "metric_description_report": "Measures disparity in selection rates across sensitive groups conditioned on another variable.",
+      "metric_right_report": "Non_Discrimination",
+      "user_justification_report": "Since no weight has been assigned, the default weight 5 has been used",
+      "schema_type_report": "conditional_nested",
+      "context_report": {
+        "Conditional Variable": "Age Cv",
+        "Metric": "Conditional Statistical Parity",
+        "Sensitive Feature": "Competences Coverage Optional",
+        "Status": "Success"
+      },
+      "summary_report": {
+        "Final Score": 6.018,
+        "Normalized Average": 0.602,
+        "Normalized Max": 1,
+        "Normalized Min": 0,
+        "Processed Conditions": 45,
+        "Raw Average": 0.398,
+        "Raw Max": 1,
+        "Raw Min": 0,
+        "Total Samples": 5000
+      }
+    }
+  },
+  "conditional_use_accuracy_equality": {
+    "competences_coverage_required": {
+      "total_score_report": 5.914,
+      "metric_report": "conditional_use_accuracy_equality",
+      "user_weight_report": 5.0,
+      "metric_description_report": "Accuracy parity across sensitive groups, computed only on samples with positive predictions (ŷ=1).",
+      "metric_right_report": "Non_Discrimination",
+      "user_justification_report": "Since no weight has been assigned, the default weight 5 has been used",
+      "schema_type_report": "group_metric_map",
+      "context_report": {
+        "Difference": 0.409,
+        "Final Score": 5.914,
+        "Metric": "Conditional Use Accuracy Equality",
+        "Normalized Score": 0.591,
+        "Sensitive Feature": "Competences Coverage Required",
+        "Status": "Success"
+      }
+    },
+    "competences_coverage_optional": {
+      "total_score_report": 8.767,
+      "metric_report": "conditional_use_accuracy_equality",
+      "user_weight_report": 5.0,
+      "metric_description_report": "Accuracy parity across sensitive groups, computed only on samples with positive predictions (ŷ=1).",
+      "metric_right_report": "Non_Discrimination",
+      "user_justification_report": "Since no weight has been assigned, the default weight 5 has been used",
+      "schema_type_report": "group_metric_map",
+      "context_report": {
+        "Difference": 0.123,
+        "Final Score": 8.767,
+        "Metric": "Conditional Use Accuracy Equality",
+        "Normalized Score": 0.877,
+        "Sensitive Feature": "Competences Coverage Optional",
+        "Status": "Success"
+      }
+    }
+  },
+  "demographic_parity": {
+    "competences_coverage_required": {
+      "total_score_report": 1.5,
+      "metric_report": "demographic_parity",
+      "user_weight_report": 5.0,
+      "group_report": "non_discrimination",
+      "metric_description_report": "Measures demographic parity by computing selection rate differences across sensitive groups.",
+      "metric_right_report": "Non_Discrimination",
+      "user_justification_report": "Since no weight has been assigned, the default weight 5 has been used",
+      "context_report": {
+        "metric": "demographic_parity",
+        "sensitive_features": "competences_coverage_required",
+        "value": 0.15
+      }
+    },
+    "competences_coverage_optional": {
+      "total_score_report": 3.73,
+      "metric_report": "demographic_parity",
+      "user_weight_report": 5.0,
+      "group_report": "non_discrimination",
+      "metric_description_report": "Measures demographic parity by computing selection rate differences across sensitive groups.",
+      "metric_right_report": "Non_Discrimination",
+      "user_justification_report": "Since no weight has been assigned, the default weight 5 has been used",
+      "context_report": {
+        "metric": "demographic_parity",
+        "sensitive_features": "competences_coverage_optional",
+        "value": 0.373
+      }
+    }
+  },
+  "disparate_impact": {
+    "competences_coverage_required": {
+      "total_score_report": 9.053,
+      "metric_report": "disparate_impact",
+      "user_weight_report": 5.0,
+      "metric_description_report": "Disparate Impact based on selection rates across sensitive groups (min SR / max SR).",
+      "metric_right_report": "Non_Discrimination",
+      "user_justification_report": "Since no weight has been assigned, the default weight 5 has been used",
+      "schema_type_report": "group_metric_map",
+      "context_report": {
+        "Disparate Impact": 0.905,
+        "Final Score": 9.053,
+        "Metric": "Disparate Impact",
+        "Sensitive Feature": "Competences Coverage Required",
+        "Status": "Success"
+      }
+    },
+    "competences_coverage_optional": {
+      "total_score_report": 7.067,
+      "metric_report": "disparate_impact",
+      "user_weight_report": 5.0,
+      "metric_description_report": "Disparate Impact based on selection rates across sensitive groups (min SR / max SR).",
+      "metric_right_report": "Non_Discrimination",
+      "user_justification_report": "Since no weight has been assigned, the default weight 5 has been used",
+      "schema_type_report": "group_metric_map",
+      "context_report": {
+        "Disparate Impact": 0.707,
+        "Final Score": 7.067,
+        "Metric": "Disparate Impact",
+        "Sensitive Feature": "Competences Coverage Optional",
+        "Status": "Success"
+      }
+    }
+  },
+  "equal_opportunity": {
+    "competences_coverage_required": {
+      "total_score_report": 3.758,
+      "metric_report": "equal_opportunity",
+      "user_weight_report": 5.0,
+      "metric_description_report": "Measures Equal Opportunity by comparing True Positive Rates across sensitive groups.",
+      "metric_right_report": "Non_Discrimination",
+      "user_justification_report": "Since no weight has been assigned, the default weight 5 has been used",
+      "schema_type_report": "group_metric_map",
+      "context_report": {
+        "Difference": 0.376,
+        "Final Score": 3.758,
+        "Metric": "Equal Opportunity",
+        "Sensitive Feature": "Competences Coverage Required",
+        "Status": "Success"
+      }
+    },
+    "competences_coverage_optional": {
+      "total_score_report": 7.113,
+      "metric_report": "equal_opportunity",
+      "user_weight_report": 5.0,
+      "metric_description_report": "Measures Equal Opportunity by comparing True Positive Rates across sensitive groups.",
+      "metric_right_report": "Non_Discrimination",
+      "user_justification_report": "Since no weight has been assigned, the default weight 5 has been used",
+      "schema_type_report": "group_metric_map",
+      "context_report": {
+        "Difference": 0.711,
+        "Final Score": 7.113,
+        "Metric": "Equal Opportunity",
+        "Sensitive Feature": "Competences Coverage Optional",
+        "Status": "Success"
+      }
+    }
+  },
+  "equalized_odds_difference": {
+    "competences_coverage_required": {
+      "total_score_report": 3.76,
+      "metric_report": "equalized_odds_difference",
+      "user_weight_report": 5.0,
+      "group_report": "non_discrimination",
+      "metric_description_report": "Measures Equalized Odds difference across sensitive groups (lower is better).",
+      "metric_right_report": "Non_Discrimination",
+      "user_justification_report": "Since no weight has been assigned, the default weight 5 has been used",
+      "context_report": {
+        "metric": "equalized_odds_difference",
+        "sensitive_features": "competences_coverage_required",
+        "value": 0.376
+      }
+    },
+    "competences_coverage_optional": {
+      "total_score_report": 7.11,
+      "metric_report": "equalized_odds_difference",
+      "user_weight_report": 5.0,
+      "group_report": "non_discrimination",
+      "metric_description_report": "Measures Equalized Odds difference across sensitive groups (lower is better).",
+      "metric_right_report": "Non_Discrimination",
+      "user_justification_report": "Since no weight has been assigned, the default weight 5 has been used",
+      "context_report": {
+        "metric": "equalized_odds_difference",
+        "sensitive_features": "competences_coverage_optional",
+        "value": 0.711
+      }
+    }
+  },
+  "overall_accuracy_equality": {
+    "competences_coverage_required": {
+      "total_score_report": 8.423,
+      "metric_report": "overall_accuracy_equality",
+      "user_weight_report": 5.0,
+      "metric_description_report": "Compares accuracy across sensitive groups and reports difference/ratio (higher equality_score is better).",
+      "metric_right_report": "Non_Discrimination",
+      "user_justification_report": "Since no weight has been assigned, the default weight 5 has been used",
+      "schema_type_report": "group_metric_map",
+      "context_report": {
+        "Accuracy Ratio": 0.832,
+        "Difference": 0.158,
+        "Equality Score": 0.842,
+        "Final Score": 8.423,
+        "Metric": "Overall Accuracy Equality",
+        "Sensitive Feature": "Competences Coverage Required",
+        "Status": "Success"
+      }
+    },
+    "competences_coverage_optional": {
+      "total_score_report": 7.946,
+      "metric_report": "overall_accuracy_equality",
+      "user_weight_report": 5.0,
+      "metric_description_report": "Compares accuracy across sensitive groups and reports difference/ratio (higher equality_score is better).",
+      "metric_right_report": "Non_Discrimination",
+      "user_justification_report": "Since no weight has been assigned, the default weight 5 has been used",
+      "schema_type_report": "group_metric_map",
+      "context_report": {
+        "Accuracy Ratio": 0.778,
+        "Difference": 0.205,
+        "Equality Score": 0.795,
+        "Final Score": 7.946,
+        "Metric": "Overall Accuracy Equality",
+        "Sensitive Feature": "Competences Coverage Optional",
+        "Status": "Success"
+      }
+    }
+  },
+  "predictive_parity": {
+    "competences_coverage_required": {
+      "total_score_report": 5.914,
+      "metric_report": "predictive_parity",
+      "user_weight_report": 5.0,
+      "metric_description_report": "Compares precision across sensitive groups (higher equality means smaller precision gap).",
+      "metric_right_report": "Non_Discrimination",
+      "user_justification_report": "Since no weight has been assigned, the default weight 5 has been used",
+      "schema_type_report": "group_metric_map",
+      "context_report": {
+        "Difference": 0.409,
+        "Final Score": 5.914,
+        "Metric": "Predictive Parity",
+        "Precision Ratio": 0.591,
+        "Sensitive Feature": "Competences Coverage Required",
+        "Status": "Success"
+      }
+    },
+    "competences_coverage_optional": {
+      "total_score_report": 8.767,
+      "metric_report": "predictive_parity",
+      "user_weight_report": 5.0,
+      "metric_description_report": "Compares precision across sensitive groups (higher equality means smaller precision gap).",
+      "metric_right_report": "Non_Discrimination",
+      "user_justification_report": "Since no weight has been assigned, the default weight 5 has been used",
+      "schema_type_report": "group_metric_map",
+      "context_report": {
+        "Difference": 0.123,
+        "Final Score": 8.767,
+        "Metric": "Predictive Parity",
+        "Precision Ratio": 0.877,
+        "Sensitive Feature": "Competences Coverage Optional",
+        "Status": "Success"
+      }
+    }
+  },
+  "anonymity_set_size": {
+    "metric": "Anonymity Set Size",
+    "status": "success",
+    "average": 200.0,
+    "min": 2,
+    "max": 1033,
+    "unique_combinations": 25,
+    "total_records": 5000,
+    "sensitive_features": [
+      "competences_coverage_required",
+      "competences_coverage_optional"
+    ],
+    "final_score": 9.95,
+    "full_results": [
+      {
+        "competences_coverage_required": 1.0,
+        "competences_coverage_optional": 0.0,
+        "count": 1033
+      },
+      {
+        "competences_coverage_required": 0.5,
+        "competences_coverage_optional": 0.0,
+        "count": 730
+      },
+      {
+        "competences_coverage_required": 0.75,
+        "competences_coverage_optional": 0.0,
+        "count": 654
+      },
+      {
+        "competences_coverage_required": 0.25,
+        "competences_coverage_optional": 0.0,
+        "count": 594
+      },
+      {
+        "competences_coverage_required": 1.0,
+        "competences_coverage_optional": 1.0,
+        "count": 481
+      },
+      {
+        "competences_coverage_required": 0.5,
+        "competences_coverage_optional": 1.0,
+        "count": 371
+      },
+      {
+        "competences_coverage_required": 0.75,
+        "competences_coverage_optional": 1.0,
+        "count": 308
+      },
+      {
+        "competences_coverage_required": 0.25,
+        "competences_coverage_optional": 1.0,
+        "count": 262
+      },
+      {
+        "competences_coverage_required": 0.667,
+        "competences_coverage_optional": 0.0,
+        "count": 180
+      },
+      {
+        "competences_coverage_required": 0.667,
+        "competences_coverage_optional": 1.0,
+        "count": 95
+      },
+      {
+        "competences_coverage_required": 0.333,
+        "competences_coverage_optional": 0.0,
+        "count": 92
+      },
+      {
+        "competences_coverage_required": 0.333,
+        "competences_coverage_optional": 1.0,
+        "count": 43
+      },
+      {
+        "competences_coverage_required": 1.0,
+        "competences_coverage_optional": 0.5,
+        "count": 40
+      },
+      {
+        "competences_coverage_required": 0.5,
+        "competences_coverage_optional": 0.5,
+        "count": 26
+      },
+      {
+        "competences_coverage_required": 1.0,
+        "competences_coverage_optional": 0.333,
+        "count": 18
+      },
+      {
+        "competences_coverage_required": 0.667,
+        "competences_coverage_optional": 0.333,
+        "count": 18
+      },
+      {
+        "competences_coverage_required": 0.333,
+        "competences_coverage_optional": 0.333,
+        "count": 14
+      },
+      {
+        "competences_coverage_required": 0.333,
+        "competences_coverage_optional": 0.5,
+        "count": 12
+      },
+      {
+        "competences_coverage_required": 1.0,
+        "competences_coverage_optional": 0.667,
+        "count": 6
+      },
+      {
+        "competences_coverage_required": 0.667,
+        "competences_coverage_optional": 0.667,
+        "count": 5
+      },
+      {
+        "competences_coverage_required": 0.25,
+        "competences_coverage_optional": 0.5,
+        "count": 5
+      },
+      {
+        "competences_coverage_required": 0.333,
+        "competences_coverage_optional": 0.667,
+        "count": 4
+      },
+      {
+        "competences_coverage_required": 0.667,
+        "competences_coverage_optional": 0.5,
+        "count": 4
+      },
+      {
+        "competences_coverage_required": 0.75,
+        "competences_coverage_optional": 0.333,
+        "count": 3
+      },
+      {
+        "competences_coverage_required": 0.75,
+        "competences_coverage_optional": 0.5,
+        "count": 2
+      }
+    ],
+    "total_score_report": 9.95,
+    "metric_report": "anonymity_set_size",
+    "user_weight_report": 5.0,
+    "right_report": "privacy",
+    "metric_description_report": "Computes anonymity set sizes for combinations of sensitive features (quasi-identifiers).",
+    "metric_right_report": "Privacy",
+    "user_justification_report": "Since no weight has been assigned, the default weight 5 has been used",
+    "context_report": {
+      "metric": "Anonymity Set Size",
+      "status": "success",
+      "average": 200,
+      "min": 2,
+      "max": 1033,
+      "unique_combinations": 25,
+      "total_records": 5000,
+      "sensitive_features": [
+        "competences_coverage_required",
+        "competences_coverage_optional"
+      ],
+      "final_score": 9.95
+    }
+  },
+  "k_anonymity": {
+    "status": "error",
+    "message": "Error during computation: float division by zero",
+    "k_value": 0,
+    "sensitive_features": [
+      "age_cv",
+      "competences_coverage_required"
+    ],
+    "metric_report": "k_anonymity",
+    "user_weight_report": 5.0,
+    "right_report": "privacy",
+    "metric_description_report": "Evaluates K-Anonymity over quasi-identifiers (each equivalence class must have at least k records).",
+    "metric_right_report": "Privacy",
+    "user_justification_report": "Since no weight has been assigned, the default weight 5 has been used",
+    "schema_type_report": "card_map",
+    "context_report": {}
+  },
+  "l_diversity": {
+    "metric": "L-Diversity",
+    "status": "success",
+    "l_min": 1,
+    "l_avg": 2.307,
+    "total_groups": 218,
+    "quasi_identifiers": [
+      "age_cv",
+      "competences_coverage_required"
+    ],
+    "sensitive_attribute": "competences_coverage_optional",
+    "full_results": [
+      {
+        "age_cv": 16,
+        "competences_coverage_required": 0.25,
+        "l": 1
+      },
+      {
+        "age_cv": 16,
+        "competences_coverage_required": 0.5,
+        "l": 2
+      },
+      {
+        "age_cv": 16,
+        "competences_coverage_required": 0.75,
+        "l": 1
+      },
+      {
+        "age_cv": 16,
+        "competences_coverage_required": 1.0,
+        "l": 2
+      },
+      {
+        "age_cv": 17,
+        "competences_coverage_required": 0.25,
+        "l": 2
+      },
+      {
+        "age_cv": 17,
+        "competences_coverage_required": 0.5,
+        "l": 1
+      },
+      {
+        "age_cv": 17,
+        "competences_coverage_required": 0.75,
+        "l": 1
+      },
+      {
+        "age_cv": 18,
+        "competences_coverage_required": 0.25,
+        "l": 2
+      },
+      {
+        "age_cv": 18,
+        "competences_coverage_required": 0.333,
+        "l": 2
+      },
+      {
+        "age_cv": 18,
+        "competences_coverage_required": 0.5,
+        "l": 2
+      },
+      {
+        "age_cv": 18,
+        "competences_coverage_required": 0.667,
+        "l": 4
+      },
+      {
+        "age_cv": 18,
+        "competences_coverage_required": 0.75,
+        "l": 2
+      },
+      {
+        "age_cv": 18,
+        "competences_coverage_required": 1.0,
+        "l": 3
+      },
+      {
+        "age_cv": 19,
+        "competences_coverage_required": 0.25,
+        "l": 1
+      },
+      {
+        "age_cv": 19,
+        "competences_coverage_required": 0.333,
+        "l": 3
+      },
+      {
+        "age_cv": 19,
+        "competences_coverage_required": 0.5,
+        "l": 2
+      },
+      {
+        "age_cv": 19,
+        "competences_coverage_required": 0.667,
+        "l": 3
+      },
+      {
+        "age_cv": 19,
+        "competences_coverage_required": 0.75,
+        "l": 2
+      },
+      {
+        "age_cv": 19,
+        "competences_coverage_required": 1.0,
+        "l": 4
+      },
+      {
+        "age_cv": 20,
+        "competences_coverage_required": 0.25,
+        "l": 2
+      },
+      {
+        "age_cv": 20,
+        "competences_coverage_required": 0.333,
+        "l": 2
+      },
+      {
+        "age_cv": 20,
+        "competences_coverage_required": 0.5,
+        "l": 2
+      },
+      {
+        "age_cv": 20,
+        "competences_coverage_required": 0.667,
+        "l": 3
+      },
+      {
+        "age_cv": 20,
+        "competences_coverage_required": 0.75,
+        "l": 2
+      },
+      {
+        "age_cv": 20,
+        "competences_coverage_required": 1.0,
+        "l": 2
+      },
+      {
+        "age_cv": 21,
+        "competences_coverage_required": 0.25,
+        "l": 2
+      },
+      {
+        "age_cv": 21,
+        "competences_coverage_required": 0.333,
+        "l": 3
+      },
+      {
+        "age_cv": 21,
+        "competences_coverage_required": 0.5,
+        "l": 2
+      },
+      {
+        "age_cv": 21,
+        "competences_coverage_required": 0.667,
+        "l": 2
+      },
+      {
+        "age_cv": 21,
+        "competences_coverage_required": 0.75,
+        "l": 2
+      },
+      {
+        "age_cv": 21,
+        "competences_coverage_required": 1.0,
+        "l": 2
+      },
+      {
+        "age_cv": 22,
+        "competences_coverage_required": 0.25,
+        "l": 2
+      },
+      {
+        "age_cv": 22,
+        "competences_coverage_required": 0.333,
+        "l": 2
+      },
+      {
+        "age_cv": 22,
+        "competences_coverage_required": 0.5,
+        "l": 2
+      },
+      {
+        "age_cv": 22,
+        "competences_coverage_required": 0.667,
+        "l": 3
+      },
+      {
+        "age_cv": 22,
+        "competences_coverage_required": 0.75,
+        "l": 2
+      },
+      {
+        "age_cv": 22,
+        "competences_coverage_required": 1.0,
+        "l": 2
+      },
+      {
+        "age_cv": 23,
+        "competences_coverage_required": 0.25,
+        "l": 2
+      },
+      {
+        "age_cv": 23,
+        "competences_coverage_required": 0.333,
+        "l": 2
+      },
+      {
+        "age_cv": 23,
+        "competences_coverage_required": 0.5,
+        "l": 2
+      },
+      {
+        "age_cv": 23,
+        "competences_coverage_required": 0.667,
+        "l": 3
+      },
+      {
+        "age_cv": 23,
+        "competences_coverage_required": 0.75,
+        "l": 2
+      },
+      {
+        "age_cv": 23,
+        "competences_coverage_required": 1.0,
+        "l": 4
+      },
+      {
+        "age_cv": 24,
+        "competences_coverage_required": 0.25,
+        "l": 2
+      },
+      {
+        "age_cv": 24,
+        "competences_coverage_required": 0.333,
+        "l": 3
+      },
+      {
+        "age_cv": 24,
+        "competences_coverage_required": 0.5,
+        "l": 2
+      },
+      {
+        "age_cv": 24,
+        "competences_coverage_required": 0.667,
+        "l": 2
+      },
+      {
+        "age_cv": 24,
+        "competences_coverage_required": 0.75,
+        "l": 2
+      },
+      {
+        "age_cv": 24,
+        "competences_coverage_required": 1.0,
+        "l": 2
+      },
+      {
+        "age_cv": 25,
+        "competences_coverage_required": 0.25,
+        "l": 2
+      },
+      {
+        "age_cv": 25,
+        "competences_coverage_required": 0.333,
+        "l": 4
+      },
+      {
+        "age_cv": 25,
+        "competences_coverage_required": 0.5,
+        "l": 3
+      },
+      {
+        "age_cv": 25,
+        "competences_coverage_required": 0.667,
+        "l": 5
+      },
+      {
+        "age_cv": 25,
+        "competences_coverage_required": 0.75,
+        "l": 2
+      },
+      {
+        "age_cv": 25,
+        "competences_coverage_required": 1.0,
+        "l": 3
+      },
+      {
+        "age_cv": 26,
+        "competences_coverage_required": 0.25,
+        "l": 3
+      },
+      {
+        "age_cv": 26,
+        "competences_coverage_required": 0.333,
+        "l": 5
+      },
+      {
+        "age_cv": 26,
+        "competences_coverage_required": 0.5,
+        "l": 3
+      },
+      {
+        "age_cv": 26,
+        "competences_coverage_required": 0.667,
+        "l": 2
+      },
+      {
+        "age_cv": 26,
+        "competences_coverage_required": 0.75,
+        "l": 2
+      },
+      {
+        "age_cv": 26,
+        "competences_coverage_required": 1.0,
+        "l": 5
+      },
+      {
+        "age_cv": 27,
+        "competences_coverage_required": 0.25,
+        "l": 2
+      },
+      {
+        "age_cv": 27,
+        "competences_coverage_required": 0.333,
+        "l": 3
+      },
+      {
+        "age_cv": 27,
+        "competences_coverage_required": 0.5,
+        "l": 3
+      },
+      {
+        "age_cv": 27,
+        "competences_coverage_required": 0.667,
+        "l": 3
+      },
+      {
+        "age_cv": 27,
+        "competences_coverage_required": 0.75,
+        "l": 2
+      },
+      {
+        "age_cv": 27,
+        "competences_coverage_required": 1.0,
+        "l": 5
+      },
+      {
+        "age_cv": 28,
+        "competences_coverage_required": 0.25,
+        "l": 2
+      },
+      {
+        "age_cv": 28,
+        "competences_coverage_required": 0.333,
+        "l": 4
+      },
+      {
+        "age_cv": 28,
+        "competences_coverage_required": 0.5,
+        "l": 3
+      },
+      {
+        "age_cv": 28,
+        "competences_coverage_required": 0.667,
+        "l": 4
+      },
+      {
+        "age_cv": 28,
+        "competences_coverage_required": 0.75,
+        "l": 2
+      },
+      {
+        "age_cv": 28,
+        "competences_coverage_required": 1.0,
+        "l": 4
+      },
+      {
+        "age_cv": 29,
+        "competences_coverage_required": 0.25,
+        "l": 2
+      },
+      {
+        "age_cv": 29,
+        "competences_coverage_required": 0.333,
+        "l": 4
+      },
+      {
+        "age_cv": 29,
+        "competences_coverage_required": 0.5,
+        "l": 3
+      },
+      {
+        "age_cv": 29,
+        "competences_coverage_required": 0.667,
+        "l": 2
+      },
+      {
+        "age_cv": 29,
+        "competences_coverage_required": 0.75,
+        "l": 2
+      },
+      {
+        "age_cv": 29,
+        "competences_coverage_required": 1.0,
+        "l": 4
+      },
+      {
+        "age_cv": 30,
+        "competences_coverage_required": 0.25,
+        "l": 2
+      },
+      {
+        "age_cv": 30,
+        "competences_coverage_required": 0.333,
+        "l": 5
+      },
+      {
+        "age_cv": 30,
+        "competences_coverage_required": 0.5,
+        "l": 2
+      },
+      {
+        "age_cv": 30,
+        "competences_coverage_required": 0.667,
+        "l": 4
+      },
+      {
+        "age_cv": 30,
+        "competences_coverage_required": 0.75,
+        "l": 2
+      },
+      {
+        "age_cv": 30,
+        "competences_coverage_required": 1.0,
+        "l": 3
+      },
+      {
+        "age_cv": 31,
+        "competences_coverage_required": 0.25,
+        "l": 2
+      },
+      {
+        "age_cv": 31,
+        "competences_coverage_required": 0.333,
+        "l": 2
+      },
+      {
+        "age_cv": 31,
+        "competences_coverage_required": 0.5,
+        "l": 3
+      },
+      {
+        "age_cv": 31,
+        "competences_coverage_required": 0.667,
+        "l": 2
+      },
+      {
+        "age_cv": 31,
+        "competences_coverage_required": 0.75,
+        "l": 3
+      },
+      {
+        "age_cv": 31,
+        "competences_coverage_required": 1.0,
+        "l": 3
+      },
+      {
+        "age_cv": 32,
+        "competences_coverage_required": 0.25,
+        "l": 2
+      },
+      {
+        "age_cv": 32,
+        "competences_coverage_required": 0.333,
+        "l": 1
+      },
+      {
+        "age_cv": 32,
+        "competences_coverage_required": 0.5,
+        "l": 2
+      },
+      {
+        "age_cv": 32,
+        "competences_coverage_required": 0.667,
+        "l": 3
+      },
+      {
+        "age_cv": 32,
+        "competences_coverage_required": 0.75,
+        "l": 3
+      },
+      {
+        "age_cv": 32,
+        "competences_coverage_required": 1.0,
+        "l": 4
+      },
+      {
+        "age_cv": 33,
+        "competences_coverage_required": 0.25,
+        "l": 2
+      },
+      {
+        "age_cv": 33,
+        "competences_coverage_required": 0.333,
+        "l": 1
+      },
+      {
+        "age_cv": 33,
+        "competences_coverage_required": 0.5,
+        "l": 2
+      },
+      {
+        "age_cv": 33,
+        "competences_coverage_required": 0.667,
+        "l": 1
+      },
+      {
+        "age_cv": 33,
+        "competences_coverage_required": 0.75,
+        "l": 2
+      },
+      {
+        "age_cv": 33,
+        "competences_coverage_required": 1.0,
+        "l": 3
+      },
+      {
+        "age_cv": 34,
+        "competences_coverage_required": 0.25,
+        "l": 2
+      },
+      {
+        "age_cv": 34,
+        "competences_coverage_required": 0.333,
+        "l": 1
+      },
+      {
+        "age_cv": 34,
+        "competences_coverage_required": 0.5,
+        "l": 3
+      },
+      {
+        "age_cv": 34,
+        "competences_coverage_required": 0.667,
+        "l": 3
+      },
+      {
+        "age_cv": 34,
+        "competences_coverage_required": 0.75,
+        "l": 2
+      },
+      {
+        "age_cv": 34,
+        "competences_coverage_required": 1.0,
+        "l": 4
+      },
+      {
+        "age_cv": 35,
+        "competences_coverage_required": 0.25,
+        "l": 2
+      },
+      {
+        "age_cv": 35,
+        "competences_coverage_required": 0.333,
+        "l": 1
+      },
+      {
+        "age_cv": 35,
+        "competences_coverage_required": 0.5,
+        "l": 3
+      },
+      {
+        "age_cv": 35,
+        "competences_coverage_required": 0.667,
+        "l": 1
+      },
+      {
+        "age_cv": 35,
+        "competences_coverage_required": 0.75,
+        "l": 2
+      },
+      {
+        "age_cv": 35,
+        "competences_coverage_required": 1.0,
+        "l": 3
+      },
+      {
+        "age_cv": 36,
+        "competences_coverage_required": 0.25,
+        "l": 2
+      },
+      {
+        "age_cv": 36,
+        "competences_coverage_required": 0.333,
+        "l": 1
+      },
+      {
+        "age_cv": 36,
+        "competences_coverage_required": 0.5,
+        "l": 3
+      },
+      {
+        "age_cv": 36,
+        "competences_coverage_required": 0.667,
+        "l": 1
+      },
+      {
+        "age_cv": 36,
+        "competences_coverage_required": 0.75,
+        "l": 2
+      },
+      {
+        "age_cv": 36,
+        "competences_coverage_required": 1.0,
+        "l": 3
+      },
+      {
+        "age_cv": 37,
+        "competences_coverage_required": 0.25,
+        "l": 2
+      },
+      {
+        "age_cv": 37,
+        "competences_coverage_required": 0.5,
+        "l": 3
+      },
+      {
+        "age_cv": 37,
+        "competences_coverage_required": 0.667,
+        "l": 2
+      },
+      {
+        "age_cv": 37,
+        "competences_coverage_required": 0.75,
+        "l": 2
+      },
+      {
+        "age_cv": 37,
+        "competences_coverage_required": 1.0,
+        "l": 2
+      },
+      {
+        "age_cv": 38,
+        "competences_coverage_required": 0.25,
+        "l": 2
+      },
+      {
+        "age_cv": 38,
+        "competences_coverage_required": 0.5,
+        "l": 2
+      },
+      {
+        "age_cv": 38,
+        "competences_coverage_required": 0.75,
+        "l": 2
+      },
+      {
+        "age_cv": 38,
+        "competences_coverage_required": 1.0,
+        "l": 3
+      },
+      {
+        "age_cv": 39,
+        "competences_coverage_required": 0.25,
+        "l": 2
+      },
+      {
+        "age_cv": 39,
+        "competences_coverage_required": 0.5,
+        "l": 2
+      },
+      {
+        "age_cv": 39,
+        "competences_coverage_required": 0.75,
+        "l": 2
+      },
+      {
+        "age_cv": 39,
+        "competences_coverage_required": 1.0,
+        "l": 2
+      },
+      {
+        "age_cv": 40,
+        "competences_coverage_required": 0.25,
+        "l": 3
+      },
+      {
+        "age_cv": 40,
+        "competences_coverage_required": 0.5,
+        "l": 2
+      },
+      {
+        "age_cv": 40,
+        "competences_coverage_required": 0.75,
+        "l": 2
+      },
+      {
+        "age_cv": 40,
+        "competences_coverage_required": 1.0,
+        "l": 2
+      },
+      {
+        "age_cv": 41,
+        "competences_coverage_required": 0.25,
+        "l": 2
+      },
+      {
+        "age_cv": 41,
+        "competences_coverage_required": 0.5,
+        "l": 2
+      },
+      {
+        "age_cv": 41,
+        "competences_coverage_required": 0.75,
+        "l": 2
+      },
+      {
+        "age_cv": 41,
+        "competences_coverage_required": 1.0,
+        "l": 2
+      },
+      {
+        "age_cv": 42,
+        "competences_coverage_required": 0.25,
+        "l": 2
+      },
+      {
+        "age_cv": 42,
+        "competences_coverage_required": 0.5,
+        "l": 2
+      },
+      {
+        "age_cv": 42,
+        "competences_coverage_required": 0.75,
+        "l": 2
+      },
+      {
+        "age_cv": 42,
+        "competences_coverage_required": 1.0,
+        "l": 2
+      },
+      {
+        "age_cv": 43,
+        "competences_coverage_required": 0.25,
+        "l": 3
+      },
+      {
+        "age_cv": 43,
+        "competences_coverage_required": 0.5,
+        "l": 2
+      },
+      {
+        "age_cv": 43,
+        "competences_coverage_required": 0.75,
+        "l": 2
+      },
+      {
+        "age_cv": 43,
+        "competences_coverage_required": 1.0,
+        "l": 2
+      },
+      {
+        "age_cv": 44,
+        "competences_coverage_required": 0.25,
+        "l": 2
+      },
+      {
+        "age_cv": 44,
+        "competences_coverage_required": 0.5,
+        "l": 2
+      },
+      {
+        "age_cv": 44,
+        "competences_coverage_required": 0.75,
+        "l": 2
+      },
+      {
+        "age_cv": 44,
+        "competences_coverage_required": 1.0,
+        "l": 2
+      },
+      {
+        "age_cv": 45,
+        "competences_coverage_required": 0.25,
+        "l": 2
+      },
+      {
+        "age_cv": 45,
+        "competences_coverage_required": 0.5,
+        "l": 2
+      },
+      {
+        "age_cv": 45,
+        "competences_coverage_required": 0.75,
+        "l": 2
+      },
+      {
+        "age_cv": 45,
+        "competences_coverage_required": 1.0,
+        "l": 2
+      },
+      {
+        "age_cv": 46,
+        "competences_coverage_required": 0.25,
+        "l": 2
+      },
+      {
+        "age_cv": 46,
+        "competences_coverage_required": 0.5,
+        "l": 2
+      },
+      {
+        "age_cv": 46,
+        "competences_coverage_required": 0.75,
+        "l": 2
+      },
+      {
+        "age_cv": 46,
+        "competences_coverage_required": 1.0,
+        "l": 2
+      },
+      {
+        "age_cv": 47,
+        "competences_coverage_required": 0.25,
+        "l": 2
+      },
+      {
+        "age_cv": 47,
+        "competences_coverage_required": 0.5,
+        "l": 2
+      },
+      {
+        "age_cv": 47,
+        "competences_coverage_required": 0.75,
+        "l": 2
+      },
+      {
+        "age_cv": 47,
+        "competences_coverage_required": 1.0,
+        "l": 2
+      },
+      {
+        "age_cv": 48,
+        "competences_coverage_required": 0.25,
+        "l": 2
+      },
+      {
+        "age_cv": 48,
+        "competences_coverage_required": 0.5,
+        "l": 2
+      },
+      {
+        "age_cv": 48,
+        "competences_coverage_required": 0.75,
+        "l": 2
+      },
+      {
+        "age_cv": 48,
+        "competences_coverage_required": 1.0,
+        "l": 2
+      },
+      {
+        "age_cv": 49,
+        "competences_coverage_required": 0.25,
+        "l": 2
+      },
+      {
+        "age_cv": 49,
+        "competences_coverage_required": 0.5,
+        "l": 2
+      },
+      {
+        "age_cv": 49,
+        "competences_coverage_required": 0.75,
+        "l": 2
+      },
+      {
+        "age_cv": 49,
+        "competences_coverage_required": 1.0,
+        "l": 2
+      },
+      {
+        "age_cv": 50,
+        "competences_coverage_required": 0.25,
+        "l": 2
+      },
+      {
+        "age_cv": 50,
+        "competences_coverage_required": 0.5,
+        "l": 2
+      },
+      {
+        "age_cv": 50,
+        "competences_coverage_required": 0.75,
+        "l": 2
+      },
+      {
+        "age_cv": 50,
+        "competences_coverage_required": 1.0,
+        "l": 3
+      },
+      {
+        "age_cv": 51,
+        "competences_coverage_required": 0.25,
+        "l": 2
+      },
+      {
+        "age_cv": 51,
+        "competences_coverage_required": 0.5,
+        "l": 3
+      },
+      {
+        "age_cv": 51,
+        "competences_coverage_required": 0.75,
+        "l": 3
+      },
+      {
+        "age_cv": 51,
+        "competences_coverage_required": 1.0,
+        "l": 2
+      },
+      {
+        "age_cv": 52,
+        "competences_coverage_required": 0.25,
+        "l": 3
+      },
+      {
+        "age_cv": 52,
+        "competences_coverage_required": 0.5,
+        "l": 2
+      },
+      {
+        "age_cv": 52,
+        "competences_coverage_required": 0.75,
+        "l": 2
+      },
+      {
+        "age_cv": 52,
+        "competences_coverage_required": 1.0,
+        "l": 2
+      },
+      {
+        "age_cv": 53,
+        "competences_coverage_required": 0.25,
+        "l": 2
+      },
+      {
+        "age_cv": 53,
+        "competences_coverage_required": 0.5,
+        "l": 2
+      },
+      {
+        "age_cv": 53,
+        "competences_coverage_required": 0.75,
+        "l": 2
+      },
+      {
+        "age_cv": 53,
+        "competences_coverage_required": 1.0,
+        "l": 3
+      },
+      {
+        "age_cv": 54,
+        "competences_coverage_required": 0.25,
+        "l": 2
+      },
+      {
+        "age_cv": 54,
+        "competences_coverage_required": 0.5,
+        "l": 2
+      },
+      {
+        "age_cv": 54,
+        "competences_coverage_required": 0.75,
+        "l": 2
+      },
+      {
+        "age_cv": 54,
+        "competences_coverage_required": 1.0,
+        "l": 2
+      },
+      {
+        "age_cv": 55,
+        "competences_coverage_required": 0.25,
+        "l": 2
+      },
+      {
+        "age_cv": 55,
+        "competences_coverage_required": 0.5,
+        "l": 2
+      },
+      {
+        "age_cv": 55,
+        "competences_coverage_required": 0.75,
+        "l": 2
+      },
+      {
+        "age_cv": 55,
+        "competences_coverage_required": 1.0,
+        "l": 3
+      },
+      {
+        "age_cv": 56,
+        "competences_coverage_required": 0.25,
+        "l": 2
+      },
+      {
+        "age_cv": 56,
+        "competences_coverage_required": 0.5,
+        "l": 2
+      },
+      {
+        "age_cv": 56,
+        "competences_coverage_required": 0.75,
+        "l": 2
+      },
+      {
+        "age_cv": 56,
+        "competences_coverage_required": 1.0,
+        "l": 2
+      },
+      {
+        "age_cv": 57,
+        "competences_coverage_required": 0.25,
+        "l": 2
+      },
+      {
+        "age_cv": 57,
+        "competences_coverage_required": 0.5,
+        "l": 2
+      },
+      {
+        "age_cv": 57,
+        "competences_coverage_required": 0.75,
+        "l": 3
+      },
+      {
+        "age_cv": 57,
+        "competences_coverage_required": 1.0,
+        "l": 2
+      },
+      {
+        "age_cv": 58,
+        "competences_coverage_required": 0.25,
+        "l": 2
+      },
+      {
+        "age_cv": 58,
+        "competences_coverage_required": 0.5,
+        "l": 2
+      },
+      {
+        "age_cv": 58,
+        "competences_coverage_required": 0.75,
+        "l": 2
+      },
+      {
+        "age_cv": 58,
+        "competences_coverage_required": 1.0,
+        "l": 2
+      },
+      {
+        "age_cv": 59,
+        "competences_coverage_required": 0.25,
+        "l": 2
+      },
+      {
+        "age_cv": 59,
+        "competences_coverage_required": 0.5,
+        "l": 2
+      },
+      {
+        "age_cv": 59,
+        "competences_coverage_required": 0.75,
+        "l": 2
+      },
+      {
+        "age_cv": 59,
+        "competences_coverage_required": 1.0,
+        "l": 2
+      },
+      {
+        "age_cv": 60,
+        "competences_coverage_required": 0.25,
+        "l": 2
+      },
+      {
+        "age_cv": 60,
+        "competences_coverage_required": 0.5,
+        "l": 2
+      },
+      {
+        "age_cv": 60,
+        "competences_coverage_required": 0.75,
+        "l": 2
+      },
+      {
+        "age_cv": 60,
+        "competences_coverage_required": 1.0,
+        "l": 2
+      }
+    ],
+    "final_score": 9.7,
+    "total_score_report": 9.7,
+    "metric_report": "l_diversity",
+    "user_weight_report": 5.0,
+    "right_report": "privacy",
+    "metric_description_report": "Computes L-Diversity by grouping on quasi-identifiers and counting distinct values of a sensitive attribute.",
+    "metric_right_report": "Privacy",
+    "user_justification_report": "Since no weight has been assigned, the default weight 5 has been used",
+    "context_report": {
+      "metric": "L-Diversity",
+      "status": "success",
+      "l_min": 1,
+      "l_avg": 2.307,
+      "total_groups": 218,
+      "quasi_identifiers": [
+        "age_cv",
+        "competences_coverage_required"
+      ],
+      "sensitive_attribute": "competences_coverage_optional",
+      "final_score": 9.7
+    }
+  },
+  "mutual_information_metric": {
+    "metric": "Mutual Information",
+    "status": "success",
+    "total_mi": 8.088,
+    "sensitive_attribute": "age_cv",
+    "final_score": 8.9,
+    "full_results": [
+      {
+        "feature": "PCA_2",
+        "mutual_information": 3.661
+      },
+      {
+        "feature": "PCA_1",
+        "mutual_information": 3.661
+      },
+      {
+        "feature": "age_max_job",
+        "mutual_information": 0.102
+      },
+      {
+        "feature": "age_min_job",
+        "mutual_information": 0.091
+      },
+      {
+        "feature": "competences_coverage_required",
+        "mutual_information": 0.082
+      },
+      {
+        "feature": "education_job_encoded",
+        "mutual_information": 0.056
+      },
+      {
+        "feature": "education_cv_encoded",
+        "mutual_information": 0.045
+      },
+      {
+        "feature": "gender_cv_Male",
+        "mutual_information": 0.041
+      },
+      {
+        "feature": "nationality_job_Spanish",
+        "mutual_information": 0.04
+      },
+      {
+        "feature": "disability_cv_No",
+        "mutual_information": 0.027
+      },
+      {
+        "feature": "nationality_job_French",
+        "mutual_information": 0.022
+      },
+      {
+        "feature": "nationality_cv_French",
+        "mutual_information": 0.02
+      },
+      {
+        "feature": "distrib_test",
+        "mutual_information": 0.02
+      },
+      {
+        "feature": "people_of_world",
+        "mutual_information": 0.02
+      },
+      {
+        "feature": "gender_cv_Female",
+        "mutual_information": 0.02
+      },
+      {
+        "feature": "gender_cv_Not binary",
+        "mutual_information": 0.017
+      },
+      {
+        "feature": "gender_job_Any",
+        "mutual_information": 0.017
+      },
+      {
+        "feature": "nationality_cv_Spanish",
+        "mutual_information": 0.015
+      },
+      {
+        "feature": "gender_job_Male",
+        "mutual_information": 0.014
+      },
+      {
+        "feature": "disability_job_Any",
+        "mutual_information": 0.014
+      },
+      {
+        "feature": "nationality_cv_Catalan",
+        "mutual_information": 0.013
+      },
+      {
+        "feature": "nationality_job_Any",
+        "mutual_information": 0.012
+      },
+      {
+        "feature": "disability_cv_Yes",
+        "mutual_information": 0.012
+      },
+      {
+        "feature": "nationality_cv_German",
+        "mutual_information": 0.011
+      },
+      {
+        "feature": "nationality_cv_Romanian",
+        "mutual_information": 0.011
+      },
+      {
+        "feature": "nationality_cv_Russian",
+        "mutual_information": 0.009
+      },
+      {
+        "feature": "check_it",
+        "mutual_information": 0.007
+      },
+      {
+        "feature": "nationality_job_Italian",
+        "mutual_information": 0.007
+      },
+      {
+        "feature": "check_de",
+        "mutual_information": 0.007
+      },
+      {
+        "feature": "nationality_job_Catalan",
+        "mutual_information": 0.006
+      },
+      {
+        "feature": "education_job_req",
+        "mutual_information": 0.004
+      },
+      {
+        "feature": "nationality_cv_LowGerman",
+        "mutual_information": 0.002
+      },
+      {
+        "feature": "nationality_cv_Irish",
+        "mutual_information": 0.0
+      },
+      {
+        "feature": "gender_job_Female",
+        "mutual_information": 0.0
+      },
+      {
+        "feature": "gender_cv_Not declared",
+        "mutual_information": 0.0
+      },
+      {
+        "feature": "disability_cv_Not declared",
+        "mutual_information": 0.0
+      },
+      {
+        "feature": "disability_job_No",
+        "mutual_information": 0.0
+      },
+      {
+        "feature": "nationality_job_English",
+        "mutual_information": 0.0
+      },
+      {
+        "feature": "nationality_cv_English",
+        "mutual_information": 0.0
+      },
+      {
+        "feature": "nationality_cv_Italian",
+        "mutual_information": 0.0
+      },
+      {
+        "feature": "nationality_cv_Swedish",
+        "mutual_information": 0.0
+      }
+    ],
+    "total_score_report": 8.9,
+    "metric_report": "mutual_information_metric",
+    "user_weight_report": 5.0,
+    "right_report": "privacy",
+    "user_justification_report": "Since no weight has been assigned, the default weight 5 has been used",
+    "context_report": {
+      "metric": "Mutual Information",
+      "status": "success",
+      "total_mi": 8.088,
+      "sensitive_attribute": "age_cv",
+      "final_score": 8.9
+    }
+  },
+  "t_closeness": {
+    "metric": "T-Closeness",
+    "status": "success",
+    "quasi_identifiers": [
+      "age_cv",
+      "competences_coverage_required"
+    ],
+    "sensitive_attribute": "competences_coverage_required",
+    "t_optimal": 0.228,
+    "full_results": [
+      {
+        "age_cv": 16,
+        "competences_coverage_required": 0.25,
+        "t": 0.228
+      },
+      {
+        "age_cv": 16,
+        "competences_coverage_required": 0.5,
+        "t": 0.228
+      },
+      {
+        "age_cv": 16,
+        "competences_coverage_required": 0.75,
+        "t": 0.228
+      },
+      {
+        "age_cv": 16,
+        "competences_coverage_required": 1.0,
+        "t": 0.228
+      },
+      {
+        "age_cv": 17,
+        "competences_coverage_required": 0.25,
+        "t": 0.228
+      },
+      {
+        "age_cv": 17,
+        "competences_coverage_required": 0.5,
+        "t": 0.228
+      },
+      {
+        "age_cv": 17,
+        "competences_coverage_required": 0.75,
+        "t": 0.228
+      },
+      {
+        "age_cv": 18,
+        "competences_coverage_required": 0.25,
+        "t": 0.228
+      },
+      {
+        "age_cv": 18,
+        "competences_coverage_required": 0.333,
+        "t": 0.228
+      },
+      {
+        "age_cv": 18,
+        "competences_coverage_required": 0.5,
+        "t": 0.228
+      },
+      {
+        "age_cv": 18,
+        "competences_coverage_required": 0.667,
+        "t": 0.228
+      },
+      {
+        "age_cv": 18,
+        "competences_coverage_required": 0.75,
+        "t": 0.228
+      },
+      {
+        "age_cv": 18,
+        "competences_coverage_required": 1.0,
+        "t": 0.228
+      },
+      {
+        "age_cv": 19,
+        "competences_coverage_required": 0.25,
+        "t": 0.228
+      },
+      {
+        "age_cv": 19,
+        "competences_coverage_required": 0.333,
+        "t": 0.228
+      },
+      {
+        "age_cv": 19,
+        "competences_coverage_required": 0.5,
+        "t": 0.228
+      },
+      {
+        "age_cv": 19,
+        "competences_coverage_required": 0.667,
+        "t": 0.228
+      },
+      {
+        "age_cv": 19,
+        "competences_coverage_required": 0.75,
+        "t": 0.228
+      },
+      {
+        "age_cv": 19,
+        "competences_coverage_required": 1.0,
+        "t": 0.228
+      },
+      {
+        "age_cv": 20,
+        "competences_coverage_required": 0.25,
+        "t": 0.228
+      },
+      {
+        "age_cv": 20,
+        "competences_coverage_required": 0.333,
+        "t": 0.228
+      },
+      {
+        "age_cv": 20,
+        "competences_coverage_required": 0.5,
+        "t": 0.228
+      },
+      {
+        "age_cv": 20,
+        "competences_coverage_required": 0.667,
+        "t": 0.228
+      },
+      {
+        "age_cv": 20,
+        "competences_coverage_required": 0.75,
+        "t": 0.228
+      },
+      {
+        "age_cv": 20,
+        "competences_coverage_required": 1.0,
+        "t": 0.228
+      },
+      {
+        "age_cv": 21,
+        "competences_coverage_required": 0.25,
+        "t": 0.228
+      },
+      {
+        "age_cv": 21,
+        "competences_coverage_required": 0.333,
+        "t": 0.228
+      },
+      {
+        "age_cv": 21,
+        "competences_coverage_required": 0.5,
+        "t": 0.228
+      },
+      {
+        "age_cv": 21,
+        "competences_coverage_required": 0.667,
+        "t": 0.228
+      },
+      {
+        "age_cv": 21,
+        "competences_coverage_required": 0.75,
+        "t": 0.228
+      },
+      {
+        "age_cv": 21,
+        "competences_coverage_required": 1.0,
+        "t": 0.228
+      },
+      {
+        "age_cv": 22,
+        "competences_coverage_required": 0.25,
+        "t": 0.228
+      },
+      {
+        "age_cv": 22,
+        "competences_coverage_required": 0.333,
+        "t": 0.228
+      },
+      {
+        "age_cv": 22,
+        "competences_coverage_required": 0.5,
+        "t": 0.228
+      },
+      {
+        "age_cv": 22,
+        "competences_coverage_required": 0.667,
+        "t": 0.228
+      },
+      {
+        "age_cv": 22,
+        "competences_coverage_required": 0.75,
+        "t": 0.228
+      },
+      {
+        "age_cv": 22,
+        "competences_coverage_required": 1.0,
+        "t": 0.228
+      },
+      {
+        "age_cv": 23,
+        "competences_coverage_required": 0.25,
+        "t": 0.228
+      },
+      {
+        "age_cv": 23,
+        "competences_coverage_required": 0.333,
+        "t": 0.228
+      },
+      {
+        "age_cv": 23,
+        "competences_coverage_required": 0.5,
+        "t": 0.228
+      },
+      {
+        "age_cv": 23,
+        "competences_coverage_required": 0.667,
+        "t": 0.228
+      },
+      {
+        "age_cv": 23,
+        "competences_coverage_required": 0.75,
+        "t": 0.228
+      },
+      {
+        "age_cv": 23,
+        "competences_coverage_required": 1.0,
+        "t": 0.228
+      },
+      {
+        "age_cv": 24,
+        "competences_coverage_required": 0.25,
+        "t": 0.228
+      },
+      {
+        "age_cv": 24,
+        "competences_coverage_required": 0.333,
+        "t": 0.228
+      },
+      {
+        "age_cv": 24,
+        "competences_coverage_required": 0.5,
+        "t": 0.228
+      },
+      {
+        "age_cv": 24,
+        "competences_coverage_required": 0.667,
+        "t": 0.228
+      },
+      {
+        "age_cv": 24,
+        "competences_coverage_required": 0.75,
+        "t": 0.228
+      },
+      {
+        "age_cv": 24,
+        "competences_coverage_required": 1.0,
+        "t": 0.228
+      },
+      {
+        "age_cv": 25,
+        "competences_coverage_required": 0.25,
+        "t": 0.228
+      },
+      {
+        "age_cv": 25,
+        "competences_coverage_required": 0.333,
+        "t": 0.228
+      },
+      {
+        "age_cv": 25,
+        "competences_coverage_required": 0.5,
+        "t": 0.228
+      },
+      {
+        "age_cv": 25,
+        "competences_coverage_required": 0.667,
+        "t": 0.228
+      },
+      {
+        "age_cv": 25,
+        "competences_coverage_required": 0.75,
+        "t": 0.228
+      },
+      {
+        "age_cv": 25,
+        "competences_coverage_required": 1.0,
+        "t": 0.228
+      },
+      {
+        "age_cv": 26,
+        "competences_coverage_required": 0.25,
+        "t": 0.228
+      },
+      {
+        "age_cv": 26,
+        "competences_coverage_required": 0.333,
+        "t": 0.228
+      },
+      {
+        "age_cv": 26,
+        "competences_coverage_required": 0.5,
+        "t": 0.228
+      },
+      {
+        "age_cv": 26,
+        "competences_coverage_required": 0.667,
+        "t": 0.228
+      },
+      {
+        "age_cv": 26,
+        "competences_coverage_required": 0.75,
+        "t": 0.228
+      },
+      {
+        "age_cv": 26,
+        "competences_coverage_required": 1.0,
+        "t": 0.228
+      },
+      {
+        "age_cv": 27,
+        "competences_coverage_required": 0.25,
+        "t": 0.228
+      },
+      {
+        "age_cv": 27,
+        "competences_coverage_required": 0.333,
+        "t": 0.228
+      },
+      {
+        "age_cv": 27,
+        "competences_coverage_required": 0.5,
+        "t": 0.228
+      },
+      {
+        "age_cv": 27,
+        "competences_coverage_required": 0.667,
+        "t": 0.228
+      },
+      {
+        "age_cv": 27,
+        "competences_coverage_required": 0.75,
+        "t": 0.228
+      },
+      {
+        "age_cv": 27,
+        "competences_coverage_required": 1.0,
+        "t": 0.228
+      },
+      {
+        "age_cv": 28,
+        "competences_coverage_required": 0.25,
+        "t": 0.228
+      },
+      {
+        "age_cv": 28,
+        "competences_coverage_required": 0.333,
+        "t": 0.228
+      },
+      {
+        "age_cv": 28,
+        "competences_coverage_required": 0.5,
+        "t": 0.228
+      },
+      {
+        "age_cv": 28,
+        "competences_coverage_required": 0.667,
+        "t": 0.228
+      },
+      {
+        "age_cv": 28,
+        "competences_coverage_required": 0.75,
+        "t": 0.228
+      },
+      {
+        "age_cv": 28,
+        "competences_coverage_required": 1.0,
+        "t": 0.228
+      },
+      {
+        "age_cv": 29,
+        "competences_coverage_required": 0.25,
+        "t": 0.228
+      },
+      {
+        "age_cv": 29,
+        "competences_coverage_required": 0.333,
+        "t": 0.228
+      },
+      {
+        "age_cv": 29,
+        "competences_coverage_required": 0.5,
+        "t": 0.228
+      },
+      {
+        "age_cv": 29,
+        "competences_coverage_required": 0.667,
+        "t": 0.228
+      },
+      {
+        "age_cv": 29,
+        "competences_coverage_required": 0.75,
+        "t": 0.228
+      },
+      {
+        "age_cv": 29,
+        "competences_coverage_required": 1.0,
+        "t": 0.228
+      },
+      {
+        "age_cv": 30,
+        "competences_coverage_required": 0.25,
+        "t": 0.228
+      },
+      {
+        "age_cv": 30,
+        "competences_coverage_required": 0.333,
+        "t": 0.228
+      },
+      {
+        "age_cv": 30,
+        "competences_coverage_required": 0.5,
+        "t": 0.228
+      },
+      {
+        "age_cv": 30,
+        "competences_coverage_required": 0.667,
+        "t": 0.228
+      },
+      {
+        "age_cv": 30,
+        "competences_coverage_required": 0.75,
+        "t": 0.228
+      },
+      {
+        "age_cv": 30,
+        "competences_coverage_required": 1.0,
+        "t": 0.228
+      },
+      {
+        "age_cv": 31,
+        "competences_coverage_required": 0.25,
+        "t": 0.228
+      },
+      {
+        "age_cv": 31,
+        "competences_coverage_required": 0.333,
+        "t": 0.228
+      },
+      {
+        "age_cv": 31,
+        "competences_coverage_required": 0.5,
+        "t": 0.228
+      },
+      {
+        "age_cv": 31,
+        "competences_coverage_required": 0.667,
+        "t": 0.228
+      },
+      {
+        "age_cv": 31,
+        "competences_coverage_required": 0.75,
+        "t": 0.228
+      },
+      {
+        "age_cv": 31,
+        "competences_coverage_required": 1.0,
+        "t": 0.228
+      },
+      {
+        "age_cv": 32,
+        "competences_coverage_required": 0.25,
+        "t": 0.228
+      },
+      {
+        "age_cv": 32,
+        "competences_coverage_required": 0.333,
+        "t": 0.228
+      },
+      {
+        "age_cv": 32,
+        "competences_coverage_required": 0.5,
+        "t": 0.228
+      },
+      {
+        "age_cv": 32,
+        "competences_coverage_required": 0.667,
+        "t": 0.228
+      },
+      {
+        "age_cv": 32,
+        "competences_coverage_required": 0.75,
+        "t": 0.228
+      },
+      {
+        "age_cv": 32,
+        "competences_coverage_required": 1.0,
+        "t": 0.228
+      },
+      {
+        "age_cv": 33,
+        "competences_coverage_required": 0.25,
+        "t": 0.228
+      },
+      {
+        "age_cv": 33,
+        "competences_coverage_required": 0.333,
+        "t": 0.228
+      },
+      {
+        "age_cv": 33,
+        "competences_coverage_required": 0.5,
+        "t": 0.228
+      },
+      {
+        "age_cv": 33,
+        "competences_coverage_required": 0.667,
+        "t": 0.228
+      },
+      {
+        "age_cv": 33,
+        "competences_coverage_required": 0.75,
+        "t": 0.228
+      },
+      {
+        "age_cv": 33,
+        "competences_coverage_required": 1.0,
+        "t": 0.228
+      },
+      {
+        "age_cv": 34,
+        "competences_coverage_required": 0.25,
+        "t": 0.228
+      },
+      {
+        "age_cv": 34,
+        "competences_coverage_required": 0.333,
+        "t": 0.228
+      },
+      {
+        "age_cv": 34,
+        "competences_coverage_required": 0.5,
+        "t": 0.228
+      },
+      {
+        "age_cv": 34,
+        "competences_coverage_required": 0.667,
+        "t": 0.228
+      },
+      {
+        "age_cv": 34,
+        "competences_coverage_required": 0.75,
+        "t": 0.228
+      },
+      {
+        "age_cv": 34,
+        "competences_coverage_required": 1.0,
+        "t": 0.228
+      },
+      {
+        "age_cv": 35,
+        "competences_coverage_required": 0.25,
+        "t": 0.228
+      },
+      {
+        "age_cv": 35,
+        "competences_coverage_required": 0.333,
+        "t": 0.228
+      },
+      {
+        "age_cv": 35,
+        "competences_coverage_required": 0.5,
+        "t": 0.228
+      },
+      {
+        "age_cv": 35,
+        "competences_coverage_required": 0.667,
+        "t": 0.228
+      },
+      {
+        "age_cv": 35,
+        "competences_coverage_required": 0.75,
+        "t": 0.228
+      },
+      {
+        "age_cv": 35,
+        "competences_coverage_required": 1.0,
+        "t": 0.228
+      },
+      {
+        "age_cv": 36,
+        "competences_coverage_required": 0.25,
+        "t": 0.228
+      },
+      {
+        "age_cv": 36,
+        "competences_coverage_required": 0.333,
+        "t": 0.228
+      },
+      {
+        "age_cv": 36,
+        "competences_coverage_required": 0.5,
+        "t": 0.228
+      },
+      {
+        "age_cv": 36,
+        "competences_coverage_required": 0.667,
+        "t": 0.228
+      },
+      {
+        "age_cv": 36,
+        "competences_coverage_required": 0.75,
+        "t": 0.228
+      },
+      {
+        "age_cv": 36,
+        "competences_coverage_required": 1.0,
+        "t": 0.228
+      },
+      {
+        "age_cv": 37,
+        "competences_coverage_required": 0.25,
+        "t": 0.228
+      },
+      {
+        "age_cv": 37,
+        "competences_coverage_required": 0.5,
+        "t": 0.228
+      },
+      {
+        "age_cv": 37,
+        "competences_coverage_required": 0.667,
+        "t": 0.228
+      },
+      {
+        "age_cv": 37,
+        "competences_coverage_required": 0.75,
+        "t": 0.228
+      },
+      {
+        "age_cv": 37,
+        "competences_coverage_required": 1.0,
+        "t": 0.228
+      },
+      {
+        "age_cv": 38,
+        "competences_coverage_required": 0.25,
+        "t": 0.228
+      },
+      {
+        "age_cv": 38,
+        "competences_coverage_required": 0.5,
+        "t": 0.228
+      },
+      {
+        "age_cv": 38,
+        "competences_coverage_required": 0.75,
+        "t": 0.228
+      },
+      {
+        "age_cv": 38,
+        "competences_coverage_required": 1.0,
+        "t": 0.228
+      },
+      {
+        "age_cv": 39,
+        "competences_coverage_required": 0.25,
+        "t": 0.228
+      },
+      {
+        "age_cv": 39,
+        "competences_coverage_required": 0.5,
+        "t": 0.228
+      },
+      {
+        "age_cv": 39,
+        "competences_coverage_required": 0.75,
+        "t": 0.228
+      },
+      {
+        "age_cv": 39,
+        "competences_coverage_required": 1.0,
+        "t": 0.228
+      },
+      {
+        "age_cv": 40,
+        "competences_coverage_required": 0.25,
+        "t": 0.228
+      },
+      {
+        "age_cv": 40,
+        "competences_coverage_required": 0.5,
+        "t": 0.228
+      },
+      {
+        "age_cv": 40,
+        "competences_coverage_required": 0.75,
+        "t": 0.228
+      },
+      {
+        "age_cv": 40,
+        "competences_coverage_required": 1.0,
+        "t": 0.228
+      },
+      {
+        "age_cv": 41,
+        "competences_coverage_required": 0.25,
+        "t": 0.228
+      },
+      {
+        "age_cv": 41,
+        "competences_coverage_required": 0.5,
+        "t": 0.228
+      },
+      {
+        "age_cv": 41,
+        "competences_coverage_required": 0.75,
+        "t": 0.228
+      },
+      {
+        "age_cv": 41,
+        "competences_coverage_required": 1.0,
+        "t": 0.228
+      },
+      {
+        "age_cv": 42,
+        "competences_coverage_required": 0.25,
+        "t": 0.228
+      },
+      {
+        "age_cv": 42,
+        "competences_coverage_required": 0.5,
+        "t": 0.228
+      },
+      {
+        "age_cv": 42,
+        "competences_coverage_required": 0.75,
+        "t": 0.228
+      },
+      {
+        "age_cv": 42,
+        "competences_coverage_required": 1.0,
+        "t": 0.228
+      },
+      {
+        "age_cv": 43,
+        "competences_coverage_required": 0.25,
+        "t": 0.228
+      },
+      {
+        "age_cv": 43,
+        "competences_coverage_required": 0.5,
+        "t": 0.228
+      },
+      {
+        "age_cv": 43,
+        "competences_coverage_required": 0.75,
+        "t": 0.228
+      },
+      {
+        "age_cv": 43,
+        "competences_coverage_required": 1.0,
+        "t": 0.228
+      },
+      {
+        "age_cv": 44,
+        "competences_coverage_required": 0.25,
+        "t": 0.228
+      },
+      {
+        "age_cv": 44,
+        "competences_coverage_required": 0.5,
+        "t": 0.228
+      },
+      {
+        "age_cv": 44,
+        "competences_coverage_required": 0.75,
+        "t": 0.228
+      },
+      {
+        "age_cv": 44,
+        "competences_coverage_required": 1.0,
+        "t": 0.228
+      },
+      {
+        "age_cv": 45,
+        "competences_coverage_required": 0.25,
+        "t": 0.228
+      },
+      {
+        "age_cv": 45,
+        "competences_coverage_required": 0.5,
+        "t": 0.228
+      },
+      {
+        "age_cv": 45,
+        "competences_coverage_required": 0.75,
+        "t": 0.228
+      },
+      {
+        "age_cv": 45,
+        "competences_coverage_required": 1.0,
+        "t": 0.228
+      },
+      {
+        "age_cv": 46,
+        "competences_coverage_required": 0.25,
+        "t": 0.228
+      },
+      {
+        "age_cv": 46,
+        "competences_coverage_required": 0.5,
+        "t": 0.228
+      },
+      {
+        "age_cv": 46,
+        "competences_coverage_required": 0.75,
+        "t": 0.228
+      },
+      {
+        "age_cv": 46,
+        "competences_coverage_required": 1.0,
+        "t": 0.228
+      },
+      {
+        "age_cv": 47,
+        "competences_coverage_required": 0.25,
+        "t": 0.228
+      },
+      {
+        "age_cv": 47,
+        "competences_coverage_required": 0.5,
+        "t": 0.228
+      },
+      {
+        "age_cv": 47,
+        "competences_coverage_required": 0.75,
+        "t": 0.228
+      },
+      {
+        "age_cv": 47,
+        "competences_coverage_required": 1.0,
+        "t": 0.228
+      },
+      {
+        "age_cv": 48,
+        "competences_coverage_required": 0.25,
+        "t": 0.228
+      },
+      {
+        "age_cv": 48,
+        "competences_coverage_required": 0.5,
+        "t": 0.228
+      },
+      {
+        "age_cv": 48,
+        "competences_coverage_required": 0.75,
+        "t": 0.228
+      },
+      {
+        "age_cv": 48,
+        "competences_coverage_required": 1.0,
+        "t": 0.228
+      },
+      {
+        "age_cv": 49,
+        "competences_coverage_required": 0.25,
+        "t": 0.228
+      },
+      {
+        "age_cv": 49,
+        "competences_coverage_required": 0.5,
+        "t": 0.228
+      },
+      {
+        "age_cv": 49,
+        "competences_coverage_required": 0.75,
+        "t": 0.228
+      },
+      {
+        "age_cv": 49,
+        "competences_coverage_required": 1.0,
+        "t": 0.228
+      },
+      {
+        "age_cv": 50,
+        "competences_coverage_required": 0.25,
+        "t": 0.228
+      },
+      {
+        "age_cv": 50,
+        "competences_coverage_required": 0.5,
+        "t": 0.228
+      },
+      {
+        "age_cv": 50,
+        "competences_coverage_required": 0.75,
+        "t": 0.228
+      },
+      {
+        "age_cv": 50,
+        "competences_coverage_required": 1.0,
+        "t": 0.228
+      },
+      {
+        "age_cv": 51,
+        "competences_coverage_required": 0.25,
+        "t": 0.228
+      },
+      {
+        "age_cv": 51,
+        "competences_coverage_required": 0.5,
+        "t": 0.228
+      },
+      {
+        "age_cv": 51,
+        "competences_coverage_required": 0.75,
+        "t": 0.228
+      },
+      {
+        "age_cv": 51,
+        "competences_coverage_required": 1.0,
+        "t": 0.228
+      },
+      {
+        "age_cv": 52,
+        "competences_coverage_required": 0.25,
+        "t": 0.228
+      },
+      {
+        "age_cv": 52,
+        "competences_coverage_required": 0.5,
+        "t": 0.228
+      },
+      {
+        "age_cv": 52,
+        "competences_coverage_required": 0.75,
+        "t": 0.228
+      },
+      {
+        "age_cv": 52,
+        "competences_coverage_required": 1.0,
+        "t": 0.228
+      },
+      {
+        "age_cv": 53,
+        "competences_coverage_required": 0.25,
+        "t": 0.228
+      },
+      {
+        "age_cv": 53,
+        "competences_coverage_required": 0.5,
+        "t": 0.228
+      },
+      {
+        "age_cv": 53,
+        "competences_coverage_required": 0.75,
+        "t": 0.228
+      },
+      {
+        "age_cv": 53,
+        "competences_coverage_required": 1.0,
+        "t": 0.228
+      },
+      {
+        "age_cv": 54,
+        "competences_coverage_required": 0.25,
+        "t": 0.228
+      },
+      {
+        "age_cv": 54,
+        "competences_coverage_required": 0.5,
+        "t": 0.228
+      },
+      {
+        "age_cv": 54,
+        "competences_coverage_required": 0.75,
+        "t": 0.228
+      },
+      {
+        "age_cv": 54,
+        "competences_coverage_required": 1.0,
+        "t": 0.228
+      },
+      {
+        "age_cv": 55,
+        "competences_coverage_required": 0.25,
+        "t": 0.228
+      },
+      {
+        "age_cv": 55,
+        "competences_coverage_required": 0.5,
+        "t": 0.228
+      },
+      {
+        "age_cv": 55,
+        "competences_coverage_required": 0.75,
+        "t": 0.228
+      },
+      {
+        "age_cv": 55,
+        "competences_coverage_required": 1.0,
+        "t": 0.228
+      },
+      {
+        "age_cv": 56,
+        "competences_coverage_required": 0.25,
+        "t": 0.228
+      },
+      {
+        "age_cv": 56,
+        "competences_coverage_required": 0.5,
+        "t": 0.228
+      },
+      {
+        "age_cv": 56,
+        "competences_coverage_required": 0.75,
+        "t": 0.228
+      },
+      {
+        "age_cv": 56,
+        "competences_coverage_required": 1.0,
+        "t": 0.228
+      },
+      {
+        "age_cv": 57,
+        "competences_coverage_required": 0.25,
+        "t": 0.228
+      },
+      {
+        "age_cv": 57,
+        "competences_coverage_required": 0.5,
+        "t": 0.228
+      },
+      {
+        "age_cv": 57,
+        "competences_coverage_required": 0.75,
+        "t": 0.228
+      },
+      {
+        "age_cv": 57,
+        "competences_coverage_required": 1.0,
+        "t": 0.228
+      },
+      {
+        "age_cv": 58,
+        "competences_coverage_required": 0.25,
+        "t": 0.228
+      },
+      {
+        "age_cv": 58,
+        "competences_coverage_required": 0.5,
+        "t": 0.228
+      },
+      {
+        "age_cv": 58,
+        "competences_coverage_required": 0.75,
+        "t": 0.228
+      },
+      {
+        "age_cv": 58,
+        "competences_coverage_required": 1.0,
+        "t": 0.228
+      },
+      {
+        "age_cv": 59,
+        "competences_coverage_required": 0.25,
+        "t": 0.228
+      },
+      {
+        "age_cv": 59,
+        "competences_coverage_required": 0.5,
+        "t": 0.228
+      },
+      {
+        "age_cv": 59,
+        "competences_coverage_required": 0.75,
+        "t": 0.228
+      },
+      {
+        "age_cv": 59,
+        "competences_coverage_required": 1.0,
+        "t": 0.228
+      },
+      {
+        "age_cv": 60,
+        "competences_coverage_required": 0.25,
+        "t": 0.228
+      },
+      {
+        "age_cv": 60,
+        "competences_coverage_required": 0.5,
+        "t": 0.228
+      },
+      {
+        "age_cv": 60,
+        "competences_coverage_required": 0.75,
+        "t": 0.228
+      },
+      {
+        "age_cv": 60,
+        "competences_coverage_required": 1.0,
+        "t": 0.228
+      }
+    ],
+    "final_score": 7.719,
+    "total_score_report": 7.719,
+    "metric_report": "t_closeness",
+    "user_weight_report": 5.0,
+    "right_report": "privacy",
+    "metric_description_report": "Computes Wasserstein distance between global and group distributions of a sensitive attribute, grouped by quasi-identifiers.",
+    "metric_right_report": "Privacy",
+    "user_justification_report": "Since no weight has been assigned, the default weight 5 has been used",
+    "context_report": {
+      "metric": "T-Closeness",
+      "status": "success",
+      "quasi_identifiers": [
+        "age_cv",
+        "competences_coverage_required"
+      ],
+      "sensitive_attribute": "competences_coverage_required",
+      "t_optimal": 0.228,
+      "final_score": 7.719
+    }
+  }
+}

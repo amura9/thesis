@@ -170,6 +170,9 @@ def save_weights(payload: WeightsSavePayload):
         final_score = compute_total_score(metric_value, w)
         if final_score is not None:
             metric_obj["(global)"]["total_score_report"] = final_score
+        
+        #save metric
+        metric_obj["(global)"]["metric_report"] = metric
 
         #in report: weight, right, metric description, justification, context
         if w: 
@@ -228,6 +231,9 @@ def save_weights(payload: WeightsSavePayload):
         final_score = compute_total_score(metric_value, w)
         if final_score is not None:
             metric_obj["total_score_report"] = final_score
+
+        #save metric
+        metric_obj["metric_report"] = metric
 
         ##in report: weight, right, metric description, justification, context
         if w: 
@@ -298,6 +304,9 @@ def save_weights(payload: WeightsSavePayload):
             final_score = compute_total_score(metric_value, w)
             if final_score is not None:
                 metric_obj[feature]["total_score_report"] = final_score
+
+            #save metric
+            metric_obj[feature]["metric_report"] = metric
 
             ##in report: weight, right, metric description, justification, context report, summary report
             metric_obj[feature]["user_weight_report"] = w

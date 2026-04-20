@@ -242,13 +242,14 @@ const needleRotation = computed(() => {
         </div>
       </section>
     </div>
+    <div class="page-number">
+    {{ pageNumber }}
+  </div>
 
     
   </div>
 
-  <div class="page-number">
-    {{ pageNumber }}
-  </div>
+  
 </template>
 
 <style scoped>
@@ -374,11 +375,11 @@ const needleRotation = computed(() => {
   position: absolute;
   bottom: 5mm;
   left: 0;
-  right: 0;
-  text-align: center;
-  font-size: 9pt;
-  color: #000000;
+  right: 5mm;
+  text-align: right;
+  z-index: 1;
 }
+
 
 .section-block,
 .intro-block,

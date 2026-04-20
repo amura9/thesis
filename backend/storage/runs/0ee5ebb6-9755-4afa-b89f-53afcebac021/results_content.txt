@@ -27,14 +27,6 @@ Running Demographic Parity
   Computing for feature: competences_coverage_required
   Computing for feature: competences_coverage_optional
 
-Running Equal Opportunity
-  Computing for feature: competences_coverage_required
-  Computing for feature: competences_coverage_optional
-
-Running New Metric Example
-
-Running Anonymity Set Size
-
 Running K-Anonymity
 
 === FINAL RESULTS ===
@@ -63,63 +55,41 @@ Running K-Anonymity
   Feature: competences_coverage_optional
     Value: 0.3733354789395341
 
---- Metrics: equal_opportunity ---
-
-  Feature: competences_coverage_required
-    Metric: Equal Opportunity
-    Value: {'metric': 'Equal Opportunity', 'status': 'success', 'sensitive_feature': 'competences_coverage_required', 'tpr_by_group': {0.25: 0.625, 0.3333333333333333: 0.9393939393939394, 0.5: 0.4926829268292683, 0.6666666666666666: 0.9271523178807947, 0.75: 0.31521739130434784, 1.0: 0.6850763807285546}, 'difference': 0.37582345191040845, 'final_score': 3.7582345191040845}
-
-  Feature: competences_coverage_optional
-    Metric: Equal Opportunity
-    Value: {'metric': 'Equal Opportunity', 'status': 'success', 'sensitive_feature': 'competences_coverage_optional', 'tpr_by_group': {0.0: 0.6500415627597672, 0.3333333333333333: 0.9387755102040817, 0.5: 0.6842105263157895, 0.6666666666666666: 0.8, 1.0: 0.6712328767123288}, 'difference': 0.7112660525556855, 'final_score': 7.112660525556855}
-
---- Metrics: new_metric ---
-
-  Feature: (global)
-    Metric: New Metric
-    Value: {'status': 'success', 'metric': 'New Metric', 'used_column': 'age_cv', 'mean': 35.3406, 'median': 32.0, 'ratio_rule': 'mean/median', 'computed': 1.10439375, 'threshold': 0.2, 'result': 0.2, 'final_score': 2.0}
-
---- Metrics: anonymity_set_size ---
-
-  Combined result:
-    Metric: Anonymity Set Size
-    Value: {'metric': 'Anonymity Set Size', 'status': 'success', 'average': 200.0, 'min': 2, 'max': 1033, 'unique_combinations': 25, 'total_records': 5000, 'sensitive_features': ['competences_coverage_required', 'competences_coverage_optional'], 'final_score': 9.95, 'full_results': [{'competences_coverage_required': 1.0, 'competences_coverage_optional': 0.0, 'count': 1033}, {'competences_coverage_required': 0.5, 'competences_coverage_optional': 0.0, 'count': 730}, {'competences_coverage_required': 0.75, 'competences_coverage_optional': 0.0, 'count': 654}, {'competences_coverage_required': 0.25, 'competences_coverage_optional': 0.0, 'count': 594}, {'competences_coverage_required': 1.0, 'competences_coverage_optional': 1.0, 'count': 481}, {'competences_coverage_required': 0.5, 'competences_coverage_optional': 1.0, 'count': 371}, {'competences_coverage_required': 0.75, 'competences_coverage_optional': 1.0, 'count': 308}, {'competences_coverage_required': 0.25, 'competences_coverage_optional': 1.0, 'count': 262}, {'competences_coverage_required': 0.6666666666666666, 'competences_coverage_optional': 0.0, 'count': 180}, {'competences_coverage_required': 0.6666666666666666, 'competences_coverage_optional': 1.0, 'count': 95}, {'competences_coverage_required': 0.3333333333333333, 'competences_coverage_optional': 0.0, 'count': 92}, {'competences_coverage_required': 0.3333333333333333, 'competences_coverage_optional': 1.0, 'count': 43}, {'competences_coverage_required': 1.0, 'competences_coverage_optional': 0.5, 'count': 40}, {'competences_coverage_required': 0.5, 'competences_coverage_optional': 0.5, 'count': 26}, {'competences_coverage_required': 1.0, 'competences_coverage_optional': 0.3333333333333333, 'count': 18}, {'competences_coverage_required': 0.6666666666666666, 'competences_coverage_optional': 0.3333333333333333, 'count': 18}, {'competences_coverage_required': 0.3333333333333333, 'competences_coverage_optional': 0.3333333333333333, 'count': 14}, {'competences_coverage_required': 0.3333333333333333, 'competences_coverage_optional': 0.5, 'count': 12}, {'competences_coverage_required': 1.0, 'competences_coverage_optional': 0.6666666666666666, 'count': 6}, {'competences_coverage_required': 0.6666666666666666, 'competences_coverage_optional': 0.6666666666666666, 'count': 5}, {'competences_coverage_required': 0.25, 'competences_coverage_optional': 0.5, 'count': 5}, {'competences_coverage_required': 0.3333333333333333, 'competences_coverage_optional': 0.6666666666666666, 'count': 4}, {'competences_coverage_required': 0.6666666666666666, 'competences_coverage_optional': 0.5, 'count': 4}, {'competences_coverage_required': 0.75, 'competences_coverage_optional': 0.3333333333333333, 'count': 3}, {'competences_coverage_required': 0.75, 'competences_coverage_optional': 0.5, 'count': 2}]}
-
 --- Metrics: k_anonymity ---
 
   Combined result:
     Metric: K-Anonymity
     k: 2
-    Compliance: True (100.0%)
-    Min group size: 165
-    Max group size: 1578
-    Avg group size: 833.33
+    Compliance: False (97.71%)
+    Min group size: 1
+    Max group size: 97
+    Avg group size: 22.94
 
 [COMPACT] Example groups (max 5):
       Group:
 None
-      Count: 861
+      Count: 1
+      Compliant: False
+
+      Group:
+None
+      Count: 6
       Compliant: True
 
       Group:
 None
-      Count: 165
+      Count: 5
       Compliant: True
 
       Group:
 None
-      Count: 1127
+      Count: 6
       Compliant: True
 
       Group:
 None
-      Count: 302
+      Count: 9
       Compliant: True
 
-      Group:
-None
-      Count: 967
-      Compliant: True
-
-    ... (1 groups omitted)
+    ... (213 groups omitted)
 [INFO] Saved UI schemas to: C:\Users\pc\Desktop\Alberto\Alberto\Tesi\FRIA_evaluation\FRIA_evaluation\evaluator\run_results\result_schemas.json

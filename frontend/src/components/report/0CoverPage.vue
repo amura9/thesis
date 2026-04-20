@@ -18,6 +18,9 @@ const props = defineProps({
       <div>Evaluation Date:&nbsp; {{ meta.evaluation_date }}</div>
       <div>Dataset Name:&nbsp; {{ meta.dataset_name }}</div>
     </div>
+    <div class="page-number">
+      {{ pageNumber }}
+    </div>
   </div>
 </template>
 
@@ -61,4 +64,14 @@ const props = defineProps({
   line-height: 1.9;
   opacity: 0.75;
 }
+
+.page-number {
+  position: absolute;
+  bottom: 5mm;
+  left: 0;
+  right: 5mm;
+  text-align: right;
+  z-index: 1;
+}
+
 </style>

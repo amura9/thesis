@@ -1,7 +1,7 @@
 <script setup>
 const props = defineProps({
   meta: { type: Object, required: true },
-  pageNumber: { type: [String, Number], default: 1 },
+  pageNumber: { type: [String, Number], default: 2 },
 });
 </script>
 
@@ -26,70 +26,60 @@ const props = defineProps({
       <div class="row">
         <div class="dot red"></div>
         <div class="label">
-          <div class="name">Low compliance</div>
+          <div class="name">Low Score</div>
           <div class="range">(0 – 2.0)</div>
         </div>
         <div class="text">
-          Interpretation: critical values. Strong evidence of discrimination or
-          privacy violations. The system does not meet minimum requirements for
-          fairness and data protection. Immediate mitigation measures are
-          required.
+          Interpretation: critical values. Strong evidence of violations or risks for the analyzed fundamental right. Immediate mitigation measures are required.
         </div>
       </div>
 
       <div class="row">
         <div class="dot orange"></div>
         <div class="label">
-          <div class="name">Low-Medium compliance</div>
+          <div class="name">Low-Medium Score</div>
           <div class="range">(2.01 – 4.0)</div>
         </div>
         <div class="text">
-          Interpretation: problematic values. Significant imbalances between
-          groups or vulnerabilities in data protection persist. Acceptable only
-          as a preliminary stage of analysis; requires review of the model or
-          dataset.
+          Interpretation: problematic value (e.g., significant imbalances between groups or vulnerabilities in data protection). Acceptable only as a preliminary stage of analysis; requires review of the model or dataset.
         </div>
       </div>
 
       <div class="row">
         <div class="dot yellow"></div>
         <div class="label">
-          <div class="name">Medium compliance</div>
+          <div class="name">Medium Score</div>
           <div class="range">(4.01 – 6.0)</div>
         </div>
         <div class="text">
-          Interpretation: intermediate level. No extreme violations emerge, but
-          safeguards are still insufficient. Detailed analysis and possible
-          improvements are suggested.
+          Interpretation: good level. The system is consistent with the principles of non-discrimination and privacy protection, but there are room for minor optimization. It can be considered compliant, but under monitoring.
         </div>
       </div>
 
       <div class="row">
         <div class="dot lightblue"></div>
         <div class="label">
-          <div class="name">Medium-High compliance</div>
+          <div class="name">Medium-High Score</div>
           <div class="range">(6.01 – 8.0)</div>
         </div>
         <div class="text">
-          Interpretation: good level. The system is consistent with the
-          principles of non-discrimination and privacy protection, but there are
-          room for minor optimization. It can be considered compliant, but under
-          monitoring.
+          Interpretation: good level. The measure suggests that the system is consistent with the analyzed fundamental right, but there is room for minor optimizations. If other metrics are consistent with this level, the system can be considered compliant, but under monitoring.
         </div>
       </div>
 
       <div class="row">
         <div class="dot blue"></div>
         <div class="label">
-          <div class="name">High compliance</div>
+          <div class="name">High Score</div>
           <div class="range">(8.01 – 10.00)</div>
         </div>
         <div class="text">
-          Interpretation: optimal level. No significant evidence of
-          discrimination or privacy risks emerges. The system is fully compliant
-          with fairness and privacy requirements.
+           Interpretation: optimal level. No significant evidence of risks emerges from this metric. The metric suggests that the system is fully compliant with the requirements of the analyzed fundamental right.
         </div>
       </div>
+    </div>
+    <div class="page-number">
+      {{ pageNumber }}
     </div>
   </div>
 </template>
@@ -181,5 +171,15 @@ const props = defineProps({
   line-height: 1.25;
   color: #222;
 }
+
+.page-number {
+  position: absolute;
+  bottom: 5mm;
+  left: 0;
+  right: 5mm;
+  text-align: right;
+  z-index: 1;
+}
+
 
 </style>

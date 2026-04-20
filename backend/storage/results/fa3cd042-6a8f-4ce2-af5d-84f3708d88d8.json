@@ -4,10 +4,10 @@
       "status": "success",
       "metric": "New Metric",
       "used_column": "age_cv",
-      "mean": 35.3406,
+      "mean": 35.341,
       "median": 32.0,
       "ratio_rule": "mean/median",
-      "computed": 1.10439375,
+      "computed": 1.104,
       "threshold": 0.2,
       "result": 0.2,
       "final_score": 2.0
@@ -36,163 +36,163 @@
           "0.75": 0.0,
           "raw_difference": 0.0,
           "normalized_score": 1.0,
-          "weight": 0.0018,
+          "weight": 0.002,
           "total_samples": 9
         },
         "18": {
           "0.25": 0.2,
-          "0.3333333333333333": 0.7142857142857143,
-          "0.5": 0.6153846153846154,
-          "0.6666666666666666": 0.6153846153846154,
+          "0.3333333333333333": 0.714,
+          "0.5": 0.615,
+          "0.6666666666666666": 0.615,
           "0.75": 0.0,
-          "1.0": 0.7941176470588235,
-          "raw_difference": 0.7941176470588235,
-          "normalized_score": 0.20588235294117652,
-          "weight": 0.0176,
+          "1.0": 0.794,
+          "raw_difference": 0.794,
+          "normalized_score": 0.206,
+          "weight": 0.018,
           "total_samples": 88
         },
         "19": {
           "0.25": 0.0,
           "0.3333333333333333": 1.0,
-          "0.5": 0.6111111111111112,
-          "0.6666666666666666": 0.5384615384615384,
+          "0.5": 0.611,
+          "0.6666666666666666": 0.538,
           "0.75": 0.0,
-          "1.0": 0.7333333333333333,
+          "1.0": 0.733,
           "raw_difference": 1.0,
           "normalized_score": 0.0,
-          "weight": 0.0156,
+          "weight": 0.016,
           "total_samples": 78
         },
         "20": {
           "0.25": 0.0,
-          "0.3333333333333333": 0.16666666666666666,
-          "0.5": 0.5555555555555556,
+          "0.3333333333333333": 0.167,
+          "0.5": 0.556,
           "0.6666666666666666": 0.75,
           "0.75": 0.0,
-          "1.0": 0.7407407407407407,
+          "1.0": 0.741,
           "raw_difference": 0.75,
           "normalized_score": 0.25,
-          "weight": 0.0168,
+          "weight": 0.017,
           "total_samples": 84
         },
         "21": {
           "0.25": 0.25,
           "0.3333333333333333": 1.0,
-          "0.5": 0.7058823529411765,
-          "0.6666666666666666": 0.8333333333333334,
+          "0.5": 0.706,
+          "0.6666666666666666": 0.833,
           "0.75": 0.0,
-          "1.0": 0.8235294117647058,
+          "1.0": 0.824,
           "raw_difference": 1.0,
           "normalized_score": 0.0,
-          "weight": 0.0238,
+          "weight": 0.024,
           "total_samples": 119
         },
         "22": {
-          "0.25": 0.23529411764705882,
+          "0.25": 0.235,
           "0.3333333333333333": 1.0,
-          "0.5": 0.47368421052631576,
-          "0.6666666666666666": 0.8571428571428571,
+          "0.5": 0.474,
+          "0.6666666666666666": 0.857,
           "0.75": 0.0,
-          "1.0": 0.6557377049180327,
+          "1.0": 0.656,
           "raw_difference": 1.0,
           "normalized_score": 0.0,
-          "weight": 0.0248,
+          "weight": 0.025,
           "total_samples": 124
         },
         "23": {
-          "0.25": 0.4117647058823529,
+          "0.25": 0.412,
           "0.3333333333333333": 1.0,
-          "0.5": 0.5909090909090909,
-          "0.6666666666666666": 0.8235294117647058,
+          "0.5": 0.591,
+          "0.6666666666666666": 0.824,
           "0.75": 0.0,
-          "1.0": 0.6463414634146342,
+          "1.0": 0.646,
           "raw_difference": 1.0,
           "normalized_score": 0.0,
-          "weight": 0.0388,
+          "weight": 0.039,
           "total_samples": 194
         },
         "24": {
-          "0.25": 0.19047619047619047,
+          "0.25": 0.19,
           "0.3333333333333333": 1.0,
           "0.5": 0.2,
           "0.6666666666666666": 1.0,
-          "0.75": 0.16666666666666666,
+          "0.75": 0.167,
           "1.0": 0.5,
-          "raw_difference": 0.8333333333333334,
-          "normalized_score": 0.16666666666666663,
-          "weight": 0.0338,
+          "raw_difference": 0.833,
+          "normalized_score": 0.167,
+          "weight": 0.034,
           "total_samples": 169
         },
         "25": {
           "0.25": 0.28,
           "0.3333333333333333": 1.0,
-          "0.5": 0.5294117647058824,
+          "0.5": 0.529,
           "0.6666666666666666": 1.0,
-          "0.75": 0.14285714285714285,
-          "1.0": 0.527027027027027,
-          "raw_difference": 0.8571428571428572,
-          "normalized_score": 0.1428571428571428,
-          "weight": 0.0426,
+          "0.75": 0.143,
+          "1.0": 0.527,
+          "raw_difference": 0.857,
+          "normalized_score": 0.143,
+          "weight": 0.043,
           "total_samples": 213
         },
         "26": {
-          "0.25": 0.3870967741935484,
+          "0.25": 0.387,
           "0.3333333333333333": 1.0,
-          "0.5": 0.2857142857142857,
+          "0.5": 0.286,
           "0.6666666666666666": 1.0,
-          "0.75": 0.1891891891891892,
-          "1.0": 0.7125,
-          "raw_difference": 0.8108108108108107,
-          "normalized_score": 0.18918918918918926,
-          "weight": 0.0492,
+          "0.75": 0.189,
+          "1.0": 0.713,
+          "raw_difference": 0.811,
+          "normalized_score": 0.189,
+          "weight": 0.049,
           "total_samples": 246
         },
         "27": {
           "0.25": 0.36,
           "0.3333333333333333": 1.0,
-          "0.5": 0.09090909090909091,
-          "0.6666666666666666": 0.9705882352941176,
-          "0.75": 0.19444444444444445,
-          "1.0": 0.4742268041237113,
-          "raw_difference": 0.9090909090909091,
-          "normalized_score": 0.09090909090909094,
-          "weight": 0.0496,
+          "0.5": 0.091,
+          "0.6666666666666666": 0.971,
+          "0.75": 0.194,
+          "1.0": 0.474,
+          "raw_difference": 0.909,
+          "normalized_score": 0.091,
+          "weight": 0.05,
           "total_samples": 248
         },
         "28": {
-          "0.25": 0.2777777777777778,
-          "0.3333333333333333": 0.9565217391304348,
-          "0.5": 0.13043478260869565,
+          "0.25": 0.278,
+          "0.3333333333333333": 0.957,
+          "0.5": 0.13,
           "0.6666666666666666": 1.0,
-          "0.75": 0.2682926829268293,
-          "1.0": 0.4470588235294118,
-          "raw_difference": 0.8695652173913043,
-          "normalized_score": 0.13043478260869568,
-          "weight": 0.0516,
+          "0.75": 0.268,
+          "1.0": 0.447,
+          "raw_difference": 0.87,
+          "normalized_score": 0.13,
+          "weight": 0.052,
           "total_samples": 258
         },
         "29": {
-          "0.25": 0.2413793103448276,
+          "0.25": 0.241,
           "0.3333333333333333": 1.0,
-          "0.5": 0.28888888888888886,
+          "0.5": 0.289,
           "0.6666666666666666": 1.0,
-          "0.75": 0.19444444444444445,
-          "1.0": 0.4810126582278481,
-          "raw_difference": 0.8055555555555556,
-          "normalized_score": 0.19444444444444442,
-          "weight": 0.0468,
+          "0.75": 0.194,
+          "1.0": 0.481,
+          "raw_difference": 0.806,
+          "normalized_score": 0.194,
+          "weight": 0.047,
           "total_samples": 234
         },
         "30": {
-          "0.25": 0.18181818181818182,
+          "0.25": 0.182,
           "0.3333333333333333": 1.0,
-          "0.5": 0.22580645161290322,
+          "0.5": 0.226,
           "0.6666666666666666": 1.0,
-          "0.75": 0.20689655172413793,
-          "1.0": 0.5595238095238095,
-          "raw_difference": 0.8181818181818181,
-          "normalized_score": 0.18181818181818188,
-          "weight": 0.0424,
+          "0.75": 0.207,
+          "1.0": 0.56,
+          "raw_difference": 0.818,
+          "normalized_score": 0.182,
+          "weight": 0.042,
           "total_samples": 212
         },
         "31": {
@@ -200,102 +200,102 @@
           "0.3333333333333333": 1.0,
           "0.5": 0.32,
           "0.6666666666666666": 1.0,
-          "0.75": 0.14814814814814814,
-          "1.0": 0.2962962962962963,
-          "raw_difference": 0.8518518518518519,
-          "normalized_score": 0.14814814814814814,
-          "weight": 0.0342,
+          "0.75": 0.148,
+          "1.0": 0.296,
+          "raw_difference": 0.852,
+          "normalized_score": 0.148,
+          "weight": 0.034,
           "total_samples": 171
         },
         "32": {
-          "0.25": 0.09090909090909091,
+          "0.25": 0.091,
           "0.3333333333333333": 1.0,
-          "0.5": 0.29411764705882354,
+          "0.5": 0.294,
           "0.6666666666666666": 1.0,
-          "0.75": 0.38235294117647056,
+          "0.75": 0.382,
           "1.0": 0.44,
-          "raw_difference": 0.9090909090909091,
-          "normalized_score": 0.09090909090909094,
-          "weight": 0.0304,
+          "raw_difference": 0.909,
+          "normalized_score": 0.091,
+          "weight": 0.03,
           "total_samples": 152
         },
         "33": {
-          "0.25": 0.2608695652173913,
+          "0.25": 0.261,
           "0.3333333333333333": 1.0,
-          "0.5": 0.13636363636363635,
+          "0.5": 0.136,
           "0.6666666666666666": 1.0,
-          "0.75": 0.07407407407407407,
-          "1.0": 0.32075471698113206,
-          "raw_difference": 0.9259259259259259,
-          "normalized_score": 0.07407407407407407,
-          "weight": 0.0266,
+          "0.75": 0.074,
+          "1.0": 0.321,
+          "raw_difference": 0.926,
+          "normalized_score": 0.074,
+          "weight": 0.027,
           "total_samples": 133
         },
         "34": {
-          "0.25": 0.14285714285714285,
+          "0.25": 0.143,
           "0.3333333333333333": 0.5,
-          "0.5": 0.2962962962962963,
-          "0.6666666666666666": 0.9230769230769231,
+          "0.5": 0.296,
+          "0.6666666666666666": 0.923,
           "0.75": 0.1,
           "1.0": 0.5,
-          "raw_difference": 0.8230769230769232,
-          "normalized_score": 0.17692307692307685,
-          "weight": 0.0258,
+          "raw_difference": 0.823,
+          "normalized_score": 0.177,
+          "weight": 0.026,
           "total_samples": 129
         },
         "35": {
           "0.25": 0.2,
           "0.3333333333333333": 1.0,
-          "0.5": 0.36666666666666664,
+          "0.5": 0.367,
           "0.6666666666666666": 1.0,
-          "0.75": 0.3333333333333333,
-          "1.0": 0.3409090909090909,
+          "0.75": 0.333,
+          "1.0": 0.341,
           "raw_difference": 0.8,
-          "normalized_score": 0.19999999999999996,
-          "weight": 0.0238,
+          "normalized_score": 0.2,
+          "weight": 0.024,
           "total_samples": 119
         },
         "36": {
-          "0.25": 0.13636363636363635,
+          "0.25": 0.136,
           "0.3333333333333333": 0.0,
-          "0.5": 0.18181818181818182,
+          "0.5": 0.182,
           "0.6666666666666666": 1.0,
-          "0.75": 0.0967741935483871,
-          "1.0": 0.1891891891891892,
+          "0.75": 0.097,
+          "1.0": 0.189,
           "raw_difference": 1.0,
           "normalized_score": 0.0,
-          "weight": 0.0258,
+          "weight": 0.026,
           "total_samples": 129
         },
         "37": {
-          "0.25": 0.06666666666666667,
+          "0.25": 0.067,
           "0.5": 0.2,
           "0.6666666666666666": 1.0,
           "0.75": 0.04,
-          "1.0": 0.37037037037037035,
+          "1.0": 0.37,
           "raw_difference": 0.96,
-          "normalized_score": 0.040000000000000036,
-          "weight": 0.0186,
+          "normalized_score": 0.04,
+          "weight": 0.019,
           "total_samples": 93
         },
         "38": {
-          "0.25": 0.18181818181818182,
-          "0.5": 0.09523809523809523,
-          "0.75": 0.14814814814814814,
+          "0.25": 0.182,
+          "0.5": 0.095,
+          "0.75": 0.148,
           "1.0": 0.25,
-          "raw_difference": 0.15476190476190477,
-          "normalized_score": 0.8452380952380952,
-          "weight": 0.0196,
+          "raw_difference": 0.155,
+          "normalized_score": 0.845,
+          "weight": 0.02,
           "total_samples": 98
         },
         "39": {
           "0.25": 0.0,
-          "0.5": 0.043478260869565216,
+          "0.5": 0.043,
           "0.75": 0.0,
           "1.0": 0.0,
-          "raw_difference": 0.043478260869565216,
-          "normalized_score": 0.9565217391304348,
-          "weight": 0.0168,
+          "raw_difference": 0.043,
+          "normalized_score": 0.957,
+          "weight": 0.017,
           "total_samples": 84
         },
         "40": {
@@ -305,7 +305,7 @@
           "1.0": 0.0,
           "raw_difference": 0.0,
           "normalized_score": 1.0,
-          "weight": 0.0148,
+          "weight": 0.015,
           "total_samples": 74
         },
         "41": {
@@ -315,7 +315,7 @@
           "1.0": 0.0,
           "raw_difference": 0.0,
           "normalized_score": 1.0,
-          "weight": 0.0128,
+          "weight": 0.013,
           "total_samples": 64
         },
         "42": {
@@ -345,7 +345,7 @@
           "1.0": 0.0,
           "raw_difference": 0.0,
           "normalized_score": 1.0,
-          "weight": 0.0122,
+          "weight": 0.012,
           "total_samples": 61
         },
         "45": {
@@ -355,7 +355,7 @@
           "1.0": 0.0,
           "raw_difference": 0.0,
           "normalized_score": 1.0,
-          "weight": 0.0164,
+          "weight": 0.016,
           "total_samples": 82
         },
         "46": {
@@ -365,7 +365,7 @@
           "1.0": 0.0,
           "raw_difference": 0.0,
           "normalized_score": 1.0,
-          "weight": 0.0166,
+          "weight": 0.017,
           "total_samples": 83
         },
         "47": {
@@ -375,7 +375,7 @@
           "1.0": 0.0,
           "raw_difference": 0.0,
           "normalized_score": 1.0,
-          "weight": 0.0168,
+          "weight": 0.017,
           "total_samples": 84
         },
         "48": {
@@ -385,7 +385,7 @@
           "1.0": 0.0,
           "raw_difference": 0.0,
           "normalized_score": 1.0,
-          "weight": 0.0136,
+          "weight": 0.014,
           "total_samples": 68
         },
         "49": {
@@ -395,7 +395,7 @@
           "1.0": 0.0,
           "raw_difference": 0.0,
           "normalized_score": 1.0,
-          "weight": 0.0124,
+          "weight": 0.012,
           "total_samples": 62
         },
         "50": {
@@ -405,7 +405,7 @@
           "1.0": 0.0,
           "raw_difference": 0.0,
           "normalized_score": 1.0,
-          "weight": 0.0134,
+          "weight": 0.013,
           "total_samples": 67
         },
         "51": {
@@ -425,7 +425,7 @@
           "1.0": 0.0,
           "raw_difference": 0.0,
           "normalized_score": 1.0,
-          "weight": 0.0162,
+          "weight": 0.016,
           "total_samples": 81
         },
         "53": {
@@ -435,7 +435,7 @@
           "1.0": 0.0,
           "raw_difference": 0.0,
           "normalized_score": 1.0,
-          "weight": 0.0136,
+          "weight": 0.014,
           "total_samples": 68
         },
         "54": {
@@ -455,7 +455,7 @@
           "1.0": 0.0,
           "raw_difference": 0.0,
           "normalized_score": 1.0,
-          "weight": 0.0158,
+          "weight": 0.016,
           "total_samples": 79
         },
         "56": {
@@ -465,7 +465,7 @@
           "1.0": 0.0,
           "raw_difference": 0.0,
           "normalized_score": 1.0,
-          "weight": 0.0188,
+          "weight": 0.019,
           "total_samples": 94
         },
         "57": {
@@ -475,7 +475,7 @@
           "1.0": 0.0,
           "raw_difference": 0.0,
           "normalized_score": 1.0,
-          "weight": 0.0158,
+          "weight": 0.016,
           "total_samples": 79
         },
         "58": {
@@ -485,7 +485,7 @@
           "1.0": 0.0,
           "raw_difference": 0.0,
           "normalized_score": 1.0,
-          "weight": 0.0132,
+          "weight": 0.013,
           "total_samples": 66
         },
         "59": {
@@ -505,20 +505,20 @@
           "1.0": 0.0,
           "raw_difference": 0.0,
           "normalized_score": 1.0,
-          "weight": 0.0198,
+          "weight": 0.02,
           "total_samples": 99
         }
       },
       "disparity_summary": {
-        "raw_average": 0.5655951775909422,
+        "raw_average": 0.566,
         "raw_max": 1.0,
         "raw_min": 0.0,
-        "normalized_average": 0.43440482240905764,
+        "normalized_average": 0.434,
         "normalized_max": 1.0,
         "normalized_min": 0.0,
         "processed_conditions": 45,
         "total_samples": 5000,
-        "final_score": 4.344048224090576
+        "final_score": 4.344
       }
     },
     "competences_coverage_optional": {
@@ -540,196 +540,196 @@
           "1.0": 0.0,
           "raw_difference": 0.0,
           "normalized_score": 1.0,
-          "weight": 0.0018,
+          "weight": 0.002,
           "total_samples": 9
         },
         "18": {
-          "0.0": 0.2222222222222222,
+          "0.0": 0.222,
           "0.3333333333333333": 0.5,
           "0.6666666666666666": 1.0,
-          "1.0": 0.7692307692307693,
-          "raw_difference": 0.7777777777777778,
-          "normalized_score": 0.2222222222222222,
-          "weight": 0.0176,
+          "1.0": 0.769,
+          "raw_difference": 0.778,
+          "normalized_score": 0.222,
+          "weight": 0.018,
           "total_samples": 88
         },
         "19": {
-          "0.0": 0.27586206896551724,
+          "0.0": 0.276,
           "0.3333333333333333": 0.75,
           "0.6666666666666666": 0.0,
-          "1.0": 0.7727272727272727,
-          "raw_difference": 0.7727272727272727,
-          "normalized_score": 0.2272727272727273,
-          "weight": 0.0156,
+          "1.0": 0.773,
+          "raw_difference": 0.773,
+          "normalized_score": 0.227,
+          "weight": 0.016,
           "total_samples": 78
         },
         "20": {
           "0.0": 0.12,
           "0.6666666666666666": 0.0,
-          "1.0": 0.6724137931034483,
-          "raw_difference": 0.6724137931034483,
-          "normalized_score": 0.3275862068965517,
-          "weight": 0.0168,
+          "1.0": 0.672,
+          "raw_difference": 0.672,
+          "normalized_score": 0.328,
+          "weight": 0.017,
           "total_samples": 84
         },
         "21": {
           "0.0": 0.55,
           "0.3333333333333333": 1.0,
-          "1.0": 0.896551724137931,
-          "raw_difference": 0.44999999999999996,
+          "1.0": 0.897,
+          "raw_difference": 0.45,
           "normalized_score": 0.55,
-          "weight": 0.0238,
+          "weight": 0.024,
           "total_samples": 119
         },
         "22": {
           "0.0": 0.4,
           "0.3333333333333333": 1.0,
-          "1.0": 0.7547169811320755,
+          "1.0": 0.755,
           "raw_difference": 0.6,
           "normalized_score": 0.4,
-          "weight": 0.0248,
+          "weight": 0.025,
           "total_samples": 124
         },
         "23": {
-          "0.0": 0.37962962962962965,
+          "0.0": 0.38,
           "0.3333333333333333": 1.0,
           "0.6666666666666666": 1.0,
-          "1.0": 0.7317073170731707,
-          "raw_difference": 0.6203703703703703,
-          "normalized_score": 0.37962962962962965,
-          "weight": 0.0388,
+          "1.0": 0.732,
+          "raw_difference": 0.62,
+          "normalized_score": 0.38,
+          "weight": 0.039,
           "total_samples": 194
         },
         "24": {
-          "0.0": 0.29508196721311475,
+          "0.0": 0.295,
           "0.3333333333333333": 1.0,
-          "1.0": 0.6086956521739131,
-          "raw_difference": 0.7049180327868853,
-          "normalized_score": 0.29508196721311475,
-          "weight": 0.0338,
+          "1.0": 0.609,
+          "raw_difference": 0.705,
+          "normalized_score": 0.295,
+          "weight": 0.034,
           "total_samples": 169
         },
         "25": {
           "0.0": 0.5,
           "0.3333333333333333": 1.0,
-          "0.5": 0.8888888888888888,
+          "0.5": 0.889,
           "0.6666666666666666": 1.0,
-          "1.0": 0.4864864864864865,
-          "raw_difference": 0.5135135135135135,
-          "normalized_score": 0.4864864864864865,
-          "weight": 0.0426,
+          "1.0": 0.486,
+          "raw_difference": 0.514,
+          "normalized_score": 0.486,
+          "weight": 0.043,
           "total_samples": 213
         },
         "26": {
-          "0.0": 0.5674157303370787,
+          "0.0": 0.567,
           "0.3333333333333333": 1.0,
           "0.5": 0.6,
           "0.6666666666666666": 1.0,
-          "1.0": 0.5094339622641509,
-          "raw_difference": 0.49056603773584906,
-          "normalized_score": 0.5094339622641509,
-          "weight": 0.0492,
+          "1.0": 0.509,
+          "raw_difference": 0.491,
+          "normalized_score": 0.509,
+          "weight": 0.049,
           "total_samples": 246
         },
         "27": {
-          "0.0": 0.4246575342465753,
+          "0.0": 0.425,
           "0.3333333333333333": 1.0,
           "0.5": 0.75,
           "0.6666666666666666": 1.0,
-          "1.0": 0.39285714285714285,
-          "raw_difference": 0.6071428571428572,
-          "normalized_score": 0.3928571428571428,
-          "weight": 0.0496,
+          "1.0": 0.393,
+          "raw_difference": 0.607,
+          "normalized_score": 0.393,
+          "weight": 0.05,
           "total_samples": 248
         },
         "28": {
-          "0.0": 0.43820224719101125,
+          "0.0": 0.438,
           "0.3333333333333333": 1.0,
-          "0.5": 0.8181818181818182,
+          "0.5": 0.818,
           "0.6666666666666666": 1.0,
-          "1.0": 0.34375,
-          "raw_difference": 0.65625,
-          "normalized_score": 0.34375,
-          "weight": 0.0516,
+          "1.0": 0.344,
+          "raw_difference": 0.656,
+          "normalized_score": 0.344,
+          "weight": 0.052,
           "total_samples": 258
         },
         "29": {
-          "0.0": 0.4896551724137931,
+          "0.0": 0.49,
           "0.3333333333333333": 1.0,
           "0.5": 0.8,
-          "1.0": 0.37662337662337664,
-          "raw_difference": 0.6233766233766234,
-          "normalized_score": 0.37662337662337664,
-          "weight": 0.0468,
+          "1.0": 0.377,
+          "raw_difference": 0.623,
+          "normalized_score": 0.377,
+          "weight": 0.047,
           "total_samples": 234
         },
         "30": {
-          "0.0": 0.5407407407407407,
+          "0.0": 0.541,
           "0.3333333333333333": 1.0,
           "0.5": 1.0,
           "0.6666666666666666": 1.0,
-          "1.0": 0.38461538461538464,
-          "raw_difference": 0.6153846153846154,
-          "normalized_score": 0.3846153846153846,
-          "weight": 0.0424,
+          "1.0": 0.385,
+          "raw_difference": 0.615,
+          "normalized_score": 0.385,
+          "weight": 0.042,
           "total_samples": 212
         },
         "31": {
-          "0.0": 0.38461538461538464,
+          "0.0": 0.385,
           "0.3333333333333333": 1.0,
           "0.5": 0.5,
-          "1.0": 0.14285714285714285,
-          "raw_difference": 0.8571428571428572,
-          "normalized_score": 0.1428571428571428,
-          "weight": 0.0342,
+          "1.0": 0.143,
+          "raw_difference": 0.857,
+          "normalized_score": 0.143,
+          "weight": 0.034,
           "total_samples": 171
         },
         "32": {
-          "0.0": 0.42045454545454547,
+          "0.0": 0.42,
           "0.3333333333333333": 1.0,
           "0.5": 1.0,
           "0.6666666666666666": 0.5,
-          "1.0": 0.29310344827586204,
-          "raw_difference": 0.7068965517241379,
-          "normalized_score": 0.2931034482758621,
-          "weight": 0.0304,
+          "1.0": 0.293,
+          "raw_difference": 0.707,
+          "normalized_score": 0.293,
+          "weight": 0.03,
           "total_samples": 152
         },
         "33": {
-          "0.0": 0.36904761904761907,
+          "0.0": 0.369,
           "0.5": 0.0,
-          "1.0": 0.10869565217391304,
-          "raw_difference": 0.36904761904761907,
-          "normalized_score": 0.6309523809523809,
-          "weight": 0.0266,
+          "1.0": 0.109,
+          "raw_difference": 0.369,
+          "normalized_score": 0.631,
+          "weight": 0.027,
           "total_samples": 133
         },
         "34": {
-          "0.0": 0.425531914893617,
+          "0.0": 0.426,
           "0.3333333333333333": 1.0,
           "0.5": 0.6,
-          "1.0": 0.14285714285714285,
-          "raw_difference": 0.8571428571428572,
-          "normalized_score": 0.1428571428571428,
-          "weight": 0.0258,
+          "1.0": 0.143,
+          "raw_difference": 0.857,
+          "normalized_score": 0.143,
+          "weight": 0.026,
           "total_samples": 129
         },
         "35": {
-          "0.0": 0.40229885057471265,
+          "0.0": 0.402,
           "0.5": 0.6,
-          "1.0": 0.1111111111111111,
-          "raw_difference": 0.4888888888888889,
-          "normalized_score": 0.5111111111111111,
-          "weight": 0.0238,
+          "1.0": 0.111,
+          "raw_difference": 0.489,
+          "normalized_score": 0.511,
+          "weight": 0.024,
           "total_samples": 119
         },
         "36": {
-          "0.0": 0.19318181818181818,
-          "0.5": 0.2857142857142857,
-          "1.0": 0.14705882352941177,
-          "raw_difference": 0.13865546218487393,
-          "normalized_score": 0.8613445378151261,
-          "weight": 0.0258,
+          "0.0": 0.193,
+          "0.5": 0.286,
+          "1.0": 0.147,
+          "raw_difference": 0.139,
+          "normalized_score": 0.861,
+          "weight": 0.026,
           "total_samples": 129
         },
         "37": {
@@ -738,24 +738,24 @@
           "1.0": 0.2,
           "raw_difference": 0.25,
           "normalized_score": 0.75,
-          "weight": 0.0186,
+          "weight": 0.019,
           "total_samples": 93
         },
         "38": {
-          "0.0": 0.21333333333333335,
+          "0.0": 0.213,
           "0.5": 1.0,
           "1.0": 0.0,
           "raw_difference": 1.0,
           "normalized_score": 0.0,
-          "weight": 0.0196,
+          "weight": 0.02,
           "total_samples": 98
         },
         "39": {
-          "0.0": 0.015873015873015872,
+          "0.0": 0.016,
           "1.0": 0.0,
-          "raw_difference": 0.015873015873015872,
-          "normalized_score": 0.9841269841269842,
-          "weight": 0.0168,
+          "raw_difference": 0.016,
+          "normalized_score": 0.984,
+          "weight": 0.017,
           "total_samples": 84
         },
         "40": {
@@ -764,7 +764,7 @@
           "1.0": 0.0,
           "raw_difference": 0.0,
           "normalized_score": 1.0,
-          "weight": 0.0148,
+          "weight": 0.015,
           "total_samples": 74
         },
         "41": {
@@ -772,7 +772,7 @@
           "1.0": 0.0,
           "raw_difference": 0.0,
           "normalized_score": 1.0,
-          "weight": 0.0128,
+          "weight": 0.013,
           "total_samples": 64
         },
         "42": {
@@ -797,7 +797,7 @@
           "1.0": 0.0,
           "raw_difference": 0.0,
           "normalized_score": 1.0,
-          "weight": 0.0122,
+          "weight": 0.012,
           "total_samples": 61
         },
         "45": {
@@ -805,7 +805,7 @@
           "1.0": 0.0,
           "raw_difference": 0.0,
           "normalized_score": 1.0,
-          "weight": 0.0164,
+          "weight": 0.016,
           "total_samples": 82
         },
         "46": {
@@ -813,7 +813,7 @@
           "1.0": 0.0,
           "raw_difference": 0.0,
           "normalized_score": 1.0,
-          "weight": 0.0166,
+          "weight": 0.017,
           "total_samples": 83
         },
         "47": {
@@ -821,7 +821,7 @@
           "1.0": 0.0,
           "raw_difference": 0.0,
           "normalized_score": 1.0,
-          "weight": 0.0168,
+          "weight": 0.017,
           "total_samples": 84
         },
         "48": {
@@ -829,7 +829,7 @@
           "1.0": 0.0,
           "raw_difference": 0.0,
           "normalized_score": 1.0,
-          "weight": 0.0136,
+          "weight": 0.014,
           "total_samples": 68
         },
         "49": {
@@ -837,7 +837,7 @@
           "1.0": 0.0,
           "raw_difference": 0.0,
           "normalized_score": 1.0,
-          "weight": 0.0124,
+          "weight": 0.012,
           "total_samples": 62
         },
         "50": {
@@ -846,7 +846,7 @@
           "1.0": 0.0,
           "raw_difference": 0.0,
           "normalized_score": 1.0,
-          "weight": 0.0134,
+          "weight": 0.013,
           "total_samples": 67
         },
         "51": {
@@ -865,7 +865,7 @@
           "1.0": 0.0,
           "raw_difference": 0.0,
           "normalized_score": 1.0,
-          "weight": 0.0162,
+          "weight": 0.016,
           "total_samples": 81
         },
         "53": {
@@ -874,7 +874,7 @@
           "1.0": 0.0,
           "raw_difference": 0.0,
           "normalized_score": 1.0,
-          "weight": 0.0136,
+          "weight": 0.014,
           "total_samples": 68
         },
         "54": {
@@ -891,7 +891,7 @@
           "1.0": 0.0,
           "raw_difference": 0.0,
           "normalized_score": 1.0,
-          "weight": 0.0158,
+          "weight": 0.016,
           "total_samples": 79
         },
         "56": {
@@ -899,7 +899,7 @@
           "1.0": 0.0,
           "raw_difference": 0.0,
           "normalized_score": 1.0,
-          "weight": 0.0188,
+          "weight": 0.019,
           "total_samples": 94
         },
         "57": {
@@ -908,7 +908,7 @@
           "1.0": 0.0,
           "raw_difference": 0.0,
           "normalized_score": 1.0,
-          "weight": 0.0158,
+          "weight": 0.016,
           "total_samples": 79
         },
         "58": {
@@ -916,7 +916,7 @@
           "1.0": 0.0,
           "raw_difference": 0.0,
           "normalized_score": 1.0,
-          "weight": 0.0132,
+          "weight": 0.013,
           "total_samples": 66
         },
         "59": {
@@ -932,20 +932,20 @@
           "1.0": 0.0,
           "raw_difference": 0.0,
           "normalized_score": 1.0,
-          "weight": 0.0198,
+          "weight": 0.02,
           "total_samples": 99
         }
       },
       "disparity_summary": {
-        "raw_average": 0.39824565647328203,
+        "raw_average": 0.398,
         "raw_max": 1.0,
         "raw_min": 0.0,
-        "normalized_average": 0.6017543435267181,
+        "normalized_average": 0.602,
         "normalized_max": 1.0,
         "normalized_min": 0.0,
         "processed_conditions": 45,
         "total_samples": 5000,
-        "final_score": 6.01754343526718
+        "final_score": 6.018
       }
     }
   },
@@ -955,36 +955,36 @@
       "status": "success",
       "sensitive_feature": "competences_coverage_required",
       "accuracy_by_group": {
-        "0.25": 0.5913978494623656,
+        "0.25": 0.591,
         "0.3333333333333333": 1.0,
-        "0.5": 0.8416666666666667,
+        "0.5": 0.842,
         "0.6666666666666666": 1.0,
-        "0.75": 0.6744186046511628,
-        "1.0": 0.9479674796747968
+        "0.75": 0.674,
+        "1.0": 0.948
       },
-      "difference": 0.4086021505376344,
-      "normalized_score": 0.5913978494623656,
-      "final_score": 5.913978494623656
+      "difference": 0.409,
+      "normalized_score": 0.591,
+      "final_score": 5.914
     },
     "competences_coverage_optional": {
       "metric": "Conditional Use Accuracy Equality",
       "status": "success",
       "sensitive_feature": "competences_coverage_optional",
       "accuracy_by_group": {
-        "0.0": 0.9156908665105387,
-        "0.3333333333333333": 0.9787234042553191,
-        "0.5": 0.9811320754716981,
+        "0.0": 0.916,
+        "0.3333333333333333": 0.979,
+        "0.5": 0.981,
         "0.6666666666666666": 1.0,
-        "1.0": 0.8767395626242545
+        "1.0": 0.877
       },
-      "difference": 0.12326043737574555,
-      "normalized_score": 0.8767395626242545,
-      "final_score": 8.767395626242545
+      "difference": 0.123,
+      "normalized_score": 0.877,
+      "final_score": 8.767
     }
   },
   "demographic_parity": {
-    "competences_coverage_required": 0.14954091065776687,
-    "competences_coverage_optional": 0.3733354789395341
+    "competences_coverage_required": 0.15,
+    "competences_coverage_optional": 0.373
   },
   "disparate_impact": {
     "competences_coverage_required": {
@@ -992,29 +992,29 @@
       "status": "success",
       "sensitive_feature": "competences_coverage_required",
       "selection_rates": {
-        "0.25": 0.10801393728222997,
-        "0.3333333333333333": 0.9393939393939394,
-        "0.5": 0.2129547471162378,
-        "0.6666666666666666": 0.9271523178807947,
-        "0.75": 0.0889348500517063,
-        "1.0": 0.3897338403041825
+        "0.25": 0.108,
+        "0.3333333333333333": 0.939,
+        "0.5": 0.213,
+        "0.6666666666666666": 0.927,
+        "0.75": 0.089,
+        "1.0": 0.39
       },
-      "disparate_impact": 0.9053274176868933,
-      "final_score": 9.053274176868932
+      "disparate_impact": 0.905,
+      "final_score": 9.053
     },
     "competences_coverage_optional": {
       "metric": "Disparate Impact",
       "status": "success",
       "sensitive_feature": "competences_coverage_optional",
       "selection_rates": {
-        "0.0": 0.2601279317697228,
-        "0.3333333333333333": 0.8867924528301887,
-        "0.5": 0.5955056179775281,
+        "0.0": 0.26,
+        "0.3333333333333333": 0.887,
+        "0.5": 0.596,
         "0.6666666666666666": 0.8,
-        "1.0": 0.32243589743589746
+        "1.0": 0.322
       },
-      "disparate_impact": 0.7066642471532913,
-      "final_score": 7.066642471532914
+      "disparate_impact": 0.707,
+      "final_score": 7.067
     }
   },
   "equal_opportunity": {
@@ -1024,33 +1024,33 @@
       "sensitive_feature": "competences_coverage_required",
       "tpr_by_group": {
         "0.25": 0.625,
-        "0.3333333333333333": 0.9393939393939394,
-        "0.5": 0.4926829268292683,
-        "0.6666666666666666": 0.9271523178807947,
-        "0.75": 0.31521739130434784,
-        "1.0": 0.6850763807285546
+        "0.3333333333333333": 0.939,
+        "0.5": 0.493,
+        "0.6666666666666666": 0.927,
+        "0.75": 0.315,
+        "1.0": 0.685
       },
-      "difference": 0.37582345191040845,
-      "final_score": 3.7582345191040845
+      "difference": 0.376,
+      "final_score": 3.758
     },
     "competences_coverage_optional": {
       "metric": "Equal Opportunity",
       "status": "success",
       "sensitive_feature": "competences_coverage_optional",
       "tpr_by_group": {
-        "0.0": 0.6500415627597672,
-        "0.3333333333333333": 0.9387755102040817,
-        "0.5": 0.6842105263157895,
+        "0.0": 0.65,
+        "0.3333333333333333": 0.939,
+        "0.5": 0.684,
         "0.6666666666666666": 0.8,
-        "1.0": 0.6712328767123288
+        "1.0": 0.671
       },
-      "difference": 0.7112660525556855,
-      "final_score": 7.112660525556855
+      "difference": 0.711,
+      "final_score": 7.113
     }
   },
   "equalized_odds_difference": {
-    "competences_coverage_required": 0.37582345191040845,
-    "competences_coverage_optional": 0.7112660525556855
+    "competences_coverage_required": 0.376,
+    "competences_coverage_optional": 0.711
   },
   "overall_accuracy_equality": {
     "competences_coverage_required": {
@@ -1058,33 +1058,33 @@
       "status": "success",
       "sensitive_feature": "competences_coverage_required",
       "accuracy_by_group": {
-        "0.25": 0.9175377468060395,
-        "0.3333333333333333": 0.9393939393939394,
-        "0.5": 0.7817213842058562,
-        "0.6666666666666666": 0.9271523178807947,
-        "0.75": 0.8407445708376422,
-        "1.0": 0.8098859315589354
+        "0.25": 0.918,
+        "0.3333333333333333": 0.939,
+        "0.5": 0.782,
+        "0.6666666666666666": 0.927,
+        "0.75": 0.841,
+        "1.0": 0.81
       },
-      "accuracy_ratio": 0.8321550218965565,
-      "difference": 0.1576725551880832,
-      "equality_score": 0.8423274448119168,
-      "final_score": 8.423274448119168
+      "accuracy_ratio": 0.832,
+      "difference": 0.158,
+      "equality_score": 0.842,
+      "final_score": 8.423
     },
     "competences_coverage_optional": {
       "metric": "Overall Accuracy Equality",
       "status": "success",
       "sensitive_feature": "competences_coverage_optional",
       "accuracy_by_group": {
-        "0.0": 0.8498324703015535,
-        "0.3333333333333333": 0.9245283018867925,
-        "0.5": 0.7191011235955056,
+        "0.0": 0.85,
+        "0.3333333333333333": 0.925,
+        "0.5": 0.719,
         "0.6666666666666666": 0.8,
-        "1.0": 0.8217948717948718
+        "1.0": 0.822
       },
-      "accuracy_ratio": 0.7778032561339142,
-      "difference": 0.20542717829128687,
-      "equality_score": 0.7945728217087131,
-      "final_score": 7.945728217087131
+      "accuracy_ratio": 0.778,
+      "difference": 0.205,
+      "equality_score": 0.795,
+      "final_score": 7.946
     }
   },
   "predictive_parity": {
@@ -1093,31 +1093,31 @@
       "status": "success",
       "sensitive_feature": "competences_coverage_required",
       "precision_by_group": {
-        "0.25": 0.5913978494623656,
+        "0.25": 0.591,
         "0.3333333333333333": 1.0,
-        "0.5": 0.8416666666666667,
+        "0.5": 0.842,
         "0.6666666666666666": 1.0,
-        "0.75": 0.6744186046511628,
-        "1.0": 0.9479674796747968
+        "0.75": 0.674,
+        "1.0": 0.948
       },
-      "precision_ratio": 0.5913978494623656,
-      "difference": 0.4086021505376344,
-      "final_score": 5.913978494623656
+      "precision_ratio": 0.591,
+      "difference": 0.409,
+      "final_score": 5.914
     },
     "competences_coverage_optional": {
       "metric": "Predictive Parity",
       "status": "success",
       "sensitive_feature": "competences_coverage_optional",
       "precision_by_group": {
-        "0.0": 0.9156908665105387,
-        "0.3333333333333333": 0.9787234042553191,
-        "0.5": 0.9811320754716981,
+        "0.0": 0.916,
+        "0.3333333333333333": 0.979,
+        "0.5": 0.981,
         "0.6666666666666666": 1.0,
-        "1.0": 0.8767395626242545
+        "1.0": 0.877
       },
-      "precision_ratio": 0.8767395626242545,
-      "difference": 0.12326043737574555,
-      "final_score": 8.767395626242545
+      "precision_ratio": 0.877,
+      "difference": 0.123,
+      "final_score": 8.767
     }
   },
   "anonymity_set_size": {
@@ -1175,22 +1175,22 @@
         "count": 262
       },
       {
-        "competences_coverage_required": 0.6666666666666666,
+        "competences_coverage_required": 0.667,
         "competences_coverage_optional": 0.0,
         "count": 180
       },
       {
-        "competences_coverage_required": 0.6666666666666666,
+        "competences_coverage_required": 0.667,
         "competences_coverage_optional": 1.0,
         "count": 95
       },
       {
-        "competences_coverage_required": 0.3333333333333333,
+        "competences_coverage_required": 0.333,
         "competences_coverage_optional": 0.0,
         "count": 92
       },
       {
-        "competences_coverage_required": 0.3333333333333333,
+        "competences_coverage_required": 0.333,
         "competences_coverage_optional": 1.0,
         "count": 43
       },
@@ -1206,32 +1206,32 @@
       },
       {
         "competences_coverage_required": 1.0,
-        "competences_coverage_optional": 0.3333333333333333,
+        "competences_coverage_optional": 0.333,
         "count": 18
       },
       {
-        "competences_coverage_required": 0.6666666666666666,
-        "competences_coverage_optional": 0.3333333333333333,
+        "competences_coverage_required": 0.667,
+        "competences_coverage_optional": 0.333,
         "count": 18
       },
       {
-        "competences_coverage_required": 0.3333333333333333,
-        "competences_coverage_optional": 0.3333333333333333,
+        "competences_coverage_required": 0.333,
+        "competences_coverage_optional": 0.333,
         "count": 14
       },
       {
-        "competences_coverage_required": 0.3333333333333333,
+        "competences_coverage_required": 0.333,
         "competences_coverage_optional": 0.5,
         "count": 12
       },
       {
         "competences_coverage_required": 1.0,
-        "competences_coverage_optional": 0.6666666666666666,
+        "competences_coverage_optional": 0.667,
         "count": 6
       },
       {
-        "competences_coverage_required": 0.6666666666666666,
-        "competences_coverage_optional": 0.6666666666666666,
+        "competences_coverage_required": 0.667,
+        "competences_coverage_optional": 0.667,
         "count": 5
       },
       {
@@ -1240,18 +1240,18 @@
         "count": 5
       },
       {
-        "competences_coverage_required": 0.3333333333333333,
-        "competences_coverage_optional": 0.6666666666666666,
+        "competences_coverage_required": 0.333,
+        "competences_coverage_optional": 0.667,
         "count": 4
       },
       {
-        "competences_coverage_required": 0.6666666666666666,
+        "competences_coverage_required": 0.667,
         "competences_coverage_optional": 0.5,
         "count": 4
       },
       {
         "competences_coverage_required": 0.75,
-        "competences_coverage_optional": 0.3333333333333333,
+        "competences_coverage_optional": 0.333,
         "count": 3
       },
       {
@@ -1274,7 +1274,7 @@
     "metric": "L-Diversity",
     "status": "success",
     "l_min": 1,
-    "l_avg": 2.3073394495412844,
+    "l_avg": 2.307,
     "total_groups": 218,
     "quasi_identifiers": [
       "age_cv",
@@ -1324,7 +1324,7 @@
       },
       {
         "age_cv": 18,
-        "competences_coverage_required": 0.3333333333333333,
+        "competences_coverage_required": 0.333,
         "l": 2
       },
       {
@@ -1334,7 +1334,7 @@
       },
       {
         "age_cv": 18,
-        "competences_coverage_required": 0.6666666666666666,
+        "competences_coverage_required": 0.667,
         "l": 4
       },
       {
@@ -1354,7 +1354,7 @@
       },
       {
         "age_cv": 19,
-        "competences_coverage_required": 0.3333333333333333,
+        "competences_coverage_required": 0.333,
         "l": 3
       },
       {
@@ -1364,7 +1364,7 @@
       },
       {
         "age_cv": 19,
-        "competences_coverage_required": 0.6666666666666666,
+        "competences_coverage_required": 0.667,
         "l": 3
       },
       {
@@ -1384,7 +1384,7 @@
       },
       {
         "age_cv": 20,
-        "competences_coverage_required": 0.3333333333333333,
+        "competences_coverage_required": 0.333,
         "l": 2
       },
       {
@@ -1394,7 +1394,7 @@
       },
       {
         "age_cv": 20,
-        "competences_coverage_required": 0.6666666666666666,
+        "competences_coverage_required": 0.667,
         "l": 3
       },
       {
@@ -1414,7 +1414,7 @@
       },
       {
         "age_cv": 21,
-        "competences_coverage_required": 0.3333333333333333,
+        "competences_coverage_required": 0.333,
         "l": 3
       },
       {
@@ -1424,7 +1424,7 @@
       },
       {
         "age_cv": 21,
-        "competences_coverage_required": 0.6666666666666666,
+        "competences_coverage_required": 0.667,
         "l": 2
       },
       {
@@ -1444,7 +1444,7 @@
       },
       {
         "age_cv": 22,
-        "competences_coverage_required": 0.3333333333333333,
+        "competences_coverage_required": 0.333,
         "l": 2
       },
       {
@@ -1454,7 +1454,7 @@
       },
       {
         "age_cv": 22,
-        "competences_coverage_required": 0.6666666666666666,
+        "competences_coverage_required": 0.667,
         "l": 3
       },
       {
@@ -1474,7 +1474,7 @@
       },
       {
         "age_cv": 23,
-        "competences_coverage_required": 0.3333333333333333,
+        "competences_coverage_required": 0.333,
         "l": 2
       },
       {
@@ -1484,7 +1484,7 @@
       },
       {
         "age_cv": 23,
-        "competences_coverage_required": 0.6666666666666666,
+        "competences_coverage_required": 0.667,
         "l": 3
       },
       {
@@ -1504,7 +1504,7 @@
       },
       {
         "age_cv": 24,
-        "competences_coverage_required": 0.3333333333333333,
+        "competences_coverage_required": 0.333,
         "l": 3
       },
       {
@@ -1514,7 +1514,7 @@
       },
       {
         "age_cv": 24,
-        "competences_coverage_required": 0.6666666666666666,
+        "competences_coverage_required": 0.667,
         "l": 2
       },
       {
@@ -1534,7 +1534,7 @@
       },
       {
         "age_cv": 25,
-        "competences_coverage_required": 0.3333333333333333,
+        "competences_coverage_required": 0.333,
         "l": 4
       },
       {
@@ -1544,7 +1544,7 @@
       },
       {
         "age_cv": 25,
-        "competences_coverage_required": 0.6666666666666666,
+        "competences_coverage_required": 0.667,
         "l": 5
       },
       {
@@ -1564,7 +1564,7 @@
       },
       {
         "age_cv": 26,
-        "competences_coverage_required": 0.3333333333333333,
+        "competences_coverage_required": 0.333,
         "l": 5
       },
       {
@@ -1574,7 +1574,7 @@
       },
       {
         "age_cv": 26,
-        "competences_coverage_required": 0.6666666666666666,
+        "competences_coverage_required": 0.667,
         "l": 2
       },
       {
@@ -1594,7 +1594,7 @@
       },
       {
         "age_cv": 27,
-        "competences_coverage_required": 0.3333333333333333,
+        "competences_coverage_required": 0.333,
         "l": 3
       },
       {
@@ -1604,7 +1604,7 @@
       },
       {
         "age_cv": 27,
-        "competences_coverage_required": 0.6666666666666666,
+        "competences_coverage_required": 0.667,
         "l": 3
       },
       {
@@ -1624,7 +1624,7 @@
       },
       {
         "age_cv": 28,
-        "competences_coverage_required": 0.3333333333333333,
+        "competences_coverage_required": 0.333,
         "l": 4
       },
       {
@@ -1634,7 +1634,7 @@
       },
       {
         "age_cv": 28,
-        "competences_coverage_required": 0.6666666666666666,
+        "competences_coverage_required": 0.667,
         "l": 4
       },
       {
@@ -1654,7 +1654,7 @@
       },
       {
         "age_cv": 29,
-        "competences_coverage_required": 0.3333333333333333,
+        "competences_coverage_required": 0.333,
         "l": 4
       },
       {
@@ -1664,7 +1664,7 @@
       },
       {
         "age_cv": 29,
-        "competences_coverage_required": 0.6666666666666666,
+        "competences_coverage_required": 0.667,
         "l": 2
       },
       {
@@ -1684,7 +1684,7 @@
       },
       {
         "age_cv": 30,
-        "competences_coverage_required": 0.3333333333333333,
+        "competences_coverage_required": 0.333,
         "l": 5
       },
       {
@@ -1694,7 +1694,7 @@
       },
       {
         "age_cv": 30,
-        "competences_coverage_required": 0.6666666666666666,
+        "competences_coverage_required": 0.667,
         "l": 4
       },
       {
@@ -1714,7 +1714,7 @@
       },
       {
         "age_cv": 31,
-        "competences_coverage_required": 0.3333333333333333,
+        "competences_coverage_required": 0.333,
         "l": 2
       },
       {
@@ -1724,7 +1724,7 @@
       },
       {
         "age_cv": 31,
-        "competences_coverage_required": 0.6666666666666666,
+        "competences_coverage_required": 0.667,
         "l": 2
       },
       {
@@ -1744,7 +1744,7 @@
       },
       {
         "age_cv": 32,
-        "competences_coverage_required": 0.3333333333333333,
+        "competences_coverage_required": 0.333,
         "l": 1
       },
       {
@@ -1754,7 +1754,7 @@
       },
       {
         "age_cv": 32,
-        "competences_coverage_required": 0.6666666666666666,
+        "competences_coverage_required": 0.667,
         "l": 3
       },
       {
@@ -1774,7 +1774,7 @@
       },
       {
         "age_cv": 33,
-        "competences_coverage_required": 0.3333333333333333,
+        "competences_coverage_required": 0.333,
         "l": 1
       },
       {
@@ -1784,7 +1784,7 @@
       },
       {
         "age_cv": 33,
-        "competences_coverage_required": 0.6666666666666666,
+        "competences_coverage_required": 0.667,
         "l": 1
       },
       {
@@ -1804,7 +1804,7 @@
       },
       {
         "age_cv": 34,
-        "competences_coverage_required": 0.3333333333333333,
+        "competences_coverage_required": 0.333,
         "l": 1
       },
       {
@@ -1814,7 +1814,7 @@
       },
       {
         "age_cv": 34,
-        "competences_coverage_required": 0.6666666666666666,
+        "competences_coverage_required": 0.667,
         "l": 3
       },
       {
@@ -1834,7 +1834,7 @@
       },
       {
         "age_cv": 35,
-        "competences_coverage_required": 0.3333333333333333,
+        "competences_coverage_required": 0.333,
         "l": 1
       },
       {
@@ -1844,7 +1844,7 @@
       },
       {
         "age_cv": 35,
-        "competences_coverage_required": 0.6666666666666666,
+        "competences_coverage_required": 0.667,
         "l": 1
       },
       {
@@ -1864,7 +1864,7 @@
       },
       {
         "age_cv": 36,
-        "competences_coverage_required": 0.3333333333333333,
+        "competences_coverage_required": 0.333,
         "l": 1
       },
       {
@@ -1874,7 +1874,7 @@
       },
       {
         "age_cv": 36,
-        "competences_coverage_required": 0.6666666666666666,
+        "competences_coverage_required": 0.667,
         "l": 1
       },
       {
@@ -1899,7 +1899,7 @@
       },
       {
         "age_cv": 37,
-        "competences_coverage_required": 0.6666666666666666,
+        "competences_coverage_required": 0.667,
         "l": 2
       },
       {
@@ -2378,141 +2378,141 @@
   "mutual_information_metric": {
     "metric": "Mutual Information",
     "status": "success",
-    "total_mi": 8.087962278879896,
+    "total_mi": 8.088,
     "sensitive_attribute": "age_cv",
     "final_score": 8.9,
     "full_results": [
       {
         "feature": "PCA_2",
-        "mutual_information": 3.6611071841075464
+        "mutual_information": 3.661
       },
       {
         "feature": "PCA_1",
-        "mutual_information": 3.6608299252353227
+        "mutual_information": 3.661
       },
       {
         "feature": "age_max_job",
-        "mutual_information": 0.10178426331794199
+        "mutual_information": 0.102
       },
       {
         "feature": "age_min_job",
-        "mutual_information": 0.09112738474676263
+        "mutual_information": 0.091
       },
       {
         "feature": "competences_coverage_required",
-        "mutual_information": 0.0816370304617342
+        "mutual_information": 0.082
       },
       {
         "feature": "education_job_encoded",
-        "mutual_information": 0.05608571825158748
+        "mutual_information": 0.056
       },
       {
         "feature": "education_cv_encoded",
-        "mutual_information": 0.04528461428995545
+        "mutual_information": 0.045
       },
       {
         "feature": "gender_cv_Male",
-        "mutual_information": 0.04092964671744426
+        "mutual_information": 0.041
       },
       {
         "feature": "nationality_job_Spanish",
-        "mutual_information": 0.040091096253854985
+        "mutual_information": 0.04
       },
       {
         "feature": "disability_cv_No",
-        "mutual_information": 0.026553005807939734
+        "mutual_information": 0.027
       },
       {
         "feature": "nationality_job_French",
-        "mutual_information": 0.022410770114769107
+        "mutual_information": 0.022
       },
       {
         "feature": "nationality_cv_French",
-        "mutual_information": 0.020470660355947246
+        "mutual_information": 0.02
       },
       {
         "feature": "distrib_test",
-        "mutual_information": 0.019923135600699027
+        "mutual_information": 0.02
       },
       {
         "feature": "people_of_world",
-        "mutual_information": 0.019826854722589715
+        "mutual_information": 0.02
       },
       {
         "feature": "gender_cv_Female",
-        "mutual_information": 0.01950979200139713
+        "mutual_information": 0.02
       },
       {
         "feature": "gender_cv_Not binary",
-        "mutual_information": 0.017100743857881184
+        "mutual_information": 0.017
       },
       {
         "feature": "gender_job_Any",
-        "mutual_information": 0.01684299382973542
+        "mutual_information": 0.017
       },
       {
         "feature": "nationality_cv_Spanish",
-        "mutual_information": 0.014761864196920271
+        "mutual_information": 0.015
       },
       {
         "feature": "gender_job_Male",
-        "mutual_information": 0.014495151657355265
+        "mutual_information": 0.014
       },
       {
         "feature": "disability_job_Any",
-        "mutual_information": 0.01425287249488516
+        "mutual_information": 0.014
       },
       {
         "feature": "nationality_cv_Catalan",
-        "mutual_information": 0.013422093282831504
+        "mutual_information": 0.013
       },
       {
         "feature": "nationality_job_Any",
-        "mutual_information": 0.012329843464454981
+        "mutual_information": 0.012
       },
       {
         "feature": "disability_cv_Yes",
-        "mutual_information": 0.012319724330539294
+        "mutual_information": 0.012
       },
       {
         "feature": "nationality_cv_German",
-        "mutual_information": 0.011417642403437789
+        "mutual_information": 0.011
       },
       {
         "feature": "nationality_cv_Romanian",
-        "mutual_information": 0.010570826310170034
+        "mutual_information": 0.011
       },
       {
         "feature": "nationality_cv_Russian",
-        "mutual_information": 0.008923159143725101
+        "mutual_information": 0.009
       },
       {
         "feature": "check_it",
-        "mutual_information": 0.007293360358440637
+        "mutual_information": 0.007
       },
       {
         "feature": "nationality_job_Italian",
-        "mutual_information": 0.006997262367565149
+        "mutual_information": 0.007
       },
       {
         "feature": "check_de",
-        "mutual_information": 0.006749376539021412
+        "mutual_information": 0.007
       },
       {
         "feature": "nationality_job_Catalan",
-        "mutual_information": 0.006006984854519004
+        "mutual_information": 0.006
       },
       {
         "feature": "education_job_req",
-        "mutual_information": 0.004413605015993305
+        "mutual_information": 0.004
       },
       {
         "feature": "nationality_cv_LowGerman",
-        "mutual_information": 0.002073905634401463
+        "mutual_information": 0.002
       },
       {
         "feature": "nationality_cv_Irish",
-        "mutual_information": 0.00041978715252710685
+        "mutual_information": 0.0
       },
       {
         "feature": "gender_job_Female",
@@ -2556,1099 +2556,1099 @@
       "competences_coverage_required"
     ],
     "sensitive_attribute": "competences_coverage_required",
-    "t_optimal": 0.22813333333333333,
+    "t_optimal": 0.228,
     "full_results": [
       {
         "age_cv": 16,
         "competences_coverage_required": 0.25,
-        "t": 0.22813333333333333
+        "t": 0.228
       },
       {
         "age_cv": 16,
         "competences_coverage_required": 0.5,
-        "t": 0.22813333333333333
+        "t": 0.228
       },
       {
         "age_cv": 16,
         "competences_coverage_required": 0.75,
-        "t": 0.22813333333333333
+        "t": 0.228
       },
       {
         "age_cv": 16,
         "competences_coverage_required": 1.0,
-        "t": 0.22813333333333333
+        "t": 0.228
       },
       {
         "age_cv": 17,
         "competences_coverage_required": 0.25,
-        "t": 0.22813333333333333
+        "t": 0.228
       },
       {
         "age_cv": 17,
         "competences_coverage_required": 0.5,
-        "t": 0.22813333333333333
+        "t": 0.228
       },
       {
         "age_cv": 17,
         "competences_coverage_required": 0.75,
-        "t": 0.22813333333333333
+        "t": 0.228
       },
       {
         "age_cv": 18,
         "competences_coverage_required": 0.25,
-        "t": 0.22813333333333333
+        "t": 0.228
       },
       {
         "age_cv": 18,
-        "competences_coverage_required": 0.3333333333333333,
-        "t": 0.22813333333333333
+        "competences_coverage_required": 0.333,
+        "t": 0.228
       },
       {
         "age_cv": 18,
         "competences_coverage_required": 0.5,
-        "t": 0.22813333333333333
+        "t": 0.228
       },
       {
         "age_cv": 18,
-        "competences_coverage_required": 0.6666666666666666,
-        "t": 0.22813333333333333
+        "competences_coverage_required": 0.667,
+        "t": 0.228
       },
       {
         "age_cv": 18,
         "competences_coverage_required": 0.75,
-        "t": 0.22813333333333333
+        "t": 0.228
       },
       {
         "age_cv": 18,
         "competences_coverage_required": 1.0,
-        "t": 0.22813333333333333
+        "t": 0.228
       },
       {
         "age_cv": 19,
         "competences_coverage_required": 0.25,
-        "t": 0.22813333333333333
+        "t": 0.228
       },
       {
         "age_cv": 19,
-        "competences_coverage_required": 0.3333333333333333,
-        "t": 0.22813333333333333
+        "competences_coverage_required": 0.333,
+        "t": 0.228
       },
       {
         "age_cv": 19,
         "competences_coverage_required": 0.5,
-        "t": 0.22813333333333333
+        "t": 0.228
       },
       {
         "age_cv": 19,
-        "competences_coverage_required": 0.6666666666666666,
-        "t": 0.22813333333333333
+        "competences_coverage_required": 0.667,
+        "t": 0.228
       },
       {
         "age_cv": 19,
         "competences_coverage_required": 0.75,
-        "t": 0.22813333333333333
+        "t": 0.228
       },
       {
         "age_cv": 19,
         "competences_coverage_required": 1.0,
-        "t": 0.22813333333333333
+        "t": 0.228
       },
       {
         "age_cv": 20,
         "competences_coverage_required": 0.25,
-        "t": 0.22813333333333333
+        "t": 0.228
       },
       {
         "age_cv": 20,
-        "competences_coverage_required": 0.3333333333333333,
-        "t": 0.22813333333333333
+        "competences_coverage_required": 0.333,
+        "t": 0.228
       },
       {
         "age_cv": 20,
         "competences_coverage_required": 0.5,
-        "t": 0.22813333333333333
+        "t": 0.228
       },
       {
         "age_cv": 20,
-        "competences_coverage_required": 0.6666666666666666,
-        "t": 0.22813333333333333
+        "competences_coverage_required": 0.667,
+        "t": 0.228
       },
       {
         "age_cv": 20,
         "competences_coverage_required": 0.75,
-        "t": 0.22813333333333333
+        "t": 0.228
       },
       {
         "age_cv": 20,
         "competences_coverage_required": 1.0,
-        "t": 0.22813333333333333
+        "t": 0.228
       },
       {
         "age_cv": 21,
         "competences_coverage_required": 0.25,
-        "t": 0.22813333333333333
+        "t": 0.228
       },
       {
         "age_cv": 21,
-        "competences_coverage_required": 0.3333333333333333,
-        "t": 0.22813333333333333
+        "competences_coverage_required": 0.333,
+        "t": 0.228
       },
       {
         "age_cv": 21,
         "competences_coverage_required": 0.5,
-        "t": 0.22813333333333333
+        "t": 0.228
       },
       {
         "age_cv": 21,
-        "competences_coverage_required": 0.6666666666666666,
-        "t": 0.22813333333333333
+        "competences_coverage_required": 0.667,
+        "t": 0.228
       },
       {
         "age_cv": 21,
         "competences_coverage_required": 0.75,
-        "t": 0.22813333333333333
+        "t": 0.228
       },
       {
         "age_cv": 21,
         "competences_coverage_required": 1.0,
-        "t": 0.22813333333333333
+        "t": 0.228
       },
       {
         "age_cv": 22,
         "competences_coverage_required": 0.25,
-        "t": 0.22813333333333333
+        "t": 0.228
       },
       {
         "age_cv": 22,
-        "competences_coverage_required": 0.3333333333333333,
-        "t": 0.22813333333333333
+        "competences_coverage_required": 0.333,
+        "t": 0.228
       },
       {
         "age_cv": 22,
         "competences_coverage_required": 0.5,
-        "t": 0.22813333333333333
+        "t": 0.228
       },
       {
         "age_cv": 22,
-        "competences_coverage_required": 0.6666666666666666,
-        "t": 0.22813333333333333
+        "competences_coverage_required": 0.667,
+        "t": 0.228
       },
       {
         "age_cv": 22,
         "competences_coverage_required": 0.75,
-        "t": 0.22813333333333333
+        "t": 0.228
       },
       {
         "age_cv": 22,
         "competences_coverage_required": 1.0,
-        "t": 0.22813333333333333
+        "t": 0.228
       },
       {
         "age_cv": 23,
         "competences_coverage_required": 0.25,
-        "t": 0.22813333333333333
+        "t": 0.228
       },
       {
         "age_cv": 23,
-        "competences_coverage_required": 0.3333333333333333,
-        "t": 0.22813333333333333
+        "competences_coverage_required": 0.333,
+        "t": 0.228
       },
       {
         "age_cv": 23,
         "competences_coverage_required": 0.5,
-        "t": 0.22813333333333333
+        "t": 0.228
       },
       {
         "age_cv": 23,
-        "competences_coverage_required": 0.6666666666666666,
-        "t": 0.22813333333333333
+        "competences_coverage_required": 0.667,
+        "t": 0.228
       },
       {
         "age_cv": 23,
         "competences_coverage_required": 0.75,
-        "t": 0.22813333333333333
+        "t": 0.228
       },
       {
         "age_cv": 23,
         "competences_coverage_required": 1.0,
-        "t": 0.22813333333333333
+        "t": 0.228
       },
       {
         "age_cv": 24,
         "competences_coverage_required": 0.25,
-        "t": 0.22813333333333333
+        "t": 0.228
       },
       {
         "age_cv": 24,
-        "competences_coverage_required": 0.3333333333333333,
-        "t": 0.22813333333333333
+        "competences_coverage_required": 0.333,
+        "t": 0.228
       },
       {
         "age_cv": 24,
         "competences_coverage_required": 0.5,
-        "t": 0.22813333333333333
+        "t": 0.228
       },
       {
         "age_cv": 24,
-        "competences_coverage_required": 0.6666666666666666,
-        "t": 0.22813333333333333
+        "competences_coverage_required": 0.667,
+        "t": 0.228
       },
       {
         "age_cv": 24,
         "competences_coverage_required": 0.75,
-        "t": 0.22813333333333333
+        "t": 0.228
       },
       {
         "age_cv": 24,
         "competences_coverage_required": 1.0,
-        "t": 0.22813333333333333
+        "t": 0.228
       },
       {
         "age_cv": 25,
         "competences_coverage_required": 0.25,
-        "t": 0.22813333333333333
+        "t": 0.228
       },
       {
         "age_cv": 25,
-        "competences_coverage_required": 0.3333333333333333,
-        "t": 0.22813333333333333
+        "competences_coverage_required": 0.333,
+        "t": 0.228
       },
       {
         "age_cv": 25,
         "competences_coverage_required": 0.5,
-        "t": 0.22813333333333333
+        "t": 0.228
       },
       {
         "age_cv": 25,
-        "competences_coverage_required": 0.6666666666666666,
-        "t": 0.22813333333333333
+        "competences_coverage_required": 0.667,
+        "t": 0.228
       },
       {
         "age_cv": 25,
         "competences_coverage_required": 0.75,
-        "t": 0.22813333333333333
+        "t": 0.228
       },
       {
         "age_cv": 25,
         "competences_coverage_required": 1.0,
-        "t": 0.22813333333333333
+        "t": 0.228
       },
       {
         "age_cv": 26,
         "competences_coverage_required": 0.25,
-        "t": 0.22813333333333333
+        "t": 0.228
       },
       {
         "age_cv": 26,
-        "competences_coverage_required": 0.3333333333333333,
-        "t": 0.22813333333333333
+        "competences_coverage_required": 0.333,
+        "t": 0.228
       },
       {
         "age_cv": 26,
         "competences_coverage_required": 0.5,
-        "t": 0.22813333333333333
+        "t": 0.228
       },
       {
         "age_cv": 26,
-        "competences_coverage_required": 0.6666666666666666,
-        "t": 0.22813333333333333
+        "competences_coverage_required": 0.667,
+        "t": 0.228
       },
       {
         "age_cv": 26,
         "competences_coverage_required": 0.75,
-        "t": 0.22813333333333333
+        "t": 0.228
       },
       {
         "age_cv": 26,
         "competences_coverage_required": 1.0,
-        "t": 0.22813333333333333
+        "t": 0.228
       },
       {
         "age_cv": 27,
         "competences_coverage_required": 0.25,
-        "t": 0.22813333333333333
+        "t": 0.228
       },
       {
         "age_cv": 27,
-        "competences_coverage_required": 0.3333333333333333,
-        "t": 0.22813333333333333
+        "competences_coverage_required": 0.333,
+        "t": 0.228
       },
       {
         "age_cv": 27,
         "competences_coverage_required": 0.5,
-        "t": 0.22813333333333333
+        "t": 0.228
       },
       {
         "age_cv": 27,
-        "competences_coverage_required": 0.6666666666666666,
-        "t": 0.22813333333333333
+        "competences_coverage_required": 0.667,
+        "t": 0.228
       },
       {
         "age_cv": 27,
         "competences_coverage_required": 0.75,
-        "t": 0.22813333333333333
+        "t": 0.228
       },
       {
         "age_cv": 27,
         "competences_coverage_required": 1.0,
-        "t": 0.22813333333333333
+        "t": 0.228
       },
       {
         "age_cv": 28,
         "competences_coverage_required": 0.25,
-        "t": 0.22813333333333333
+        "t": 0.228
       },
       {
         "age_cv": 28,
-        "competences_coverage_required": 0.3333333333333333,
-        "t": 0.22813333333333333
+        "competences_coverage_required": 0.333,
+        "t": 0.228
       },
       {
         "age_cv": 28,
         "competences_coverage_required": 0.5,
-        "t": 0.22813333333333333
+        "t": 0.228
       },
       {
         "age_cv": 28,
-        "competences_coverage_required": 0.6666666666666666,
-        "t": 0.22813333333333333
+        "competences_coverage_required": 0.667,
+        "t": 0.228
       },
       {
         "age_cv": 28,
         "competences_coverage_required": 0.75,
-        "t": 0.22813333333333333
+        "t": 0.228
       },
       {
         "age_cv": 28,
         "competences_coverage_required": 1.0,
-        "t": 0.22813333333333333
+        "t": 0.228
       },
       {
         "age_cv": 29,
         "competences_coverage_required": 0.25,
-        "t": 0.22813333333333333
+        "t": 0.228
       },
       {
         "age_cv": 29,
-        "competences_coverage_required": 0.3333333333333333,
-        "t": 0.22813333333333333
+        "competences_coverage_required": 0.333,
+        "t": 0.228
       },
       {
         "age_cv": 29,
         "competences_coverage_required": 0.5,
-        "t": 0.22813333333333333
+        "t": 0.228
       },
       {
         "age_cv": 29,
-        "competences_coverage_required": 0.6666666666666666,
-        "t": 0.22813333333333333
+        "competences_coverage_required": 0.667,
+        "t": 0.228
       },
       {
         "age_cv": 29,
         "competences_coverage_required": 0.75,
-        "t": 0.22813333333333333
+        "t": 0.228
       },
       {
         "age_cv": 29,
         "competences_coverage_required": 1.0,
-        "t": 0.22813333333333333
+        "t": 0.228
       },
       {
         "age_cv": 30,
         "competences_coverage_required": 0.25,
-        "t": 0.22813333333333333
+        "t": 0.228
       },
       {
         "age_cv": 30,
-        "competences_coverage_required": 0.3333333333333333,
-        "t": 0.22813333333333333
+        "competences_coverage_required": 0.333,
+        "t": 0.228
       },
       {
         "age_cv": 30,
         "competences_coverage_required": 0.5,
-        "t": 0.22813333333333333
+        "t": 0.228
       },
       {
         "age_cv": 30,
-        "competences_coverage_required": 0.6666666666666666,
-        "t": 0.22813333333333333
+        "competences_coverage_required": 0.667,
+        "t": 0.228
       },
       {
         "age_cv": 30,
         "competences_coverage_required": 0.75,
-        "t": 0.22813333333333333
+        "t": 0.228
       },
       {
         "age_cv": 30,
         "competences_coverage_required": 1.0,
-        "t": 0.22813333333333333
+        "t": 0.228
       },
       {
         "age_cv": 31,
         "competences_coverage_required": 0.25,
-        "t": 0.22813333333333333
+        "t": 0.228
       },
       {
         "age_cv": 31,
-        "competences_coverage_required": 0.3333333333333333,
-        "t": 0.22813333333333333
+        "competences_coverage_required": 0.333,
+        "t": 0.228
       },
       {
         "age_cv": 31,
         "competences_coverage_required": 0.5,
-        "t": 0.22813333333333333
+        "t": 0.228
       },
       {
         "age_cv": 31,
-        "competences_coverage_required": 0.6666666666666666,
-        "t": 0.22813333333333333
+        "competences_coverage_required": 0.667,
+        "t": 0.228
       },
       {
         "age_cv": 31,
         "competences_coverage_required": 0.75,
-        "t": 0.22813333333333333
+        "t": 0.228
       },
       {
         "age_cv": 31,
         "competences_coverage_required": 1.0,
-        "t": 0.22813333333333333
+        "t": 0.228
       },
       {
         "age_cv": 32,
         "competences_coverage_required": 0.25,
-        "t": 0.22813333333333333
+        "t": 0.228
       },
       {
         "age_cv": 32,
-        "competences_coverage_required": 0.3333333333333333,
-        "t": 0.22813333333333333
+        "competences_coverage_required": 0.333,
+        "t": 0.228
       },
       {
         "age_cv": 32,
         "competences_coverage_required": 0.5,
-        "t": 0.22813333333333333
+        "t": 0.228
       },
       {
         "age_cv": 32,
-        "competences_coverage_required": 0.6666666666666666,
-        "t": 0.22813333333333333
+        "competences_coverage_required": 0.667,
+        "t": 0.228
       },
       {
         "age_cv": 32,
         "competences_coverage_required": 0.75,
-        "t": 0.22813333333333333
+        "t": 0.228
       },
       {
         "age_cv": 32,
         "competences_coverage_required": 1.0,
-        "t": 0.22813333333333333
+        "t": 0.228
       },
       {
         "age_cv": 33,
         "competences_coverage_required": 0.25,
-        "t": 0.22813333333333333
+        "t": 0.228
       },
       {
         "age_cv": 33,
-        "competences_coverage_required": 0.3333333333333333,
-        "t": 0.22813333333333333
+        "competences_coverage_required": 0.333,
+        "t": 0.228
       },
       {
         "age_cv": 33,
         "competences_coverage_required": 0.5,
-        "t": 0.22813333333333333
+        "t": 0.228
       },
       {
         "age_cv": 33,
-        "competences_coverage_required": 0.6666666666666666,
-        "t": 0.22813333333333333
+        "competences_coverage_required": 0.667,
+        "t": 0.228
       },
       {
         "age_cv": 33,
         "competences_coverage_required": 0.75,
-        "t": 0.22813333333333333
+        "t": 0.228
       },
       {
         "age_cv": 33,
         "competences_coverage_required": 1.0,
-        "t": 0.22813333333333333
+        "t": 0.228
       },
       {
         "age_cv": 34,
         "competences_coverage_required": 0.25,
-        "t": 0.22813333333333333
+        "t": 0.228
       },
       {
         "age_cv": 34,
-        "competences_coverage_required": 0.3333333333333333,
-        "t": 0.22813333333333333
+        "competences_coverage_required": 0.333,
+        "t": 0.228
       },
       {
         "age_cv": 34,
         "competences_coverage_required": 0.5,
-        "t": 0.22813333333333333
+        "t": 0.228
       },
       {
         "age_cv": 34,
-        "competences_coverage_required": 0.6666666666666666,
-        "t": 0.22813333333333333
+        "competences_coverage_required": 0.667,
+        "t": 0.228
       },
       {
         "age_cv": 34,
         "competences_coverage_required": 0.75,
-        "t": 0.22813333333333333
+        "t": 0.228
       },
       {
         "age_cv": 34,
         "competences_coverage_required": 1.0,
-        "t": 0.22813333333333333
+        "t": 0.228
       },
       {
         "age_cv": 35,
         "competences_coverage_required": 0.25,
-        "t": 0.22813333333333333
+        "t": 0.228
       },
       {
         "age_cv": 35,
-        "competences_coverage_required": 0.3333333333333333,
-        "t": 0.22813333333333333
+        "competences_coverage_required": 0.333,
+        "t": 0.228
       },
       {
         "age_cv": 35,
         "competences_coverage_required": 0.5,
-        "t": 0.22813333333333333
+        "t": 0.228
       },
       {
         "age_cv": 35,
-        "competences_coverage_required": 0.6666666666666666,
-        "t": 0.22813333333333333
+        "competences_coverage_required": 0.667,
+        "t": 0.228
       },
       {
         "age_cv": 35,
         "competences_coverage_required": 0.75,
-        "t": 0.22813333333333333
+        "t": 0.228
       },
       {
         "age_cv": 35,
         "competences_coverage_required": 1.0,
-        "t": 0.22813333333333333
+        "t": 0.228
       },
       {
         "age_cv": 36,
         "competences_coverage_required": 0.25,
-        "t": 0.22813333333333333
+        "t": 0.228
       },
       {
         "age_cv": 36,
-        "competences_coverage_required": 0.3333333333333333,
-        "t": 0.22813333333333333
+        "competences_coverage_required": 0.333,
+        "t": 0.228
       },
       {
         "age_cv": 36,
         "competences_coverage_required": 0.5,
-        "t": 0.22813333333333333
+        "t": 0.228
       },
       {
         "age_cv": 36,
-        "competences_coverage_required": 0.6666666666666666,
-        "t": 0.22813333333333333
+        "competences_coverage_required": 0.667,
+        "t": 0.228
       },
       {
         "age_cv": 36,
         "competences_coverage_required": 0.75,
-        "t": 0.22813333333333333
+        "t": 0.228
       },
       {
         "age_cv": 36,
         "competences_coverage_required": 1.0,
-        "t": 0.22813333333333333
+        "t": 0.228
       },
       {
         "age_cv": 37,
         "competences_coverage_required": 0.25,
-        "t": 0.22813333333333333
+        "t": 0.228
       },
       {
         "age_cv": 37,
         "competences_coverage_required": 0.5,
-        "t": 0.22813333333333333
+        "t": 0.228
       },
       {
         "age_cv": 37,
-        "competences_coverage_required": 0.6666666666666666,
-        "t": 0.22813333333333333
+        "competences_coverage_required": 0.667,
+        "t": 0.228
       },
       {
         "age_cv": 37,
         "competences_coverage_required": 0.75,
-        "t": 0.22813333333333333
+        "t": 0.228
       },
       {
         "age_cv": 37,
         "competences_coverage_required": 1.0,
-        "t": 0.22813333333333333
+        "t": 0.228
       },
       {
         "age_cv": 38,
         "competences_coverage_required": 0.25,
-        "t": 0.22813333333333333
+        "t": 0.228
       },
       {
         "age_cv": 38,
         "competences_coverage_required": 0.5,
-        "t": 0.22813333333333333
+        "t": 0.228
       },
       {
         "age_cv": 38,
         "competences_coverage_required": 0.75,
-        "t": 0.22813333333333333
+        "t": 0.228
       },
       {
         "age_cv": 38,
         "competences_coverage_required": 1.0,
-        "t": 0.22813333333333333
+        "t": 0.228
       },
       {
         "age_cv": 39,
         "competences_coverage_required": 0.25,
-        "t": 0.22813333333333333
+        "t": 0.228
       },
       {
         "age_cv": 39,
         "competences_coverage_required": 0.5,
-        "t": 0.22813333333333333
+        "t": 0.228
       },
       {
         "age_cv": 39,
         "competences_coverage_required": 0.75,
-        "t": 0.22813333333333333
+        "t": 0.228
       },
       {
         "age_cv": 39,
         "competences_coverage_required": 1.0,
-        "t": 0.22813333333333333
+        "t": 0.228
       },
       {
         "age_cv": 40,
         "competences_coverage_required": 0.25,
-        "t": 0.22813333333333333
+        "t": 0.228
       },
       {
         "age_cv": 40,
         "competences_coverage_required": 0.5,
-        "t": 0.22813333333333333
+        "t": 0.228
       },
       {
         "age_cv": 40,
         "competences_coverage_required": 0.75,
-        "t": 0.22813333333333333
+        "t": 0.228
       },
       {
         "age_cv": 40,
         "competences_coverage_required": 1.0,
-        "t": 0.22813333333333333
+        "t": 0.228
       },
       {
         "age_cv": 41,
         "competences_coverage_required": 0.25,
-        "t": 0.22813333333333333
+        "t": 0.228
       },
       {
         "age_cv": 41,
         "competences_coverage_required": 0.5,
-        "t": 0.22813333333333333
+        "t": 0.228
       },
       {
         "age_cv": 41,
         "competences_coverage_required": 0.75,
-        "t": 0.22813333333333333
+        "t": 0.228
       },
       {
         "age_cv": 41,
         "competences_coverage_required": 1.0,
-        "t": 0.22813333333333333
+        "t": 0.228
       },
       {
         "age_cv": 42,
         "competences_coverage_required": 0.25,
-        "t": 0.22813333333333333
+        "t": 0.228
       },
       {
         "age_cv": 42,
         "competences_coverage_required": 0.5,
-        "t": 0.22813333333333333
+        "t": 0.228
       },
       {
         "age_cv": 42,
         "competences_coverage_required": 0.75,
-        "t": 0.22813333333333333
+        "t": 0.228
       },
       {
         "age_cv": 42,
         "competences_coverage_required": 1.0,
-        "t": 0.22813333333333333
+        "t": 0.228
       },
       {
         "age_cv": 43,
         "competences_coverage_required": 0.25,
-        "t": 0.22813333333333333
+        "t": 0.228
       },
       {
         "age_cv": 43,
         "competences_coverage_required": 0.5,
-        "t": 0.22813333333333333
+        "t": 0.228
       },
       {
         "age_cv": 43,
         "competences_coverage_required": 0.75,
-        "t": 0.22813333333333333
+        "t": 0.228
       },
       {
         "age_cv": 43,
         "competences_coverage_required": 1.0,
-        "t": 0.22813333333333333
+        "t": 0.228
       },
       {
         "age_cv": 44,
         "competences_coverage_required": 0.25,
-        "t": 0.22813333333333333
+        "t": 0.228
       },
       {
         "age_cv": 44,
         "competences_coverage_required": 0.5,
-        "t": 0.22813333333333333
+        "t": 0.228
       },
       {
         "age_cv": 44,
         "competences_coverage_required": 0.75,
-        "t": 0.22813333333333333
+        "t": 0.228
       },
       {
         "age_cv": 44,
         "competences_coverage_required": 1.0,
-        "t": 0.22813333333333333
+        "t": 0.228
       },
       {
         "age_cv": 45,
         "competences_coverage_required": 0.25,
-        "t": 0.22813333333333333
+        "t": 0.228
       },
       {
         "age_cv": 45,
         "competences_coverage_required": 0.5,
-        "t": 0.22813333333333333
+        "t": 0.228
       },
       {
         "age_cv": 45,
         "competences_coverage_required": 0.75,
-        "t": 0.22813333333333333
+        "t": 0.228
       },
       {
         "age_cv": 45,
         "competences_coverage_required": 1.0,
-        "t": 0.22813333333333333
+        "t": 0.228
       },
       {
         "age_cv": 46,
         "competences_coverage_required": 0.25,
-        "t": 0.22813333333333333
+        "t": 0.228
       },
       {
         "age_cv": 46,
         "competences_coverage_required": 0.5,
-        "t": 0.22813333333333333
+        "t": 0.228
       },
       {
         "age_cv": 46,
         "competences_coverage_required": 0.75,
-        "t": 0.22813333333333333
+        "t": 0.228
       },
       {
         "age_cv": 46,
         "competences_coverage_required": 1.0,
-        "t": 0.22813333333333333
+        "t": 0.228
       },
       {
         "age_cv": 47,
         "competences_coverage_required": 0.25,
-        "t": 0.22813333333333333
+        "t": 0.228
       },
       {
         "age_cv": 47,
         "competences_coverage_required": 0.5,
-        "t": 0.22813333333333333
+        "t": 0.228
       },
       {
         "age_cv": 47,
         "competences_coverage_required": 0.75,
-        "t": 0.22813333333333333
+        "t": 0.228
       },
       {
         "age_cv": 47,
         "competences_coverage_required": 1.0,
-        "t": 0.22813333333333333
+        "t": 0.228
       },
       {
         "age_cv": 48,
         "competences_coverage_required": 0.25,
-        "t": 0.22813333333333333
+        "t": 0.228
       },
       {
         "age_cv": 48,
         "competences_coverage_required": 0.5,
-        "t": 0.22813333333333333
+        "t": 0.228
       },
       {
         "age_cv": 48,
         "competences_coverage_required": 0.75,
-        "t": 0.22813333333333333
+        "t": 0.228
       },
       {
         "age_cv": 48,
         "competences_coverage_required": 1.0,
-        "t": 0.22813333333333333
+        "t": 0.228
       },
       {
         "age_cv": 49,
         "competences_coverage_required": 0.25,
-        "t": 0.22813333333333333
+        "t": 0.228
       },
       {
         "age_cv": 49,
         "competences_coverage_required": 0.5,
-        "t": 0.22813333333333333
+        "t": 0.228
       },
       {
         "age_cv": 49,
         "competences_coverage_required": 0.75,
-        "t": 0.22813333333333333
+        "t": 0.228
       },
       {
         "age_cv": 49,
         "competences_coverage_required": 1.0,
-        "t": 0.22813333333333333
+        "t": 0.228
       },
       {
         "age_cv": 50,
         "competences_coverage_required": 0.25,
-        "t": 0.22813333333333333
+        "t": 0.228
       },
       {
         "age_cv": 50,
         "competences_coverage_required": 0.5,
-        "t": 0.22813333333333333
+        "t": 0.228
       },
       {
         "age_cv": 50,
         "competences_coverage_required": 0.75,
-        "t": 0.22813333333333333
+        "t": 0.228
       },
       {
         "age_cv": 50,
         "competences_coverage_required": 1.0,
-        "t": 0.22813333333333333
+        "t": 0.228
       },
       {
         "age_cv": 51,
         "competences_coverage_required": 0.25,
-        "t": 0.22813333333333333
+        "t": 0.228
       },
       {
         "age_cv": 51,
         "competences_coverage_required": 0.5,
-        "t": 0.22813333333333333
+        "t": 0.228
       },
       {
         "age_cv": 51,
         "competences_coverage_required": 0.75,
-        "t": 0.22813333333333333
+        "t": 0.228
       },
       {
         "age_cv": 51,
         "competences_coverage_required": 1.0,
-        "t": 0.22813333333333333
+        "t": 0.228
       },
       {
         "age_cv": 52,
         "competences_coverage_required": 0.25,
-        "t": 0.22813333333333333
+        "t": 0.228
       },
       {
         "age_cv": 52,
         "competences_coverage_required": 0.5,
-        "t": 0.22813333333333333
+        "t": 0.228
       },
       {
         "age_cv": 52,
         "competences_coverage_required": 0.75,
-        "t": 0.22813333333333333
+        "t": 0.228
       },
       {
         "age_cv": 52,
         "competences_coverage_required": 1.0,
-        "t": 0.22813333333333333
+        "t": 0.228
       },
       {
         "age_cv": 53,
         "competences_coverage_required": 0.25,
-        "t": 0.22813333333333333
+        "t": 0.228
       },
       {
         "age_cv": 53,
         "competences_coverage_required": 0.5,
-        "t": 0.22813333333333333
+        "t": 0.228
       },
       {
         "age_cv": 53,
         "competences_coverage_required": 0.75,
-        "t": 0.22813333333333333
+        "t": 0.228
       },
       {
         "age_cv": 53,
         "competences_coverage_required": 1.0,
-        "t": 0.22813333333333333
+        "t": 0.228
       },
       {
         "age_cv": 54,
         "competences_coverage_required": 0.25,
-        "t": 0.22813333333333333
+        "t": 0.228
       },
       {
         "age_cv": 54,
         "competences_coverage_required": 0.5,
-        "t": 0.22813333333333333
+        "t": 0.228
       },
       {
         "age_cv": 54,
         "competences_coverage_required": 0.75,
-        "t": 0.22813333333333333
+        "t": 0.228
       },
       {
         "age_cv": 54,
         "competences_coverage_required": 1.0,
-        "t": 0.22813333333333333
+        "t": 0.228
       },
       {
         "age_cv": 55,
         "competences_coverage_required": 0.25,
-        "t": 0.22813333333333333
+        "t": 0.228
       },
       {
         "age_cv": 55,
         "competences_coverage_required": 0.5,
-        "t": 0.22813333333333333
+        "t": 0.228
       },
       {
         "age_cv": 55,
         "competences_coverage_required": 0.75,
-        "t": 0.22813333333333333
+        "t": 0.228
       },
       {
         "age_cv": 55,
         "competences_coverage_required": 1.0,
-        "t": 0.22813333333333333
+        "t": 0.228
       },
       {
         "age_cv": 56,
         "competences_coverage_required": 0.25,
-        "t": 0.22813333333333333
+        "t": 0.228
       },
       {
         "age_cv": 56,
         "competences_coverage_required": 0.5,
-        "t": 0.22813333333333333
+        "t": 0.228
       },
       {
         "age_cv": 56,
         "competences_coverage_required": 0.75,
-        "t": 0.22813333333333333
+        "t": 0.228
       },
       {
         "age_cv": 56,
         "competences_coverage_required": 1.0,
-        "t": 0.22813333333333333
+        "t": 0.228
       },
       {
         "age_cv": 57,
         "competences_coverage_required": 0.25,
-        "t": 0.22813333333333333
+        "t": 0.228
       },
       {
         "age_cv": 57,
         "competences_coverage_required": 0.5,
-        "t": 0.22813333333333333
+        "t": 0.228
       },
       {
         "age_cv": 57,
         "competences_coverage_required": 0.75,
-        "t": 0.22813333333333333
+        "t": 0.228
       },
       {
         "age_cv": 57,
         "competences_coverage_required": 1.0,
-        "t": 0.22813333333333333
+        "t": 0.228
       },
       {
         "age_cv": 58,
         "competences_coverage_required": 0.25,
-        "t": 0.22813333333333333
+        "t": 0.228
       },
       {
         "age_cv": 58,
         "competences_coverage_required": 0.5,
-        "t": 0.22813333333333333
+        "t": 0.228
       },
       {
         "age_cv": 58,
         "competences_coverage_required": 0.75,
-        "t": 0.22813333333333333
+        "t": 0.228
       },
       {
         "age_cv": 58,
         "competences_coverage_required": 1.0,
-        "t": 0.22813333333333333
+        "t": 0.228
       },
       {
         "age_cv": 59,
         "competences_coverage_required": 0.25,
-        "t": 0.22813333333333333
+        "t": 0.228
       },
       {
         "age_cv": 59,
         "competences_coverage_required": 0.5,
-        "t": 0.22813333333333333
+        "t": 0.228
       },
       {
         "age_cv": 59,
         "competences_coverage_required": 0.75,
-        "t": 0.22813333333333333
+        "t": 0.228
       },
       {
         "age_cv": 59,
         "competences_coverage_required": 1.0,
-        "t": 0.22813333333333333
+        "t": 0.228
       },
       {
         "age_cv": 60,
         "competences_coverage_required": 0.25,
-        "t": 0.22813333333333333
+        "t": 0.228
       },
       {
         "age_cv": 60,
         "competences_coverage_required": 0.5,
-        "t": 0.22813333333333333
+        "t": 0.228
       },
       {
         "age_cv": 60,
         "competences_coverage_required": 0.75,
-        "t": 0.22813333333333333
+        "t": 0.228
       },
       {
         "age_cv": 60,
         "competences_coverage_required": 1.0,
-        "t": 0.22813333333333333
+        "t": 0.228
       }
     ],
-    "final_score": 7.7186666666666675
+    "final_score": 7.719
   }
 }
