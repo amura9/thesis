@@ -325,13 +325,13 @@ watch(toggleRecombine, (enabled) => {
   <div class="page">
 
     <main class="wrap">
-      <h1 class="title">Post-Processing Configuration</h1>
+      <h1 class="title">STEP 2 - Post Processing Configuration</h1>
 
       <!-- stepper line -->
       <div class="stepper">
         <div class="step"><span class="dot">1</span><span>Start evaluation</span></div>
         <span class="arrow">→</span>
-        <div class="step active"><span class="dot">2</span><span>Upload your data</span></div>
+        <span class="step active"><span class="dot filled">2</span> Provide context & data</span>
         <span class="arrow">→</span>
         <div class="step"><span class="dot">3</span><span>Choose the right</span></div>
         <span class="arrow">→</span>
@@ -544,6 +544,7 @@ watch(toggleRecombine, (enabled) => {
   white-space:nowrap;
 }
 .step.active{ font-weight:900; }
+
 .dot{
   display:inline-flex;
   align-items:center;
@@ -556,6 +557,12 @@ watch(toggleRecombine, (enabled) => {
   font-size:12px;
   font-weight:900;
 }
+
+.dot.filled {
+  background: #e23b3b;
+  color: #fff;
+}
+
 .arrow{
   color:#ef4444;
   font-weight:900;

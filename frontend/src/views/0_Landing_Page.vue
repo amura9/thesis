@@ -48,9 +48,9 @@ async function start() {
       <h2 class="subtitle">How does it work?</h2>
 
       <ol class="steps">
-        <li>Upload your data and model</li>
+        <li>Provide the context and upload your data</li>
         <li>Select the sensitive features</li>
-        <li>Choose what to evaluate (privacy, non-discrimination)</li>
+        <li>Choose the right to evaluate</li>
         <li>View results, interact with the metrics</li>
         <li>Provide your judgment and export a final report</li>
       </ol>

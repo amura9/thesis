@@ -1262,25 +1262,1342 @@
     ]
   },
   "k_anonymity": {
-    "status": "error",
-    "message": "Error during computation: float division by zero",
-    "k_value": 0,
-    "sensitive_features": [
+    "metric": "K-Anonymity",
+    "status": "success",
+    "k_value": 2,
+    "total_groups": 218,
+    "min_group_size": 1,
+    "max_group_size": 97,
+    "avg_group_size": 22.94,
+    "compliance": false,
+    "compliance_percentage": 97.71,
+    "quasi_identifiers": [
       "age_cv",
       "competences_coverage_required"
+    ],
+    "final_score": 9.89,
+    "full_results": [
+      {
+        "age_cv": 16,
+        "competences_coverage_required": 0.25,
+        "count": 1,
+        "compliant": false
+      },
+      {
+        "age_cv": 16,
+        "competences_coverage_required": 0.5,
+        "count": 5,
+        "compliant": true
+      },
+      {
+        "age_cv": 16,
+        "competences_coverage_required": 0.75,
+        "count": 1,
+        "compliant": false
+      },
+      {
+        "age_cv": 16,
+        "competences_coverage_required": 1.0,
+        "count": 3,
+        "compliant": true
+      },
+      {
+        "age_cv": 17,
+        "competences_coverage_required": 0.25,
+        "count": 6,
+        "compliant": true
+      },
+      {
+        "age_cv": 17,
+        "competences_coverage_required": 0.5,
+        "count": 1,
+        "compliant": false
+      },
+      {
+        "age_cv": 17,
+        "competences_coverage_required": 0.75,
+        "count": 2,
+        "compliant": true
+      },
+      {
+        "age_cv": 18,
+        "competences_coverage_required": 0.25,
+        "count": 5,
+        "compliant": true
+      },
+      {
+        "age_cv": 18,
+        "competences_coverage_required": 0.333,
+        "count": 7,
+        "compliant": true
+      },
+      {
+        "age_cv": 18,
+        "competences_coverage_required": 0.5,
+        "count": 26,
+        "compliant": true
+      },
+      {
+        "age_cv": 18,
+        "competences_coverage_required": 0.667,
+        "count": 13,
+        "compliant": true
+      },
+      {
+        "age_cv": 18,
+        "competences_coverage_required": 0.75,
+        "count": 3,
+        "compliant": true
+      },
+      {
+        "age_cv": 18,
+        "competences_coverage_required": 1.0,
+        "count": 34,
+        "compliant": true
+      },
+      {
+        "age_cv": 19,
+        "competences_coverage_required": 0.25,
+        "count": 6,
+        "compliant": true
+      },
+      {
+        "age_cv": 19,
+        "competences_coverage_required": 0.333,
+        "count": 5,
+        "compliant": true
+      },
+      {
+        "age_cv": 19,
+        "competences_coverage_required": 0.5,
+        "count": 18,
+        "compliant": true
+      },
+      {
+        "age_cv": 19,
+        "competences_coverage_required": 0.667,
+        "count": 13,
+        "compliant": true
+      },
+      {
+        "age_cv": 19,
+        "competences_coverage_required": 0.75,
+        "count": 6,
+        "compliant": true
+      },
+      {
+        "age_cv": 19,
+        "competences_coverage_required": 1.0,
+        "count": 30,
+        "compliant": true
+      },
+      {
+        "age_cv": 20,
+        "competences_coverage_required": 0.25,
+        "count": 9,
+        "compliant": true
+      },
+      {
+        "age_cv": 20,
+        "competences_coverage_required": 0.333,
+        "count": 6,
+        "compliant": true
+      },
+      {
+        "age_cv": 20,
+        "competences_coverage_required": 0.5,
+        "count": 27,
+        "compliant": true
+      },
+      {
+        "age_cv": 20,
+        "competences_coverage_required": 0.667,
+        "count": 8,
+        "compliant": true
+      },
+      {
+        "age_cv": 20,
+        "competences_coverage_required": 0.75,
+        "count": 7,
+        "compliant": true
+      },
+      {
+        "age_cv": 20,
+        "competences_coverage_required": 1.0,
+        "count": 27,
+        "compliant": true
+      },
+      {
+        "age_cv": 21,
+        "competences_coverage_required": 0.25,
+        "count": 8,
+        "compliant": true
+      },
+      {
+        "age_cv": 21,
+        "competences_coverage_required": 0.333,
+        "count": 8,
+        "compliant": true
+      },
+      {
+        "age_cv": 21,
+        "competences_coverage_required": 0.5,
+        "count": 34,
+        "compliant": true
+      },
+      {
+        "age_cv": 21,
+        "competences_coverage_required": 0.667,
+        "count": 12,
+        "compliant": true
+      },
+      {
+        "age_cv": 21,
+        "competences_coverage_required": 0.75,
+        "count": 6,
+        "compliant": true
+      },
+      {
+        "age_cv": 21,
+        "competences_coverage_required": 1.0,
+        "count": 51,
+        "compliant": true
+      },
+      {
+        "age_cv": 22,
+        "competences_coverage_required": 0.25,
+        "count": 17,
+        "compliant": true
+      },
+      {
+        "age_cv": 22,
+        "competences_coverage_required": 0.333,
+        "count": 4,
+        "compliant": true
+      },
+      {
+        "age_cv": 22,
+        "competences_coverage_required": 0.5,
+        "count": 19,
+        "compliant": true
+      },
+      {
+        "age_cv": 22,
+        "competences_coverage_required": 0.667,
+        "count": 14,
+        "compliant": true
+      },
+      {
+        "age_cv": 22,
+        "competences_coverage_required": 0.75,
+        "count": 9,
+        "compliant": true
+      },
+      {
+        "age_cv": 22,
+        "competences_coverage_required": 1.0,
+        "count": 61,
+        "compliant": true
+      },
+      {
+        "age_cv": 23,
+        "competences_coverage_required": 0.25,
+        "count": 17,
+        "compliant": true
+      },
+      {
+        "age_cv": 23,
+        "competences_coverage_required": 0.333,
+        "count": 5,
+        "compliant": true
+      },
+      {
+        "age_cv": 23,
+        "competences_coverage_required": 0.5,
+        "count": 44,
+        "compliant": true
+      },
+      {
+        "age_cv": 23,
+        "competences_coverage_required": 0.667,
+        "count": 17,
+        "compliant": true
+      },
+      {
+        "age_cv": 23,
+        "competences_coverage_required": 0.75,
+        "count": 29,
+        "compliant": true
+      },
+      {
+        "age_cv": 23,
+        "competences_coverage_required": 1.0,
+        "count": 82,
+        "compliant": true
+      },
+      {
+        "age_cv": 24,
+        "competences_coverage_required": 0.25,
+        "count": 21,
+        "compliant": true
+      },
+      {
+        "age_cv": 24,
+        "competences_coverage_required": 0.333,
+        "count": 10,
+        "compliant": true
+      },
+      {
+        "age_cv": 24,
+        "competences_coverage_required": 0.5,
+        "count": 35,
+        "compliant": true
+      },
+      {
+        "age_cv": 24,
+        "competences_coverage_required": 0.667,
+        "count": 9,
+        "compliant": true
+      },
+      {
+        "age_cv": 24,
+        "competences_coverage_required": 0.75,
+        "count": 36,
+        "compliant": true
+      },
+      {
+        "age_cv": 24,
+        "competences_coverage_required": 1.0,
+        "count": 58,
+        "compliant": true
+      },
+      {
+        "age_cv": 25,
+        "competences_coverage_required": 0.25,
+        "count": 25,
+        "compliant": true
+      },
+      {
+        "age_cv": 25,
+        "competences_coverage_required": 0.333,
+        "count": 18,
+        "compliant": true
+      },
+      {
+        "age_cv": 25,
+        "competences_coverage_required": 0.5,
+        "count": 51,
+        "compliant": true
+      },
+      {
+        "age_cv": 25,
+        "competences_coverage_required": 0.667,
+        "count": 17,
+        "compliant": true
+      },
+      {
+        "age_cv": 25,
+        "competences_coverage_required": 0.75,
+        "count": 28,
+        "compliant": true
+      },
+      {
+        "age_cv": 25,
+        "competences_coverage_required": 1.0,
+        "count": 74,
+        "compliant": true
+      },
+      {
+        "age_cv": 26,
+        "competences_coverage_required": 0.25,
+        "count": 31,
+        "compliant": true
+      },
+      {
+        "age_cv": 26,
+        "competences_coverage_required": 0.333,
+        "count": 23,
+        "compliant": true
+      },
+      {
+        "age_cv": 26,
+        "competences_coverage_required": 0.5,
+        "count": 49,
+        "compliant": true
+      },
+      {
+        "age_cv": 26,
+        "competences_coverage_required": 0.667,
+        "count": 26,
+        "compliant": true
+      },
+      {
+        "age_cv": 26,
+        "competences_coverage_required": 0.75,
+        "count": 37,
+        "compliant": true
+      },
+      {
+        "age_cv": 26,
+        "competences_coverage_required": 1.0,
+        "count": 80,
+        "compliant": true
+      },
+      {
+        "age_cv": 27,
+        "competences_coverage_required": 0.25,
+        "count": 25,
+        "compliant": true
+      },
+      {
+        "age_cv": 27,
+        "competences_coverage_required": 0.333,
+        "count": 12,
+        "compliant": true
+      },
+      {
+        "age_cv": 27,
+        "competences_coverage_required": 0.5,
+        "count": 44,
+        "compliant": true
+      },
+      {
+        "age_cv": 27,
+        "competences_coverage_required": 0.667,
+        "count": 34,
+        "compliant": true
+      },
+      {
+        "age_cv": 27,
+        "competences_coverage_required": 0.75,
+        "count": 36,
+        "compliant": true
+      },
+      {
+        "age_cv": 27,
+        "competences_coverage_required": 1.0,
+        "count": 97,
+        "compliant": true
+      },
+      {
+        "age_cv": 28,
+        "competences_coverage_required": 0.25,
+        "count": 36,
+        "compliant": true
+      },
+      {
+        "age_cv": 28,
+        "competences_coverage_required": 0.333,
+        "count": 23,
+        "compliant": true
+      },
+      {
+        "age_cv": 28,
+        "competences_coverage_required": 0.5,
+        "count": 46,
+        "compliant": true
+      },
+      {
+        "age_cv": 28,
+        "competences_coverage_required": 0.667,
+        "count": 27,
+        "compliant": true
+      },
+      {
+        "age_cv": 28,
+        "competences_coverage_required": 0.75,
+        "count": 41,
+        "compliant": true
+      },
+      {
+        "age_cv": 28,
+        "competences_coverage_required": 1.0,
+        "count": 85,
+        "compliant": true
+      },
+      {
+        "age_cv": 29,
+        "competences_coverage_required": 0.25,
+        "count": 29,
+        "compliant": true
+      },
+      {
+        "age_cv": 29,
+        "competences_coverage_required": 0.333,
+        "count": 14,
+        "compliant": true
+      },
+      {
+        "age_cv": 29,
+        "competences_coverage_required": 0.5,
+        "count": 45,
+        "compliant": true
+      },
+      {
+        "age_cv": 29,
+        "competences_coverage_required": 0.667,
+        "count": 31,
+        "compliant": true
+      },
+      {
+        "age_cv": 29,
+        "competences_coverage_required": 0.75,
+        "count": 36,
+        "compliant": true
+      },
+      {
+        "age_cv": 29,
+        "competences_coverage_required": 1.0,
+        "count": 79,
+        "compliant": true
+      },
+      {
+        "age_cv": 30,
+        "competences_coverage_required": 0.25,
+        "count": 22,
+        "compliant": true
+      },
+      {
+        "age_cv": 30,
+        "competences_coverage_required": 0.333,
+        "count": 17,
+        "compliant": true
+      },
+      {
+        "age_cv": 30,
+        "competences_coverage_required": 0.5,
+        "count": 31,
+        "compliant": true
+      },
+      {
+        "age_cv": 30,
+        "competences_coverage_required": 0.667,
+        "count": 29,
+        "compliant": true
+      },
+      {
+        "age_cv": 30,
+        "competences_coverage_required": 0.75,
+        "count": 29,
+        "compliant": true
+      },
+      {
+        "age_cv": 30,
+        "competences_coverage_required": 1.0,
+        "count": 84,
+        "compliant": true
+      },
+      {
+        "age_cv": 31,
+        "competences_coverage_required": 0.25,
+        "count": 25,
+        "compliant": true
+      },
+      {
+        "age_cv": 31,
+        "competences_coverage_required": 0.333,
+        "count": 3,
+        "compliant": true
+      },
+      {
+        "age_cv": 31,
+        "competences_coverage_required": 0.5,
+        "count": 50,
+        "compliant": true
+      },
+      {
+        "age_cv": 31,
+        "competences_coverage_required": 0.667,
+        "count": 12,
+        "compliant": true
+      },
+      {
+        "age_cv": 31,
+        "competences_coverage_required": 0.75,
+        "count": 27,
+        "compliant": true
+      },
+      {
+        "age_cv": 31,
+        "competences_coverage_required": 1.0,
+        "count": 54,
+        "compliant": true
+      },
+      {
+        "age_cv": 32,
+        "competences_coverage_required": 0.25,
+        "count": 22,
+        "compliant": true
+      },
+      {
+        "age_cv": 32,
+        "competences_coverage_required": 0.333,
+        "count": 4,
+        "compliant": true
+      },
+      {
+        "age_cv": 32,
+        "competences_coverage_required": 0.5,
+        "count": 34,
+        "compliant": true
+      },
+      {
+        "age_cv": 32,
+        "competences_coverage_required": 0.667,
+        "count": 8,
+        "compliant": true
+      },
+      {
+        "age_cv": 32,
+        "competences_coverage_required": 0.75,
+        "count": 34,
+        "compliant": true
+      },
+      {
+        "age_cv": 32,
+        "competences_coverage_required": 1.0,
+        "count": 50,
+        "compliant": true
+      },
+      {
+        "age_cv": 33,
+        "competences_coverage_required": 0.25,
+        "count": 23,
+        "compliant": true
+      },
+      {
+        "age_cv": 33,
+        "competences_coverage_required": 0.333,
+        "count": 2,
+        "compliant": true
+      },
+      {
+        "age_cv": 33,
+        "competences_coverage_required": 0.5,
+        "count": 22,
+        "compliant": true
+      },
+      {
+        "age_cv": 33,
+        "competences_coverage_required": 0.667,
+        "count": 6,
+        "compliant": true
+      },
+      {
+        "age_cv": 33,
+        "competences_coverage_required": 0.75,
+        "count": 27,
+        "compliant": true
+      },
+      {
+        "age_cv": 33,
+        "competences_coverage_required": 1.0,
+        "count": 53,
+        "compliant": true
+      },
+      {
+        "age_cv": 34,
+        "competences_coverage_required": 0.25,
+        "count": 21,
+        "compliant": true
+      },
+      {
+        "age_cv": 34,
+        "competences_coverage_required": 0.333,
+        "count": 2,
+        "compliant": true
+      },
+      {
+        "age_cv": 34,
+        "competences_coverage_required": 0.5,
+        "count": 27,
+        "compliant": true
+      },
+      {
+        "age_cv": 34,
+        "competences_coverage_required": 0.667,
+        "count": 13,
+        "compliant": true
+      },
+      {
+        "age_cv": 34,
+        "competences_coverage_required": 0.75,
+        "count": 20,
+        "compliant": true
+      },
+      {
+        "age_cv": 34,
+        "competences_coverage_required": 1.0,
+        "count": 46,
+        "compliant": true
+      },
+      {
+        "age_cv": 35,
+        "competences_coverage_required": 0.25,
+        "count": 15,
+        "compliant": true
+      },
+      {
+        "age_cv": 35,
+        "competences_coverage_required": 0.333,
+        "count": 1,
+        "compliant": false
+      },
+      {
+        "age_cv": 35,
+        "competences_coverage_required": 0.5,
+        "count": 30,
+        "compliant": true
+      },
+      {
+        "age_cv": 35,
+        "competences_coverage_required": 0.667,
+        "count": 2,
+        "compliant": true
+      },
+      {
+        "age_cv": 35,
+        "competences_coverage_required": 0.75,
+        "count": 27,
+        "compliant": true
+      },
+      {
+        "age_cv": 35,
+        "competences_coverage_required": 1.0,
+        "count": 44,
+        "compliant": true
+      },
+      {
+        "age_cv": 36,
+        "competences_coverage_required": 0.25,
+        "count": 22,
+        "compliant": true
+      },
+      {
+        "age_cv": 36,
+        "competences_coverage_required": 0.333,
+        "count": 1,
+        "compliant": false
+      },
+      {
+        "age_cv": 36,
+        "competences_coverage_required": 0.5,
+        "count": 33,
+        "compliant": true
+      },
+      {
+        "age_cv": 36,
+        "competences_coverage_required": 0.667,
+        "count": 5,
+        "compliant": true
+      },
+      {
+        "age_cv": 36,
+        "competences_coverage_required": 0.75,
+        "count": 31,
+        "compliant": true
+      },
+      {
+        "age_cv": 36,
+        "competences_coverage_required": 1.0,
+        "count": 37,
+        "compliant": true
+      },
+      {
+        "age_cv": 37,
+        "competences_coverage_required": 0.25,
+        "count": 15,
+        "compliant": true
+      },
+      {
+        "age_cv": 37,
+        "competences_coverage_required": 0.5,
+        "count": 20,
+        "compliant": true
+      },
+      {
+        "age_cv": 37,
+        "competences_coverage_required": 0.667,
+        "count": 6,
+        "compliant": true
+      },
+      {
+        "age_cv": 37,
+        "competences_coverage_required": 0.75,
+        "count": 25,
+        "compliant": true
+      },
+      {
+        "age_cv": 37,
+        "competences_coverage_required": 1.0,
+        "count": 27,
+        "compliant": true
+      },
+      {
+        "age_cv": 38,
+        "competences_coverage_required": 0.25,
+        "count": 22,
+        "compliant": true
+      },
+      {
+        "age_cv": 38,
+        "competences_coverage_required": 0.5,
+        "count": 21,
+        "compliant": true
+      },
+      {
+        "age_cv": 38,
+        "competences_coverage_required": 0.75,
+        "count": 27,
+        "compliant": true
+      },
+      {
+        "age_cv": 38,
+        "competences_coverage_required": 1.0,
+        "count": 28,
+        "compliant": true
+      },
+      {
+        "age_cv": 39,
+        "competences_coverage_required": 0.25,
+        "count": 22,
+        "compliant": true
+      },
+      {
+        "age_cv": 39,
+        "competences_coverage_required": 0.5,
+        "count": 23,
+        "compliant": true
+      },
+      {
+        "age_cv": 39,
+        "competences_coverage_required": 0.75,
+        "count": 20,
+        "compliant": true
+      },
+      {
+        "age_cv": 39,
+        "competences_coverage_required": 1.0,
+        "count": 19,
+        "compliant": true
+      },
+      {
+        "age_cv": 40,
+        "competences_coverage_required": 0.25,
+        "count": 21,
+        "compliant": true
+      },
+      {
+        "age_cv": 40,
+        "competences_coverage_required": 0.5,
+        "count": 23,
+        "compliant": true
+      },
+      {
+        "age_cv": 40,
+        "competences_coverage_required": 0.75,
+        "count": 11,
+        "compliant": true
+      },
+      {
+        "age_cv": 40,
+        "competences_coverage_required": 1.0,
+        "count": 19,
+        "compliant": true
+      },
+      {
+        "age_cv": 41,
+        "competences_coverage_required": 0.25,
+        "count": 15,
+        "compliant": true
+      },
+      {
+        "age_cv": 41,
+        "competences_coverage_required": 0.5,
+        "count": 18,
+        "compliant": true
+      },
+      {
+        "age_cv": 41,
+        "competences_coverage_required": 0.75,
+        "count": 17,
+        "compliant": true
+      },
+      {
+        "age_cv": 41,
+        "competences_coverage_required": 1.0,
+        "count": 14,
+        "compliant": true
+      },
+      {
+        "age_cv": 42,
+        "competences_coverage_required": 0.25,
+        "count": 14,
+        "compliant": true
+      },
+      {
+        "age_cv": 42,
+        "competences_coverage_required": 0.5,
+        "count": 19,
+        "compliant": true
+      },
+      {
+        "age_cv": 42,
+        "competences_coverage_required": 0.75,
+        "count": 17,
+        "compliant": true
+      },
+      {
+        "age_cv": 42,
+        "competences_coverage_required": 1.0,
+        "count": 15,
+        "compliant": true
+      },
+      {
+        "age_cv": 43,
+        "competences_coverage_required": 0.25,
+        "count": 21,
+        "compliant": true
+      },
+      {
+        "age_cv": 43,
+        "competences_coverage_required": 0.5,
+        "count": 22,
+        "compliant": true
+      },
+      {
+        "age_cv": 43,
+        "competences_coverage_required": 0.75,
+        "count": 21,
+        "compliant": true
+      },
+      {
+        "age_cv": 43,
+        "competences_coverage_required": 1.0,
+        "count": 16,
+        "compliant": true
+      },
+      {
+        "age_cv": 44,
+        "competences_coverage_required": 0.25,
+        "count": 15,
+        "compliant": true
+      },
+      {
+        "age_cv": 44,
+        "competences_coverage_required": 0.5,
+        "count": 20,
+        "compliant": true
+      },
+      {
+        "age_cv": 44,
+        "competences_coverage_required": 0.75,
+        "count": 8,
+        "compliant": true
+      },
+      {
+        "age_cv": 44,
+        "competences_coverage_required": 1.0,
+        "count": 18,
+        "compliant": true
+      },
+      {
+        "age_cv": 45,
+        "competences_coverage_required": 0.25,
+        "count": 21,
+        "compliant": true
+      },
+      {
+        "age_cv": 45,
+        "competences_coverage_required": 0.5,
+        "count": 17,
+        "compliant": true
+      },
+      {
+        "age_cv": 45,
+        "competences_coverage_required": 0.75,
+        "count": 23,
+        "compliant": true
+      },
+      {
+        "age_cv": 45,
+        "competences_coverage_required": 1.0,
+        "count": 21,
+        "compliant": true
+      },
+      {
+        "age_cv": 46,
+        "competences_coverage_required": 0.25,
+        "count": 23,
+        "compliant": true
+      },
+      {
+        "age_cv": 46,
+        "competences_coverage_required": 0.5,
+        "count": 16,
+        "compliant": true
+      },
+      {
+        "age_cv": 46,
+        "competences_coverage_required": 0.75,
+        "count": 22,
+        "compliant": true
+      },
+      {
+        "age_cv": 46,
+        "competences_coverage_required": 1.0,
+        "count": 22,
+        "compliant": true
+      },
+      {
+        "age_cv": 47,
+        "competences_coverage_required": 0.25,
+        "count": 16,
+        "compliant": true
+      },
+      {
+        "age_cv": 47,
+        "competences_coverage_required": 0.5,
+        "count": 20,
+        "compliant": true
+      },
+      {
+        "age_cv": 47,
+        "competences_coverage_required": 0.75,
+        "count": 29,
+        "compliant": true
+      },
+      {
+        "age_cv": 47,
+        "competences_coverage_required": 1.0,
+        "count": 19,
+        "compliant": true
+      },
+      {
+        "age_cv": 48,
+        "competences_coverage_required": 0.25,
+        "count": 19,
+        "compliant": true
+      },
+      {
+        "age_cv": 48,
+        "competences_coverage_required": 0.5,
+        "count": 15,
+        "compliant": true
+      },
+      {
+        "age_cv": 48,
+        "competences_coverage_required": 0.75,
+        "count": 20,
+        "compliant": true
+      },
+      {
+        "age_cv": 48,
+        "competences_coverage_required": 1.0,
+        "count": 14,
+        "compliant": true
+      },
+      {
+        "age_cv": 49,
+        "competences_coverage_required": 0.25,
+        "count": 14,
+        "compliant": true
+      },
+      {
+        "age_cv": 49,
+        "competences_coverage_required": 0.5,
+        "count": 17,
+        "compliant": true
+      },
+      {
+        "age_cv": 49,
+        "competences_coverage_required": 0.75,
+        "count": 16,
+        "compliant": true
+      },
+      {
+        "age_cv": 49,
+        "competences_coverage_required": 1.0,
+        "count": 15,
+        "compliant": true
+      },
+      {
+        "age_cv": 50,
+        "competences_coverage_required": 0.25,
+        "count": 12,
+        "compliant": true
+      },
+      {
+        "age_cv": 50,
+        "competences_coverage_required": 0.5,
+        "count": 25,
+        "compliant": true
+      },
+      {
+        "age_cv": 50,
+        "competences_coverage_required": 0.75,
+        "count": 17,
+        "compliant": true
+      },
+      {
+        "age_cv": 50,
+        "competences_coverage_required": 1.0,
+        "count": 13,
+        "compliant": true
+      },
+      {
+        "age_cv": 51,
+        "competences_coverage_required": 0.25,
+        "count": 26,
+        "compliant": true
+      },
+      {
+        "age_cv": 51,
+        "competences_coverage_required": 0.5,
+        "count": 25,
+        "compliant": true
+      },
+      {
+        "age_cv": 51,
+        "competences_coverage_required": 0.75,
+        "count": 23,
+        "compliant": true
+      },
+      {
+        "age_cv": 51,
+        "competences_coverage_required": 1.0,
+        "count": 16,
+        "compliant": true
+      },
+      {
+        "age_cv": 52,
+        "competences_coverage_required": 0.25,
+        "count": 23,
+        "compliant": true
+      },
+      {
+        "age_cv": 52,
+        "competences_coverage_required": 0.5,
+        "count": 12,
+        "compliant": true
+      },
+      {
+        "age_cv": 52,
+        "competences_coverage_required": 0.75,
+        "count": 31,
+        "compliant": true
+      },
+      {
+        "age_cv": 52,
+        "competences_coverage_required": 1.0,
+        "count": 15,
+        "compliant": true
+      },
+      {
+        "age_cv": 53,
+        "competences_coverage_required": 0.25,
+        "count": 13,
+        "compliant": true
+      },
+      {
+        "age_cv": 53,
+        "competences_coverage_required": 0.5,
+        "count": 23,
+        "compliant": true
+      },
+      {
+        "age_cv": 53,
+        "competences_coverage_required": 0.75,
+        "count": 18,
+        "compliant": true
+      },
+      {
+        "age_cv": 53,
+        "competences_coverage_required": 1.0,
+        "count": 14,
+        "compliant": true
+      },
+      {
+        "age_cv": 54,
+        "competences_coverage_required": 0.25,
+        "count": 22,
+        "compliant": true
+      },
+      {
+        "age_cv": 54,
+        "competences_coverage_required": 0.5,
+        "count": 10,
+        "compliant": true
+      },
+      {
+        "age_cv": 54,
+        "competences_coverage_required": 0.75,
+        "count": 24,
+        "compliant": true
+      },
+      {
+        "age_cv": 54,
+        "competences_coverage_required": 1.0,
+        "count": 14,
+        "compliant": true
+      },
+      {
+        "age_cv": 55,
+        "competences_coverage_required": 0.25,
+        "count": 21,
+        "compliant": true
+      },
+      {
+        "age_cv": 55,
+        "competences_coverage_required": 0.5,
+        "count": 18,
+        "compliant": true
+      },
+      {
+        "age_cv": 55,
+        "competences_coverage_required": 0.75,
+        "count": 18,
+        "compliant": true
+      },
+      {
+        "age_cv": 55,
+        "competences_coverage_required": 1.0,
+        "count": 22,
+        "compliant": true
+      },
+      {
+        "age_cv": 56,
+        "competences_coverage_required": 0.25,
+        "count": 24,
+        "compliant": true
+      },
+      {
+        "age_cv": 56,
+        "competences_coverage_required": 0.5,
+        "count": 21,
+        "compliant": true
+      },
+      {
+        "age_cv": 56,
+        "competences_coverage_required": 0.75,
+        "count": 22,
+        "compliant": true
+      },
+      {
+        "age_cv": 56,
+        "competences_coverage_required": 1.0,
+        "count": 27,
+        "compliant": true
+      },
+      {
+        "age_cv": 57,
+        "competences_coverage_required": 0.25,
+        "count": 30,
+        "compliant": true
+      },
+      {
+        "age_cv": 57,
+        "competences_coverage_required": 0.5,
+        "count": 14,
+        "compliant": true
+      },
+      {
+        "age_cv": 57,
+        "competences_coverage_required": 0.75,
+        "count": 16,
+        "compliant": true
+      },
+      {
+        "age_cv": 57,
+        "competences_coverage_required": 1.0,
+        "count": 19,
+        "compliant": true
+      },
+      {
+        "age_cv": 58,
+        "competences_coverage_required": 0.25,
+        "count": 12,
+        "compliant": true
+      },
+      {
+        "age_cv": 58,
+        "competences_coverage_required": 0.5,
+        "count": 14,
+        "compliant": true
+      },
+      {
+        "age_cv": 58,
+        "competences_coverage_required": 0.75,
+        "count": 14,
+        "compliant": true
+      },
+      {
+        "age_cv": 58,
+        "competences_coverage_required": 1.0,
+        "count": 26,
+        "compliant": true
+      },
+      {
+        "age_cv": 59,
+        "competences_coverage_required": 0.25,
+        "count": 24,
+        "compliant": true
+      },
+      {
+        "age_cv": 59,
+        "competences_coverage_required": 0.5,
+        "count": 20,
+        "compliant": true
+      },
+      {
+        "age_cv": 59,
+        "competences_coverage_required": 0.75,
+        "count": 29,
+        "compliant": true
+      },
+      {
+        "age_cv": 59,
+        "competences_coverage_required": 1.0,
+        "count": 17,
+        "compliant": true
+      },
+      {
+        "age_cv": 60,
+        "competences_coverage_required": 0.25,
+        "count": 30,
+        "compliant": true
+      },
+      {
+        "age_cv": 60,
+        "competences_coverage_required": 0.5,
+        "count": 23,
+        "compliant": true
+      },
+      {
+        "age_cv": 60,
+        "competences_coverage_required": 0.75,
+        "count": 27,
+        "compliant": true
+      },
+      {
+        "age_cv": 60,
+        "competences_coverage_required": 1.0,
+        "count": 19,
+        "compliant": true
+      }
     ]
   },
   "l_diversity": {
     "metric": "L-Diversity",
     "status": "success",
     "l_min": 1,
-    "l_avg": 2.307,
+    "l_avg": 1.0,
     "total_groups": 218,
     "quasi_identifiers": [
       "age_cv",
       "competences_coverage_required"
     ],
-    "sensitive_attribute": "competences_coverage_optional",
+    "sensitive_attribute": "competences_coverage_required",
     "full_results": [
       {
         "age_cv": 16,
@@ -1290,62 +2607,62 @@
       {
         "age_cv": 16,
         "competences_coverage_required": 0.5,
-        "l": 2
-      },
-      {
-        "age_cv": 16,
-        "competences_coverage_required": 0.75,
         "l": 1
       },
       {
         "age_cv": 16,
+        "competences_coverage_required": 0.75,
+        "l": 1
+      },
+      {
+        "age_cv": 16,
         "competences_coverage_required": 1.0,
-        "l": 2
-      },
-      {
-        "age_cv": 17,
-        "competences_coverage_required": 0.25,
-        "l": 2
-      },
-      {
-        "age_cv": 17,
-        "competences_coverage_required": 0.5,
         "l": 1
       },
       {
         "age_cv": 17,
+        "competences_coverage_required": 0.25,
+        "l": 1
+      },
+      {
+        "age_cv": 17,
+        "competences_coverage_required": 0.5,
+        "l": 1
+      },
+      {
+        "age_cv": 17,
         "competences_coverage_required": 0.75,
         "l": 1
       },
       {
         "age_cv": 18,
         "competences_coverage_required": 0.25,
-        "l": 2
+        "l": 1
       },
       {
         "age_cv": 18,
         "competences_coverage_required": 0.333,
-        "l": 2
+        "l": 1
       },
       {
         "age_cv": 18,
         "competences_coverage_required": 0.5,
-        "l": 2
+        "l": 1
       },
       {
         "age_cv": 18,
         "competences_coverage_required": 0.667,
-        "l": 4
+        "l": 1
       },
       {
         "age_cv": 18,
         "competences_coverage_required": 0.75,
-        "l": 2
+        "l": 1
       },
       {
         "age_cv": 18,
         "competences_coverage_required": 1.0,
-        "l": 3
+        "l": 1
       },
       {
         "age_cv": 19,
@@ -1355,392 +2672,392 @@
       {
         "age_cv": 19,
         "competences_coverage_required": 0.333,
-        "l": 3
+        "l": 1
       },
       {
         "age_cv": 19,
         "competences_coverage_required": 0.5,
-        "l": 2
+        "l": 1
       },
       {
         "age_cv": 19,
         "competences_coverage_required": 0.667,
-        "l": 3
+        "l": 1
       },
       {
         "age_cv": 19,
         "competences_coverage_required": 0.75,
-        "l": 2
+        "l": 1
       },
       {
         "age_cv": 19,
         "competences_coverage_required": 1.0,
-        "l": 4
+        "l": 1
       },
       {
         "age_cv": 20,
         "competences_coverage_required": 0.25,
-        "l": 2
+        "l": 1
       },
       {
         "age_cv": 20,
         "competences_coverage_required": 0.333,
-        "l": 2
+        "l": 1
       },
       {
         "age_cv": 20,
         "competences_coverage_required": 0.5,
-        "l": 2
+        "l": 1
       },
       {
         "age_cv": 20,
         "competences_coverage_required": 0.667,
-        "l": 3
+        "l": 1
       },
       {
         "age_cv": 20,
         "competences_coverage_required": 0.75,
-        "l": 2
+        "l": 1
       },
       {
         "age_cv": 20,
         "competences_coverage_required": 1.0,
-        "l": 2
+        "l": 1
       },
       {
         "age_cv": 21,
         "competences_coverage_required": 0.25,
-        "l": 2
+        "l": 1
       },
       {
         "age_cv": 21,
         "competences_coverage_required": 0.333,
-        "l": 3
+        "l": 1
       },
       {
         "age_cv": 21,
         "competences_coverage_required": 0.5,
-        "l": 2
+        "l": 1
       },
       {
         "age_cv": 21,
         "competences_coverage_required": 0.667,
-        "l": 2
+        "l": 1
       },
       {
         "age_cv": 21,
         "competences_coverage_required": 0.75,
-        "l": 2
+        "l": 1
       },
       {
         "age_cv": 21,
         "competences_coverage_required": 1.0,
-        "l": 2
+        "l": 1
       },
       {
         "age_cv": 22,
         "competences_coverage_required": 0.25,
-        "l": 2
+        "l": 1
       },
       {
         "age_cv": 22,
         "competences_coverage_required": 0.333,
-        "l": 2
+        "l": 1
       },
       {
         "age_cv": 22,
         "competences_coverage_required": 0.5,
-        "l": 2
+        "l": 1
       },
       {
         "age_cv": 22,
         "competences_coverage_required": 0.667,
-        "l": 3
+        "l": 1
       },
       {
         "age_cv": 22,
         "competences_coverage_required": 0.75,
-        "l": 2
+        "l": 1
       },
       {
         "age_cv": 22,
         "competences_coverage_required": 1.0,
-        "l": 2
+        "l": 1
       },
       {
         "age_cv": 23,
         "competences_coverage_required": 0.25,
-        "l": 2
+        "l": 1
       },
       {
         "age_cv": 23,
         "competences_coverage_required": 0.333,
-        "l": 2
+        "l": 1
       },
       {
         "age_cv": 23,
         "competences_coverage_required": 0.5,
-        "l": 2
+        "l": 1
       },
       {
         "age_cv": 23,
         "competences_coverage_required": 0.667,
-        "l": 3
+        "l": 1
       },
       {
         "age_cv": 23,
         "competences_coverage_required": 0.75,
-        "l": 2
+        "l": 1
       },
       {
         "age_cv": 23,
         "competences_coverage_required": 1.0,
-        "l": 4
+        "l": 1
       },
       {
         "age_cv": 24,
         "competences_coverage_required": 0.25,
-        "l": 2
+        "l": 1
       },
       {
         "age_cv": 24,
         "competences_coverage_required": 0.333,
-        "l": 3
+        "l": 1
       },
       {
         "age_cv": 24,
         "competences_coverage_required": 0.5,
-        "l": 2
+        "l": 1
       },
       {
         "age_cv": 24,
         "competences_coverage_required": 0.667,
-        "l": 2
+        "l": 1
       },
       {
         "age_cv": 24,
         "competences_coverage_required": 0.75,
-        "l": 2
+        "l": 1
       },
       {
         "age_cv": 24,
         "competences_coverage_required": 1.0,
-        "l": 2
+        "l": 1
       },
       {
         "age_cv": 25,
         "competences_coverage_required": 0.25,
-        "l": 2
+        "l": 1
       },
       {
         "age_cv": 25,
         "competences_coverage_required": 0.333,
-        "l": 4
+        "l": 1
       },
       {
         "age_cv": 25,
         "competences_coverage_required": 0.5,
-        "l": 3
+        "l": 1
       },
       {
         "age_cv": 25,
         "competences_coverage_required": 0.667,
-        "l": 5
+        "l": 1
       },
       {
         "age_cv": 25,
         "competences_coverage_required": 0.75,
-        "l": 2
+        "l": 1
       },
       {
         "age_cv": 25,
         "competences_coverage_required": 1.0,
-        "l": 3
+        "l": 1
       },
       {
         "age_cv": 26,
         "competences_coverage_required": 0.25,
-        "l": 3
+        "l": 1
       },
       {
         "age_cv": 26,
         "competences_coverage_required": 0.333,
-        "l": 5
+        "l": 1
       },
       {
         "age_cv": 26,
         "competences_coverage_required": 0.5,
-        "l": 3
+        "l": 1
       },
       {
         "age_cv": 26,
         "competences_coverage_required": 0.667,
-        "l": 2
+        "l": 1
       },
       {
         "age_cv": 26,
         "competences_coverage_required": 0.75,
-        "l": 2
+        "l": 1
       },
       {
         "age_cv": 26,
         "competences_coverage_required": 1.0,
-        "l": 5
+        "l": 1
       },
       {
         "age_cv": 27,
         "competences_coverage_required": 0.25,
-        "l": 2
+        "l": 1
       },
       {
         "age_cv": 27,
         "competences_coverage_required": 0.333,
-        "l": 3
+        "l": 1
       },
       {
         "age_cv": 27,
         "competences_coverage_required": 0.5,
-        "l": 3
+        "l": 1
       },
       {
         "age_cv": 27,
         "competences_coverage_required": 0.667,
-        "l": 3
+        "l": 1
       },
       {
         "age_cv": 27,
         "competences_coverage_required": 0.75,
-        "l": 2
+        "l": 1
       },
       {
         "age_cv": 27,
         "competences_coverage_required": 1.0,
-        "l": 5
+        "l": 1
       },
       {
         "age_cv": 28,
         "competences_coverage_required": 0.25,
-        "l": 2
+        "l": 1
       },
       {
         "age_cv": 28,
         "competences_coverage_required": 0.333,
-        "l": 4
+        "l": 1
       },
       {
         "age_cv": 28,
         "competences_coverage_required": 0.5,
-        "l": 3
+        "l": 1
       },
       {
         "age_cv": 28,
         "competences_coverage_required": 0.667,
-        "l": 4
+        "l": 1
       },
       {
         "age_cv": 28,
         "competences_coverage_required": 0.75,
-        "l": 2
+        "l": 1
       },
       {
         "age_cv": 28,
         "competences_coverage_required": 1.0,
-        "l": 4
+        "l": 1
       },
       {
         "age_cv": 29,
         "competences_coverage_required": 0.25,
-        "l": 2
+        "l": 1
       },
       {
         "age_cv": 29,
         "competences_coverage_required": 0.333,
-        "l": 4
+        "l": 1
       },
       {
         "age_cv": 29,
         "competences_coverage_required": 0.5,
-        "l": 3
+        "l": 1
       },
       {
         "age_cv": 29,
         "competences_coverage_required": 0.667,
-        "l": 2
+        "l": 1
       },
       {
         "age_cv": 29,
         "competences_coverage_required": 0.75,
-        "l": 2
+        "l": 1
       },
       {
         "age_cv": 29,
         "competences_coverage_required": 1.0,
-        "l": 4
+        "l": 1
       },
       {
         "age_cv": 30,
         "competences_coverage_required": 0.25,
-        "l": 2
+        "l": 1
       },
       {
         "age_cv": 30,
         "competences_coverage_required": 0.333,
-        "l": 5
+        "l": 1
       },
       {
         "age_cv": 30,
         "competences_coverage_required": 0.5,
-        "l": 2
+        "l": 1
       },
       {
         "age_cv": 30,
         "competences_coverage_required": 0.667,
-        "l": 4
+        "l": 1
       },
       {
         "age_cv": 30,
         "competences_coverage_required": 0.75,
-        "l": 2
+        "l": 1
       },
       {
         "age_cv": 30,
         "competences_coverage_required": 1.0,
-        "l": 3
+        "l": 1
       },
       {
         "age_cv": 31,
         "competences_coverage_required": 0.25,
-        "l": 2
+        "l": 1
       },
       {
         "age_cv": 31,
         "competences_coverage_required": 0.333,
-        "l": 2
+        "l": 1
       },
       {
         "age_cv": 31,
         "competences_coverage_required": 0.5,
-        "l": 3
+        "l": 1
       },
       {
         "age_cv": 31,
         "competences_coverage_required": 0.667,
-        "l": 2
+        "l": 1
       },
       {
         "age_cv": 31,
         "competences_coverage_required": 0.75,
-        "l": 3
+        "l": 1
       },
       {
         "age_cv": 31,
         "competences_coverage_required": 1.0,
-        "l": 3
+        "l": 1
       },
       {
         "age_cv": 32,
         "competences_coverage_required": 0.25,
-        "l": 2
+        "l": 1
       },
       {
         "age_cv": 32,
@@ -1750,27 +3067,27 @@
       {
         "age_cv": 32,
         "competences_coverage_required": 0.5,
-        "l": 2
+        "l": 1
       },
       {
         "age_cv": 32,
         "competences_coverage_required": 0.667,
-        "l": 3
+        "l": 1
       },
       {
         "age_cv": 32,
         "competences_coverage_required": 0.75,
-        "l": 3
+        "l": 1
       },
       {
         "age_cv": 32,
         "competences_coverage_required": 1.0,
-        "l": 4
+        "l": 1
       },
       {
         "age_cv": 33,
         "competences_coverage_required": 0.25,
-        "l": 2
+        "l": 1
       },
       {
         "age_cv": 33,
@@ -1780,7 +3097,7 @@
       {
         "age_cv": 33,
         "competences_coverage_required": 0.5,
-        "l": 2
+        "l": 1
       },
       {
         "age_cv": 33,
@@ -1790,17 +3107,17 @@
       {
         "age_cv": 33,
         "competences_coverage_required": 0.75,
-        "l": 2
+        "l": 1
       },
       {
         "age_cv": 33,
         "competences_coverage_required": 1.0,
-        "l": 3
+        "l": 1
       },
       {
         "age_cv": 34,
         "competences_coverage_required": 0.25,
-        "l": 2
+        "l": 1
       },
       {
         "age_cv": 34,
@@ -1810,27 +3127,27 @@
       {
         "age_cv": 34,
         "competences_coverage_required": 0.5,
-        "l": 3
+        "l": 1
       },
       {
         "age_cv": 34,
         "competences_coverage_required": 0.667,
-        "l": 3
+        "l": 1
       },
       {
         "age_cv": 34,
         "competences_coverage_required": 0.75,
-        "l": 2
+        "l": 1
       },
       {
         "age_cv": 34,
         "competences_coverage_required": 1.0,
-        "l": 4
+        "l": 1
       },
       {
         "age_cv": 35,
         "competences_coverage_required": 0.25,
-        "l": 2
+        "l": 1
       },
       {
         "age_cv": 35,
@@ -1840,7 +3157,7 @@
       {
         "age_cv": 35,
         "competences_coverage_required": 0.5,
-        "l": 3
+        "l": 1
       },
       {
         "age_cv": 35,
@@ -1850,17 +3167,17 @@
       {
         "age_cv": 35,
         "competences_coverage_required": 0.75,
-        "l": 2
+        "l": 1
       },
       {
         "age_cv": 35,
         "competences_coverage_required": 1.0,
-        "l": 3
+        "l": 1
       },
       {
         "age_cv": 36,
         "competences_coverage_required": 0.25,
-        "l": 2
+        "l": 1
       },
       {
         "age_cv": 36,
@@ -1870,7 +3187,7 @@
       {
         "age_cv": 36,
         "competences_coverage_required": 0.5,
-        "l": 3
+        "l": 1
       },
       {
         "age_cv": 36,
@@ -1880,654 +3197,582 @@
       {
         "age_cv": 36,
         "competences_coverage_required": 0.75,
-        "l": 2
+        "l": 1
       },
       {
         "age_cv": 36,
         "competences_coverage_required": 1.0,
-        "l": 3
+        "l": 1
       },
       {
         "age_cv": 37,
         "competences_coverage_required": 0.25,
-        "l": 2
+        "l": 1
       },
       {
         "age_cv": 37,
         "competences_coverage_required": 0.5,
-        "l": 3
+        "l": 1
       },
       {
         "age_cv": 37,
         "competences_coverage_required": 0.667,
-        "l": 2
+        "l": 1
       },
       {
         "age_cv": 37,
         "competences_coverage_required": 0.75,
-        "l": 2
+        "l": 1
       },
       {
         "age_cv": 37,
         "competences_coverage_required": 1.0,
-        "l": 2
+        "l": 1
       },
       {
         "age_cv": 38,
         "competences_coverage_required": 0.25,
-        "l": 2
+        "l": 1
       },
       {
         "age_cv": 38,
         "competences_coverage_required": 0.5,
-        "l": 2
+        "l": 1
       },
       {
         "age_cv": 38,
         "competences_coverage_required": 0.75,
-        "l": 2
+        "l": 1
       },
       {
         "age_cv": 38,
         "competences_coverage_required": 1.0,
-        "l": 3
+        "l": 1
       },
       {
         "age_cv": 39,
         "competences_coverage_required": 0.25,
-        "l": 2
+        "l": 1
       },
       {
         "age_cv": 39,
         "competences_coverage_required": 0.5,
-        "l": 2
+        "l": 1
       },
       {
         "age_cv": 39,
         "competences_coverage_required": 0.75,
-        "l": 2
+        "l": 1
       },
       {
         "age_cv": 39,
         "competences_coverage_required": 1.0,
-        "l": 2
+        "l": 1
       },
       {
         "age_cv": 40,
         "competences_coverage_required": 0.25,
-        "l": 3
+        "l": 1
       },
       {
         "age_cv": 40,
         "competences_coverage_required": 0.5,
-        "l": 2
+        "l": 1
       },
       {
         "age_cv": 40,
         "competences_coverage_required": 0.75,
-        "l": 2
+        "l": 1
       },
       {
         "age_cv": 40,
         "competences_coverage_required": 1.0,
-        "l": 2
+        "l": 1
       },
       {
         "age_cv": 41,
         "competences_coverage_required": 0.25,
-        "l": 2
+        "l": 1
       },
       {
         "age_cv": 41,
         "competences_coverage_required": 0.5,
-        "l": 2
+        "l": 1
       },
       {
         "age_cv": 41,
         "competences_coverage_required": 0.75,
-        "l": 2
+        "l": 1
       },
       {
         "age_cv": 41,
         "competences_coverage_required": 1.0,
-        "l": 2
+        "l": 1
       },
       {
         "age_cv": 42,
         "competences_coverage_required": 0.25,
-        "l": 2
+        "l": 1
       },
       {
         "age_cv": 42,
         "competences_coverage_required": 0.5,
-        "l": 2
+        "l": 1
       },
       {
         "age_cv": 42,
         "competences_coverage_required": 0.75,
-        "l": 2
+        "l": 1
       },
       {
         "age_cv": 42,
         "competences_coverage_required": 1.0,
-        "l": 2
+        "l": 1
       },
       {
         "age_cv": 43,
         "competences_coverage_required": 0.25,
-        "l": 3
+        "l": 1
       },
       {
         "age_cv": 43,
         "competences_coverage_required": 0.5,
-        "l": 2
+        "l": 1
       },
       {
         "age_cv": 43,
         "competences_coverage_required": 0.75,
-        "l": 2
+        "l": 1
       },
       {
         "age_cv": 43,
         "competences_coverage_required": 1.0,
-        "l": 2
+        "l": 1
       },
       {
         "age_cv": 44,
         "competences_coverage_required": 0.25,
-        "l": 2
+        "l": 1
       },
       {
         "age_cv": 44,
         "competences_coverage_required": 0.5,
-        "l": 2
+        "l": 1
       },
       {
         "age_cv": 44,
         "competences_coverage_required": 0.75,
-        "l": 2
+        "l": 1
       },
       {
         "age_cv": 44,
         "competences_coverage_required": 1.0,
-        "l": 2
+        "l": 1
       },
       {
         "age_cv": 45,
         "competences_coverage_required": 0.25,
-        "l": 2
+        "l": 1
       },
       {
         "age_cv": 45,
         "competences_coverage_required": 0.5,
-        "l": 2
+        "l": 1
       },
       {
         "age_cv": 45,
         "competences_coverage_required": 0.75,
-        "l": 2
+        "l": 1
       },
       {
         "age_cv": 45,
         "competences_coverage_required": 1.0,
-        "l": 2
+        "l": 1
       },
       {
         "age_cv": 46,
         "competences_coverage_required": 0.25,
-        "l": 2
+        "l": 1
       },
       {
         "age_cv": 46,
         "competences_coverage_required": 0.5,
-        "l": 2
+        "l": 1
       },
       {
         "age_cv": 46,
         "competences_coverage_required": 0.75,
-        "l": 2
+        "l": 1
       },
       {
         "age_cv": 46,
         "competences_coverage_required": 1.0,
-        "l": 2
+        "l": 1
       },
       {
         "age_cv": 47,
         "competences_coverage_required": 0.25,
-        "l": 2
+        "l": 1
       },
       {
         "age_cv": 47,
         "competences_coverage_required": 0.5,
-        "l": 2
+        "l": 1
       },
       {
         "age_cv": 47,
         "competences_coverage_required": 0.75,
-        "l": 2
+        "l": 1
       },
       {
         "age_cv": 47,
         "competences_coverage_required": 1.0,
-        "l": 2
+        "l": 1
       },
       {
         "age_cv": 48,
         "competences_coverage_required": 0.25,
-        "l": 2
+        "l": 1
       },
       {
         "age_cv": 48,
         "competences_coverage_required": 0.5,
-        "l": 2
+        "l": 1
       },
       {
         "age_cv": 48,
         "competences_coverage_required": 0.75,
-        "l": 2
+        "l": 1
       },
       {
         "age_cv": 48,
         "competences_coverage_required": 1.0,
-        "l": 2
+        "l": 1
       },
       {
         "age_cv": 49,
         "competences_coverage_required": 0.25,
-        "l": 2
+        "l": 1
       },
       {
         "age_cv": 49,
         "competences_coverage_required": 0.5,
-        "l": 2
+        "l": 1
       },
       {
         "age_cv": 49,
         "competences_coverage_required": 0.75,
-        "l": 2
+        "l": 1
       },
       {
         "age_cv": 49,
         "competences_coverage_required": 1.0,
-        "l": 2
+        "l": 1
       },
       {
         "age_cv": 50,
         "competences_coverage_required": 0.25,
-        "l": 2
+        "l": 1
       },
       {
         "age_cv": 50,
         "competences_coverage_required": 0.5,
-        "l": 2
+        "l": 1
       },
       {
         "age_cv": 50,
         "competences_coverage_required": 0.75,
-        "l": 2
+        "l": 1
       },
       {
         "age_cv": 50,
         "competences_coverage_required": 1.0,
-        "l": 3
+        "l": 1
       },
       {
         "age_cv": 51,
         "competences_coverage_required": 0.25,
-        "l": 2
+        "l": 1
       },
       {
         "age_cv": 51,
         "competences_coverage_required": 0.5,
-        "l": 3
+        "l": 1
       },
       {
         "age_cv": 51,
         "competences_coverage_required": 0.75,
-        "l": 3
+        "l": 1
       },
       {
         "age_cv": 51,
         "competences_coverage_required": 1.0,
-        "l": 2
+        "l": 1
       },
       {
         "age_cv": 52,
         "competences_coverage_required": 0.25,
-        "l": 3
+        "l": 1
       },
       {
         "age_cv": 52,
         "competences_coverage_required": 0.5,
-        "l": 2
+        "l": 1
       },
       {
         "age_cv": 52,
         "competences_coverage_required": 0.75,
-        "l": 2
+        "l": 1
       },
       {
         "age_cv": 52,
         "competences_coverage_required": 1.0,
-        "l": 2
+        "l": 1
       },
       {
         "age_cv": 53,
         "competences_coverage_required": 0.25,
-        "l": 2
+        "l": 1
       },
       {
         "age_cv": 53,
         "competences_coverage_required": 0.5,
-        "l": 2
+        "l": 1
       },
       {
         "age_cv": 53,
         "competences_coverage_required": 0.75,
-        "l": 2
+        "l": 1
       },
       {
         "age_cv": 53,
         "competences_coverage_required": 1.0,
-        "l": 3
+        "l": 1
       },
       {
         "age_cv": 54,
         "competences_coverage_required": 0.25,
-        "l": 2
+        "l": 1
       },
       {
         "age_cv": 54,
         "competences_coverage_required": 0.5,
-        "l": 2
+        "l": 1
       },
       {
         "age_cv": 54,
         "competences_coverage_required": 0.75,
-        "l": 2
+        "l": 1
       },
       {
         "age_cv": 54,
         "competences_coverage_required": 1.0,
-        "l": 2
+        "l": 1
       },
       {
         "age_cv": 55,
         "competences_coverage_required": 0.25,
-        "l": 2
+        "l": 1
       },
       {
         "age_cv": 55,
         "competences_coverage_required": 0.5,
-        "l": 2
+        "l": 1
       },
       {
         "age_cv": 55,
         "competences_coverage_required": 0.75,
-        "l": 2
+        "l": 1
       },
       {
         "age_cv": 55,
         "competences_coverage_required": 1.0,
-        "l": 3
+        "l": 1
       },
       {
         "age_cv": 56,
         "competences_coverage_required": 0.25,
-        "l": 2
+        "l": 1
       },
       {
         "age_cv": 56,
         "competences_coverage_required": 0.5,
-        "l": 2
+        "l": 1
       },
       {
         "age_cv": 56,
         "competences_coverage_required": 0.75,
-        "l": 2
+        "l": 1
       },
       {
         "age_cv": 56,
         "competences_coverage_required": 1.0,
-        "l": 2
+        "l": 1
       },
       {
         "age_cv": 57,
         "competences_coverage_required": 0.25,
-        "l": 2
+        "l": 1
       },
       {
         "age_cv": 57,
         "competences_coverage_required": 0.5,
-        "l": 2
+        "l": 1
       },
       {
         "age_cv": 57,
         "competences_coverage_required": 0.75,
-        "l": 3
+        "l": 1
       },
       {
         "age_cv": 57,
         "competences_coverage_required": 1.0,
-        "l": 2
+        "l": 1
       },
       {
         "age_cv": 58,
         "competences_coverage_required": 0.25,
-        "l": 2
+        "l": 1
       },
       {
         "age_cv": 58,
         "competences_coverage_required": 0.5,
-        "l": 2
+        "l": 1
       },
       {
         "age_cv": 58,
         "competences_coverage_required": 0.75,
-        "l": 2
+        "l": 1
       },
       {
         "age_cv": 58,
         "competences_coverage_required": 1.0,
-        "l": 2
+        "l": 1
       },
       {
         "age_cv": 59,
         "competences_coverage_required": 0.25,
-        "l": 2
+        "l": 1
       },
       {
         "age_cv": 59,
         "competences_coverage_required": 0.5,
-        "l": 2
+        "l": 1
       },
       {
         "age_cv": 59,
         "competences_coverage_required": 0.75,
-        "l": 2
+        "l": 1
       },
       {
         "age_cv": 59,
         "competences_coverage_required": 1.0,
-        "l": 2
+        "l": 1
       },
       {
         "age_cv": 60,
         "competences_coverage_required": 0.25,
-        "l": 2
+        "l": 1
       },
       {
         "age_cv": 60,
         "competences_coverage_required": 0.5,
-        "l": 2
+        "l": 1
       },
       {
         "age_cv": 60,
         "competences_coverage_required": 0.75,
-        "l": 2
+        "l": 1
       },
       {
         "age_cv": 60,
         "competences_coverage_required": 1.0,
-        "l": 2
+        "l": 1
       }
     ],
-    "final_score": 9.7
+    "final_score": 5.0
   },
   "mutual_information_metric": {
     "metric": "Mutual Information",
     "status": "success",
-    "total_mi": 8.088,
-    "sensitive_attribute": "age_cv",
-    "final_score": 8.9,
+    "total_mi": 1.334,
+    "sensitive_attribute": "competences_coverage_required",
+    "final_score": 5.716,
     "full_results": [
       {
         "feature": "PCA_2",
-        "mutual_information": 3.661
+        "mutual_information": 0.621
       },
       {
         "feature": "PCA_1",
-        "mutual_information": 3.661
+        "mutual_information": 0.621
       },
       {
-        "feature": "age_max_job",
-        "mutual_information": 0.102
-      },
-      {
-        "feature": "age_min_job",
-        "mutual_information": 0.091
-      },
-      {
-        "feature": "competences_coverage_required",
-        "mutual_information": 0.082
-      },
-      {
-        "feature": "education_job_encoded",
-        "mutual_information": 0.056
-      },
-      {
-        "feature": "education_cv_encoded",
-        "mutual_information": 0.045
-      },
-      {
-        "feature": "gender_cv_Male",
-        "mutual_information": 0.041
-      },
-      {
-        "feature": "nationality_job_Spanish",
-        "mutual_information": 0.04
-      },
-      {
-        "feature": "disability_cv_No",
-        "mutual_information": 0.027
-      },
-      {
-        "feature": "nationality_job_French",
-        "mutual_information": 0.022
-      },
-      {
-        "feature": "nationality_cv_French",
-        "mutual_information": 0.02
-      },
-      {
-        "feature": "distrib_test",
-        "mutual_information": 0.02
-      },
-      {
-        "feature": "people_of_world",
-        "mutual_information": 0.02
-      },
-      {
-        "feature": "gender_cv_Female",
-        "mutual_information": 0.02
-      },
-      {
-        "feature": "gender_cv_Not binary",
-        "mutual_information": 0.017
-      },
-      {
-        "feature": "gender_job_Any",
-        "mutual_information": 0.017
-      },
-      {
-        "feature": "nationality_cv_Spanish",
-        "mutual_information": 0.015
-      },
-      {
-        "feature": "gender_job_Male",
-        "mutual_information": 0.014
-      },
-      {
-        "feature": "disability_job_Any",
-        "mutual_information": 0.014
-      },
-      {
-        "feature": "nationality_cv_Catalan",
+        "feature": "nationality_cv_Italian",
         "mutual_information": 0.013
       },
       {
-        "feature": "nationality_job_Any",
-        "mutual_information": 0.012
-      },
-      {
-        "feature": "disability_cv_Yes",
-        "mutual_information": 0.012
-      },
-      {
-        "feature": "nationality_cv_German",
-        "mutual_information": 0.011
-      },
-      {
-        "feature": "nationality_cv_Romanian",
-        "mutual_information": 0.011
-      },
-      {
-        "feature": "nationality_cv_Russian",
-        "mutual_information": 0.009
-      },
-      {
-        "feature": "check_it",
-        "mutual_information": 0.007
-      },
-      {
         "feature": "nationality_job_Italian",
-        "mutual_information": 0.007
+        "mutual_information": 0.011
       },
       {
-        "feature": "check_de",
-        "mutual_information": 0.007
-      },
-      {
-        "feature": "nationality_job_Catalan",
-        "mutual_information": 0.006
-      },
-      {
-        "feature": "education_job_req",
-        "mutual_information": 0.004
+        "feature": "age_max_job",
+        "mutual_information": 0.01
       },
       {
         "feature": "nationality_cv_LowGerman",
-        "mutual_information": 0.002
+        "mutual_information": 0.008
+      },
+      {
+        "feature": "check_de",
+        "mutual_information": 0.008
+      },
+      {
+        "feature": "education_cv_encoded",
+        "mutual_information": 0.006
+      },
+      {
+        "feature": "education_job_encoded",
+        "mutual_information": 0.006
+      },
+      {
+        "feature": "gender_cv_Male",
+        "mutual_information": 0.005
+      },
+      {
+        "feature": "age_min_job",
+        "mutual_information": 0.005
       },
       {
         "feature": "nationality_cv_Irish",
-        "mutual_information": 0.0
+        "mutual_information": 0.005
       },
       {
-        "feature": "gender_job_Female",
-        "mutual_information": 0.0
+        "feature": "disability_cv_Yes",
+        "mutual_information": 0.004
+      },
+      {
+        "feature": "nationality_cv_English",
+        "mutual_information": 0.003
+      },
+      {
+        "feature": "nationality_cv_Swedish",
+        "mutual_information": 0.002
       },
       {
         "feature": "gender_cv_Not declared",
-        "mutual_information": 0.0
+        "mutual_information": 0.002
       },
       {
-        "feature": "disability_cv_Not declared",
-        "mutual_information": 0.0
+        "feature": "disability_job_Any",
+        "mutual_information": 0.002
       },
       {
-        "feature": "disability_job_No",
+        "feature": "nationality_job_Spanish",
+        "mutual_information": 0.001
+      },
+      {
+        "feature": "nationality_cv_Spanish",
         "mutual_information": 0.0
       },
       {
@@ -2535,15 +3780,87 @@
         "mutual_information": 0.0
       },
       {
-        "feature": "nationality_cv_English",
+        "feature": "education_job_req",
         "mutual_information": 0.0
       },
       {
-        "feature": "nationality_cv_Italian",
+        "feature": "competences_coverage_optional",
         "mutual_information": 0.0
       },
       {
-        "feature": "nationality_cv_Swedish",
+        "feature": "gender_job_Male",
+        "mutual_information": 0.0
+      },
+      {
+        "feature": "gender_job_Female",
+        "mutual_information": 0.0
+      },
+      {
+        "feature": "gender_job_Any",
+        "mutual_information": 0.0
+      },
+      {
+        "feature": "gender_cv_Female",
+        "mutual_information": 0.0
+      },
+      {
+        "feature": "nationality_job_French",
+        "mutual_information": 0.0
+      },
+      {
+        "feature": "nationality_job_Any",
+        "mutual_information": 0.0
+      },
+      {
+        "feature": "nationality_job_Catalan",
+        "mutual_information": 0.0
+      },
+      {
+        "feature": "disability_cv_Not declared",
+        "mutual_information": 0.0
+      },
+      {
+        "feature": "disability_cv_No",
+        "mutual_information": 0.0
+      },
+      {
+        "feature": "gender_cv_Not binary",
+        "mutual_information": 0.0
+      },
+      {
+        "feature": "disability_job_No",
+        "mutual_information": 0.0
+      },
+      {
+        "feature": "nationality_cv_Catalan",
+        "mutual_information": 0.0
+      },
+      {
+        "feature": "nationality_cv_Romanian",
+        "mutual_information": 0.0
+      },
+      {
+        "feature": "nationality_cv_French",
+        "mutual_information": 0.0
+      },
+      {
+        "feature": "nationality_cv_German",
+        "mutual_information": 0.0
+      },
+      {
+        "feature": "nationality_cv_Russian",
+        "mutual_information": 0.0
+      },
+      {
+        "feature": "distrib_test",
+        "mutual_information": 0.0
+      },
+      {
+        "feature": "check_it",
+        "mutual_information": 0.0
+      },
+      {
+        "feature": "people_of_world",
         "mutual_information": 0.0
       }
     ]
@@ -2552,1103 +3869,142 @@
     "metric": "T-Closeness",
     "status": "success",
     "quasi_identifiers": [
-      "age_cv",
       "competences_coverage_required"
     ],
-    "sensitive_attribute": "competences_coverage_required",
-    "t_optimal": 0.228,
+    "sensitive_attribute": "education_cv_encoded",
+    "t_optimal": 0.226,
     "full_results": [
       {
-        "age_cv": 16,
         "competences_coverage_required": 0.25,
-        "t": 0.228
+        "education_cv_encoded": 0,
+        "t": 0.226
       },
       {
-        "age_cv": 16,
-        "competences_coverage_required": 0.5,
-        "t": 0.228
-      },
-      {
-        "age_cv": 16,
-        "competences_coverage_required": 0.75,
-        "t": 0.228
-      },
-      {
-        "age_cv": 16,
-        "competences_coverage_required": 1.0,
-        "t": 0.228
-      },
-      {
-        "age_cv": 17,
         "competences_coverage_required": 0.25,
-        "t": 0.228
+        "education_cv_encoded": 1,
+        "t": 0.226
       },
       {
-        "age_cv": 17,
-        "competences_coverage_required": 0.5,
-        "t": 0.228
-      },
-      {
-        "age_cv": 17,
-        "competences_coverage_required": 0.75,
-        "t": 0.228
-      },
-      {
-        "age_cv": 18,
         "competences_coverage_required": 0.25,
-        "t": 0.228
+        "education_cv_encoded": 2,
+        "t": 0.226
       },
       {
-        "age_cv": 18,
+        "competences_coverage_required": 0.25,
+        "education_cv_encoded": 3,
+        "t": 0.226
+      },
+      {
+        "competences_coverage_required": 0.25,
+        "education_cv_encoded": 4,
+        "t": 0.226
+      },
+      {
         "competences_coverage_required": 0.333,
-        "t": 0.228
+        "education_cv_encoded": 1,
+        "t": 0.226
       },
       {
-        "age_cv": 18,
-        "competences_coverage_required": 0.5,
-        "t": 0.228
-      },
-      {
-        "age_cv": 18,
-        "competences_coverage_required": 0.667,
-        "t": 0.228
-      },
-      {
-        "age_cv": 18,
-        "competences_coverage_required": 0.75,
-        "t": 0.228
-      },
-      {
-        "age_cv": 18,
-        "competences_coverage_required": 1.0,
-        "t": 0.228
-      },
-      {
-        "age_cv": 19,
-        "competences_coverage_required": 0.25,
-        "t": 0.228
-      },
-      {
-        "age_cv": 19,
         "competences_coverage_required": 0.333,
-        "t": 0.228
+        "education_cv_encoded": 2,
+        "t": 0.226
       },
       {
-        "age_cv": 19,
-        "competences_coverage_required": 0.5,
-        "t": 0.228
-      },
-      {
-        "age_cv": 19,
-        "competences_coverage_required": 0.667,
-        "t": 0.228
-      },
-      {
-        "age_cv": 19,
-        "competences_coverage_required": 0.75,
-        "t": 0.228
-      },
-      {
-        "age_cv": 19,
-        "competences_coverage_required": 1.0,
-        "t": 0.228
-      },
-      {
-        "age_cv": 20,
-        "competences_coverage_required": 0.25,
-        "t": 0.228
-      },
-      {
-        "age_cv": 20,
         "competences_coverage_required": 0.333,
-        "t": 0.228
+        "education_cv_encoded": 3,
+        "t": 0.226
       },
       {
-        "age_cv": 20,
         "competences_coverage_required": 0.5,
-        "t": 0.228
+        "education_cv_encoded": 0,
+        "t": 0.226
       },
       {
-        "age_cv": 20,
+        "competences_coverage_required": 0.5,
+        "education_cv_encoded": 1,
+        "t": 0.226
+      },
+      {
+        "competences_coverage_required": 0.5,
+        "education_cv_encoded": 2,
+        "t": 0.226
+      },
+      {
+        "competences_coverage_required": 0.5,
+        "education_cv_encoded": 3,
+        "t": 0.226
+      },
+      {
+        "competences_coverage_required": 0.5,
+        "education_cv_encoded": 4,
+        "t": 0.226
+      },
+      {
         "competences_coverage_required": 0.667,
-        "t": 0.228
+        "education_cv_encoded": 1,
+        "t": 0.226
       },
       {
-        "age_cv": 20,
-        "competences_coverage_required": 0.75,
-        "t": 0.228
-      },
-      {
-        "age_cv": 20,
-        "competences_coverage_required": 1.0,
-        "t": 0.228
-      },
-      {
-        "age_cv": 21,
-        "competences_coverage_required": 0.25,
-        "t": 0.228
-      },
-      {
-        "age_cv": 21,
-        "competences_coverage_required": 0.333,
-        "t": 0.228
-      },
-      {
-        "age_cv": 21,
-        "competences_coverage_required": 0.5,
-        "t": 0.228
-      },
-      {
-        "age_cv": 21,
         "competences_coverage_required": 0.667,
-        "t": 0.228
+        "education_cv_encoded": 2,
+        "t": 0.226
       },
       {
-        "age_cv": 21,
-        "competences_coverage_required": 0.75,
-        "t": 0.228
-      },
-      {
-        "age_cv": 21,
-        "competences_coverage_required": 1.0,
-        "t": 0.228
-      },
-      {
-        "age_cv": 22,
-        "competences_coverage_required": 0.25,
-        "t": 0.228
-      },
-      {
-        "age_cv": 22,
-        "competences_coverage_required": 0.333,
-        "t": 0.228
-      },
-      {
-        "age_cv": 22,
-        "competences_coverage_required": 0.5,
-        "t": 0.228
-      },
-      {
-        "age_cv": 22,
         "competences_coverage_required": 0.667,
-        "t": 0.228
+        "education_cv_encoded": 3,
+        "t": 0.226
       },
       {
-        "age_cv": 22,
         "competences_coverage_required": 0.75,
-        "t": 0.228
+        "education_cv_encoded": 0,
+        "t": 0.226
       },
       {
-        "age_cv": 22,
-        "competences_coverage_required": 1.0,
-        "t": 0.228
-      },
-      {
-        "age_cv": 23,
-        "competences_coverage_required": 0.25,
-        "t": 0.228
-      },
-      {
-        "age_cv": 23,
-        "competences_coverage_required": 0.333,
-        "t": 0.228
-      },
-      {
-        "age_cv": 23,
-        "competences_coverage_required": 0.5,
-        "t": 0.228
-      },
-      {
-        "age_cv": 23,
-        "competences_coverage_required": 0.667,
-        "t": 0.228
-      },
-      {
-        "age_cv": 23,
         "competences_coverage_required": 0.75,
-        "t": 0.228
+        "education_cv_encoded": 1,
+        "t": 0.226
       },
       {
-        "age_cv": 23,
-        "competences_coverage_required": 1.0,
-        "t": 0.228
-      },
-      {
-        "age_cv": 24,
-        "competences_coverage_required": 0.25,
-        "t": 0.228
-      },
-      {
-        "age_cv": 24,
-        "competences_coverage_required": 0.333,
-        "t": 0.228
-      },
-      {
-        "age_cv": 24,
-        "competences_coverage_required": 0.5,
-        "t": 0.228
-      },
-      {
-        "age_cv": 24,
-        "competences_coverage_required": 0.667,
-        "t": 0.228
-      },
-      {
-        "age_cv": 24,
         "competences_coverage_required": 0.75,
-        "t": 0.228
+        "education_cv_encoded": 2,
+        "t": 0.226
       },
       {
-        "age_cv": 24,
-        "competences_coverage_required": 1.0,
-        "t": 0.228
-      },
-      {
-        "age_cv": 25,
-        "competences_coverage_required": 0.25,
-        "t": 0.228
-      },
-      {
-        "age_cv": 25,
-        "competences_coverage_required": 0.333,
-        "t": 0.228
-      },
-      {
-        "age_cv": 25,
-        "competences_coverage_required": 0.5,
-        "t": 0.228
-      },
-      {
-        "age_cv": 25,
-        "competences_coverage_required": 0.667,
-        "t": 0.228
-      },
-      {
-        "age_cv": 25,
         "competences_coverage_required": 0.75,
-        "t": 0.228
+        "education_cv_encoded": 3,
+        "t": 0.226
       },
       {
-        "age_cv": 25,
-        "competences_coverage_required": 1.0,
-        "t": 0.228
-      },
-      {
-        "age_cv": 26,
-        "competences_coverage_required": 0.25,
-        "t": 0.228
-      },
-      {
-        "age_cv": 26,
-        "competences_coverage_required": 0.333,
-        "t": 0.228
-      },
-      {
-        "age_cv": 26,
-        "competences_coverage_required": 0.5,
-        "t": 0.228
-      },
-      {
-        "age_cv": 26,
-        "competences_coverage_required": 0.667,
-        "t": 0.228
-      },
-      {
-        "age_cv": 26,
         "competences_coverage_required": 0.75,
-        "t": 0.228
+        "education_cv_encoded": 4,
+        "t": 0.226
       },
       {
-        "age_cv": 26,
         "competences_coverage_required": 1.0,
-        "t": 0.228
+        "education_cv_encoded": 0,
+        "t": 0.226
       },
       {
-        "age_cv": 27,
-        "competences_coverage_required": 0.25,
-        "t": 0.228
-      },
-      {
-        "age_cv": 27,
-        "competences_coverage_required": 0.333,
-        "t": 0.228
-      },
-      {
-        "age_cv": 27,
-        "competences_coverage_required": 0.5,
-        "t": 0.228
-      },
-      {
-        "age_cv": 27,
-        "competences_coverage_required": 0.667,
-        "t": 0.228
-      },
-      {
-        "age_cv": 27,
-        "competences_coverage_required": 0.75,
-        "t": 0.228
-      },
-      {
-        "age_cv": 27,
         "competences_coverage_required": 1.0,
-        "t": 0.228
+        "education_cv_encoded": 1,
+        "t": 0.226
       },
       {
-        "age_cv": 28,
-        "competences_coverage_required": 0.25,
-        "t": 0.228
-      },
-      {
-        "age_cv": 28,
-        "competences_coverage_required": 0.333,
-        "t": 0.228
-      },
-      {
-        "age_cv": 28,
-        "competences_coverage_required": 0.5,
-        "t": 0.228
-      },
-      {
-        "age_cv": 28,
-        "competences_coverage_required": 0.667,
-        "t": 0.228
-      },
-      {
-        "age_cv": 28,
-        "competences_coverage_required": 0.75,
-        "t": 0.228
-      },
-      {
-        "age_cv": 28,
         "competences_coverage_required": 1.0,
-        "t": 0.228
+        "education_cv_encoded": 2,
+        "t": 0.226
       },
       {
-        "age_cv": 29,
-        "competences_coverage_required": 0.25,
-        "t": 0.228
-      },
-      {
-        "age_cv": 29,
-        "competences_coverage_required": 0.333,
-        "t": 0.228
-      },
-      {
-        "age_cv": 29,
-        "competences_coverage_required": 0.5,
-        "t": 0.228
-      },
-      {
-        "age_cv": 29,
-        "competences_coverage_required": 0.667,
-        "t": 0.228
-      },
-      {
-        "age_cv": 29,
-        "competences_coverage_required": 0.75,
-        "t": 0.228
-      },
-      {
-        "age_cv": 29,
         "competences_coverage_required": 1.0,
-        "t": 0.228
+        "education_cv_encoded": 3,
+        "t": 0.226
       },
       {
-        "age_cv": 30,
-        "competences_coverage_required": 0.25,
-        "t": 0.228
-      },
-      {
-        "age_cv": 30,
-        "competences_coverage_required": 0.333,
-        "t": 0.228
-      },
-      {
-        "age_cv": 30,
-        "competences_coverage_required": 0.5,
-        "t": 0.228
-      },
-      {
-        "age_cv": 30,
-        "competences_coverage_required": 0.667,
-        "t": 0.228
-      },
-      {
-        "age_cv": 30,
-        "competences_coverage_required": 0.75,
-        "t": 0.228
-      },
-      {
-        "age_cv": 30,
         "competences_coverage_required": 1.0,
-        "t": 0.228
-      },
-      {
-        "age_cv": 31,
-        "competences_coverage_required": 0.25,
-        "t": 0.228
-      },
-      {
-        "age_cv": 31,
-        "competences_coverage_required": 0.333,
-        "t": 0.228
-      },
-      {
-        "age_cv": 31,
-        "competences_coverage_required": 0.5,
-        "t": 0.228
-      },
-      {
-        "age_cv": 31,
-        "competences_coverage_required": 0.667,
-        "t": 0.228
-      },
-      {
-        "age_cv": 31,
-        "competences_coverage_required": 0.75,
-        "t": 0.228
-      },
-      {
-        "age_cv": 31,
-        "competences_coverage_required": 1.0,
-        "t": 0.228
-      },
-      {
-        "age_cv": 32,
-        "competences_coverage_required": 0.25,
-        "t": 0.228
-      },
-      {
-        "age_cv": 32,
-        "competences_coverage_required": 0.333,
-        "t": 0.228
-      },
-      {
-        "age_cv": 32,
-        "competences_coverage_required": 0.5,
-        "t": 0.228
-      },
-      {
-        "age_cv": 32,
-        "competences_coverage_required": 0.667,
-        "t": 0.228
-      },
-      {
-        "age_cv": 32,
-        "competences_coverage_required": 0.75,
-        "t": 0.228
-      },
-      {
-        "age_cv": 32,
-        "competences_coverage_required": 1.0,
-        "t": 0.228
-      },
-      {
-        "age_cv": 33,
-        "competences_coverage_required": 0.25,
-        "t": 0.228
-      },
-      {
-        "age_cv": 33,
-        "competences_coverage_required": 0.333,
-        "t": 0.228
-      },
-      {
-        "age_cv": 33,
-        "competences_coverage_required": 0.5,
-        "t": 0.228
-      },
-      {
-        "age_cv": 33,
-        "competences_coverage_required": 0.667,
-        "t": 0.228
-      },
-      {
-        "age_cv": 33,
-        "competences_coverage_required": 0.75,
-        "t": 0.228
-      },
-      {
-        "age_cv": 33,
-        "competences_coverage_required": 1.0,
-        "t": 0.228
-      },
-      {
-        "age_cv": 34,
-        "competences_coverage_required": 0.25,
-        "t": 0.228
-      },
-      {
-        "age_cv": 34,
-        "competences_coverage_required": 0.333,
-        "t": 0.228
-      },
-      {
-        "age_cv": 34,
-        "competences_coverage_required": 0.5,
-        "t": 0.228
-      },
-      {
-        "age_cv": 34,
-        "competences_coverage_required": 0.667,
-        "t": 0.228
-      },
-      {
-        "age_cv": 34,
-        "competences_coverage_required": 0.75,
-        "t": 0.228
-      },
-      {
-        "age_cv": 34,
-        "competences_coverage_required": 1.0,
-        "t": 0.228
-      },
-      {
-        "age_cv": 35,
-        "competences_coverage_required": 0.25,
-        "t": 0.228
-      },
-      {
-        "age_cv": 35,
-        "competences_coverage_required": 0.333,
-        "t": 0.228
-      },
-      {
-        "age_cv": 35,
-        "competences_coverage_required": 0.5,
-        "t": 0.228
-      },
-      {
-        "age_cv": 35,
-        "competences_coverage_required": 0.667,
-        "t": 0.228
-      },
-      {
-        "age_cv": 35,
-        "competences_coverage_required": 0.75,
-        "t": 0.228
-      },
-      {
-        "age_cv": 35,
-        "competences_coverage_required": 1.0,
-        "t": 0.228
-      },
-      {
-        "age_cv": 36,
-        "competences_coverage_required": 0.25,
-        "t": 0.228
-      },
-      {
-        "age_cv": 36,
-        "competences_coverage_required": 0.333,
-        "t": 0.228
-      },
-      {
-        "age_cv": 36,
-        "competences_coverage_required": 0.5,
-        "t": 0.228
-      },
-      {
-        "age_cv": 36,
-        "competences_coverage_required": 0.667,
-        "t": 0.228
-      },
-      {
-        "age_cv": 36,
-        "competences_coverage_required": 0.75,
-        "t": 0.228
-      },
-      {
-        "age_cv": 36,
-        "competences_coverage_required": 1.0,
-        "t": 0.228
-      },
-      {
-        "age_cv": 37,
-        "competences_coverage_required": 0.25,
-        "t": 0.228
-      },
-      {
-        "age_cv": 37,
-        "competences_coverage_required": 0.5,
-        "t": 0.228
-      },
-      {
-        "age_cv": 37,
-        "competences_coverage_required": 0.667,
-        "t": 0.228
-      },
-      {
-        "age_cv": 37,
-        "competences_coverage_required": 0.75,
-        "t": 0.228
-      },
-      {
-        "age_cv": 37,
-        "competences_coverage_required": 1.0,
-        "t": 0.228
-      },
-      {
-        "age_cv": 38,
-        "competences_coverage_required": 0.25,
-        "t": 0.228
-      },
-      {
-        "age_cv": 38,
-        "competences_coverage_required": 0.5,
-        "t": 0.228
-      },
-      {
-        "age_cv": 38,
-        "competences_coverage_required": 0.75,
-        "t": 0.228
-      },
-      {
-        "age_cv": 38,
-        "competences_coverage_required": 1.0,
-        "t": 0.228
-      },
-      {
-        "age_cv": 39,
-        "competences_coverage_required": 0.25,
-        "t": 0.228
-      },
-      {
-        "age_cv": 39,
-        "competences_coverage_required": 0.5,
-        "t": 0.228
-      },
-      {
-        "age_cv": 39,
-        "competences_coverage_required": 0.75,
-        "t": 0.228
-      },
-      {
-        "age_cv": 39,
-        "competences_coverage_required": 1.0,
-        "t": 0.228
-      },
-      {
-        "age_cv": 40,
-        "competences_coverage_required": 0.25,
-        "t": 0.228
-      },
-      {
-        "age_cv": 40,
-        "competences_coverage_required": 0.5,
-        "t": 0.228
-      },
-      {
-        "age_cv": 40,
-        "competences_coverage_required": 0.75,
-        "t": 0.228
-      },
-      {
-        "age_cv": 40,
-        "competences_coverage_required": 1.0,
-        "t": 0.228
-      },
-      {
-        "age_cv": 41,
-        "competences_coverage_required": 0.25,
-        "t": 0.228
-      },
-      {
-        "age_cv": 41,
-        "competences_coverage_required": 0.5,
-        "t": 0.228
-      },
-      {
-        "age_cv": 41,
-        "competences_coverage_required": 0.75,
-        "t": 0.228
-      },
-      {
-        "age_cv": 41,
-        "competences_coverage_required": 1.0,
-        "t": 0.228
-      },
-      {
-        "age_cv": 42,
-        "competences_coverage_required": 0.25,
-        "t": 0.228
-      },
-      {
-        "age_cv": 42,
-        "competences_coverage_required": 0.5,
-        "t": 0.228
-      },
-      {
-        "age_cv": 42,
-        "competences_coverage_required": 0.75,
-        "t": 0.228
-      },
-      {
-        "age_cv": 42,
-        "competences_coverage_required": 1.0,
-        "t": 0.228
-      },
-      {
-        "age_cv": 43,
-        "competences_coverage_required": 0.25,
-        "t": 0.228
-      },
-      {
-        "age_cv": 43,
-        "competences_coverage_required": 0.5,
-        "t": 0.228
-      },
-      {
-        "age_cv": 43,
-        "competences_coverage_required": 0.75,
-        "t": 0.228
-      },
-      {
-        "age_cv": 43,
-        "competences_coverage_required": 1.0,
-        "t": 0.228
-      },
-      {
-        "age_cv": 44,
-        "competences_coverage_required": 0.25,
-        "t": 0.228
-      },
-      {
-        "age_cv": 44,
-        "competences_coverage_required": 0.5,
-        "t": 0.228
-      },
-      {
-        "age_cv": 44,
-        "competences_coverage_required": 0.75,
-        "t": 0.228
-      },
-      {
-        "age_cv": 44,
-        "competences_coverage_required": 1.0,
-        "t": 0.228
-      },
-      {
-        "age_cv": 45,
-        "competences_coverage_required": 0.25,
-        "t": 0.228
-      },
-      {
-        "age_cv": 45,
-        "competences_coverage_required": 0.5,
-        "t": 0.228
-      },
-      {
-        "age_cv": 45,
-        "competences_coverage_required": 0.75,
-        "t": 0.228
-      },
-      {
-        "age_cv": 45,
-        "competences_coverage_required": 1.0,
-        "t": 0.228
-      },
-      {
-        "age_cv": 46,
-        "competences_coverage_required": 0.25,
-        "t": 0.228
-      },
-      {
-        "age_cv": 46,
-        "competences_coverage_required": 0.5,
-        "t": 0.228
-      },
-      {
-        "age_cv": 46,
-        "competences_coverage_required": 0.75,
-        "t": 0.228
-      },
-      {
-        "age_cv": 46,
-        "competences_coverage_required": 1.0,
-        "t": 0.228
-      },
-      {
-        "age_cv": 47,
-        "competences_coverage_required": 0.25,
-        "t": 0.228
-      },
-      {
-        "age_cv": 47,
-        "competences_coverage_required": 0.5,
-        "t": 0.228
-      },
-      {
-        "age_cv": 47,
-        "competences_coverage_required": 0.75,
-        "t": 0.228
-      },
-      {
-        "age_cv": 47,
-        "competences_coverage_required": 1.0,
-        "t": 0.228
-      },
-      {
-        "age_cv": 48,
-        "competences_coverage_required": 0.25,
-        "t": 0.228
-      },
-      {
-        "age_cv": 48,
-        "competences_coverage_required": 0.5,
-        "t": 0.228
-      },
-      {
-        "age_cv": 48,
-        "competences_coverage_required": 0.75,
-        "t": 0.228
-      },
-      {
-        "age_cv": 48,
-        "competences_coverage_required": 1.0,
-        "t": 0.228
-      },
-      {
-        "age_cv": 49,
-        "competences_coverage_required": 0.25,
-        "t": 0.228
-      },
-      {
-        "age_cv": 49,
-        "competences_coverage_required": 0.5,
-        "t": 0.228
-      },
-      {
-        "age_cv": 49,
-        "competences_coverage_required": 0.75,
-        "t": 0.228
-      },
-      {
-        "age_cv": 49,
-        "competences_coverage_required": 1.0,
-        "t": 0.228
-      },
-      {
-        "age_cv": 50,
-        "competences_coverage_required": 0.25,
-        "t": 0.228
-      },
-      {
-        "age_cv": 50,
-        "competences_coverage_required": 0.5,
-        "t": 0.228
-      },
-      {
-        "age_cv": 50,
-        "competences_coverage_required": 0.75,
-        "t": 0.228
-      },
-      {
-        "age_cv": 50,
-        "competences_coverage_required": 1.0,
-        "t": 0.228
-      },
-      {
-        "age_cv": 51,
-        "competences_coverage_required": 0.25,
-        "t": 0.228
-      },
-      {
-        "age_cv": 51,
-        "competences_coverage_required": 0.5,
-        "t": 0.228
-      },
-      {
-        "age_cv": 51,
-        "competences_coverage_required": 0.75,
-        "t": 0.228
-      },
-      {
-        "age_cv": 51,
-        "competences_coverage_required": 1.0,
-        "t": 0.228
-      },
-      {
-        "age_cv": 52,
-        "competences_coverage_required": 0.25,
-        "t": 0.228
-      },
-      {
-        "age_cv": 52,
-        "competences_coverage_required": 0.5,
-        "t": 0.228
-      },
-      {
-        "age_cv": 52,
-        "competences_coverage_required": 0.75,
-        "t": 0.228
-      },
-      {
-        "age_cv": 52,
-        "competences_coverage_required": 1.0,
-        "t": 0.228
-      },
-      {
-        "age_cv": 53,
-        "competences_coverage_required": 0.25,
-        "t": 0.228
-      },
-      {
-        "age_cv": 53,
-        "competences_coverage_required": 0.5,
-        "t": 0.228
-      },
-      {
-        "age_cv": 53,
-        "competences_coverage_required": 0.75,
-        "t": 0.228
-      },
-      {
-        "age_cv": 53,
-        "competences_coverage_required": 1.0,
-        "t": 0.228
-      },
-      {
-        "age_cv": 54,
-        "competences_coverage_required": 0.25,
-        "t": 0.228
-      },
-      {
-        "age_cv": 54,
-        "competences_coverage_required": 0.5,
-        "t": 0.228
-      },
-      {
-        "age_cv": 54,
-        "competences_coverage_required": 0.75,
-        "t": 0.228
-      },
-      {
-        "age_cv": 54,
-        "competences_coverage_required": 1.0,
-        "t": 0.228
-      },
-      {
-        "age_cv": 55,
-        "competences_coverage_required": 0.25,
-        "t": 0.228
-      },
-      {
-        "age_cv": 55,
-        "competences_coverage_required": 0.5,
-        "t": 0.228
-      },
-      {
-        "age_cv": 55,
-        "competences_coverage_required": 0.75,
-        "t": 0.228
-      },
-      {
-        "age_cv": 55,
-        "competences_coverage_required": 1.0,
-        "t": 0.228
-      },
-      {
-        "age_cv": 56,
-        "competences_coverage_required": 0.25,
-        "t": 0.228
-      },
-      {
-        "age_cv": 56,
-        "competences_coverage_required": 0.5,
-        "t": 0.228
-      },
-      {
-        "age_cv": 56,
-        "competences_coverage_required": 0.75,
-        "t": 0.228
-      },
-      {
-        "age_cv": 56,
-        "competences_coverage_required": 1.0,
-        "t": 0.228
-      },
-      {
-        "age_cv": 57,
-        "competences_coverage_required": 0.25,
-        "t": 0.228
-      },
-      {
-        "age_cv": 57,
-        "competences_coverage_required": 0.5,
-        "t": 0.228
-      },
-      {
-        "age_cv": 57,
-        "competences_coverage_required": 0.75,
-        "t": 0.228
-      },
-      {
-        "age_cv": 57,
-        "competences_coverage_required": 1.0,
-        "t": 0.228
-      },
-      {
-        "age_cv": 58,
-        "competences_coverage_required": 0.25,
-        "t": 0.228
-      },
-      {
-        "age_cv": 58,
-        "competences_coverage_required": 0.5,
-        "t": 0.228
-      },
-      {
-        "age_cv": 58,
-        "competences_coverage_required": 0.75,
-        "t": 0.228
-      },
-      {
-        "age_cv": 58,
-        "competences_coverage_required": 1.0,
-        "t": 0.228
-      },
-      {
-        "age_cv": 59,
-        "competences_coverage_required": 0.25,
-        "t": 0.228
-      },
-      {
-        "age_cv": 59,
-        "competences_coverage_required": 0.5,
-        "t": 0.228
-      },
-      {
-        "age_cv": 59,
-        "competences_coverage_required": 0.75,
-        "t": 0.228
-      },
-      {
-        "age_cv": 59,
-        "competences_coverage_required": 1.0,
-        "t": 0.228
-      },
-      {
-        "age_cv": 60,
-        "competences_coverage_required": 0.25,
-        "t": 0.228
-      },
-      {
-        "age_cv": 60,
-        "competences_coverage_required": 0.5,
-        "t": 0.228
-      },
-      {
-        "age_cv": 60,
-        "competences_coverage_required": 0.75,
-        "t": 0.228
-      },
-      {
-        "age_cv": 60,
-        "competences_coverage_required": 1.0,
-        "t": 0.228
+        "education_cv_encoded": 4,
+        "t": 0.226
       }
     ],
-    "final_score": 7.719
+    "final_score": 7.743
   }
 }

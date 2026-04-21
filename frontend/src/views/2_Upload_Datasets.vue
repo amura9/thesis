@@ -197,12 +197,12 @@ onMounted(() => {
 
     <!-- Header like Image 2 -->
     <header class="header">
-      <h1 class="bigTitle">Advanced Configuration:<br />Upload you data</h1>
+      <h1 class="bigTitle"><br />STEP 2 -  Upload your data</h1>
 
-      <div class="steps">
+    <div class="steps">
         <span class="step"><span class="dot">1</span> Start evaluation</span>
         <span class="sep">→</span>
-        <span class="step active"><span class="dot filled">2</span> Upload your data</span>
+        <span class="step active"><span class="dot filled">2</span> Provide context & data</span>
         <span class="sep">→</span>
         <span class="step"><span class="dot">3</span> Choose the right</span>
         <span class="sep">→</span>
@@ -212,7 +212,7 @@ onMounted(() => {
       </div>
 
       <p class="subtitle">
-        We’ll start by uploading the dataset and the AI model to be evaluated. If you don’t have this yet, you can return later.
+        Upload the dataset and the AI model to be evaluated. If you don’t have this yet, you can return later.
       </p>
     </header>
 
@@ -361,6 +361,7 @@ onMounted(() => {
   font-size: 16px;
   font-weight: 700;
 }
+
 .step {
   display: inline-flex;
   align-items: center;

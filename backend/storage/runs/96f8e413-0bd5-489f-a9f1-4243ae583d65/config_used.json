@@ -1,9 +1,9 @@
 {
   "datasets": {
     "train": null,
-    "X_test": "C:\\Users\\pc\\Desktop\\Alberto\\Alberto\\Tesi\\FRIA_evaluation\\FRIA_evaluation\\backend\\storage\\uploads\\X_test__fa3cd042-6a8f-4ce2-af5d-84f3708d88d8__X_test_MIN.csv",
-    "y_true": "C:\\Users\\pc\\Desktop\\Alberto\\Alberto\\Tesi\\FRIA_evaluation\\FRIA_evaluation\\backend\\storage\\uploads\\y_true__fa3cd042-6a8f-4ce2-af5d-84f3708d88d8__y_true.csv",
-    "y_pred": "C:\\Users\\pc\\Desktop\\Alberto\\Alberto\\Tesi\\FRIA_evaluation\\FRIA_evaluation\\backend\\storage\\uploads\\y_pred__fa3cd042-6a8f-4ce2-af5d-84f3708d88d8__y_pred_MIN.csv"
+    "X_test": "C:\\Users\\pc\\Desktop\\Alberto\\Alberto\\Tesi\\FRIA_evaluation\\FRIA_evaluation\\backend\\storage\\uploads\\X_test__96f8e413-0bd5-489f-a9f1-4243ae583d65__X_test_MIN.csv",
+    "y_true": "C:\\Users\\pc\\Desktop\\Alberto\\Alberto\\Tesi\\FRIA_evaluation\\FRIA_evaluation\\backend\\storage\\uploads\\y_true__96f8e413-0bd5-489f-a9f1-4243ae583d65__y_true.csv",
+    "y_pred": "C:\\Users\\pc\\Desktop\\Alberto\\Alberto\\Tesi\\FRIA_evaluation\\FRIA_evaluation\\backend\\storage\\uploads\\y_pred__96f8e413-0bd5-489f-a9f1-4243ae583d65__y_pred_MIN.csv"
   },
   "model": {
     "path": null
@@ -67,6 +67,9 @@
     "plugins.privacy.mutual_information_metric",
     "plugins.privacy.t_closeness"
   ],
+  "description_of_processes": "",
+  "period_and_frequency_of_use": "",
+  "affected_persons_and_groups": "",
   "metric_requirements": {
     "new_metric": {
       "name": "New Metric",
@@ -316,38 +319,37 @@
       "t_closeness"
     ]
   },
+  "new_metric": {
+    "threshold": 0.2
+  },
   "conditional_statistical_parity": {
     "conditional_variable": "age_cv"
   },
   "k_anonymity": {
-    "k_value": 0,
+    "k_value": 2,
     "quasi_identifiers": [
       "age_cv",
       "competences_coverage_required"
     ]
-  },
-  "new_metric": {
-    "threshold": 0.2
   },
   "l_diversity": {
     "quasi_identifiers": [
       "age_cv",
       "competences_coverage_required"
     ],
-    "sensitive_attribute": "competences_coverage_optional",
+    "sensitive_attribute": "competences_coverage_required",
     "l_value": 2
   },
   "mutual_information": {
-    "sensitive_attribute": "age_cv",
+    "sensitive_attribute": "competences_coverage_required",
     "columns_to_exclude": [
-      "competences_coverage_optional"
+      "age_cv"
     ]
   },
   "t_closeness": {
     "quasi_identifiers": [
-      "age_cv",
       "competences_coverage_required"
     ],
-    "sensitive_attribute": "competences_coverage_required"
+    "sensitive_attribute": "education_cv_encoded"
   }
 }

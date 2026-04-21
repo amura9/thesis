@@ -109,13 +109,13 @@ onMounted(fetchColumns);
   <div class="page">
 
     <main class="container">
-      <h1 class="title">Step 4- Identify sensitive<br />features</h1>
+      <h1 class="title">STEP 4 - Identify sensitive<br />features</h1>
 
       <!-- stepper -->
       <div class="stepper">
         <span><span class="dot">1</span> Start evaluation</span>
         <span class="arrow">→</span>
-        <span><span class="dot">2</span> Upload your data</span>
+        <span><span class="dot">2</span> Provide context & data</span>
         <span class="arrow">→</span>
         <span><span class="dot">3</span> Choose the right</span>
         <span class="arrow">→</span>
@@ -127,7 +127,7 @@ onMounted(fetchColumns);
       <!-- explanation -->
       <p class="explain">
         <em>
-          Since you selected <strong>fairness rights</strong> in the previous step, we now need to know which variables in your
+          Since you selected <strong>non-discrimination rights</strong> in the previous step, we now need to know which variables in your
           dataset may reflect legally protected attributes such as age, gender, nationality, or disability.
           This allows the evaluator to assess if the AI system produces unfair outcomes across different demographic groups. Select the
           <strong>features</strong> that relate to protected characteristics, to enable fairness evaluation:

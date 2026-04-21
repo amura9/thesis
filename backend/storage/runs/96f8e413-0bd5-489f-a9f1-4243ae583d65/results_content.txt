@@ -1,3 +1,62 @@
+Namespace(config='C:\\Users\\pc\\Desktop\\Alberto\\Alberto\\Tesi\\FRIA_evaluation\\FRIA_evaluation\\backend\\storage\\configs\\96f8e413-0bd5-489f-a9f1-4243ae583d65.json')
+C:\Users\pc\Desktop\Alberto\Alberto\Tesi\FRIA_evaluation\FRIA_evaluation\backend\storage\configs\96f8e413-0bd5-489f-a9f1-4243ae583d65.json
+[INFO] Using config: C:\Users\pc\Desktop\Alberto\Alberto\Tesi\FRIA_evaluation\FRIA_evaluation\backend\storage\configs\96f8e413-0bd5-489f-a9f1-4243ae583d65.json
+
+Selected sensitive features: ['competences_coverage_required', 'competences_coverage_optional']
+
+Columns available after preprocessing: ['age_cv', 'competences_coverage_required', 'competences_coverage_optional', 'education_cv_encoded', 'education_job_req', 'education_job_encoded', 'gender_job_Any', 'gender_job_Female', 'gender_job_Male', 'gender_cv_Female', 'gender_cv_Male', 'gender_cv_Not binary', 'gender_cv_Not declared', 'disability_cv_No', 'disability_cv_Not declared', 'disability_cv_Yes', 'disability_job_Any', 'disability_job_No', 'PCA_1', 'PCA_2', 'nationality_job_Any', 'nationality_job_Catalan', 'nationality_job_English', 'nationality_job_French', 'nationality_job_Italian', 'nationality_job_Spanish', 'nationality_cv_Catalan', 'nationality_cv_English', 'nationality_cv_French', 'nationality_cv_German', 'nationality_cv_Irish', 'nationality_cv_Italian', 'nationality_cv_LowGerman', 'nationality_cv_Romanian', 'nationality_cv_Russian', 'nationality_cv_Spanish', 'nationality_cv_Swedish', 'age_min_job', 'age_max_job', 'distrib_test', 'check_it', 'check_de', 'people_of_world']
+
+Running New Metric Example
+
+Running conditional_statistical_parity
+  Computing for feature: competences_coverage_required
+Loaded conditional_variable: age_cv
+Loaded sensitive_feature: competences_coverage_required
+Config section: {'conditional_variable': 'age_cv'}
+Available X_test columns: ['age_cv', 'competences_coverage_required', 'competences_coverage_optional', 'education_cv_encoded', 'education_job_req', 'education_job_encoded', 'gender_job_Any', 'gender_job_Female', 'gender_job_Male', 'gender_cv_Female', 'gender_cv_Male', 'gender_cv_Not binary', 'gender_cv_Not declared', 'disability_cv_No', 'disability_cv_Not declared', 'disability_cv_Yes', 'disability_job_Any', 'disability_job_No', 'PCA_1', 'PCA_2', 'nationality_job_Any', 'nationality_job_Catalan', 'nationality_job_English', 'nationality_job_French', 'nationality_job_Italian', 'nationality_job_Spanish', 'nationality_cv_Catalan', 'nationality_cv_English', 'nationality_cv_French', 'nationality_cv_German', 'nationality_cv_Irish', 'nationality_cv_Italian', 'nationality_cv_LowGerman', 'nationality_cv_Romanian', 'nationality_cv_Russian', 'nationality_cv_Spanish', 'nationality_cv_Swedish', 'age_min_job', 'age_max_job', 'distrib_test', 'check_it', 'check_de', 'people_of_world']
+  Computing for feature: competences_coverage_optional
+Loaded conditional_variable: age_cv
+Loaded sensitive_feature: competences_coverage_optional
+Config section: {'conditional_variable': 'age_cv'}
+Available X_test columns: ['age_cv', 'competences_coverage_required', 'competences_coverage_optional', 'education_cv_encoded', 'education_job_req', 'education_job_encoded', 'gender_job_Any', 'gender_job_Female', 'gender_job_Male', 'gender_cv_Female', 'gender_cv_Male', 'gender_cv_Not binary', 'gender_cv_Not declared', 'disability_cv_No', 'disability_cv_Not declared', 'disability_cv_Yes', 'disability_job_Any', 'disability_job_No', 'PCA_1', 'PCA_2', 'nationality_job_Any', 'nationality_job_Catalan', 'nationality_job_English', 'nationality_job_French', 'nationality_job_Italian', 'nationality_job_Spanish', 'nationality_cv_Catalan', 'nationality_cv_English', 'nationality_cv_French', 'nationality_cv_German', 'nationality_cv_Irish', 'nationality_cv_Italian', 'nationality_cv_LowGerman', 'nationality_cv_Romanian', 'nationality_cv_Russian', 'nationality_cv_Spanish', 'nationality_cv_Swedish', 'age_min_job', 'age_max_job', 'distrib_test', 'check_it', 'check_de', 'people_of_world']
+
+Running Conditional Use Accuracy Equality
+  Computing for feature: competences_coverage_required
+  Computing for feature: competences_coverage_optional
+
+Running Demographic Parity
+  Computing for feature: competences_coverage_required
+  Computing for feature: competences_coverage_optional
+
+Running Disparate Impact
+  Computing for feature: competences_coverage_required
+  Computing for feature: competences_coverage_optional
+
+Running Equal Opportunity
+  Computing for feature: competences_coverage_required
+  Computing for feature: competences_coverage_optional
+
+Running Equalized Odds Difference
+  Computing for feature: competences_coverage_required
+  Computing for feature: competences_coverage_optional
+
+Running Overall Accuracy Equality
+  Computing for feature: competences_coverage_required
+  Computing for feature: competences_coverage_optional
+
+Running Predictive Parity
+  Computing for feature: competences_coverage_required
+  Computing for feature: competences_coverage_optional
+
+Running Anonymity Set Size
+
+Running K-Anonymity
+
+Running L-Diversity
+
+Running Mutual Information
+
+Running T-Closeness
 
 === FINAL RESULTS ===
 
@@ -150,3 +209,4 @@ None
   Combined result:
     Metric: T-Closeness
     Value: {'metric': 'T-Closeness', 'status': 'success', 'quasi_identifiers': ['competences_coverage_required'], 'sensitive_attribute': 'education_cv_encoded', 't_optimal': 0.22568, 'full_results': [{'competences_coverage_required': 0.25, 'education_cv_encoded': 0, 't': 0.22568}, {'competences_coverage_required': 0.25, 'education_cv_encoded': 1, 't': 0.22568}, {'competences_coverage_required': 0.25, 'education_cv_encoded': 2, 't': 0.22568}, {'competences_coverage_required': 0.25, 'education_cv_encoded': 3, 't': 0.22568}, {'competences_coverage_required': 0.25, 'education_cv_encoded': 4, 't': 0.22568}, {'competences_coverage_required': 0.3333333333333333, 'education_cv_encoded': 1, 't': 0.22568}, {'competences_coverage_required': 0.3333333333333333, 'education_cv_encoded': 2, 't': 0.22568}, {'competences_coverage_required': 0.3333333333333333, 'education_cv_encoded': 3, 't': 0.22568}, {'competences_coverage_required': 0.5, 'education_cv_encoded': 0, 't': 0.22568}, {'competences_coverage_required': 0.5, 'education_cv_encoded': 1, 't': 0.22568}, {'competences_coverage_required': 0.5, 'education_cv_encoded': 2, 't': 0.22568}, {'competences_coverage_required': 0.5, 'education_cv_encoded': 3, 't': 0.22568}, {'competences_coverage_required': 0.5, 'education_cv_encoded': 4, 't': 0.22568}, {'competences_coverage_required': 0.6666666666666666, 'education_cv_encoded': 1, 't': 0.22568}, {'competences_coverage_required': 0.6666666666666666, 'education_cv_encoded': 2, 't': 0.22568}, {'competences_coverage_required': 0.6666666666666666, 'education_cv_encoded': 3, 't': 0.22568}, {'competences_coverage_required': 0.75, 'education_cv_encoded': 0, 't': 0.22568}, {'competences_coverage_required': 0.75, 'education_cv_encoded': 1, 't': 0.22568}, {'competences_coverage_required': 0.75, 'education_cv_encoded': 2, 't': 0.22568}, {'competences_coverage_required': 0.75, 'education_cv_encoded': 3, 't': 0.22568}, {'competences_coverage_required': 0.75, 'education_cv_encoded': 4, 't': 0.22568}, {'competences_coverage_required': 1.0, 'education_cv_encoded': 0, 't': 0.22568}, {'competences_coverage_required': 1.0, 'education_cv_encoded': 1, 't': 0.22568}, {'competences_coverage_required': 1.0, 'education_cv_encoded': 2, 't': 0.22568}, {'competences_coverage_required': 1.0, 'education_cv_encoded': 3, 't': 0.22568}, {'competences_coverage_required': 1.0, 'education_cv_encoded': 4, 't': 0.22568}], 'final_score': 7.7432}
+[INFO] Saved UI schemas to: C:\Users\pc\Desktop\Alberto\Alberto\Tesi\FRIA_evaluation\FRIA_evaluation\evaluator\run_results\result_schemas.json

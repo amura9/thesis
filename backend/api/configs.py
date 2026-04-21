@@ -167,6 +167,30 @@ def update_latest_metrics(payload: Update):
 
     return {"config_id": path.stem, "config": cfg_path}
 
+#Update FRIA CONTEXT:
+class FRIAContextPayload(BaseModel):
+    description_of_processes: str = ""
+    period_and_frequency_of_use: str = ""
+    affected_persons_and_groups: str = ""
+
+@configs_router.put("/configs/update_fria_context")
+def update_fria_context(payload: FRIAContextPayload):
+    latest_cfg = latest_config_path()  # use your existing helper
+    if not latest_cfg.exists():
+        raise HTTPException(status_code=404, detail="No config file found")
+
+    cfg = json.loads(latest_cfg.read_text(encoding="utf-8"))
+
+    cfg["description_of_processes"] = payload.description_of_processes
+    cfg["period_and_frequency_of_use"] = payload.period_and_frequency_of_use
+    cfg["affected_persons_and_groups"] = payload.affected_persons_and_groups
+
+    latest_cfg.write_text(json.dumps(cfg, indent=2, ensure_ascii=False), encoding="utf-8")
+
+    return {"ok": True}
+
+
+
 #Save parameters selected for metrics.json
 class ParametersPayload(RootModel[Dict[str, Dict[str, Any]]]): 
     pass

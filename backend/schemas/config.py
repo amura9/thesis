@@ -84,3 +84,9 @@ class ConfigIn(BaseModel):
     plugins: list[str] = Field(default_factory=list)
 
     #for each metric initialize empty dict
+
+    # FRIA contextual information
+    description_of_processes: str = ""
+    period_and_frequency_of_use: str = ""
+    affected_persons_and_groups: str = ""
+

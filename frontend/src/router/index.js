@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from "vue-router";
 import Home from "../views/0_Landing_Page.vue";
 import SelectUser from "../views/1_Select_User.vue";
+import AdditionalInfo from "../views/1A_Additional_Info.vue";
 import UploadYourDataAndModel from "../views/2_Upload_Datasets.vue";
 import PostProcessing from "../views/3_Postprocessing.vue";
 import ChooseRight from "../views/4_Select_Right.vue";
@@ -19,6 +20,7 @@ const router = createRouter({
   routes: [
     { path: "/", name: "home", component: Home },
     { path: "/su", name: "selectUser", component: SelectUser },
+    { path: "/ai", name: "additionalInfo", component: AdditionalInfo },
     { path: "/ud", name: "uploadDataModel", component: UploadYourDataAndModel },
     { path: "/bohe", component: PostProcessing },
     { path: "/cr", component: ChooseRight },

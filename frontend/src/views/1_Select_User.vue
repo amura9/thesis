@@ -14,7 +14,7 @@ function goToEvaluation(selectedRole) {
   role.value = selectedRole;
 
   router.push({
-    path: "/ud",
+    path: "/ai",
     query: { role: selectedRole },
   });
 }
@@ -28,8 +28,7 @@ function goToEvaluation(selectedRole) {
       <h1 class="subtitle">Choose the evaluator profile</h1>
 
       <p class="description">
-        Select the type of user who will run the evaluation. The system can then
-        adapt the flow, guidance, and level of technical detail.
+        Select the type of user who will run the evaluation.
       </p>
 
       <div class="cards">

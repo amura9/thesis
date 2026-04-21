@@ -231,7 +231,19 @@ onMounted(async () => {
 <template>
   <div class="page">
     <header class="header">
-      <h1>Step 4C - Select the metrics<br />you want to evaluate</h1>
+      <h1>Step 5 - Select the metrics<br />you want to evaluate</h1>
+
+      <div class="stepper">
+        <span class="step"><span class="num">1</span>Start evaluation</span>
+        <span class="sep">→</span>
+        <span class="step"><span class="num">2</span>Provide context & data</span>
+        <span class="sep">→</span>
+        <span class="step"><span class="num">3</span>Choose the right</span>
+        <span class="sep">→</span>
+        <span class="step"><span class="num">4</span>Select sensitive features</span>
+        <span class="sep">→</span>
+        <span class="step active"><span class="num active">5</span>Overview metrics</span>
+      </div>
       <p class="subtitle">
       
         Some of the metrics you selected require additional information, such as which feature should be treated as sensitive,
@@ -486,6 +498,44 @@ onMounted(async () => {
   border-radius: 8px;
   cursor: pointer;
   font-size: 16px;
+}
+/* stepper */
+.stepper {
+  margin-top: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  font-size: 20px;
+}
+.step {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: 600;
+}
+.num {
+  width: 22px;
+  height: 22px;
+  border-radius: 999px;
+  border: 2px solid #ff4d4d;
+  color: #ff4d4d;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  font-weight: 900;
+}
+.num.active {
+  background: #ff4d4d;
+  color: #fff;
+}
+.step.active {
+  font-weight: 900;
+}
+.sep {
+  color: #777;
 }
 
 .primary {

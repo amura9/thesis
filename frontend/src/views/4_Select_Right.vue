@@ -144,7 +144,7 @@ if (normalizedRights.includes("fairness") ||
     <div class="wrap">
       <!-- Title -->
       <h1 class="title">
-        Step 2- Choose the rights<br />
+        STEP 3 - Choose the rights<br />
         you want to evaluate
       </h1>
 
@@ -152,7 +152,7 @@ if (normalizedRights.includes("fairness") ||
       <div class="stepper">
         <span class="step"><span class="num">1</span>Start evaluation</span>
         <span class="sep">→</span>
-        <span class="step"><span class="num">2</span>Upload your data</span>
+        <span class="step"><span class="num">2</span>Provide context & data</span>
         <span class="sep">→</span>
         <span class="step active"><span class="num active">3</span>Choose the right</span>
         <span class="sep">→</span>

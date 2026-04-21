@@ -235,12 +235,12 @@ onMounted(buildUI);
   <div class="page">
 
     <div class="wrap">
-      <h1 class="title">Step 4-Evaluation metrics overview</h1>
+      <h1 class="title">Step 5 - Evaluation metrics overview</h1>
 
       <div class="stepper">
         <span class="step"><span class="num">1</span>Start evaluation</span>
         <span class="sep">→</span>
-        <span class="step"><span class="num">2</span>Upload your data</span>
+        <span class="step"><span class="num">2</span>Provide context & data</span>
         <span class="sep">→</span>
         <span class="step"><span class="num">3</span>Choose the right</span>
         <span class="sep">→</span>
