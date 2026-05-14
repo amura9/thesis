@@ -17,12 +17,252 @@
       "features": {}
     }
   },
-  "rights_to_evaluate": [],
+  "rights_to_evaluate": [
+    "new_right",
+    "non_discrimination",
+    "privacy"
+  ],
   "metrics": {
     "metrics": {}
   },
   "plugins": [],
   "description_of_processes": "",
   "period_and_frequency_of_use": "",
-  "affected_persons_and_groups": ""
+  "affected_persons_and_groups": "",
+  "metric_requirements": {
+    "new_metric": {
+      "name": "New Metric",
+      "right": "new_right",
+      "selected_right": "New Right",
+      "required_inputs": [
+        "X_test"
+      ],
+      "available_inputs": [],
+      "missing_inputs": [
+        "X_test"
+      ],
+      "computable": false
+    },
+    "conditional_statistical_parity": {
+      "name": "Conditional Statistical Parity",
+      "right": "non_discrimination",
+      "selected_right": "Non_Discrimination",
+      "required_inputs": [
+        "X_test",
+        "y_pred"
+      ],
+      "available_inputs": [],
+      "missing_inputs": [
+        "X_test",
+        "y_pred"
+      ],
+      "computable": false
+    },
+    "conditional_use_accuracy_equality": {
+      "name": "Conditional Use Accuracy Equality",
+      "right": "non_discrimination",
+      "selected_right": "Non_Discrimination",
+      "required_inputs": [
+        "X_test",
+        "y_true",
+        "y_pred"
+      ],
+      "available_inputs": [],
+      "missing_inputs": [
+        "X_test",
+        "y_true",
+        "y_pred"
+      ],
+      "computable": false
+    },
+    "demographic_parity": {
+      "name": "Demographic Parity",
+      "right": "non_discrimination",
+      "selected_right": "Non_Discrimination",
+      "required_inputs": [
+        "X_test",
+        "y_true",
+        "y_pred"
+      ],
+      "available_inputs": [],
+      "missing_inputs": [
+        "X_test",
+        "y_true",
+        "y_pred"
+      ],
+      "computable": false
+    },
+    "disparate_impact": {
+      "name": "Disparate Impact",
+      "right": "non_discrimination",
+      "selected_right": "Non_Discrimination",
+      "required_inputs": [
+        "X_test",
+        "y_true",
+        "y_pred"
+      ],
+      "available_inputs": [],
+      "missing_inputs": [
+        "X_test",
+        "y_true",
+        "y_pred"
+      ],
+      "computable": false
+    },
+    "equal_opportunity": {
+      "name": "Equal Opportunity",
+      "right": "non_discrimination",
+      "selected_right": "Non_Discrimination",
+      "required_inputs": [
+        "X_test",
+        "y_true",
+        "y_pred"
+      ],
+      "available_inputs": [],
+      "missing_inputs": [
+        "X_test",
+        "y_true",
+        "y_pred"
+      ],
+      "computable": false
+    },
+    "equalized_odds_difference": {
+      "name": "Equalized Odds Difference",
+      "right": "non_discrimination",
+      "selected_right": "Non_Discrimination",
+      "required_inputs": [
+        "X_test",
+        "y_true",
+        "y_pred"
+      ],
+      "available_inputs": [],
+      "missing_inputs": [
+        "X_test",
+        "y_true",
+        "y_pred"
+      ],
+      "computable": false
+    },
+    "overall_accuracy_equality": {
+      "name": "Overall Accuracy Equality",
+      "right": "non_discrimination",
+      "selected_right": "Non_Discrimination",
+      "required_inputs": [
+        "X_test",
+        "y_true",
+        "y_pred"
+      ],
+      "available_inputs": [],
+      "missing_inputs": [
+        "X_test",
+        "y_true",
+        "y_pred"
+      ],
+      "computable": false
+    },
+    "predictive_parity": {
+      "name": "Predictive Parity",
+      "right": "non_discrimination",
+      "selected_right": "Non_Discrimination",
+      "required_inputs": [
+        "X_test",
+        "y_true",
+        "y_pred"
+      ],
+      "available_inputs": [],
+      "missing_inputs": [
+        "X_test",
+        "y_true",
+        "y_pred"
+      ],
+      "computable": false
+    },
+    "anonymity_set_size": {
+      "name": "Anonymity Set Size",
+      "right": "privacy",
+      "selected_right": "Privacy",
+      "required_inputs": [
+        "X_test"
+      ],
+      "available_inputs": [],
+      "missing_inputs": [
+        "X_test"
+      ],
+      "computable": false
+    },
+    "k_anonymity": {
+      "name": "K-Anonymity",
+      "right": "privacy",
+      "selected_right": "Privacy",
+      "required_inputs": [
+        "X_test"
+      ],
+      "available_inputs": [],
+      "missing_inputs": [
+        "X_test"
+      ],
+      "computable": false
+    },
+    "l_diversity": {
+      "name": "L-Diversity",
+      "right": "privacy",
+      "selected_right": "Privacy",
+      "required_inputs": [
+        "X_test"
+      ],
+      "available_inputs": [],
+      "missing_inputs": [
+        "X_test"
+      ],
+      "computable": false
+    },
+    "mutual_information": {
+      "name": "Mutual Information",
+      "right": "privacy",
+      "selected_right": "Privacy",
+      "required_inputs": [
+        "X_test"
+      ],
+      "available_inputs": [],
+      "missing_inputs": [
+        "X_test"
+      ],
+      "computable": false
+    },
+    "t_closeness": {
+      "name": "T-Closeness",
+      "right": "privacy",
+      "selected_right": "Privacy",
+      "required_inputs": [
+        "X_test"
+      ],
+      "available_inputs": [],
+      "missing_inputs": [
+        "X_test"
+      ],
+      "computable": false
+    }
+  },
+  "metrics_by_right": {
+    "new_right": [
+      "new_metric"
+    ],
+    "privacy": [
+      "anonymity_set_size",
+      "k_anonymity",
+      "l_diversity",
+      "mutual_information",
+      "t_closeness"
+    ],
+    "non_discrimination": [
+      "conditional_statistical_parity",
+      "conditional_use_accuracy_equality",
+      "demographic_parity",
+      "disparate_impact",
+      "equal_opportunity",
+      "equalized_odds_difference",
+      "overall_accuracy_equality",
+      "predictive_parity"
+    ]
+  }
 }

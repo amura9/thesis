@@ -1,0 +1,36 @@
+# Cache di Python
+**/__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Frontend
+frontend/node_modules/
+frontend/dist/
+
+# Ambiente virtuale
+venv/
+.venv/
+.env
+
+# Storage locale
+backend/storage/uploads/*
+!backend/storage/uploads/.gitkeep
+
+backend/storage/summary/*.json
+
+# Config temporanei
+backend/storage/configs/*
+!backend/storage/configs/.gitkeep
+
+# Runs temporanei
+backend/storage/runs/*
+!backend/storage/runs/.gitkeep
+
+# Reports
+backend/storage/reports/*
+!backend/storage/reports/.gitkeep
+
+# Results
+backend/storage/results/*
+!backend/storage/results/.gitkeep
