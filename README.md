@@ -1,15 +1,3 @@
-# AI Fundamental Rights Evaluation Platform
-
-## Overview
-
-This project implements a modular AI Fundamental Rights Evaluation Platform designed to support structured assessment, visualization, and reporting of AI systems according to predefined evaluation criteria.
-
-The system adopts a decoupled client-server architecture composed of:
-
-* A **FastAPI** backend responsible for evaluation logic, API management, and report generation.
-* A **Vue.js** frontend providing an interactive user interface and dynamic visualization components.
-
----
 
 # Prerequisites
 
