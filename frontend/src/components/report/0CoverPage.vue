@@ -18,9 +18,7 @@ const props = defineProps({
       <div>Evaluation Date:&nbsp; {{ meta.evaluation_date }}</div>
       <div>Dataset Name:&nbsp; {{ meta.dataset_name }}</div>
     </div>
-    <div class="page-number">
-      {{ pageNumber }}
-    </div>
+
   </div>
 </template>
 

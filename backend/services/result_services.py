@@ -65,7 +65,7 @@ def render_report_to_pdf(
                 timeout=timeout_ms
             )
 
-            page.wait_for_timeout(300)
+            page.wait_for_timeout(1000)
 
             page.pdf(
                 path=str(out_path),

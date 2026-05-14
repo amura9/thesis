@@ -1,5 +1,5 @@
 <script setup>
-import { computed } from "vue";
+import { computed, ref, onMounted, nextTick  } from "vue";
 
 const props = defineProps({
   node: {
@@ -119,6 +119,19 @@ const needleRotation = computed(() => {
   return (v / 10) * 180 - 90;
 });
 
+const gaugeReady = ref(false);
+
+onMounted(async () => {
+  await nextTick();
+
+  await new Promise((resolve) =>
+    requestAnimationFrame(() => resolve())
+  );
+
+  gaugeReady.value = true;
+});
+
+
 </script>
 
 <template>
@@ -179,7 +192,7 @@ const needleRotation = computed(() => {
         <p class="body-text inline-text">{{ justification }}</p>
       </section>
 
-      <section class="gauge-section">
+      <section class="gauge-section" v-if="gaugeReady">
         <h2 class="section-title">TOTAL SCORE</h2>
 
         <div class="gauge-wrap">

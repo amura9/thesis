@@ -1,0 +1,242 @@
+{
+  "datasets": {
+    "train": null,
+    "X_test": "C:\\Users\\pc\\Desktop\\Alberto\\Alberto\\Tesi\\FRIA_evaluation\\FRIA_evaluation\\backend\\storage\\uploads\\X_test__bff5782c-a635-4ab1-ae0b-dd0f5ceddd55__X_test_MIN.csv",
+    "y_true": "C:\\Users\\pc\\Desktop\\Alberto\\Alberto\\Tesi\\FRIA_evaluation\\FRIA_evaluation\\backend\\storage\\uploads\\y_true__bff5782c-a635-4ab1-ae0b-dd0f5ceddd55__y_true.csv",
+    "y_pred": "C:\\Users\\pc\\Desktop\\Alberto\\Alberto\\Tesi\\FRIA_evaluation\\FRIA_evaluation\\backend\\storage\\uploads\\y_pred__bff5782c-a635-4ab1-ae0b-dd0f5ceddd55__y_pred_MIN.csv"
+  },
+  "model": {
+    "path": null
+  },
+  "features": {
+    "competences_coverage_required": {
+      "sensitive": true
+    },
+    "competences_coverage_optional": {
+      "sensitive": true
+    },
+    "age_cv": {
+      "sensitive": true
+    },
+    "gender_job_Male": {
+      "sensitive": true
+    },
+    "gender_cv_Female": {
+      "sensitive": true
+    }
+  },
+  "postprocessing": {
+    "use_inverse_encoding": true,
+    "inverse_encoding_prefixes": [
+      "gender_cv_Female",
+      "education_job_encoded",
+      "gender_job_Male",
+      "education_job_req"
+    ],
+    "binning": {
+      "use_binning": false,
+      "features": {}
+    }
+  },
+  "rights_to_evaluate": [
+    "non_discrimination"
+  ],
+  "metrics": {
+    "non_discrimination": [
+      "conditional_statistical_parity",
+      "conditional_use_accuracy_equality",
+      "disparate_impact"
+    ]
+  },
+  "plugins": [
+    "plugins.non_discrimination.conditional_statistical_parity",
+    "plugins.non_discrimination.conditional_use_accuracy_equality",
+    "plugins.non_discrimination.disparate_impact"
+  ],
+  "description_of_processes": "aaaaaaaaaaaaa",
+  "period_and_frequency_of_use": "aaaa",
+  "affected_persons_and_groups": "a",
+  "metric_requirements": {
+    "conditional_statistical_parity": {
+      "name": "Conditional Statistical Parity",
+      "right": "non_discrimination",
+      "selected_right": "Non_Discrimination",
+      "required_inputs": [
+        "X_test",
+        "y_pred"
+      ],
+      "available_inputs": [
+        "X_test",
+        "y_pred",
+        "y_true"
+      ],
+      "missing_inputs": [],
+      "computable": true
+    },
+    "conditional_use_accuracy_equality": {
+      "name": "Conditional Use Accuracy Equality",
+      "right": "non_discrimination",
+      "selected_right": "Non_Discrimination",
+      "required_inputs": [
+        "X_test",
+        "y_true",
+        "y_pred"
+      ],
+      "available_inputs": [
+        "X_test",
+        "y_pred",
+        "y_true"
+      ],
+      "missing_inputs": [],
+      "computable": true
+    },
+    "demographic_parity": {
+      "name": "Demographic Parity",
+      "right": "non_discrimination",
+      "selected_right": "Non_Discrimination",
+      "required_inputs": [
+        "X_test",
+        "y_true",
+        "y_pred"
+      ],
+      "available_inputs": [
+        "X_test",
+        "y_pred",
+        "y_true"
+      ],
+      "missing_inputs": [],
+      "computable": true
+    },
+    "disparate_impact": {
+      "name": "Disparate Impact",
+      "right": "non_discrimination",
+      "selected_right": "Non_Discrimination",
+      "required_inputs": [
+        "X_test",
+        "y_true",
+        "y_pred"
+      ],
+      "available_inputs": [
+        "X_test",
+        "y_pred",
+        "y_true"
+      ],
+      "missing_inputs": [],
+      "computable": true
+    },
+    "equal_opportunity": {
+      "name": "Equal Opportunity",
+      "right": "non_discrimination",
+      "selected_right": "Non_Discrimination",
+      "required_inputs": [
+        "X_test",
+        "y_true",
+        "y_pred"
+      ],
+      "available_inputs": [
+        "X_test",
+        "y_pred",
+        "y_true"
+      ],
+      "missing_inputs": [],
+      "computable": true
+    },
+    "equalized_odds_difference": {
+      "name": "Equalized Odds Difference",
+      "right": "non_discrimination",
+      "selected_right": "Non_Discrimination",
+      "required_inputs": [
+        "X_test",
+        "y_true",
+        "y_pred"
+      ],
+      "available_inputs": [
+        "X_test",
+        "y_pred",
+        "y_true"
+      ],
+      "missing_inputs": [],
+      "computable": true
+    },
+    "overall_accuracy_equality": {
+      "name": "Overall Accuracy Equality",
+      "right": "non_discrimination",
+      "selected_right": "Non_Discrimination",
+      "required_inputs": [
+        "X_test",
+        "y_true",
+        "y_pred"
+      ],
+      "available_inputs": [
+        "X_test",
+        "y_pred",
+        "y_true"
+      ],
+      "missing_inputs": [],
+      "computable": true
+    },
+    "predictive_parity": {
+      "name": "Predictive Parity",
+      "right": "non_discrimination",
+      "selected_right": "Non_Discrimination",
+      "required_inputs": [
+        "X_test",
+        "y_true",
+        "y_pred"
+      ],
+      "available_inputs": [
+        "X_test",
+        "y_pred",
+        "y_true"
+      ],
+      "missing_inputs": [],
+      "computable": true
+    }
+  },
+  "metrics_by_right": {
+    "non_discrimination": [
+      "conditional_statistical_parity",
+      "conditional_use_accuracy_equality",
+      "demographic_parity",
+      "disparate_impact",
+      "equal_opportunity",
+      "equalized_odds_difference",
+      "overall_accuracy_equality",
+      "predictive_parity"
+    ]
+  },
+  "new_metric": {
+    "threshold": 0.2
+  },
+  "k_anonymity": {
+    "k_value": 2,
+    "quasi_identifiers": [
+      "competences_coverage_required",
+      "age_cv"
+    ]
+  },
+  "l_diversity": {
+    "quasi_identifiers": [
+      "age_cv",
+      "competences_coverage_required"
+    ],
+    "sensitive_attribute": "competences_coverage_optional",
+    "l_value": 2
+  },
+  "mutual_information": {
+    "sensitive_attribute": "competences_coverage_required",
+    "columns_to_exclude": [
+      "competences_coverage_optional"
+    ]
+  },
+  "t_closeness": {
+    "quasi_identifiers": [
+      "age_cv",
+      "competences_coverage_required"
+    ],
+    "sensitive_attribute": "competences_coverage_optional"
+  },
+  "conditional_statistical_parity": {
+    "conditional_variable": "competences_coverage_optional"
+  }
+}

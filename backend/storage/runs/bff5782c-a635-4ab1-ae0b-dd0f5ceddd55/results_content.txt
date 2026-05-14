@@ -1,3 +1,52 @@
+Namespace(config='C:\\Users\\pc\\Desktop\\Alberto\\Alberto\\Tesi\\FRIA_evaluation\\FRIA_evaluation\\backend\\storage\\configs\\bff5782c-a635-4ab1-ae0b-dd0f5ceddd55.json')
+C:\Users\pc\Desktop\Alberto\Alberto\Tesi\FRIA_evaluation\FRIA_evaluation\backend\storage\configs\bff5782c-a635-4ab1-ae0b-dd0f5ceddd55.json
+[INFO] Using config: C:\Users\pc\Desktop\Alberto\Alberto\Tesi\FRIA_evaluation\FRIA_evaluation\backend\storage\configs\bff5782c-a635-4ab1-ae0b-dd0f5ceddd55.json
+
+Selected sensitive features: ['competences_coverage_required', 'competences_coverage_optional', 'age_cv', 'gender_job_Male', 'gender_cv_Female']
+
+Columns available after preprocessing: ['age_cv', 'competences_coverage_required', 'competences_coverage_optional', 'education_cv_encoded', 'education_job_req', 'education_job_encoded', 'gender_job_Any', 'gender_job_Female', 'gender_job_Male', 'gender_cv_Female', 'gender_cv_Male', 'gender_cv_Not binary', 'gender_cv_Not declared', 'disability_cv_No', 'disability_cv_Not declared', 'disability_cv_Yes', 'disability_job_Any', 'disability_job_No', 'PCA_1', 'PCA_2', 'nationality_job_Any', 'nationality_job_Catalan', 'nationality_job_English', 'nationality_job_French', 'nationality_job_Italian', 'nationality_job_Spanish', 'nationality_cv_Catalan', 'nationality_cv_English', 'nationality_cv_French', 'nationality_cv_German', 'nationality_cv_Irish', 'nationality_cv_Italian', 'nationality_cv_LowGerman', 'nationality_cv_Romanian', 'nationality_cv_Russian', 'nationality_cv_Spanish', 'nationality_cv_Swedish', 'age_min_job', 'age_max_job', 'distrib_test', 'check_it', 'check_de', 'people_of_world']
+
+Running conditional_statistical_parity
+  Computing for feature: competences_coverage_required
+Loaded conditional_variable: competences_coverage_optional
+Loaded sensitive_feature: competences_coverage_required
+Config section: {'conditional_variable': 'competences_coverage_optional'}
+Available X_test columns: ['age_cv', 'competences_coverage_required', 'competences_coverage_optional', 'education_cv_encoded', 'education_job_req', 'education_job_encoded', 'gender_job_Any', 'gender_job_Female', 'gender_job_Male', 'gender_cv_Female', 'gender_cv_Male', 'gender_cv_Not binary', 'gender_cv_Not declared', 'disability_cv_No', 'disability_cv_Not declared', 'disability_cv_Yes', 'disability_job_Any', 'disability_job_No', 'PCA_1', 'PCA_2', 'nationality_job_Any', 'nationality_job_Catalan', 'nationality_job_English', 'nationality_job_French', 'nationality_job_Italian', 'nationality_job_Spanish', 'nationality_cv_Catalan', 'nationality_cv_English', 'nationality_cv_French', 'nationality_cv_German', 'nationality_cv_Irish', 'nationality_cv_Italian', 'nationality_cv_LowGerman', 'nationality_cv_Romanian', 'nationality_cv_Russian', 'nationality_cv_Spanish', 'nationality_cv_Swedish', 'age_min_job', 'age_max_job', 'distrib_test', 'check_it', 'check_de', 'people_of_world']
+  Computing for feature: competences_coverage_optional
+Loaded conditional_variable: competences_coverage_optional
+Loaded sensitive_feature: competences_coverage_optional
+Config section: {'conditional_variable': 'competences_coverage_optional'}
+Available X_test columns: ['age_cv', 'competences_coverage_required', 'competences_coverage_optional', 'education_cv_encoded', 'education_job_req', 'education_job_encoded', 'gender_job_Any', 'gender_job_Female', 'gender_job_Male', 'gender_cv_Female', 'gender_cv_Male', 'gender_cv_Not binary', 'gender_cv_Not declared', 'disability_cv_No', 'disability_cv_Not declared', 'disability_cv_Yes', 'disability_job_Any', 'disability_job_No', 'PCA_1', 'PCA_2', 'nationality_job_Any', 'nationality_job_Catalan', 'nationality_job_English', 'nationality_job_French', 'nationality_job_Italian', 'nationality_job_Spanish', 'nationality_cv_Catalan', 'nationality_cv_English', 'nationality_cv_French', 'nationality_cv_German', 'nationality_cv_Irish', 'nationality_cv_Italian', 'nationality_cv_LowGerman', 'nationality_cv_Romanian', 'nationality_cv_Russian', 'nationality_cv_Spanish', 'nationality_cv_Swedish', 'age_min_job', 'age_max_job', 'distrib_test', 'check_it', 'check_de', 'people_of_world']
+  [SKIP feature] The truth value of a Series is ambiguous. Use a.empty, a.bool(), a.item(), a.any() or a.all().
+  Computing for feature: age_cv
+Loaded conditional_variable: competences_coverage_optional
+Loaded sensitive_feature: age_cv
+Config section: {'conditional_variable': 'competences_coverage_optional'}
+Available X_test columns: ['age_cv', 'competences_coverage_required', 'competences_coverage_optional', 'education_cv_encoded', 'education_job_req', 'education_job_encoded', 'gender_job_Any', 'gender_job_Female', 'gender_job_Male', 'gender_cv_Female', 'gender_cv_Male', 'gender_cv_Not binary', 'gender_cv_Not declared', 'disability_cv_No', 'disability_cv_Not declared', 'disability_cv_Yes', 'disability_job_Any', 'disability_job_No', 'PCA_1', 'PCA_2', 'nationality_job_Any', 'nationality_job_Catalan', 'nationality_job_English', 'nationality_job_French', 'nationality_job_Italian', 'nationality_job_Spanish', 'nationality_cv_Catalan', 'nationality_cv_English', 'nationality_cv_French', 'nationality_cv_German', 'nationality_cv_Irish', 'nationality_cv_Italian', 'nationality_cv_LowGerman', 'nationality_cv_Romanian', 'nationality_cv_Russian', 'nationality_cv_Spanish', 'nationality_cv_Swedish', 'age_min_job', 'age_max_job', 'distrib_test', 'check_it', 'check_de', 'people_of_world']
+  Computing for feature: gender_job_Male
+Loaded conditional_variable: competences_coverage_optional
+Loaded sensitive_feature: gender_job_Male
+Config section: {'conditional_variable': 'competences_coverage_optional'}
+Available X_test columns: ['age_cv', 'competences_coverage_required', 'competences_coverage_optional', 'education_cv_encoded', 'education_job_req', 'education_job_encoded', 'gender_job_Any', 'gender_job_Female', 'gender_job_Male', 'gender_cv_Female', 'gender_cv_Male', 'gender_cv_Not binary', 'gender_cv_Not declared', 'disability_cv_No', 'disability_cv_Not declared', 'disability_cv_Yes', 'disability_job_Any', 'disability_job_No', 'PCA_1', 'PCA_2', 'nationality_job_Any', 'nationality_job_Catalan', 'nationality_job_English', 'nationality_job_French', 'nationality_job_Italian', 'nationality_job_Spanish', 'nationality_cv_Catalan', 'nationality_cv_English', 'nationality_cv_French', 'nationality_cv_German', 'nationality_cv_Irish', 'nationality_cv_Italian', 'nationality_cv_LowGerman', 'nationality_cv_Romanian', 'nationality_cv_Russian', 'nationality_cv_Spanish', 'nationality_cv_Swedish', 'age_min_job', 'age_max_job', 'distrib_test', 'check_it', 'check_de', 'people_of_world']
+  Computing for feature: gender_cv_Female
+Loaded conditional_variable: competences_coverage_optional
+Loaded sensitive_feature: gender_cv_Female
+Config section: {'conditional_variable': 'competences_coverage_optional'}
+Available X_test columns: ['age_cv', 'competences_coverage_required', 'competences_coverage_optional', 'education_cv_encoded', 'education_job_req', 'education_job_encoded', 'gender_job_Any', 'gender_job_Female', 'gender_job_Male', 'gender_cv_Female', 'gender_cv_Male', 'gender_cv_Not binary', 'gender_cv_Not declared', 'disability_cv_No', 'disability_cv_Not declared', 'disability_cv_Yes', 'disability_job_Any', 'disability_job_No', 'PCA_1', 'PCA_2', 'nationality_job_Any', 'nationality_job_Catalan', 'nationality_job_English', 'nationality_job_French', 'nationality_job_Italian', 'nationality_job_Spanish', 'nationality_cv_Catalan', 'nationality_cv_English', 'nationality_cv_French', 'nationality_cv_German', 'nationality_cv_Irish', 'nationality_cv_Italian', 'nationality_cv_LowGerman', 'nationality_cv_Romanian', 'nationality_cv_Russian', 'nationality_cv_Spanish', 'nationality_cv_Swedish', 'age_min_job', 'age_max_job', 'distrib_test', 'check_it', 'check_de', 'people_of_world']
+
+Running Conditional Use Accuracy Equality
+  Computing for feature: competences_coverage_required
+  Computing for feature: competences_coverage_optional
+  Computing for feature: age_cv
+  Computing for feature: gender_job_Male
+  Computing for feature: gender_cv_Female
+
+Running Disparate Impact
+  Computing for feature: competences_coverage_required
+  Computing for feature: competences_coverage_optional
+  Computing for feature: age_cv
+  Computing for feature: gender_job_Male
+  Computing for feature: gender_cv_Female
 
 === FINAL RESULTS ===
 
@@ -62,3 +111,4 @@
   Feature: gender_cv_Female
     Metric: Disparate Impact
     Value: {'metric': 'Disparate Impact', 'status': 'success', 'sensitive_feature': 'gender_cv_Female', 'selection_rates': {False: 0.31562847608453837, True: 0.2378917378917379}, 'disparate_impact': 0.24629190356062602, 'final_score': 2.4629190356062605}
+[INFO] Saved UI schemas to: C:\Users\pc\Desktop\Alberto\Alberto\Tesi\FRIA_evaluation\FRIA_evaluation\evaluator\run_results\result_schemas.json

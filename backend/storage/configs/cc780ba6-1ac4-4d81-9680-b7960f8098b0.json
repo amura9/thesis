@@ -1,0 +1,28 @@
+{
+  "datasets": {
+    "train": null,
+    "X_test": null,
+    "y_true": null,
+    "y_pred": null
+  },
+  "model": {
+    "path": null
+  },
+  "features": null,
+  "postprocessing": {
+    "use_inverse_encoding": false,
+    "inverse_encoding_prefixes": [],
+    "binning": {
+      "use_binning": false,
+      "features": {}
+    }
+  },
+  "rights_to_evaluate": [],
+  "metrics": {
+    "metrics": {}
+  },
+  "plugins": [],
+  "description_of_processes": "",
+  "period_and_frequency_of_use": "",
+  "affected_persons_and_groups": ""
+}

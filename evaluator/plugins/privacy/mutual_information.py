@@ -170,8 +170,7 @@ class MutualInformationMetric(PrivacyMetricBase):
 
             #score inverted: the higher the better
             total_mi = float(np.sum(mi))
-            normalized_score= 10 * (1 / (1 + total_mi)) #1/1+total_mi -> higher mi = lower score (if have more info -> i have less privacy)
-            final_score = round(10 - normalized_score, 3)
+            final_score = round(10 * (1 / (1 + total_mi)), 3) #higher score, lower MI
 
             # 7) Results
             mi_df = pd.DataFrame({

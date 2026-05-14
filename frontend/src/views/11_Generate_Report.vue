@@ -3,6 +3,7 @@ import { onMounted, ref, computed, nextTick } from "vue";
 import { useRoute } from "vue-router";
 
 import CoverPage1 from "../components/report/0CoverPage.vue";
+import ContextPage from "../components/report/01ContextPage.vue";
 import MetricReportPage2 from "../components/report/1MetricReportPage.vue";
 import LastPage3 from "../components/report/2LastPage.vue";
 
@@ -378,13 +379,17 @@ onMounted(async () => {
       await document.fonts.ready;
     }
 
+    await new Promise((resolve) => requestAnimationFrame(() => resolve()));
+    await new Promise((resolve) => requestAnimationFrame(() => resolve()));
+    await new Promise((resolve) => setTimeout(resolve, 300));
+
     window.__REPORT_READY__ = true;
 
     
     if (!isPrintMode.value) {
       setTimeout(() => {
       generatePdf();
-      });
+      }, 300);
     }
       
 
@@ -410,14 +415,23 @@ onMounted(async () => {
 
       <!-- Page 2 -->
       <section class="pdfPage">
-        <MetricReportPage2
+        <ContextPage
           :meta="meta"
           :fria-context="friaContext"
           page-number="2"
         />
       </section>
 
-      <!-- Page 3+ -->
+      <!-- Page 2 -->
+      <section class="pdfPage">
+        <MetricReportPage2
+          :meta="meta"
+          :fria-context="friaContext"
+          page-number="3"
+        />
+      </section>
+
+      <!-- Page 4+ -->
       <section
         v-for="(page, index) in metricPages"
         :key="page.id"
@@ -429,7 +443,7 @@ onMounted(async () => {
           :meta="meta"
           :metric-key="page.metricKey"
           :feature-key="page.featureKey"
-          :page-number="index + 3"
+          :page-number="index + 4"
         />
       </section>
 
@@ -458,6 +472,7 @@ onMounted(async () => {
 
 /* A4 portrait page box */
 .pdfPage {
+  position: relative;
   width: 210mm;
   height: 297mm;
   background: #fff;

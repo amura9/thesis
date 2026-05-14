@@ -8,9 +8,9 @@ const loading = ref(false);
 const error = ref("");
 
 const form = ref({
-  config1: "",
-  config2: "",
-  config3: "",
+  description_of_processes: "",
+  period_and_frequency_of_use: "",
+  affected_persons_and_groups: "",
 });
 
 async function fetchLatestConfig() {
@@ -20,9 +20,9 @@ async function fetchLatestConfig() {
   const payload = await res.json();
   const cfg = payload.config || payload;
 
-  form.value.config1 = cfg.config1 || "";
-  form.value.config2 = cfg.config2 || "";
-  form.value.config3 = cfg.config3 || "";
+  form.value.description_of_processes = cfg.description_of_processes || "";
+  form.value.period_and_frequency_of_use = cfg.period_and_frequency_of_use || "";
+  form.value.affected_persons_and_groups = cfg.affected_persons_and_groups || "";
 }
 
 async function saveAndNext() {
@@ -89,20 +89,34 @@ onMounted(async () => {
 
     <template v-if="!loading">
       <section class="block">
-        <h2>1. Description of processes</h2>
-        <p>
-          Please describe the processes and activities in which the high-risk AI system
-          will be used, in line with its intended purpose.
-        </p>
-        <textarea v-model="form.config1" rows="10"></textarea>
-      </section>
+  <h2>1. Description of processes</h2>
+
+  <p>
+    Please describe the processes and activities in which the high-risk AI system
+    will be used, in line with its intended purpose.
+  </p>
+
+  <textarea
+    v-model="form.description_of_processes"
+    rows="10"
+    placeholder="What are the main tasks or decisions supported or automated by the system?
+In which operational contexts or settings will the system be deployed?
+What is the role of human oversight within these processes?"
+  ></textarea>
+</section>
 
       <section class="block">
         <h2>2. Period and frequency of use</h2>
         <p>
           Please describe the expected duration and frequency of use of the high-risk AI system.
         </p>
-        <textarea v-model="form.config2" rows="10"></textarea>
+        <textarea
+    v-model="form.period_and_frequency_of_use"
+    rows="10"
+    placeholder="Over what period of time is the system intended to be used (e.g. temporary, long-term, continuous use)?
+How frequently will the system be used (e.g. continuously, daily, periodically, on demand)?
+Are there specific phases or conditions that determine when the system is used?"
+  ></textarea>
       </section>
 
       <section class="block">
@@ -111,7 +125,12 @@ onMounted(async () => {
           Please identify the categories of natural persons and groups that are likely
           to be affected by the use of the system in this specific context.
         </p>
-        <textarea v-model="form.config3" rows="10"></textarea>
+        <textarea v-model="form.affected_persons_and_groups"
+    rows="10"
+    placeholder="Who are the main individuals affected by the system (e.g. customers, employees, citizens)?
+Are there specific groups that may be particularly impacted?
+Are there any vulnerable groups that may be particularly affected (e.g., minors, employees, migrants, etc.)?
+What type of impact may the system have on these individuals or groups (e.g., decision-making, access to services, monitoring)?"></textarea>
       </section>
 
       <div class="bottom-nav">
@@ -155,6 +174,16 @@ textarea {
   resize: vertical;
 }
 
+textarea::placeholder {
+  white-space: pre-line;
+  color: #888;
+  transition: opacity 0.2s ease;
+}
+
+textarea:focus::placeholder {
+  opacity: 0;
+}
+
 .subtitle {
   margin: 14px auto 0;
   max-width: 880px;
@@ -162,6 +191,12 @@ textarea {
   opacity: 0.85;
 }
 
+
+/* placeholder */
+textarea::placeholder {
+  white-space: pre-line;
+  color: #888;
+}
 
 /* stepper */
 .steps {
